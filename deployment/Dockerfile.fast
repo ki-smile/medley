@@ -24,17 +24,17 @@ RUN pip install --no-cache-dir --upgrade pip setuptools wheel && \
     -r requirements.txt \
     -r requirements_web_minimal.txt
 
-# Create user and directories first (as root)
+# Create user first (as root)
 RUN groupadd -r medley && \
-    useradd -r -g medley -d /app medley && \
-    mkdir -p /app/cache/responses /app/reports /app/logs /app/usecases
+    useradd -r -g medley -d /app medley
 
 # Copy application code
 COPY . .
 
-# Ensure all files have proper ownership and permissions
+# Ensure all files have proper ownership and permissions (AFTER copying)
 RUN chown -R medley:medley /app && \
-    chmod -R 755 /app/cache /app/reports /app/logs /app/usecases
+    chmod -R 755 /app && \
+    mkdir -p /app/logs
 
 # Switch to non-root user
 USER medley
