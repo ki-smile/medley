@@ -5,9 +5,8 @@
 [![Python](https://img.shields.io/badge/Python-3.8%2B-blue)](https://www.python.org/)
 [![Models](https://img.shields.io/badge/AI%20Models-31-green)](https://openrouter.ai/)
 [![Countries](https://img.shields.io/badge/Countries-6-orange)](https://github.com/)
-[![License](https://img.shields.io/badge/License-MIT-purple)](LICENSE)
+[![License](https://img.shields.io/badge/License-CC%20BY--SA%204.0-purple)](LICENSE)
 
-**Author:** Farhad Abtahi  
 **Developed by:** SMAILE (Stockholm Medical Artificial Intelligence and Learning Environments) at Karolinska Institutet  
 **Website:** [smile.ki.se](https://smile.ki.se)
 
