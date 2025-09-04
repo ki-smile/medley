@@ -30,7 +30,7 @@ COPY . .
 # Create user and directories
 RUN groupadd -r medley && \
     useradd -r -g medley -d /app medley && \
-    mkdir -p /app/cache /app/reports /app/logs && \
+    mkdir -p /app/cache/responses /app/reports /app/logs /app/usecases && \
     chown -R medley:medley /app
 
 # Switch to non-root user
