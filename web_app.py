@@ -9,6 +9,7 @@ import json
 import hashlib
 import csv
 import io
+import requests
 from pathlib import Path
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional
