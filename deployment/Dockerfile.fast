@@ -32,8 +32,9 @@ RUN groupadd -r medley && \
 # Copy application code
 COPY . .
 
-# Ensure all files have proper ownership
-RUN chown -R medley:medley /app
+# Ensure all files have proper ownership and permissions
+RUN chown -R medley:medley /app && \
+    chmod -R 755 /app/cache /app/reports /app/logs /app/usecases
 
 # Switch to non-root user
 USER medley
