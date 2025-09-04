@@ -40,11 +40,26 @@ class WebOrchestrator:
         self.active_analyses = {}
         self.analysis_queue = Queue()
         
-        # Ensure directories exist
-        self.cache_dir.mkdir(parents=True, exist_ok=True)
-        self.reports_dir.mkdir(parents=True, exist_ok=True)
-        self.usecases_dir.mkdir(parents=True, exist_ok=True)
-        self.custom_cases_dir.mkdir(parents=True, exist_ok=True)  # Create custom subfolder
+        # Ensure directories exist (handle permission errors gracefully)
+        try:
+            self.cache_dir.mkdir(parents=True, exist_ok=True)
+        except PermissionError:
+            print(f"Warning: Cannot create cache directory {self.cache_dir} - using existing directory")
+        
+        try:
+            self.reports_dir.mkdir(parents=True, exist_ok=True)
+        except PermissionError:
+            print(f"Warning: Cannot create reports directory {self.reports_dir} - using existing directory")
+        
+        try:
+            self.usecases_dir.mkdir(parents=True, exist_ok=True)
+        except PermissionError:
+            print(f"Warning: Cannot create usecases directory {self.usecases_dir} - using existing directory")
+        
+        try:
+            self.custom_cases_dir.mkdir(parents=True, exist_ok=True)  # Create custom subfolder
+        except PermissionError:
+            print(f"Warning: Cannot create custom cases directory {self.custom_cases_dir} - using existing directory")
         
     def analyze_custom_case(
         self,
