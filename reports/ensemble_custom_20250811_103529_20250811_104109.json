@@ -1,0 +1,1533 @@
+{
+  "case_id": "custom_20250811_103529",
+  "case_title": "Medical Case from custom_20250811_103529.txt",
+  "case_description": {
+    "case_id": "custom_20250811_103529",
+    "title": "Medical Case from custom_20250811_103529.txt",
+    "patient_info": "",
+    "presentation": "A 45-year-old male presents to the emergency department with sudden onset chest pain that started 2 hours ago. The pain is described as crushing, substernal, and radiates to the left arm. He has been sweating profusely and feels nauseous. \n\nPast Medical History:\n- Hypertension (diagnosed 5 years ago, on amlodipine)\n- Type 2 Diabetes Mellitus (diagnosed 3 years ago, on metformin)\n- Hyperlipidemia (on atorvastatin)\n- 20 pack-year smoking history, quit 2 years ago\n\nPhysical Examination:\n- BP: 150/90 mmHg, HR: 95 bpm\n- Diaphoretic, appears anxious\n- Cardiovascular: Normal S1/S2, no murmurs\n- Lungs: Clear bilaterally\n\nInitial Tests:\n- ECG: ST elevation in leads II, III, and aVF\n- Troponin I: 0.8 ng/mL (elevated)",
+    "symptoms": [],
+    "history": null,
+    "physical_exam": null,
+    "labs": null,
+    "imaging": null
+  },
+  "analysis_timestamp": "2025-08-11T10:41:09.375731",
+  "models_queried": 13,
+  "models_responded": 11,
+  "model_responses": [
+    {
+      "model_name": "mistralai/mistral-7b-instruct:free",
+      "origin": "France",
+      "size": "7B",
+      "response": " {\n    \"primary_diagnosis\": {\n        \"name\": \"Acute coronary syndrome (ACS) - likely ST-elevation myocardial infarction (STEMI)\",\n        \"confidence\": 0.8,\n        \"icd_code\": \"I21.0\",\n        \"reasoning\": \"Sudden onset crushing chest pain, radiating to the left arm, diaphoresis, nausea, elevated troponin I, and ST elevation in ECG leads II, III, and aVF\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Aortic dissection\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"I70.0\",\n            \"reasoning\": \"Risk factors include hypertension and age over 60; however, the absence of aortic murmur and back pain tends to suggest other etiologies\"\n        },\n        {\n            \"name\": \"Pulmonary embolism\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"I26.0\",\n            \"reasoning\": \"Chest pain and shortness of breath may be present in pulmonary embolism; however, the clear lungs on auscultation and absence of pleuritic chest pain suggest a lower likelihood\"\n        },\n        {\n            \"name\": \"Pericarditis\",\n            \"confidence\": 0.1,\n            \"icd_code\": \"I30.9\",\n            \"reasoning\": \"While chest pain can be present in pericarditis, the lack of pericardial friction rub and normal ECG findings in the initial stages suggest it's less likely\"\n    }],\n    \"key_findings\": [\n        \"Sudden onset of chest pain\",\n        \"ST elevation in ECG leads II, III, and aVF\",\n        \"Elevated troponin I\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Serial troponin I measurements\",\n            \"purpose\": \"To confirm diagnosis and monitor response to treatment\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Echocardiogram\",\n            \"purpose\": \"To assess left ventricular function, wall motion, and valvular function\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"CT angiogram\",\n            \"purpose\": \"To rule out aortic dissection\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Oxygen therapy\",\n            \"Nitroglycerin sublingual administration\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Aspirin\",\n                \"dose\": \"325 mg\",\n                \"route\": \"PO\",\n                \"duration\": \"Long-term\",\n                \"rationale\": \"Loading dose to reduce platelet aggregation\"\n            },\n            {\n                \"drug\": \"Ticlopidine\",\n                \"dose\": \"500 mg BID\",\n                \"route\": \"PO\",\n                \"duration\": \"Long-term\",\n                \"rationale\": \"Additional antiplatelet therapy\"\n            },\n            {\n                \"drug\": \"Clopidogrel\",\n                \"dose\": \"600 mg loading dose, then 75 mg daily\",\n                \"route\": \"PO\",\n                \"duration\": \"Long-term\",\n                \"rationale\": \"Additional antiplatelet therapy\"\n            },\n            {\n                \"drug\": \"Morphine\",\n                \"dose\": \"2-4 mg IV\",\n                \"route\": \"IV\",\n                \"duration\": \"As needed for pain management\",\n                \"rationale\": \"For pain control\"\n            },\n            {\n                \"drug\": \"Beta-blocker\",\n                \"dose\": \"Metoprolol 5 mg IV over 2 minutes, followed by 50 mg every 5 minutes up to a maximum of 15 mg/min or 25 mg, then 50-100 mg PO BID\",\n                \"route\": \"IV, then PO\",\n                \"duration\": \"Long-term\",\n                \"rationale\": \"To reduce heart rate, myocardial oxygen demand, and infarct size\"\n            }\n        ],\n        \"monitoring\": [\n            \"ECG monitoring\",\n            \"Cardiac enzymes\",\n            \"Blood pressure, heart rate, respiratory rate, and oxygen saturation every hour\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Cardiology\",\n                \"urgency\": \"immediate\",\n                \"reason\": \"For further management and possible percutaneous coronary intervention or coronary artery bypass graft surgery\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Recurrent chest pain\",\n        \"Hypotension\",\n        \"Persistent ST-segment elevation\"\n    ],\n    \"patient_education\": [\n        \"Importance of taking all medications as prescribed\",\n        \"Signs of worsening condition and need for immediate medical attention\",\n        \"Lifestyle modifications for better heart health (diet, exercise, smoking cessation, and stress management)\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"Within 24-48 hours for re-evaluation\",\n        \"conditions\": \"Recurrent chest pain, persistent ST-segment elevation, or worsening heart function on echocardiogram\"\n    },\n    \"confidence_in_assessment\": 0.8,\n    \"uncertainties\": [\n        \"Possibility of other etiologies contributing to the chest pain\",\n        \"Presence of multi-vessel disease\"\n    ]\n}",
+      "error": null,
+      "timestamp": "2025-08-11T10:35:42.361739",
+      "tokens_used": 2600,
+      "input_tokens": 1169,
+      "output_tokens": 1431,
+      "latency": 13.062227010726929
+    },
+    {
+      "model_name": "google/gemma-2-9b-it:free",
+      "origin": "USA",
+      "size": "9B",
+      "response": "\n\n\n",
+      "error": null,
+      "timestamp": "2025-08-11T10:35:44.579647",
+      "tokens_used": 1041,
+      "input_tokens": 1039,
+      "output_tokens": 2,
+      "latency": 2.188187837600708
+    },
+    {
+      "model_name": "meta-llama/llama-3.2-3b-instruct:free",
+      "origin": "USA",
+      "size": "3B",
+      "response": "{\n    \"primary_diagnosis\": {\n        \"name\": \"Acute Coronary Syndrome (ACS)\",\n        \"confidence\": 0.9,\n        \"icd_code\": \"I21.0- I25.9\",\n        \"reasoning\": \"Clinical presentation of crushing substernal chest pain radiating to the left arm, ECG changes (ST elevation in leads II, III, and aVF), and elevated Troponin I levels suggest myocardial ischemia or infarction\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Pulmonary Embolism (PE)\",\n            \"confidence\": 0.5,\n            \"icd_code\": \"I00-I09\",\n            \"reasoning\": \"Chest pain and shortness of breath may occur in PE, but the absence of respiratory symptoms and clear lungs on physical examination make this less likely\"\n        },\n        {\n            \"name\": \"Gastrointestinal Bleeding\",\n            \"confidence\": 0.3,\n            \"icd_code\": \"K01-K84\",\n            \"reasoning\": \"Chest pain can be a symptom of upper GI bleeding, but the lack of abdominal pain and normal lung exam make this diagnosis less likely\"\n        },\n        {\n            \"name\": \"Costochondritis\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"M84-M89\",\n            \"reasoning\": \"Referred pain from the chest can mimic cardiac pain, but the presence of ECG changes and elevated troponin levels make this diagnosis less likely\"\n        }\n    ],\n    \"key_findings\": [\n        \"Crushing substernal chest pain radiating to the left arm\",\n        \"ECG changes (ST elevation in leads II, III, and aVF)\",\n        \"Elevated Troponin I levels\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"ECG\",\n            \"purpose\": \"To rule in/out cardiac ischemia or infarction\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Troponin I\",\n            \"purpose\": \"To rule in/out myocardial infarction\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Chest X-ray\",\n            \"purpose\": \"To rule in/out pulmonary embolism or other pulmonary causes of chest pain\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Oxygen therapy\",\n            \"Aspirin 81mg PO\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Aspirin\",\n                \"dose\": \"81mg PO\",\n                \"route\": \"PO\",\n                \"duration\": \"until symptoms resolve or until hospital admission\",\n                \"rationale\": \"For antiplatelet and analgesic effects\"\n            },\n            {\n                \"drug\": \"Nitroglycerin\",\n                \"dose\": \"0.4mg IV (vasodilation)\",\n                \"route\": \"IV\",\n                \"duration\": \"until symptoms resolve or until hospital admission\",\n                \"rationale\": \"For vasodilation and pain relief\"\n            }\n        ],\n        \"monitoring\": [\n            \"Vital signs (BP, HR, O2 saturation)\",\n            \"ECG monitoring\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Cardiology\",\n                \"urgency\": \"immediate\",\n                \"reason\": \"For further evaluation and management\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Hypertension uncontrolled\",\n        \"History of smoking\"\n    ],\n    \"patient_education\": [\n        \"Symptoms may worsen if not treated promptly\",\n        \"Follow-up appointment scheduled for [date]\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"Follow-up in 2 weeks\",\n        \"conditions\": \"Symptoms resolve or hospital admission required\"\n    },\n    \"confidence_in_assessment\": 0.9,\n    \"uncertainties\": [\n        \"No clear indication of myocardial infarction without further testing\",\n        \"Risk of pulmonary embolism despite normal lung exam\"\n    ]\n}",
+      "error": null,
+      "timestamp": "2025-08-11T10:35:51.333596",
+      "tokens_used": 2386,
+      "input_tokens": 1509,
+      "output_tokens": 877,
+      "latency": 6.720841884613037
+    },
+    {
+      "model_name": "qwen/qwen-2.5-coder-32b-instruct",
+      "origin": "China",
+      "size": "32B",
+      "response": "{\n    \"primary_diagnosis\": {\n        \"name\": \"Acute Myocardial Infarction (STEMI)\",\n        \"confidence\": 0.95,\n        \"icd_code\": \"I21.0\",\n        \"reasoning\": \"ST elevation in leads II, III, and aVF on ECG and elevated troponin I suggest an acute myocardial infarction.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Unstable Angina\",\n            \"confidence\": 0.03,\n            \"icd_code\": \"I20.0\",\n            \"reasoning\": \"Similar presentation but without ST elevation on ECG.\"\n        },\n        {\n            \"name\": \"Acute Pericarditis\",\n            \"confidence\": 0.01,\n            \"icd_code\": \"I31.0\",\n            \"reasoning\": \"Chest pain radiating to the left arm can occur in pericarditis, but pericarditis usually has a different ECG pattern and often presents with pericardial friction rub.\"\n        },\n        {\n            \"name\": \"Aortic Dissection\",\n            \"confidence\": 0.01,\n            \"icd_code\": \"I31.2\",\n            \"reasoning\": \"Chest pain can mimic myocardial infarction, but aortic dissection typically presents with sudden, tearing chest pain and often involves hypertension.\"\n        }\n    ],\n    \"key_findings\": [\n        \"ST elevation in leads II, III, and aVF on ECG\",\n        \"Elevated troponin I (0.8 ng/mL)\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Cardiac Catheterization\",\n            \"purpose\": \"To confirm the diagnosis and assess for coronary artery blockage\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Electrolyte Panel\",\n            \"purpose\": \"To rule out electrolyte imbalances that can affect cardiac function\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Complete Blood Count (CBC)\",\n            \"purpose\": \"To assess for anemia or other hematological abnormalities\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Administer aspirin 325 mg orally\",\n            \"Initiate heparin therapy\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Aspirin\",\n                \"dose\": \"325 mg\",\n                \"route\": \"PO\",\n                \"duration\": \"Indefinitely\",\n                \"rationale\": \"Antiplatelet therapy to prevent further thrombus formation\"\n            },\n            {\n                \"drug\": \"Morphine\",\n                \"dose\": \"4-8 mg IV\",\n                \"route\": \"IV\",\n                \"duration\": \"Reassess every 5-10 minutes\",\n                \"rationale\": \"For pain relief\"\n            },\n            {\n                \"drug\": \"Nitroglycerin\",\n                \"dose\": \"0.4 mg sublingually\",\n                \"route\": \"SL\",\n                \"duration\": \"Repeat every 5 minutes up to 3 doses\",\n                \"rationale\": \"To reduce preload and afterload\"\n            }\n        ],\n        \"monitoring\": [\n            \"Cardiac rhythm and vital signs\",\n            \"Every 5 minutes in acute phase\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Cardiology\",\n                \"urgency\": \"immediate\",\n                \"reason\": \"For further management and possible intervention\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Uncontrolled hypertension\",\n        \"Development of new ECG changes\"\n    ],\n    \"patient_education\": [\n        \"Recognize symptoms of heart attack and seek immediate medical attention\",\n        \"Avoid smoking and maintain a healthy lifestyle\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"Within 24-48 hours of hospital discharge\",\n        \"conditions\": \"Chest pain recurrence, shortness of breath, or new symptoms\"\n    },\n    \"confidence_in_assessment\": 0.95,\n    \"uncertainties\": [\n        \"Timing of thrombus formation since pain onset\",\n        \"Presence of any underlying coronary artery disease\"\n    ]\n}",
+      "error": null,
+      "timestamp": "2025-08-11T10:36:12.322985",
+      "tokens_used": 1886,
+      "input_tokens": 970,
+      "output_tokens": 916,
+      "latency": 20.973685264587402
+    },
+    {
+      "model_name": "google/gemini-2.0-flash-exp:free",
+      "origin": "USA",
+      "size": "Unknown",
+      "response": null,
+      "error": "API Error 429: {\"error\":{\"message\":\"Provider returned error\",\"code\":429,\"metadata\":{\"raw\":\"google/gemini-2.0-flash-exp:free is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations\",\"provider_name\":\"Google\"}},\"user_id\":\"user_311J1DE0saKoskawvWx8XZsOQ1N\"}",
+      "timestamp": "2025-08-11T10:36:13.520741",
+      "tokens_used": 0,
+      "input_tokens": 0,
+      "output_tokens": 0
+    },
+    {
+      "model_name": "openai/gpt-5",
+      "origin": "USA",
+      "size": "Unknown",
+      "response": null,
+      "error": "API Error 403: {\"error\":{\"message\":\"OpenAI is requiring a key to access this model, which you can add in https://openrouter.ai/settings/integrations - you can also switch to gpt-5-chat or gpt-5-mini.\",\"code\":403}}",
+      "timestamp": "2025-08-11T10:36:13.697401",
+      "tokens_used": 0,
+      "input_tokens": 0,
+      "output_tokens": 0
+    },
+    {
+      "model_name": "mistralai/mistral-small-3.2-24b-instruct",
+      "origin": "France",
+      "size": "24B",
+      "response": "```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"ST-Elevation Myocardial Infarction (STEMI)\",\n        \"confidence\": 0.9,\n        \"icd_code\": \"I21.09\",\n        \"reasoning\": \"Crushing substernal chest pain radiating to the left arm, diaphoresis, nausea, ST elevation in leads II, III, and aVF, and elevated troponin I are classic signs of STEMI.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Unstable Angina\",\n            \"confidence\": 0.05,\n            \"icd_code\": \"I20.0\",\n            \"reasoning\": \"Chest pain with similar symptoms but without ST elevation or elevated troponin.\"\n        },\n        {\n            \"name\": \"Acute Pericarditis\",\n            \"confidence\": 0.03,\n            \"icd_code\": \"I30.0\",\n            \"reasoning\": \"Can present with chest pain, but ECG typically shows diffuse ST elevation and PR depression, not isolated leads.\"\n        },\n        {\n            \"name\": \"Gastroesophageal Reflux Disease (GERD)\",\n            \"confidence\": 0.02,\n            \"icd_code\": \"K21.9\",\n            \"reasoning\": \"Chest pain can mimic cardiac symptoms, but lack of typical heartburn or response to antacids, along with ECG changes, makes this less likely.\"\n        }\n    ],\n    \"key_findings\": [\n        \"Crushing substernal chest pain radiating to the left arm\",\n        \"ST elevation in leads II, III, and aVF on ECG\",\n        \"Elevated troponin I\",\n        \"Diaphoresis and nausea\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Emergency cardiac catheterization\",\n            \"purpose\": \"Confirm coronary artery occlusion and provide reperfusion therapy\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Complete blood count (CBC)\",\n            \"purpose\": \"Rule out infection or anemia\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Basic metabolic panel (BMP)\",\n            \"purpose\": \"Assess renal function and electrolytes\",\n            \"priority\": \"urgent\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Administer aspirin 160-325 mg PO\",\n            \"Administer oxygen if hypoxic\",\n            \"Prepare for emergency cardiac catheterization\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Aspirin\",\n                \"dose\": \"81-325 mg\",\n                \"route\": \"PO\",\n                \"duration\": \"Lifelong\",\n                \"rationale\": \"Antiplatelet therapy to prevent further clot formation\"\n            },\n            {\n                \"drug\": \"Heparin\",\n                \"dose\": \"80 U/kg IV bolus, then 18 U/kg/h IV infusion\",\n                \"route\": \"IV\",\n                \"duration\": \"Until PCI or CABG\",\n                \"rationale\": \"Anticoagulation to prevent further clot propagation\"\n            },\n            {\n                \"drug\": \"Atorvastatin\",\n                \"dose\": \"40-80 mg\",\n                \"route\": \"PO\",\n                \"duration\": \"Lifelong\",\n                \"rationale\": \"High-intensity statin to stabilize atherosclerotic plaques\"\n            }\n        ],\n        \"monitoring\": [\n            \"Vital signs: Every 15 minutes initially\",\n            \"ECG: Continuous monitoring\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Interventional Cardiology\",\n                \"urgency\": \"immediate\",\n                \"reason\": \"Emergency coronary revascularization\"\n            },\n            {\n                \"specialty\": \"Intensivist\",\n                \"urgency\": \"immediate\",\n                \"reason\": \"Potential need for critical care\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Crushing chest pain radiating to the left arm\",\n        \"ST elevation on ECG\",\n        \"Elevated troponin I\",\n        \"History of hypertension, diabetes, and smoking\"\n    ],\n    \"patient_education\": [\n        \"Importance of compliance with antiplatelet and statin therapy\",\n        \"Lifestyle modifications (diet, exercise, smoking cessation)\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"Post-catheterization in 24-48 hours\",\n        \"conditions\": \"Recurrent chest pain, dyspnea, or hemodynamic instability\"\n    },\n    \"confidence_in_assessment\": 0.95,\n    \"uncertainties\": [\n        \"Exact coronary anatomy until cardiac catheterization is performed\",\n        \"Potential for other etiologies of chest pain if initial diagnosis is incorrect\"\n    ]\n}\n```",
+      "error": null,
+      "timestamp": "2025-08-11T10:36:29.594937",
+      "tokens_used": 2027,
+      "input_tokens": 976,
+      "output_tokens": 1051,
+      "latency": 15.879158973693848
+    },
+    {
+      "model_name": "google/gemma-3-27b-it",
+      "origin": "USA",
+      "size": "27B",
+      "response": "\n```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"ST-Elevation Myocardial Infarction (STEMI)\",\n        \"confidence\": 0.95,\n        \"icd_code\": \"I21.09\",\n        \"reasoning\": \"The patient presents with classic symptoms of a myocardial infarction (crushing chest pain radiating to the left arm, diaphoresis, nausea) and has diagnostic ECG findings (ST elevation in inferior leads II, III, aVF) along with elevated Troponin I levels. His risk factors (hypertension, diabetes, hyperlipidemia, smoking history) further support this diagnosis.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Unstable Angina\",\n            \"confidence\": 0.7,\n            \"icd_code\": \"I20.0\",\n            \"reasoning\": \"While the ECG shows ST elevation, a transient ST elevation or incomplete occlusion could present similarly initially. Elevated troponin helps differentiate from unstable angina.\"\n        },\n        {\n            \"name\": \"Pericarditis\",\n            \"confidence\": 0.4,\n            \"icd_code\": \"I30.1\",\n            \"reasoning\": \"Can cause chest pain, but the pain is typically pleuritic and positional, and ECG findings are usually diffuse ST elevation, rather than localized to inferior leads. Also, troponin elevation is less common in pericarditis.\"\n        },\n        {\n            \"name\": \"Esophageal Spasm\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"K22.8\",\n            \"reasoning\": \"Can mimic cardiac chest pain, but is usually associated with difficulty swallowing and is not typically associated with ST-segment elevation or troponin elevation.\"\n        }\n    ],\n    \"key_findings\": [\n        \"Crushing substernal chest pain radiating to the left arm\",\n        \"ST elevation in leads II, III, and aVF\",\n        \"Elevated Troponin I (0.8 ng/mL)\",\n        \"Diaphoresis and nausea\",\n        \"Risk factors: Hypertension, Diabetes, Hyperlipidemia, Smoking History\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Repeat Troponin I\",\n            \"purpose\": \"To assess the trend of troponin levels and confirm myocardial damage.\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Complete Blood Count (CBC)\",\n            \"purpose\": \"To rule out anemia or infection.\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Basic Metabolic Panel (BMP)\",\n            \"purpose\": \"To assess renal function and electrolytes.\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Coagulation Studies (PT/INR, aPTT)\",\n            \"purpose\": \"To assess bleeding risk prior to potential interventions.\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Chest X-ray\",\n            \"purpose\": \"To rule out other causes of chest pain (e.g., pneumothorax, aortic dissection).\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Establish IV access\",\n            \"Administer oxygen\",\n            \"Continuous ECG monitoring\",\n            \"Initiate cardiac catheterization protocol\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Aspirin\",\n                \"dose\": \"325 mg\",\n                \"route\": \"PO\",\n                \"duration\": \"Once\",\n                \"rationale\": \"Antiplatelet therapy to reduce thrombus formation\"\n            },\n            {\n                \"drug\": \"Nitroglycerin\",\n                \"dose\": \"0.4 mg sublingual\",\n                \"route\": \"SL\",\n                \"duration\": \"Every 5 minutes for up to 3 doses if BP stable\",\n                \"rationale\": \"Vasodilation to improve blood flow and reduce chest pain\"\n            },\n            {\n                \"drug\": \"Morphine\",\n                \"dose\": \"2-4 mg IV\",\n                \"route\": \"IV\",\n                \"duration\": \"As needed for pain\",\n                \"rationale\": \"Pain relief\"\n            },\n            {\n                \"drug\": \"Heparin\",\n                \"dose\": \"60-100 U/kg IV bolus followed by infusion\",\n                \"route\": \"IV\",\n                \"duration\": \"Adjusted based on aPTT\",\n                \"rationale\": \"Anticoagulation to prevent further thrombus formation\"\n            }\n        ],\n        \"monitoring\": [\n            \"Vital signs (BP, HR, RR, SpO2)\",\n            \"ECG\",\n            \"Troponin levels\",\n            \"Level of consciousness\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Cardiology\",\n                \"urgency\": \"immediate\",\n                \"reason\": \"For urgent cardiac catheterization and potential percutaneous coronary intervention (PCI).\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Hypotension\",\n        \"Arrhythmias\",\n        \"Worsening chest pain\",\n        \"Respiratory distress\"\n    ],\n    \"patient_education\": [\n        \"Explain the diagnosis and treatment plan clearly.\",\n        \"Emphasize the importance of medication adherence.\",\n        \"Discuss lifestyle modifications (diet, exercise, smoking cessation).\",\n        \"Educate about warning signs of worsening cardiac condition.\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"Within 7-10 days after discharge\",\n        \"conditions\": \"Chest pain recurrence, shortness of breath, palpitations, or any symptoms suggestive of cardiac ischemia require immediate medical attention.\"\n    },\n    \"confidence_in_assessment\": 0.9,\n    \"uncertainties\": [\n        \"Exact extent of myocardial damage\",\n        \"Presence of any underlying coronary artery disease beyond the acute occlusion\"\n    ]\n}\n```",
+      "error": null,
+      "timestamp": "2025-08-11T10:36:51.666326",
+      "tokens_used": 2400,
+      "input_tokens": 1041,
+      "output_tokens": 1359,
+      "latency": 22.05983281135559
+    },
+    {
+      "model_name": "anthropic/claude-opus-4.1",
+      "origin": "USA",
+      "size": "Unknown",
+      "response": "{\n    \"primary_diagnosis\": {\n        \"name\": \"ST-Elevation Myocardial Infarction (STEMI) - Inferior Wall\",\n        \"confidence\": 0.95,\n        \"icd_code\": \"I21.19\",\n        \"reasoning\": \"Classic presentation with crushing chest pain, radiation to left arm, diaphoresis, ST elevation in inferior leads (II, III, aVF), elevated troponin, and multiple cardiac risk factors\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Unstable Angina\",\n            \"confidence\": 0.15,\n            \"icd_code\": \"I20.0\",\n            \"reasoning\": \"Similar presentation but would not show ST elevation or significant troponin elevation\"\n        },\n        {\n            \"name\": \"Aortic Dissection\",\n            \"confidence\": 0.10,\n            \"icd_code\": \"I71.00\",\n            \"reasoning\": \"Can present with severe chest pain and cardiac involvement, but ECG findings make MI more likely\"\n        },\n        {\n            \"name\": \"Pericarditis\",\n            \"confidence\": 0.05,\n            \"icd_code\": \"I30.9\",\n            \"reasoning\": \"Can cause chest pain and ECG changes, but ST elevation would be more diffuse, not localized to inferior leads\"\n        }\n    ],\n    \"key_findings\": [\n        \"ST elevation in inferior leads (II, III, aVF)\",\n        \"Elevated troponin I at 0.8 ng/mL\",\n        \"Crushing substernal chest pain with left arm radiation\",\n        \"Multiple cardiac risk factors (HTN, DM, hyperlipidemia, smoking history)\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Cardiac catheterization\",\n            \"purpose\": \"Identify culprit vessel and perform percutaneous coronary intervention\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Serial troponin levels\",\n            \"purpose\": \"Monitor myocardial injury progression\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Echocardiogram\",\n            \"purpose\": \"Assess wall motion abnormalities and ejection fraction\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Chest X-ray\",\n            \"purpose\": \"Rule out pulmonary edema and other complications\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Complete blood count\",\n            \"purpose\": \"Baseline assessment before antiplatelet therapy\",\n            \"priority\": \"urgent\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Activate cardiac catheterization lab for primary PCI\",\n            \"Continuous cardiac monitoring\",\n            \"IV access x2 large bore\",\n            \"Oxygen if SpO2 <90%\",\n            \"12-lead ECG every 30 minutes initially\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Aspirin\",\n                \"dose\": \"325 mg\",\n                \"route\": \"PO\",\n                \"duration\": \"STAT, then 81 mg daily\",\n                \"rationale\": \"Antiplatelet therapy to prevent thrombus extension\"\n            },\n            {\n                \"drug\": \"Ticagrelor\",\n                \"dose\": \"180 mg\",\n                \"route\": \"PO\",\n                \"duration\": \"Loading dose, then 90 mg BID\",\n                \"rationale\": \"P2Y12 inhibitor for dual antiplatelet therapy\"\n            },\n            {\n                \"drug\": \"Heparin\",\n                \"dose\": \"60 units/kg bolus (max 4000 units)\",\n                \"route\": \"IV\",\n                \"duration\": \"Continuous infusion per protocol\",\n                \"rationale\": \"Anticoagulation to prevent thrombus propagation\"\n            },\n            {\n                \"drug\": \"Metoprolol\",\n                \"dose\": \"25 mg\",\n                \"route\": \"PO\",\n                \"duration\": \"BID\",\n                \"rationale\": \"Beta-blocker to reduce myocardial oxygen demand\"\n            },\n            {\n                \"drug\": \"Morphine\",\n                \"dose\": \"2-4 mg\",\n                \"route\": \"IV\",\n                \"duration\": \"PRN for pain\",\n                \"rationale\": \"Pain relief and anxiety reduction\"\n            },\n            {\n                \"drug\": \"Nitroglycerin\",\n                \"dose\": \"0.4 mg\",\n                \"route\": \"SL\",\n                \"duration\": \"q5min x3 PRN\",\n                \"rationale\": \"Vasodilation and symptom relief\"\n            }\n        ],\n        \"monitoring\": [\n            \"Continuous telemetry monitoring\",\n            \"Vital signs every 15 minutes initially\",\n            \"Serial ECGs every 30 minutes for first 2 hours\",\n            \"Serial troponin levels at 3, 6, and 12 hours\",\n            \"Monitor for signs of heart failure or cardiogenic shock\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Interventional Cardiology\",\n                \"urgency\": \"immediate\",\n                \"reason\": \"Primary PCI for STEMI within 90 minutes of presentation\"\n            },\n            {\n                \"specialty\": \"Cardiology\",\n                \"urgency\": \"immediate\",\n                \"reason\": \"Ongoing management and risk stratification\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Hypotension or signs of cardiogenic shock\",\n        \"New heart failure symptoms (pulmonary edema, dyspnea)\",\n        \"Ventricular arrhythmias\",\n        \"Mechanical complications (papillary muscle rupture, VSD)\",\n        \"Recurrent chest pain despite treatment\"\n    ],\n    \"patient_education\": [\n        \"Importance of medication compliance post-discharge\",\n        \"Cardiac rehabilitation program enrollment\",\n        \"Lifestyle modifications including diet and exercise\",\n        \"Recognition of warning signs requiring immediate medical attention\",\n        \"Smoking cessation resources and support\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"Cardiology follow-up within 1-2 weeks post-discharge\",\n        \"conditions\": \"Return immediately for chest pain, shortness of breath, palpitations, syncope, or signs of bleeding\"\n    },\n    \"confidence_in_assessment\": 0.95,\n    \"uncertainties\": [\n        \"Exact coronary anatomy and culprit vessel (likely RCA given inferior STEMI)\",\n        \"Presence of multivessel disease requiring staged PCI or CABG\"\n    ]\n}",
+      "error": null,
+      "timestamp": "2025-08-11T10:37:23.594278",
+      "tokens_used": 2704,
+      "input_tokens": 1077,
+      "output_tokens": 1627,
+      "latency": 31.902485132217407
+    },
+    {
+      "model_name": "anthropic/claude-sonnet-4",
+      "origin": "USA",
+      "size": "Unknown",
+      "response": "{\n    \"primary_diagnosis\": {\n        \"name\": \"ST-elevation myocardial infarction (STEMI) - inferior wall\",\n        \"confidence\": 0.95,\n        \"icd_code\": \"I21.19\",\n        \"reasoning\": \"Classic presentation with crushing chest pain radiating to left arm, ST elevations in inferior leads (II, III, aVF), elevated troponin, and multiple cardiovascular risk factors\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Non-ST elevation myocardial infarction (NSTEMI)\",\n            \"confidence\": 0.05,\n            \"icd_code\": \"I21.9\",\n            \"reasoning\": \"Elevated troponin with chest pain, but ECG clearly shows ST elevations making STEMI more likely\"\n        },\n        {\n            \"name\": \"Unstable angina\",\n            \"confidence\": 0.02,\n            \"icd_code\": \"I20.0\",\n            \"reasoning\": \"Chest pain pattern fits, but elevated troponin and ST elevations indicate myocardial necrosis\"\n        },\n        {\n            \"name\": \"Acute pericarditis\",\n            \"confidence\": 0.01,\n            \"icd_code\": \"I30.9\",\n            \"reasoning\": \"Can cause chest pain and ECG changes, but ST elevations are localized to inferior leads and troponin elevation supports MI\"\n        }\n    ],\n    \"key_findings\": [\n        \"ST elevation in inferior leads (II, III, aVF)\",\n        \"Elevated troponin I (0.8 ng/mL)\",\n        \"Classic crushing substernal chest pain with left arm radiation\",\n        \"Multiple cardiovascular risk factors (HTN, DM, hyperlipidemia, smoking history)\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Serial 12-lead ECGs\",\n            \"purpose\": \"Monitor ST elevation evolution and identify new changes\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Chest X-ray\",\n            \"purpose\": \"Assess for pulmonary edema or other complications\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Complete metabolic panel\",\n            \"purpose\": \"Assess electrolytes, kidney function for contrast exposure\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"PT/PTT/INR\",\n            \"purpose\": \"Baseline coagulation before anticoagulation therapy\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Echocardiogram\",\n            \"purpose\": \"Assess wall motion abnormalities and ejection fraction\",\n            \"priority\": \"urgent\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Activate cardiac catheterization lab for emergency PCI\",\n            \"Establish IV access and continuous cardiac monitoring\",\n            \"Administer oxygen if SpO2 <90%\",\n            \"Obtain informed consent for PCI\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Aspirin\",\n                \"dose\": \"325 mg\",\n                \"route\": \"PO\",\n                \"duration\": \"Chewed immediately, then daily\",\n                \"rationale\": \"Antiplatelet therapy for acute MI\"\n            },\n            {\n                \"drug\": \"Clopidogrel\",\n                \"dose\": \"600 mg loading dose\",\n                \"route\": \"PO\",\n                \"duration\": \"Then 75 mg daily\",\n                \"rationale\": \"Dual antiplatelet therapy\"\n            },\n            {\n                \"drug\": \"Atorvastatin\",\n                \"dose\": \"80 mg\",\n                \"route\": \"PO\",\n                \"duration\": \"Daily\",\n                \"rationale\": \"High-intensity statin therapy post-MI\"\n            },\n            {\n                \"drug\": \"Metoprolol\",\n                \"dose\": \"25 mg\",\n                \"route\": \"PO\",\n                \"duration\": \"Twice daily, titrate as tolerated\",\n                \"rationale\": \"Beta-blocker for cardioprotection\"\n            },\n            {\n                \"drug\": \"Heparin\",\n                \"dose\": \"Weight-based protocol\",\n                \"route\": \"IV\",\n                \"duration\": \"During PCI procedure\",\n                \"rationale\": \"Anticoagulation for PCI\"\n            }\n        ],\n        \"monitoring\": [\n            \"Continuous cardiac monitoring for arrhythmias\",\n            \"Serial troponins every 8 hours\",\n            \"Blood pressure and heart rate every 15 minutes initially\",\n            \"Neurological checks if receiving thrombolytics\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Interventional Cardiology\",\n                \"urgency\": \"immediate\",\n                \"reason\": \"Emergency PCI for STEMI - door to balloon time <90 minutes\"\n            },\n            {\n                \"specialty\": \"Endocrinology\",\n                \"urgency\": \"routine\",\n                \"reason\": \"Diabetes management optimization post-MI\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Development of cardiogenic shock\",\n        \"New heart murmur suggesting papillary muscle rupture\",\n        \"Sudden worsening chest pain suggesting reinfarction\",\n        \"Signs of mechanical complications (VSD, free wall rupture)\"\n    ],\n    \"patient_education\": [\n        \"Importance of immediate treatment to minimize heart muscle damage\",\n        \"Need for lifelong medications and lifestyle modifications\",\n        \"Cardiac rehabilitation participation\",\n        \"Warning signs requiring immediate medical attention\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"Cardiology follow-up within 1-2 weeks post-discharge\",\n        \"conditions\": \"Return immediately for chest pain, shortness of breath, palpitations, or syncope\"\n    },\n    \"confidence_in_assessment\": 0.95,\n    \"uncertainties\": [\n        \"Exact culprit vessel location without angiography\",\n        \"Presence of multivessel disease\",\n        \"Degree of myocardial salvage possible with intervention\"\n    ]\n}",
+      "error": null,
+      "timestamp": "2025-08-11T10:37:46.931193",
+      "tokens_used": 2577,
+      "input_tokens": 1077,
+      "output_tokens": 1500,
+      "latency": 23.303956985473633
+    },
+    {
+      "model_name": "google/gemini-2.5-pro",
+      "origin": "USA",
+      "size": "Unknown",
+      "response": "**Assessing the Details**\n\nI'm currently reviewing the patient's presentation, focusing on the sudden onset of chest pain in a 45-year-old male, which appeared two hours ago. I'll next delve into the other critical factors.\n\n\n**Defining the Parameters**\n\nI've identified the patient's age, chief complaint of chest pain, the radiation pattern, and associated symptoms, as well as their past medical history of hypertension, diabetes, and hyperlipidemia, along with a smoking history. I'm now organizing these risk factors.\n\n\n**Refining the Diagnosis**\n\nI've now solidified the primary diagnosis as an acute inferior wall STEMI (ICD-10 code: I21.19) based on all available data. The reasoning, confidence level, and the specific ICD-10 code have been clearly stated. I'm also incorporating differential diagnoses like aortic dissection, pulmonary embolism, and pericarditis and explaining why they're less likely in this context, while including appropriate ICD-10 codes for each.\n\n\n**Creating the Structure**\n\nI'm now focused on structuring the output as a JSON object, ensuring that it includes patient details, the primary diagnosis, differential diagnoses with reasoning, key findings, and a plan for diagnostic tests, and I'm making sure it's well-organized and complete.\n\n\n**Finalizing the Assessment**\n\nI'm now synthesizing all the details. I'm putting together the diagnostic assessment, including the patient's details, the confirmed diagnosis, differential diagnoses with explanations, key findings, the diagnostic and therapeutic plan, and organizing it into a JSON format ready for use.\n\n\n**Forming the Structure**\n\nI'm now organizing all the key components, including patient specifics, diagnoses, differential considerations with justifications, salient findings, and a detailed plan for tests and treatments. My goal is to arrange everything neatly within a JSON structure.\n\n\n**Synthesizing the Findings**\n\nI'm now ready to create the JSON object, which will combine all of my previous assessments. I will integrate the patient details, confirm the diagnosis, provide differential considerations, present key findings, detail the diagnostic and therapeutic plan, and ensure its well-formatted.\n\n\n**Compiling the Information**\n\nI'm now translating the detailed clinical scenario, including patient specifics, findings, diagnoses, and plans, into the prescribed JSON format, ensuring accurate representation and compliance.\n\n\n**Structuring the JSON**\n\nI'm focused on building the JSON object that encapsulates all findings: patient details, primary and differential diagnoses with reasoning and ICD-10 codes, key findings, the management plan, and a concise follow-up plan. The structure will be complete and correct.\n\n\n\n\n---\n\n```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"Acute Inferior Wall ST-Elevation Myocardial Infarction (STEMI)\",\n        \"confidence\": 0.99,\n        \"icd_code\": \"I21.19\",\n        \"reasoning\": \"The patient presents with classic ischemic chest pain (crushing, substernal, radiating), diaphoresis, and significant cardiovascular risk factors. The diagnosis is confirmed by the specific ECG findings of ST elevation in the inferior leads (II, III, aVF) and an elevated cardiac biomarker (Troponin I).\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Aortic Dissection\",\n            \"confidence\": 0.05,\n            \"icd_code\": \"I71.01\",\n            \"reasoning\": \"Presents with sudden, severe chest pain. However, the pain is often described as 'tearing' and may radiate to the back. The focal ST elevations are highly specific for MI, making dissection much less likely.\"\n        },\n        {\n            \"name\": \"Pulmonary Embolism\",\n            \"confidence\": 0.05,\n            \"icd_code\": \"I26.99\",\n            \"reasoning\": \"Can cause acute chest pain and tachycardia. However, the pain is typically pleuritic, and ECG changes are usually non-specific or show right heart strain (S1Q3T3), not focal ST elevation in an arterial territory.\"\n        },\n        {\n            \"name\": \"Acute Pericarditis\",\n            \"confidence\": 0.02,\n            \"icd_code\": \"I30.9\",\n            \"reasoning\": \"Causes chest pain and can have ST elevation. However, the pain is typically sharp, pleuritic, and relieved by leaning forward. The ECG changes are characteristically diffuse across multiple leads, often with PR depression, unlike the localized pattern seen here.\"\n        }\n    ],\n    \"key_findings\": [\n        \"Crushing, substernal chest pain radiating to the left arm\",\n        \"ST elevation in ECG leads II, III, and aVF\",\n        \"Elevated Troponin I (0.8 ng/mL)\",\n        \"Diaphoresis and anxiety on presentation\",\n        \"Multiple cardiovascular risk factors (HTN, T2DM, hyperlipidemia, smoking history)\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Emergent Coronary Angiography\",\n            \"purpose\": \"To visualize the occluded coronary artery (likely RCA or LCx) and perform percutaneous coronary intervention (PCI) to restore blood flow. This is both diagnostic and therapeutic.\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Right-sided ECG (lead V4R)\",\n            \"purpose\": \"To assess for right ventricular infarction, which is common with inferior STEMI and has implications for management (e.g., preload dependency, caution with nitrates).\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Bedside Echocardiogram\",\n            \"purpose\": \"To assess for inferior wall motion abnormalities, evaluate overall left and right ventricular function, and rule out acute mechanical complications.\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Complete Blood Count (CBC), Comprehensive Metabolic Panel (CMP), Coagulation Panel (PT/INR, aPTT)\",\n            \"purpose\": \"To establish baseline values for hemoglobin/platelets, electrolytes/renal function, and coagulation status prior to anticoagulation and PCI.\",\n            \"priority\": \"immediate\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Activate cardiac catheterization lab for emergent PCI (goal: door-to-balloon time < 90 minutes).\",\n            \"Establish two large-bore IV lines.\",\n            \"Provide supplemental oxygen only if SpO2 < 90%.\",\n            \"Administer medications as listed below.\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Aspirin\",\n                \"dose\": \"324 mg (4 x 81 mg)\",\n                \"route\": \"PO (chewed)\",\n                \"duration\": \"Once, then daily maintenance dose\",\n                \"rationale\": \"Inhibits platelet aggregation, reduces mortality in ACS.\"\n            },\n            {\n                \"drug\": \"Ticagrelor\",\n                \"dose\": \"180 mg loading dose\",\n                \"route\": \"PO\",\n                \"duration\": \"Once, then maintenance dose\",\n                \"rationale\": \"P2Y12 inhibitor for dual antiplatelet therapy, standard of care in STEMI.\"\n            },\n            {\n                \"drug\": \"Heparin\",\n                \"dose\": \"60 units/kg IV bolus, followed by 12 units/kg/hr infusion\",\n                \"route\": \"IV\",\n                \"duration\": \"Until revascularization\",\n                \"rationale\": \"Anticoagulation to prevent thrombus propagation.\"\n            },\n            {\n                \"drug\": \"Atorvastatin\",\n                \"dose\": \"80 mg\",\n                \"route\": \"PO\",\n                \"duration\": \"Once, then daily\",\n                \"rationale\": \"High-intensity statin therapy improves outcomes in ACS, regardless of baseline cholesterol.\"\n            },\n            {\n                \"drug\": \"Nitroglycerin\",\n                \"dose\": \"0.4 mg\",\n                \"route\": \"SL\",\n                \"duration\": \"Every 5 min x3 PRN for chest pain, if SBP > 90 mmHg\",\n                \"rationale\": \"Vasodilator for pain relief; use with caution in inferior MI due to risk of hypotension.\"\n            }\n        ],\n        \"monitoring\": [\n            \"Continuous cardiac monitoring for arrhythmias (e.g., bradycardia, heart block, ventricular tachycardia).\",\n            \"Frequent vital signs (every 15 minutes initially).\",\n            \"Serial ECGs to monitor for evolution or changes.\",\n            \"Assess for signs of heart failure (e.g., rales, JVD) or cardiogenic shock.\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Interventional Cardiology\",\n                \"urgency\": \"immediate\",\n                \"reason\": \"For emergent revascularization via PCI, which is the primary treatment for STEMI.\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"ST elevation on ECG, indicating a time-sensitive coronary occlusion.\",\n        \"Elevated troponin, confirming myocardial cell death.\",\n        \"Ongoing crushing chest pain, indicating persistent ischemia.\",\n        \"Potential for hemodynamic compromise (hypotension, bradycardia) associated with inferior MI.\"\n    ],\n    \"patient_education\": [\n        \"You are having a heart attack. This means a blood clot has blocked an artery supplying blood to your heart muscle.\",\n        \"We need to perform an urgent procedure called a cardiac catheterization to find and open the blocked artery. This is the best way to save the heart muscle.\",\n        \"You will be given several medications to thin your blood and help your heart.\",\n        \"After the procedure and recovery, we will discuss long-term lifestyle changes and medications to prevent this from happening again.\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"With a cardiologist within 1 week of hospital discharge.\",\n        \"conditions\": \"Return to the emergency department immediately for any recurrent chest pain, severe shortness of breath, fainting, or new weakness.\"\n    },\n    \"confidence_in_assessment\": 0.99,\n    \"uncertainties\": [\n        \"The specific occluded coronary artery (Right Coronary Artery vs. Left Circumflex Artery), which will be determined by angiography.\",\n        \"The presence and extent of right ventricular (RV) involvement, which impacts hemodynamic management.\",\n        \"The patient's baseline left ventricular ejection fraction and the degree of permanent myocardial damage.\"\n    ]\n}\n```",
+      "error": null,
+      "timestamp": "2025-08-11T10:38:25.962488",
+      "tokens_used": 5004,
+      "input_tokens": 1030,
+      "output_tokens": 3974,
+      "latency": 38.998552083969116
+    },
+    {
+      "model_name": "google/gemini-2.5-flash",
+      "origin": "USA",
+      "size": "Unknown",
+      "response": "```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"ST-Elevation Myocardial Infarction (STEMI)\",\n        \"confidence\": 0.98,\n        \"icd_code\": \"I21.0\",\n        \"reasoning\": \"Classic presentation with crushing substernal chest pain radiating to the left arm, profuse sweating, nausea, and significant cardiovascular risk factors (hypertension, diabetes, hyperlipidemia, smoking history). ECG shows ST elevation in inferior leads (II, III, aVF), and troponin I is elevated, all highly indicative of acute myocardial infarction.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Unstable Angina\",\n            \"confidence\": 0.05,\n            \"icd_code\": \"I20.0\",\n            \"reasoning\": \"While chest pain is present, the presence of ST elevation on ECG and elevated troponin rules out unstable angina as the primary diagnosis. It would be considered if troponin was negative and ECG changes were non-specific or absent.\"\n        },\n        {\n            \"name\": \"Aortic Dissection\",\n            \"confidence\": 0.02,\n            \"icd_code\": \"I71.0\",\n            \"reasoning\": \"Can present with sudden severe chest pain and hypertension. However, the pain is typically described as tearing or ripping, and ECG findings (ST elevation) and elevated troponin are not typical for isolated aortic dissection. No signs of pulse deficits or widened mediastinum.\"\n        },\n        {\n            \"name\": \"Pericarditis\",\n            \"confidence\": 0.01,\n            \"icd_code\": \"I30.9\",\n            \"reasoning\": \"Can cause chest pain, but it's often pleuritic and relieved by leaning forward. ECG changes in pericarditis typically involve diffuse ST elevation with PR depression, not localized ST elevation in specific leads. Troponin elevation can occur but is usually milder and due to myopericarditis.\"\n        },\n        {\n            \"name\": \"Pulmonary Embolism (PE)\",\n            \"confidence\": 0.01,\n            \"icd_code\": \"I26.99\",\n            \"reasoning\": \"Can cause sudden chest pain and dyspnea, but the pain is typically pleuritic. ECG findings in PE (e.g., S1Q3T3 pattern, right heart strain) are different from the observed ST elevation. Troponin can be elevated in severe PE due to right ventricular strain, but not to the extent seen in MI, and the primary symptoms and ECG are inconsistent.\"\n        }\n    ],\n    \"key_findings\": [\n        \"Sudden onset crushing substernal chest pain radiating to left arm\",\n        \"ST elevation in leads II, III, and aVF on ECG\",\n        \"Elevated Troponin I (0.8 ng/mL)\",\n        \"History of hypertension, type 2 diabetes, hyperlipidemia, and 20 pack-year smoking history\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Repeat ECG\",\n            \"purpose\": \"Monitor evolution of ST segment changes and arrhythmias\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Cardiac Enzymes (Troponin I/T, CK-MB)\",\n            \"purpose\": \"Confirm myocardial injury and assess peak/trend\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Complete Blood Count (CBC)\",\n            \"purpose\": \"Assess for anemia, infection, and platelet count\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Basic Metabolic Panel (BMP)\",\n            \"purpose\": \"Assess renal function, electrolytes, and glucose\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Coagulation Panel (PT/INR, PTT)\",\n            \"purpose\": \"Assess baseline coagulation status prior to antithrombotic therapy\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Chest X-ray (CXR)\",\n            \"purpose\": \"Rule out other causes of chest pain (e.g., pneumothorax, aortic dissection, pulmonary edema)\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Echocardiogram\",\n            \"purpose\": \"Assess left ventricular function, wall motion abnormalities, and rule out structural heart disease\",\n            \"priority\": \"urgent\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Activate STEMI protocol/Cardiac Catheterization Lab\",\n            \"Establish IV access (2 large bore IVs)\",\n            \"Continuous cardiac monitoring\",\n            \"Oxygen supplementation (if SpO2 < 90% or respiratory distress)\",\n            \"Pain management\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Aspirin\",\n                \"dose\": \"325 mg\",\n                \"route\": \"PO (chewed)\",\n                \"duration\": \"Single dose initially, then 81 mg daily indefinitely\",\n                \"rationale\": \"Antiplatelet therapy to inhibit thrombus formation\"\n            },\n            {\n                \"drug\": \"Ticagrelor\",\n                \"dose\": \"180 mg\",\n                \"route\": \"PO\",\n                \"duration\": \"Single loading dose, then 90 mg BID for 12 months post-PCI\",\n                \"rationale\": \"P2Y12 inhibitor for dual antiplatelet therapy to prevent stent thrombosis and recurrent MI\"\n            },\n            {\n                \"drug\": \"Nitroglycerin\",\n                \"dose\": \"0.4 mg\",\n                \"route\": \"SL (sublingual)\",\n                \"duration\": \"Every 5 minutes, up to 3 doses (if BP allows)\",\n                \"rationale\": \"Vasodilator for chest pain relief and reduction of preload/afterload\"\n            },\n            {\n                \"drug\": \"Morphine Sulfate\",\n                \"dose\": \"2-4 mg\",\n                \"route\": \"IV\",\n                \"duration\": \"Titrated as needed for pain\",\n                \"rationale\": \"Analgesia, anxiolysis, and venodilation (if nitroglycerin ineffective and BP allows)\"\n            },\n            {\n                \"drug\": \"Unfractionated Heparin (UFH) or Enoxaparin\",\n                \"dose\": \"UFH: Bolus 60 units/kg (max 4000 units), then infusion 12 units/kg/hr (max 1000 units/hr); Enoxaparin: 1 mg/kg SC BID\",\n                \"route\": \"IV (UFH), SC (Enoxaparin)\",\n                \"duration\": \"During PCI and post-PCI as indicated\",\n                \"rationale\": \"Anticoagulation to prevent thrombus propagation and facilitate revascularization\"\n            },\n            {\n                \"drug\": \"Metoprolol\",\n                \"dose\": \"5 mg\",\n                \"route\": \"IV (if stable and no contraindications)\",\n                \"duration\": \"Repeat every 5-10 mins for total 15 mg, then convert to oral\",\n                \"rationale\": \"Beta-blockade to reduce myocardial oxygen demand, heart rate, and prevent arrhythmias\"\n            },\n            {\n                \"drug\": \"Atorvastatin\",\n                \"dose\": \"80 mg\",\n                \"route\": \"PO\",\n                \"duration\": \"Daily, indefinitely\",\n                \"rationale\": \"High-intensity statin therapy for lipid lowering and plaque stabilization\"\n            }\n        ],\n        \"monitoring\": [\n            \"Continuous ECG monitoring for arrhythmias and ST segment changes\",\n            \"Vital signs (BP, HR, RR, SpO2) every 5-15 minutes initially, then hourly\",\n            \"Pain scale assessment\",\n            \"Input/Output (I&O)\",\n            \"Neurological status (especially if sedated or with reperfusion)\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Cardiology/Interventional Cardiology\",\n                \"urgency\": \"immediate\",\n                \"reason\": \"For urgent primary percutaneous coronary intervention (PCI) or thrombolysis, and ongoing management of STEMI\"\n            },\n            {\n                \"specialty\": \"Cardiac Surgery\",\n                \"urgency\": \"urgent\",\n                \"reason\": \"Consider if PCI fails, anatomy unsuitable for PCI, or mechanical complications develop (e.g., VSD, mitral regurgitation)\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Persistent chest pain despite initial therapy\",\n        \"Development of cardiogenic shock (hypotension, signs of hypoperfusion)\",\n        \"New or worsening heart failure symptoms (e.g., dyspnea, crackles)\",\n        \"New arrhythmias (e.g., ventricular tachycardia/fibrillation, complete heart block)\",\n        \"Mechanical complications (e.g., new murmur indicating VSD or papillary muscle rupture)\",\n        \"Bleeding complications from antithrombotic therapy\"\n    ],\n    \"patient_education\": [\n        \"Explanation of STEMI, its causes, and the need for urgent treatment (PCI)\",\n        \"Importance of medication adherence (antiplatelets, statins, beta-blockers, ACE inhibitors)\",\n        \"Lifestyle modifications: smoking cessation, healthy diet, regular exercise, weight management, diabetes and blood pressure control\",\n        \"Recognition of recurrent symptoms and when to seek immediate medical attention\",\n        \"Cardiac rehabilitation program enrollment\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"Regular follow-up with cardiology team post-discharge (e.g., 1-2 weeks, then monthly/quarterly as needed)\",\n        \"conditions\": \"Recurrence of chest pain, shortness of breath, palpitations, swelling in legs, signs of bleeding, or any new concerning symptoms.\"\n    },\n    \"confidence_in_assessment\": 0.99,\n    \"uncertainties\": [\n        \"Exact time of symptom onset (patient reported 2 hours, but could be longer or shorter)\",\n        \"Presence of any contraindications to specific medications (e.g., severe renal impairment for enoxaparin)\",\n        \"Patient's baseline cardiac function prior to this event\",\n        \"Specific coronary artery involved (will be determined by angiography)\"\n    ]\n}\n```",
+      "error": null,
+      "timestamp": "2025-08-11T10:38:38.343347",
+      "tokens_used": 3350,
+      "input_tokens": 1030,
+      "output_tokens": 2320,
+      "latency": 12.354753017425537
+    },
+    {
+      "model_name": "x-ai/grok-4",
+      "origin": "USA",
+      "size": "Unknown",
+      "response": "{\n    \"primary_diagnosis\": {\n        \"name\": \"ST-Elevation Myocardial Infarction (STEMI), Inferior Wall\",\n        \"confidence\": 0.95,\n        \"icd_code\": \"I21.19\",\n        \"reasoning\": \"Classic presentation of sudden crushing substernal chest pain radiating to left arm, with diaphoresis and nausea, in a patient with multiple risk factors (hypertension, diabetes, hyperlipidemia, smoking history). ECG shows ST elevation in inferior leads (II, III, aVF) and elevated troponin confirms myocardial injury.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Aortic Dissection\",\n            \"confidence\": 0.1,\n            \"icd_code\": \"I71.00\",\n            \"reasoning\": \"Can present with severe chest pain radiating to arm, but less likely due to specific ECG changes and troponin elevation pointing to MI; considered in hypertensive patients.\"\n        },\n        {\n            \"name\": \"Pulmonary Embolism\",\n            \"confidence\": 0.05,\n            \"icd_code\": \"I26.99\",\n            \"reasoning\": \"May cause chest pain and diaphoresis, but ECG typically shows right heart strain rather than inferior ST elevation; low likelihood without respiratory symptoms or risk factors like immobility.\"\n        },\n        {\n            \"name\": \"Acute Pericarditis\",\n            \"confidence\": 0.1,\n            \"icd_code\": \"I30.9\",\n            \"reasoning\": \"Can cause diffuse ST elevation and chest pain, but pain is usually pleuritic/positional, and troponin elevation is milder; considered due to ECG changes but mismatched symptom description.\"\n        }\n    ],\n    \"key_findings\": [\n        \"Sudden onset crushing substernal chest pain radiating to left arm with diaphoresis and nausea\",\n        \"ST elevation in ECG leads II, III, aVF\",\n        \"Elevated troponin I (0.8 ng/mL)\",\n        \"Multiple cardiovascular risk factors: hypertension, type 2 diabetes, hyperlipidemia, 20 pack-year smoking history\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Coronary Angiography\",\n            \"purpose\": \"To confirm coronary artery occlusion and guide percutaneous coronary intervention (PCI)\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Echocardiogram\",\n            \"purpose\": \"To assess left ventricular function, wall motion abnormalities, and complications like ventricular septal defect\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Repeat Troponin I\",\n            \"purpose\": \"To monitor trend and confirm ongoing myocardial injury\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Chest CT Angiography\",\n            \"purpose\": \"To rule out aortic dissection if clinical suspicion persists\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Activate cardiac catheterization lab for emergent PCI\",\n            \"Administer oxygen if hypoxic, monitor vital signs continuously\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Aspirin\",\n                \"dose\": \"325 mg\",\n                \"route\": \"PO\",\n                \"duration\": \"Once, then 81 mg daily indefinitely\",\n                \"rationale\": \"Antiplatelet therapy to prevent further thrombus formation\"\n            },\n            {\n                \"drug\": \"Clopidogrel\",\n                \"dose\": \"600 mg loading dose, then 75 mg daily\",\n                \"route\": \"PO\",\n                \"duration\": \"At least 1 year post-PCI\",\n                \"rationale\": \"Dual antiplatelet therapy to reduce risk of stent thrombosis\"\n            },\n            {\n                \"drug\": \"Heparin (Unfractionated)\",\n                \"dose\": \"60 units/kg IV bolus, then 12 units/kg/hr infusion\",\n                \"route\": \"IV\",\n                \"duration\": \"Until PCI or 48 hours\",\n                \"rationale\": \"Anticoagulation to prevent thrombus propagation during acute phase\"\n            },\n            {\n                \"drug\": \"Nitroglycerin\",\n                \"dose\": \"0.3-0.6 mg sublingual as needed, or IV infusion if persistent pain\",\n                \"route\": \"SL/IV\",\n                \"duration\": \"As needed for pain\",\n                \"rationale\": \"Vasodilation to relieve ischemic chest pain, avoiding if inferior MI with right ventricular involvement\"\n            }\n        ],\n        \"monitoring\": [\n            \"Continuous cardiac rhythm and vital signs\", \"Every 15 minutes initially, then hourly\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Cardiology\",\n                \"urgency\": \"immediate\",\n                \"reason\": \"For emergent PCI and management of STEMI\"\n            },\n            {\n                \"specialty\": \"Endocrinology\",\n                \"urgency\": \"routine\",\n                \"reason\": \"Optimization of diabetes management post-acute phase, considering impact on cardiovascular risk\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Hypotension or signs of cardiogenic shock\",\n        \"New arrhythmias or heart block\",\n        \"Worsening chest pain or shortness of breath\"\n    ],\n    \"patient_education\": [\n        \"Importance of smoking cessation and lifestyle modifications (diet, exercise) to reduce future cardiac risk, considering patient's age and risk factors\",\n        \"Adherence to dual antiplatelet therapy to prevent stent complications, with awareness of bleeding risks\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"Cardiology clinic within 1 week post-discharge\",\n        \"conditions\": \"Immediate return for recurrent chest pain, shortness of breath, or syncope\"\n    },\n    \"confidence_in_assessment\": 0.95,\n    \"uncertainties\": [\n        \"Exact coronary artery involved and extent of myocardial damage pending angiography\",\n        \"Potential cultural or socioeconomic barriers to medication adherence and follow-up, as patient demographics may influence compliance\"\n    ]\n}",
+      "error": null,
+      "timestamp": "2025-08-11T10:39:08.535407",
+      "tokens_used": 2552,
+      "input_tokens": 902,
+      "output_tokens": 1650,
+      "latency": 30.1646089553833
+    }
+  ],
+  "parsed_responses": [
+    {
+      "primary_diagnosis": {
+        "name": "Acute coronary syndrome (ACS) - likely ST-elevation myocardial infarction (STEMI)",
+        "confidence": 0.8,
+        "icd_code": "I21.0",
+        "reasoning": "Sudden onset crushing chest pain, radiating to the left arm, diaphoresis, nausea, elevated troponin I, and ST elevation in ECG leads II, III, and aVF"
+      },
+      "differential_diagnoses": [
+        {
+          "name": "Aortic dissection",
+          "confidence": 0.2,
+          "icd_code": "I70.0",
+          "reasoning": "Risk factors include hypertension and age over 60; however, the absence of aortic murmur and back pain tends to suggest other etiologies"
+        },
+        {
+          "name": "Pulmonary embolism",
+          "confidence": 0.2,
+          "icd_code": "I26.0",
+          "reasoning": "Chest pain and shortness of breath may be present in pulmonary embolism; however, the clear lungs on auscultation and absence of pleuritic chest pain suggest a lower likelihood"
+        },
+        {
+          "name": "Pericarditis",
+          "confidence": 0.1,
+          "icd_code": "I30.9",
+          "reasoning": "While chest pain can be present in pericarditis, the lack of pericardial friction rub and normal ECG findings in the initial stages suggest it's less likely"
+        }
+      ],
+      "key_findings": [
+        "Sudden onset of chest pain",
+        "ST elevation in ECG leads II, III, and aVF",
+        "Elevated troponin I"
+      ],
+      "diagnostic_tests": [
+        {
+          "test": "Serial troponin I measurements",
+          "purpose": "To confirm diagnosis and monitor response to treatment",
+          "priority": "immediate"
+        },
+        {
+          "test": "Echocardiogram",
+          "purpose": "To assess left ventricular function, wall motion, and valvular function",
+          "priority": "urgent"
+        },
+        {
+          "test": "CT angiogram",
+          "purpose": "To rule out aortic dissection",
+          "priority": "routine"
+        }
+      ],
+      "management_plan": {
+        "immediate_actions": [
+          "Oxygen therapy",
+          "Nitroglycerin sublingual administration"
+        ],
+        "medications": [
+          {
+            "drug": "Aspirin",
+            "dose": "325 mg",
+            "route": "PO",
+            "duration": "Long-term",
+            "rationale": "Loading dose to reduce platelet aggregation"
+          },
+          {
+            "drug": "Ticlopidine",
+            "dose": "500 mg BID",
+            "route": "PO",
+            "duration": "Long-term",
+            "rationale": "Additional antiplatelet therapy"
+          },
+          {
+            "drug": "Clopidogrel",
+            "dose": "600 mg loading dose, then 75 mg daily",
+            "route": "PO",
+            "duration": "Long-term",
+            "rationale": "Additional antiplatelet therapy"
+          },
+          {
+            "drug": "Morphine",
+            "dose": "2-4 mg IV",
+            "route": "IV",
+            "duration": "As needed for pain management",
+            "rationale": "For pain control"
+          },
+          {
+            "drug": "Beta-blocker",
+            "dose": "Metoprolol 5 mg IV over 2 minutes, followed by 50 mg every 5 minutes up to a maximum of 15 mg/min or 25 mg, then 50-100 mg PO BID",
+            "route": "IV, then PO",
+            "duration": "Long-term",
+            "rationale": "To reduce heart rate, myocardial oxygen demand, and infarct size"
+          }
+        ],
+        "monitoring": [
+          "ECG monitoring",
+          "Cardiac enzymes",
+          "Blood pressure, heart rate, respiratory rate, and oxygen saturation every hour"
+        ],
+        "consultations": [
+          {
+            "specialty": "Cardiology",
+            "urgency": "immediate",
+            "reason": "For further management and possible percutaneous coronary intervention or coronary artery bypass graft surgery"
+          }
+        ]
+      },
+      "red_flags": [
+        "Recurrent chest pain",
+        "Hypotension",
+        "Persistent ST-segment elevation"
+      ],
+      "patient_education": [
+        "Importance of taking all medications as prescribed",
+        "Signs of worsening condition and need for immediate medical attention",
+        "Lifestyle modifications for better heart health (diet, exercise, smoking cessation, and stress management)"
+      ],
+      "follow_up": {
+        "timing": "Within 24-48 hours for re-evaluation",
+        "conditions": "Recurrent chest pain, persistent ST-segment elevation, or worsening heart function on echocardiogram"
+      },
+      "confidence_in_assessment": 0.8,
+      "uncertainties": [
+        "Possibility of other etiologies contributing to the chest pain",
+        "Presence of multi-vessel disease"
+      ]
+    },
+    {
+      "initial_impression": "",
+      "differential_diagnoses": [],
+      "alternative_perspectives": "",
+      "next_steps": "",
+      "uncertainties": "",
+      "population_considerations": "",
+      "confidence_score": null,
+      "raw_response": "\n\n\n"
+    },
+    {
+      "primary_diagnosis": {
+        "name": "Acute Coronary Syndrome (ACS)",
+        "confidence": 0.9,
+        "icd_code": "I21.0- I25.9",
+        "reasoning": "Clinical presentation of crushing substernal chest pain radiating to the left arm, ECG changes (ST elevation in leads II, III, and aVF), and elevated Troponin I levels suggest myocardial ischemia or infarction"
+      },
+      "differential_diagnoses": [
+        {
+          "name": "Pulmonary Embolism (PE)",
+          "confidence": 0.5,
+          "icd_code": "I00-I09",
+          "reasoning": "Chest pain and shortness of breath may occur in PE, but the absence of respiratory symptoms and clear lungs on physical examination make this less likely"
+        },
+        {
+          "name": "Gastrointestinal Bleeding",
+          "confidence": 0.3,
+          "icd_code": "K01-K84",
+          "reasoning": "Chest pain can be a symptom of upper GI bleeding, but the lack of abdominal pain and normal lung exam make this diagnosis less likely"
+        },
+        {
+          "name": "Costochondritis",
+          "confidence": 0.2,
+          "icd_code": "M84-M89",
+          "reasoning": "Referred pain from the chest can mimic cardiac pain, but the presence of ECG changes and elevated troponin levels make this diagnosis less likely"
+        }
+      ],
+      "key_findings": [
+        "Crushing substernal chest pain radiating to the left arm",
+        "ECG changes (ST elevation in leads II, III, and aVF)",
+        "Elevated Troponin I levels"
+      ],
+      "diagnostic_tests": [
+        {
+          "test": "ECG",
+          "purpose": "To rule in/out cardiac ischemia or infarction",
+          "priority": "immediate"
+        },
+        {
+          "test": "Troponin I",
+          "purpose": "To rule in/out myocardial infarction",
+          "priority": "urgent"
+        },
+        {
+          "test": "Chest X-ray",
+          "purpose": "To rule in/out pulmonary embolism or other pulmonary causes of chest pain",
+          "priority": "routine"
+        }
+      ],
+      "management_plan": {
+        "immediate_actions": [
+          "Oxygen therapy",
+          "Aspirin 81mg PO"
+        ],
+        "medications": [
+          {
+            "drug": "Aspirin",
+            "dose": "81mg PO",
+            "route": "PO",
+            "duration": "until symptoms resolve or until hospital admission",
+            "rationale": "For antiplatelet and analgesic effects"
+          },
+          {
+            "drug": "Nitroglycerin",
+            "dose": "0.4mg IV (vasodilation)",
+            "route": "IV",
+            "duration": "until symptoms resolve or until hospital admission",
+            "rationale": "For vasodilation and pain relief"
+          }
+        ],
+        "monitoring": [
+          "Vital signs (BP, HR, O2 saturation)",
+          "ECG monitoring"
+        ],
+        "consultations": [
+          {
+            "specialty": "Cardiology",
+            "urgency": "immediate",
+            "reason": "For further evaluation and management"
+          }
+        ]
+      },
+      "red_flags": [
+        "Hypertension uncontrolled",
+        "History of smoking"
+      ],
+      "patient_education": [
+        "Symptoms may worsen if not treated promptly",
+        "Follow-up appointment scheduled for [date]"
+      ],
+      "follow_up": {
+        "timing": "Follow-up in 2 weeks",
+        "conditions": "Symptoms resolve or hospital admission required"
+      },
+      "confidence_in_assessment": 0.9,
+      "uncertainties": [
+        "No clear indication of myocardial infarction without further testing",
+        "Risk of pulmonary embolism despite normal lung exam"
+      ]
+    },
+    {
+      "primary_diagnosis": {
+        "name": "Acute Myocardial Infarction (STEMI)",
+        "confidence": 0.95,
+        "icd_code": "I21.0",
+        "reasoning": "ST elevation in leads II, III, and aVF on ECG and elevated troponin I suggest an acute myocardial infarction."
+      },
+      "differential_diagnoses": [
+        {
+          "name": "Unstable Angina",
+          "confidence": 0.03,
+          "icd_code": "I20.0",
+          "reasoning": "Similar presentation but without ST elevation on ECG."
+        },
+        {
+          "name": "Acute Pericarditis",
+          "confidence": 0.01,
+          "icd_code": "I31.0",
+          "reasoning": "Chest pain radiating to the left arm can occur in pericarditis, but pericarditis usually has a different ECG pattern and often presents with pericardial friction rub."
+        },
+        {
+          "name": "Aortic Dissection",
+          "confidence": 0.01,
+          "icd_code": "I31.2",
+          "reasoning": "Chest pain can mimic myocardial infarction, but aortic dissection typically presents with sudden, tearing chest pain and often involves hypertension."
+        }
+      ],
+      "key_findings": [
+        "ST elevation in leads II, III, and aVF on ECG",
+        "Elevated troponin I (0.8 ng/mL)"
+      ],
+      "diagnostic_tests": [
+        {
+          "test": "Cardiac Catheterization",
+          "purpose": "To confirm the diagnosis and assess for coronary artery blockage",
+          "priority": "immediate"
+        },
+        {
+          "test": "Electrolyte Panel",
+          "purpose": "To rule out electrolyte imbalances that can affect cardiac function",
+          "priority": "urgent"
+        },
+        {
+          "test": "Complete Blood Count (CBC)",
+          "purpose": "To assess for anemia or other hematological abnormalities",
+          "priority": "routine"
+        }
+      ],
+      "management_plan": {
+        "immediate_actions": [
+          "Administer aspirin 325 mg orally",
+          "Initiate heparin therapy"
+        ],
+        "medications": [
+          {
+            "drug": "Aspirin",
+            "dose": "325 mg",
+            "route": "PO",
+            "duration": "Indefinitely",
+            "rationale": "Antiplatelet therapy to prevent further thrombus formation"
+          },
+          {
+            "drug": "Morphine",
+            "dose": "4-8 mg IV",
+            "route": "IV",
+            "duration": "Reassess every 5-10 minutes",
+            "rationale": "For pain relief"
+          },
+          {
+            "drug": "Nitroglycerin",
+            "dose": "0.4 mg sublingually",
+            "route": "SL",
+            "duration": "Repeat every 5 minutes up to 3 doses",
+            "rationale": "To reduce preload and afterload"
+          }
+        ],
+        "monitoring": [
+          "Cardiac rhythm and vital signs",
+          "Every 5 minutes in acute phase"
+        ],
+        "consultations": [
+          {
+            "specialty": "Cardiology",
+            "urgency": "immediate",
+            "reason": "For further management and possible intervention"
+          }
+        ]
+      },
+      "red_flags": [
+        "Uncontrolled hypertension",
+        "Development of new ECG changes"
+      ],
+      "patient_education": [
+        "Recognize symptoms of heart attack and seek immediate medical attention",
+        "Avoid smoking and maintain a healthy lifestyle"
+      ],
+      "follow_up": {
+        "timing": "Within 24-48 hours of hospital discharge",
+        "conditions": "Chest pain recurrence, shortness of breath, or new symptoms"
+      },
+      "confidence_in_assessment": 0.95,
+      "uncertainties": [
+        "Timing of thrombus formation since pain onset",
+        "Presence of any underlying coronary artery disease"
+      ]
+    },
+    null,
+    null,
+    {
+      "primary_diagnosis": {
+        "name": "ST-Elevation Myocardial Infarction (STEMI)",
+        "confidence": 0.9,
+        "icd_code": "I21.09",
+        "reasoning": "Crushing substernal chest pain radiating to the left arm, diaphoresis, nausea, ST elevation in leads II, III, and aVF, and elevated troponin I are classic signs of STEMI."
+      },
+      "differential_diagnoses": [
+        {
+          "name": "Unstable Angina",
+          "confidence": 0.05,
+          "icd_code": "I20.0",
+          "reasoning": "Chest pain with similar symptoms but without ST elevation or elevated troponin."
+        },
+        {
+          "name": "Acute Pericarditis",
+          "confidence": 0.03,
+          "icd_code": "I30.0",
+          "reasoning": "Can present with chest pain, but ECG typically shows diffuse ST elevation and PR depression, not isolated leads."
+        },
+        {
+          "name": "Gastroesophageal Reflux Disease (GERD)",
+          "confidence": 0.02,
+          "icd_code": "K21.9",
+          "reasoning": "Chest pain can mimic cardiac symptoms, but lack of typical heartburn or response to antacids, along with ECG changes, makes this less likely."
+        }
+      ],
+      "key_findings": [
+        "Crushing substernal chest pain radiating to the left arm",
+        "ST elevation in leads II, III, and aVF on ECG",
+        "Elevated troponin I",
+        "Diaphoresis and nausea"
+      ],
+      "diagnostic_tests": [
+        {
+          "test": "Emergency cardiac catheterization",
+          "purpose": "Confirm coronary artery occlusion and provide reperfusion therapy",
+          "priority": "immediate"
+        },
+        {
+          "test": "Complete blood count (CBC)",
+          "purpose": "Rule out infection or anemia",
+          "priority": "urgent"
+        },
+        {
+          "test": "Basic metabolic panel (BMP)",
+          "purpose": "Assess renal function and electrolytes",
+          "priority": "urgent"
+        }
+      ],
+      "management_plan": {
+        "immediate_actions": [
+          "Administer aspirin 160-325 mg PO",
+          "Administer oxygen if hypoxic",
+          "Prepare for emergency cardiac catheterization"
+        ],
+        "medications": [
+          {
+            "drug": "Aspirin",
+            "dose": "81-325 mg",
+            "route": "PO",
+            "duration": "Lifelong",
+            "rationale": "Antiplatelet therapy to prevent further clot formation"
+          },
+          {
+            "drug": "Heparin",
+            "dose": "80 U/kg IV bolus, then 18 U/kg/h IV infusion",
+            "route": "IV",
+            "duration": "Until PCI or CABG",
+            "rationale": "Anticoagulation to prevent further clot propagation"
+          },
+          {
+            "drug": "Atorvastatin",
+            "dose": "40-80 mg",
+            "route": "PO",
+            "duration": "Lifelong",
+            "rationale": "High-intensity statin to stabilize atherosclerotic plaques"
+          }
+        ],
+        "monitoring": [
+          "Vital signs: Every 15 minutes initially",
+          "ECG: Continuous monitoring"
+        ],
+        "consultations": [
+          {
+            "specialty": "Interventional Cardiology",
+            "urgency": "immediate",
+            "reason": "Emergency coronary revascularization"
+          },
+          {
+            "specialty": "Intensivist",
+            "urgency": "immediate",
+            "reason": "Potential need for critical care"
+          }
+        ]
+      },
+      "red_flags": [
+        "Crushing chest pain radiating to the left arm",
+        "ST elevation on ECG",
+        "Elevated troponin I",
+        "History of hypertension, diabetes, and smoking"
+      ],
+      "patient_education": [
+        "Importance of compliance with antiplatelet and statin therapy",
+        "Lifestyle modifications (diet, exercise, smoking cessation)"
+      ],
+      "follow_up": {
+        "timing": "Post-catheterization in 24-48 hours",
+        "conditions": "Recurrent chest pain, dyspnea, or hemodynamic instability"
+      },
+      "confidence_in_assessment": 0.95,
+      "uncertainties": [
+        "Exact coronary anatomy until cardiac catheterization is performed",
+        "Potential for other etiologies of chest pain if initial diagnosis is incorrect"
+      ]
+    },
+    {
+      "primary_diagnosis": {
+        "name": "ST-Elevation Myocardial Infarction (STEMI)",
+        "confidence": 0.95,
+        "icd_code": "I21.09",
+        "reasoning": "The patient presents with classic symptoms of a myocardial infarction (crushing chest pain radiating to the left arm, diaphoresis, nausea) and has diagnostic ECG findings (ST elevation in inferior leads II, III, aVF) along with elevated Troponin I levels. His risk factors (hypertension, diabetes, hyperlipidemia, smoking history) further support this diagnosis."
+      },
+      "differential_diagnoses": [
+        {
+          "name": "Unstable Angina",
+          "confidence": 0.7,
+          "icd_code": "I20.0",
+          "reasoning": "While the ECG shows ST elevation, a transient ST elevation or incomplete occlusion could present similarly initially. Elevated troponin helps differentiate from unstable angina."
+        },
+        {
+          "name": "Pericarditis",
+          "confidence": 0.4,
+          "icd_code": "I30.1",
+          "reasoning": "Can cause chest pain, but the pain is typically pleuritic and positional, and ECG findings are usually diffuse ST elevation, rather than localized to inferior leads. Also, troponin elevation is less common in pericarditis."
+        },
+        {
+          "name": "Esophageal Spasm",
+          "confidence": 0.2,
+          "icd_code": "K22.8",
+          "reasoning": "Can mimic cardiac chest pain, but is usually associated with difficulty swallowing and is not typically associated with ST-segment elevation or troponin elevation."
+        }
+      ],
+      "key_findings": [
+        "Crushing substernal chest pain radiating to the left arm",
+        "ST elevation in leads II, III, and aVF",
+        "Elevated Troponin I (0.8 ng/mL)",
+        "Diaphoresis and nausea",
+        "Risk factors: Hypertension, Diabetes, Hyperlipidemia, Smoking History"
+      ],
+      "diagnostic_tests": [
+        {
+          "test": "Repeat Troponin I",
+          "purpose": "To assess the trend of troponin levels and confirm myocardial damage.",
+          "priority": "immediate"
+        },
+        {
+          "test": "Complete Blood Count (CBC)",
+          "purpose": "To rule out anemia or infection.",
+          "priority": "urgent"
+        },
+        {
+          "test": "Basic Metabolic Panel (BMP)",
+          "purpose": "To assess renal function and electrolytes.",
+          "priority": "urgent"
+        },
+        {
+          "test": "Coagulation Studies (PT/INR, aPTT)",
+          "purpose": "To assess bleeding risk prior to potential interventions.",
+          "priority": "urgent"
+        },
+        {
+          "test": "Chest X-ray",
+          "purpose": "To rule out other causes of chest pain (e.g., pneumothorax, aortic dissection).",
+          "priority": "routine"
+        }
+      ],
+      "management_plan": {
+        "immediate_actions": [
+          "Establish IV access",
+          "Administer oxygen",
+          "Continuous ECG monitoring",
+          "Initiate cardiac catheterization protocol"
+        ],
+        "medications": [
+          {
+            "drug": "Aspirin",
+            "dose": "325 mg",
+            "route": "PO",
+            "duration": "Once",
+            "rationale": "Antiplatelet therapy to reduce thrombus formation"
+          },
+          {
+            "drug": "Nitroglycerin",
+            "dose": "0.4 mg sublingual",
+            "route": "SL",
+            "duration": "Every 5 minutes for up to 3 doses if BP stable",
+            "rationale": "Vasodilation to improve blood flow and reduce chest pain"
+          },
+          {
+            "drug": "Morphine",
+            "dose": "2-4 mg IV",
+            "route": "IV",
+            "duration": "As needed for pain",
+            "rationale": "Pain relief"
+          },
+          {
+            "drug": "Heparin",
+            "dose": "60-100 U/kg IV bolus followed by infusion",
+            "route": "IV",
+            "duration": "Adjusted based on aPTT",
+            "rationale": "Anticoagulation to prevent further thrombus formation"
+          }
+        ],
+        "monitoring": [
+          "Vital signs (BP, HR, RR, SpO2)",
+          "ECG",
+          "Troponin levels",
+          "Level of consciousness"
+        ],
+        "consultations": [
+          {
+            "specialty": "Cardiology",
+            "urgency": "immediate",
+            "reason": "For urgent cardiac catheterization and potential percutaneous coronary intervention (PCI)."
+          }
+        ]
+      },
+      "red_flags": [
+        "Hypotension",
+        "Arrhythmias",
+        "Worsening chest pain",
+        "Respiratory distress"
+      ],
+      "patient_education": [
+        "Explain the diagnosis and treatment plan clearly.",
+        "Emphasize the importance of medication adherence.",
+        "Discuss lifestyle modifications (diet, exercise, smoking cessation).",
+        "Educate about warning signs of worsening cardiac condition."
+      ],
+      "follow_up": {
+        "timing": "Within 7-10 days after discharge",
+        "conditions": "Chest pain recurrence, shortness of breath, palpitations, or any symptoms suggestive of cardiac ischemia require immediate medical attention."
+      },
+      "confidence_in_assessment": 0.9,
+      "uncertainties": [
+        "Exact extent of myocardial damage",
+        "Presence of any underlying coronary artery disease beyond the acute occlusion"
+      ]
+    },
+    {
+      "primary_diagnosis": {
+        "name": "ST-Elevation Myocardial Infarction (STEMI) - Inferior Wall",
+        "confidence": 0.95,
+        "icd_code": "I21.19",
+        "reasoning": "Classic presentation with crushing chest pain, radiation to left arm, diaphoresis, ST elevation in inferior leads (II, III, aVF), elevated troponin, and multiple cardiac risk factors"
+      },
+      "differential_diagnoses": [
+        {
+          "name": "Unstable Angina",
+          "confidence": 0.15,
+          "icd_code": "I20.0",
+          "reasoning": "Similar presentation but would not show ST elevation or significant troponin elevation"
+        },
+        {
+          "name": "Aortic Dissection",
+          "confidence": 0.1,
+          "icd_code": "I71.00",
+          "reasoning": "Can present with severe chest pain and cardiac involvement, but ECG findings make MI more likely"
+        },
+        {
+          "name": "Pericarditis",
+          "confidence": 0.05,
+          "icd_code": "I30.9",
+          "reasoning": "Can cause chest pain and ECG changes, but ST elevation would be more diffuse, not localized to inferior leads"
+        }
+      ],
+      "key_findings": [
+        "ST elevation in inferior leads (II, III, aVF)",
+        "Elevated troponin I at 0.8 ng/mL",
+        "Crushing substernal chest pain with left arm radiation",
+        "Multiple cardiac risk factors (HTN, DM, hyperlipidemia, smoking history)"
+      ],
+      "diagnostic_tests": [
+        {
+          "test": "Cardiac catheterization",
+          "purpose": "Identify culprit vessel and perform percutaneous coronary intervention",
+          "priority": "immediate"
+        },
+        {
+          "test": "Serial troponin levels",
+          "purpose": "Monitor myocardial injury progression",
+          "priority": "urgent"
+        },
+        {
+          "test": "Echocardiogram",
+          "purpose": "Assess wall motion abnormalities and ejection fraction",
+          "priority": "urgent"
+        },
+        {
+          "test": "Chest X-ray",
+          "purpose": "Rule out pulmonary edema and other complications",
+          "priority": "urgent"
+        },
+        {
+          "test": "Complete blood count",
+          "purpose": "Baseline assessment before antiplatelet therapy",
+          "priority": "urgent"
+        }
+      ],
+      "management_plan": {
+        "immediate_actions": [
+          "Activate cardiac catheterization lab for primary PCI",
+          "Continuous cardiac monitoring",
+          "IV access x2 large bore",
+          "Oxygen if SpO2 <90%",
+          "12-lead ECG every 30 minutes initially"
+        ],
+        "medications": [
+          {
+            "drug": "Aspirin",
+            "dose": "325 mg",
+            "route": "PO",
+            "duration": "STAT, then 81 mg daily",
+            "rationale": "Antiplatelet therapy to prevent thrombus extension"
+          },
+          {
+            "drug": "Ticagrelor",
+            "dose": "180 mg",
+            "route": "PO",
+            "duration": "Loading dose, then 90 mg BID",
+            "rationale": "P2Y12 inhibitor for dual antiplatelet therapy"
+          },
+          {
+            "drug": "Heparin",
+            "dose": "60 units/kg bolus (max 4000 units)",
+            "route": "IV",
+            "duration": "Continuous infusion per protocol",
+            "rationale": "Anticoagulation to prevent thrombus propagation"
+          },
+          {
+            "drug": "Metoprolol",
+            "dose": "25 mg",
+            "route": "PO",
+            "duration": "BID",
+            "rationale": "Beta-blocker to reduce myocardial oxygen demand"
+          },
+          {
+            "drug": "Morphine",
+            "dose": "2-4 mg",
+            "route": "IV",
+            "duration": "PRN for pain",
+            "rationale": "Pain relief and anxiety reduction"
+          },
+          {
+            "drug": "Nitroglycerin",
+            "dose": "0.4 mg",
+            "route": "SL",
+            "duration": "q5min x3 PRN",
+            "rationale": "Vasodilation and symptom relief"
+          }
+        ],
+        "monitoring": [
+          "Continuous telemetry monitoring",
+          "Vital signs every 15 minutes initially",
+          "Serial ECGs every 30 minutes for first 2 hours",
+          "Serial troponin levels at 3, 6, and 12 hours",
+          "Monitor for signs of heart failure or cardiogenic shock"
+        ],
+        "consultations": [
+          {
+            "specialty": "Interventional Cardiology",
+            "urgency": "immediate",
+            "reason": "Primary PCI for STEMI within 90 minutes of presentation"
+          },
+          {
+            "specialty": "Cardiology",
+            "urgency": "immediate",
+            "reason": "Ongoing management and risk stratification"
+          }
+        ]
+      },
+      "red_flags": [
+        "Hypotension or signs of cardiogenic shock",
+        "New heart failure symptoms (pulmonary edema, dyspnea)",
+        "Ventricular arrhythmias",
+        "Mechanical complications (papillary muscle rupture, VSD)",
+        "Recurrent chest pain despite treatment"
+      ],
+      "patient_education": [
+        "Importance of medication compliance post-discharge",
+        "Cardiac rehabilitation program enrollment",
+        "Lifestyle modifications including diet and exercise",
+        "Recognition of warning signs requiring immediate medical attention",
+        "Smoking cessation resources and support"
+      ],
+      "follow_up": {
+        "timing": "Cardiology follow-up within 1-2 weeks post-discharge",
+        "conditions": "Return immediately for chest pain, shortness of breath, palpitations, syncope, or signs of bleeding"
+      },
+      "confidence_in_assessment": 0.95,
+      "uncertainties": [
+        "Exact coronary anatomy and culprit vessel (likely RCA given inferior STEMI)",
+        "Presence of multivessel disease requiring staged PCI or CABG"
+      ]
+    },
+    {
+      "primary_diagnosis": {
+        "name": "ST-elevation myocardial infarction (STEMI) - inferior wall",
+        "confidence": 0.95,
+        "icd_code": "I21.19",
+        "reasoning": "Classic presentation with crushing chest pain radiating to left arm, ST elevations in inferior leads (II, III, aVF), elevated troponin, and multiple cardiovascular risk factors"
+      },
+      "differential_diagnoses": [
+        {
+          "name": "Non-ST elevation myocardial infarction (NSTEMI)",
+          "confidence": 0.05,
+          "icd_code": "I21.9",
+          "reasoning": "Elevated troponin with chest pain, but ECG clearly shows ST elevations making STEMI more likely"
+        },
+        {
+          "name": "Unstable angina",
+          "confidence": 0.02,
+          "icd_code": "I20.0",
+          "reasoning": "Chest pain pattern fits, but elevated troponin and ST elevations indicate myocardial necrosis"
+        },
+        {
+          "name": "Acute pericarditis",
+          "confidence": 0.01,
+          "icd_code": "I30.9",
+          "reasoning": "Can cause chest pain and ECG changes, but ST elevations are localized to inferior leads and troponin elevation supports MI"
+        }
+      ],
+      "key_findings": [
+        "ST elevation in inferior leads (II, III, aVF)",
+        "Elevated troponin I (0.8 ng/mL)",
+        "Classic crushing substernal chest pain with left arm radiation",
+        "Multiple cardiovascular risk factors (HTN, DM, hyperlipidemia, smoking history)"
+      ],
+      "diagnostic_tests": [
+        {
+          "test": "Serial 12-lead ECGs",
+          "purpose": "Monitor ST elevation evolution and identify new changes",
+          "priority": "immediate"
+        },
+        {
+          "test": "Chest X-ray",
+          "purpose": "Assess for pulmonary edema or other complications",
+          "priority": "immediate"
+        },
+        {
+          "test": "Complete metabolic panel",
+          "purpose": "Assess electrolytes, kidney function for contrast exposure",
+          "priority": "immediate"
+        },
+        {
+          "test": "PT/PTT/INR",
+          "purpose": "Baseline coagulation before anticoagulation therapy",
+          "priority": "immediate"
+        },
+        {
+          "test": "Echocardiogram",
+          "purpose": "Assess wall motion abnormalities and ejection fraction",
+          "priority": "urgent"
+        }
+      ],
+      "management_plan": {
+        "immediate_actions": [
+          "Activate cardiac catheterization lab for emergency PCI",
+          "Establish IV access and continuous cardiac monitoring",
+          "Administer oxygen if SpO2 <90%",
+          "Obtain informed consent for PCI"
+        ],
+        "medications": [
+          {
+            "drug": "Aspirin",
+            "dose": "325 mg",
+            "route": "PO",
+            "duration": "Chewed immediately, then daily",
+            "rationale": "Antiplatelet therapy for acute MI"
+          },
+          {
+            "drug": "Clopidogrel",
+            "dose": "600 mg loading dose",
+            "route": "PO",
+            "duration": "Then 75 mg daily",
+            "rationale": "Dual antiplatelet therapy"
+          },
+          {
+            "drug": "Atorvastatin",
+            "dose": "80 mg",
+            "route": "PO",
+            "duration": "Daily",
+            "rationale": "High-intensity statin therapy post-MI"
+          },
+          {
+            "drug": "Metoprolol",
+            "dose": "25 mg",
+            "route": "PO",
+            "duration": "Twice daily, titrate as tolerated",
+            "rationale": "Beta-blocker for cardioprotection"
+          },
+          {
+            "drug": "Heparin",
+            "dose": "Weight-based protocol",
+            "route": "IV",
+            "duration": "During PCI procedure",
+            "rationale": "Anticoagulation for PCI"
+          }
+        ],
+        "monitoring": [
+          "Continuous cardiac monitoring for arrhythmias",
+          "Serial troponins every 8 hours",
+          "Blood pressure and heart rate every 15 minutes initially",
+          "Neurological checks if receiving thrombolytics"
+        ],
+        "consultations": [
+          {
+            "specialty": "Interventional Cardiology",
+            "urgency": "immediate",
+            "reason": "Emergency PCI for STEMI - door to balloon time <90 minutes"
+          },
+          {
+            "specialty": "Endocrinology",
+            "urgency": "routine",
+            "reason": "Diabetes management optimization post-MI"
+          }
+        ]
+      },
+      "red_flags": [
+        "Development of cardiogenic shock",
+        "New heart murmur suggesting papillary muscle rupture",
+        "Sudden worsening chest pain suggesting reinfarction",
+        "Signs of mechanical complications (VSD, free wall rupture)"
+      ],
+      "patient_education": [
+        "Importance of immediate treatment to minimize heart muscle damage",
+        "Need for lifelong medications and lifestyle modifications",
+        "Cardiac rehabilitation participation",
+        "Warning signs requiring immediate medical attention"
+      ],
+      "follow_up": {
+        "timing": "Cardiology follow-up within 1-2 weeks post-discharge",
+        "conditions": "Return immediately for chest pain, shortness of breath, palpitations, or syncope"
+      },
+      "confidence_in_assessment": 0.95,
+      "uncertainties": [
+        "Exact culprit vessel location without angiography",
+        "Presence of multivessel disease",
+        "Degree of myocardial salvage possible with intervention"
+      ]
+    },
+    {
+      "primary_diagnosis": {
+        "name": "Acute Inferior Wall ST-Elevation Myocardial Infarction (STEMI)",
+        "confidence": 0.99,
+        "icd_code": "I21.19",
+        "reasoning": "The patient presents with classic ischemic chest pain (crushing, substernal, radiating), diaphoresis, and significant cardiovascular risk factors. The diagnosis is confirmed by the specific ECG findings of ST elevation in the inferior leads (II, III, aVF) and an elevated cardiac biomarker (Troponin I)."
+      },
+      "differential_diagnoses": [
+        {
+          "name": "Aortic Dissection",
+          "confidence": 0.05,
+          "icd_code": "I71.01",
+          "reasoning": "Presents with sudden, severe chest pain. However, the pain is often described as 'tearing' and may radiate to the back. The focal ST elevations are highly specific for MI, making dissection much less likely."
+        },
+        {
+          "name": "Pulmonary Embolism",
+          "confidence": 0.05,
+          "icd_code": "I26.99",
+          "reasoning": "Can cause acute chest pain and tachycardia. However, the pain is typically pleuritic, and ECG changes are usually non-specific or show right heart strain (S1Q3T3), not focal ST elevation in an arterial territory."
+        },
+        {
+          "name": "Acute Pericarditis",
+          "confidence": 0.02,
+          "icd_code": "I30.9",
+          "reasoning": "Causes chest pain and can have ST elevation. However, the pain is typically sharp, pleuritic, and relieved by leaning forward. The ECG changes are characteristically diffuse across multiple leads, often with PR depression, unlike the localized pattern seen here."
+        }
+      ],
+      "key_findings": [
+        "Crushing, substernal chest pain radiating to the left arm",
+        "ST elevation in ECG leads II, III, and aVF",
+        "Elevated Troponin I (0.8 ng/mL)",
+        "Diaphoresis and anxiety on presentation",
+        "Multiple cardiovascular risk factors (HTN, T2DM, hyperlipidemia, smoking history)"
+      ],
+      "diagnostic_tests": [
+        {
+          "test": "Emergent Coronary Angiography",
+          "purpose": "To visualize the occluded coronary artery (likely RCA or LCx) and perform percutaneous coronary intervention (PCI) to restore blood flow. This is both diagnostic and therapeutic.",
+          "priority": "immediate"
+        },
+        {
+          "test": "Right-sided ECG (lead V4R)",
+          "purpose": "To assess for right ventricular infarction, which is common with inferior STEMI and has implications for management (e.g., preload dependency, caution with nitrates).",
+          "priority": "immediate"
+        },
+        {
+          "test": "Bedside Echocardiogram",
+          "purpose": "To assess for inferior wall motion abnormalities, evaluate overall left and right ventricular function, and rule out acute mechanical complications.",
+          "priority": "urgent"
+        },
+        {
+          "test": "Complete Blood Count (CBC), Comprehensive Metabolic Panel (CMP), Coagulation Panel (PT/INR, aPTT)",
+          "purpose": "To establish baseline values for hemoglobin/platelets, electrolytes/renal function, and coagulation status prior to anticoagulation and PCI.",
+          "priority": "immediate"
+        }
+      ],
+      "management_plan": {
+        "immediate_actions": [
+          "Activate cardiac catheterization lab for emergent PCI (goal: door-to-balloon time < 90 minutes).",
+          "Establish two large-bore IV lines.",
+          "Provide supplemental oxygen only if SpO2 < 90%.",
+          "Administer medications as listed below."
+        ],
+        "medications": [
+          {
+            "drug": "Aspirin",
+            "dose": "324 mg (4 x 81 mg)",
+            "route": "PO (chewed)",
+            "duration": "Once, then daily maintenance dose",
+            "rationale": "Inhibits platelet aggregation, reduces mortality in ACS."
+          },
+          {
+            "drug": "Ticagrelor",
+            "dose": "180 mg loading dose",
+            "route": "PO",
+            "duration": "Once, then maintenance dose",
+            "rationale": "P2Y12 inhibitor for dual antiplatelet therapy, standard of care in STEMI."
+          },
+          {
+            "drug": "Heparin",
+            "dose": "60 units/kg IV bolus, followed by 12 units/kg/hr infusion",
+            "route": "IV",
+            "duration": "Until revascularization",
+            "rationale": "Anticoagulation to prevent thrombus propagation."
+          },
+          {
+            "drug": "Atorvastatin",
+            "dose": "80 mg",
+            "route": "PO",
+            "duration": "Once, then daily",
+            "rationale": "High-intensity statin therapy improves outcomes in ACS, regardless of baseline cholesterol."
+          },
+          {
+            "drug": "Nitroglycerin",
+            "dose": "0.4 mg",
+            "route": "SL",
+            "duration": "Every 5 min x3 PRN for chest pain, if SBP > 90 mmHg",
+            "rationale": "Vasodilator for pain relief; use with caution in inferior MI due to risk of hypotension."
+          }
+        ],
+        "monitoring": [
+          "Continuous cardiac monitoring for arrhythmias (e.g., bradycardia, heart block, ventricular tachycardia).",
+          "Frequent vital signs (every 15 minutes initially).",
+          "Serial ECGs to monitor for evolution or changes.",
+          "Assess for signs of heart failure (e.g., rales, JVD) or cardiogenic shock."
+        ],
+        "consultations": [
+          {
+            "specialty": "Interventional Cardiology",
+            "urgency": "immediate",
+            "reason": "For emergent revascularization via PCI, which is the primary treatment for STEMI."
+          }
+        ]
+      },
+      "red_flags": [
+        "ST elevation on ECG, indicating a time-sensitive coronary occlusion.",
+        "Elevated troponin, confirming myocardial cell death.",
+        "Ongoing crushing chest pain, indicating persistent ischemia.",
+        "Potential for hemodynamic compromise (hypotension, bradycardia) associated with inferior MI."
+      ],
+      "patient_education": [
+        "You are having a heart attack. This means a blood clot has blocked an artery supplying blood to your heart muscle.",
+        "We need to perform an urgent procedure called a cardiac catheterization to find and open the blocked artery. This is the best way to save the heart muscle.",
+        "You will be given several medications to thin your blood and help your heart.",
+        "After the procedure and recovery, we will discuss long-term lifestyle changes and medications to prevent this from happening again."
+      ],
+      "follow_up": {
+        "timing": "With a cardiologist within 1 week of hospital discharge.",
+        "conditions": "Return to the emergency department immediately for any recurrent chest pain, severe shortness of breath, fainting, or new weakness."
+      },
+      "confidence_in_assessment": 0.99,
+      "uncertainties": [
+        "The specific occluded coronary artery (Right Coronary Artery vs. Left Circumflex Artery), which will be determined by angiography.",
+        "The presence and extent of right ventricular (RV) involvement, which impacts hemodynamic management.",
+        "The patient's baseline left ventricular ejection fraction and the degree of permanent myocardial damage."
+      ]
+    },
+    {
+      "primary_diagnosis": {
+        "name": "ST-Elevation Myocardial Infarction (STEMI)",
+        "confidence": 0.98,
+        "icd_code": "I21.0",
+        "reasoning": "Classic presentation with crushing substernal chest pain radiating to the left arm, profuse sweating, nausea, and significant cardiovascular risk factors (hypertension, diabetes, hyperlipidemia, smoking history). ECG shows ST elevation in inferior leads (II, III, aVF), and troponin I is elevated, all highly indicative of acute myocardial infarction."
+      },
+      "differential_diagnoses": [
+        {
+          "name": "Unstable Angina",
+          "confidence": 0.05,
+          "icd_code": "I20.0",
+          "reasoning": "While chest pain is present, the presence of ST elevation on ECG and elevated troponin rules out unstable angina as the primary diagnosis. It would be considered if troponin was negative and ECG changes were non-specific or absent."
+        },
+        {
+          "name": "Aortic Dissection",
+          "confidence": 0.02,
+          "icd_code": "I71.0",
+          "reasoning": "Can present with sudden severe chest pain and hypertension. However, the pain is typically described as tearing or ripping, and ECG findings (ST elevation) and elevated troponin are not typical for isolated aortic dissection. No signs of pulse deficits or widened mediastinum."
+        },
+        {
+          "name": "Pericarditis",
+          "confidence": 0.01,
+          "icd_code": "I30.9",
+          "reasoning": "Can cause chest pain, but it's often pleuritic and relieved by leaning forward. ECG changes in pericarditis typically involve diffuse ST elevation with PR depression, not localized ST elevation in specific leads. Troponin elevation can occur but is usually milder and due to myopericarditis."
+        },
+        {
+          "name": "Pulmonary Embolism (PE)",
+          "confidence": 0.01,
+          "icd_code": "I26.99",
+          "reasoning": "Can cause sudden chest pain and dyspnea, but the pain is typically pleuritic. ECG findings in PE (e.g., S1Q3T3 pattern, right heart strain) are different from the observed ST elevation. Troponin can be elevated in severe PE due to right ventricular strain, but not to the extent seen in MI, and the primary symptoms and ECG are inconsistent."
+        }
+      ],
+      "key_findings": [
+        "Sudden onset crushing substernal chest pain radiating to left arm",
+        "ST elevation in leads II, III, and aVF on ECG",
+        "Elevated Troponin I (0.8 ng/mL)",
+        "History of hypertension, type 2 diabetes, hyperlipidemia, and 20 pack-year smoking history"
+      ],
+      "diagnostic_tests": [
+        {
+          "test": "Repeat ECG",
+          "purpose": "Monitor evolution of ST segment changes and arrhythmias",
+          "priority": "immediate"
+        },
+        {
+          "test": "Cardiac Enzymes (Troponin I/T, CK-MB)",
+          "purpose": "Confirm myocardial injury and assess peak/trend",
+          "priority": "immediate"
+        },
+        {
+          "test": "Complete Blood Count (CBC)",
+          "purpose": "Assess for anemia, infection, and platelet count",
+          "priority": "urgent"
+        },
+        {
+          "test": "Basic Metabolic Panel (BMP)",
+          "purpose": "Assess renal function, electrolytes, and glucose",
+          "priority": "urgent"
+        },
+        {
+          "test": "Coagulation Panel (PT/INR, PTT)",
+          "purpose": "Assess baseline coagulation status prior to antithrombotic therapy",
+          "priority": "urgent"
+        },
+        {
+          "test": "Chest X-ray (CXR)",
+          "purpose": "Rule out other causes of chest pain (e.g., pneumothorax, aortic dissection, pulmonary edema)",
+          "priority": "urgent"
+        },
+        {
+          "test": "Echocardiogram",
+          "purpose": "Assess left ventricular function, wall motion abnormalities, and rule out structural heart disease",
+          "priority": "urgent"
+        }
+      ],
+      "management_plan": {
+        "immediate_actions": [
+          "Activate STEMI protocol/Cardiac Catheterization Lab",
+          "Establish IV access (2 large bore IVs)",
+          "Continuous cardiac monitoring",
+          "Oxygen supplementation (if SpO2 < 90% or respiratory distress)",
+          "Pain management"
+        ],
+        "medications": [
+          {
+            "drug": "Aspirin",
+            "dose": "325 mg",
+            "route": "PO (chewed)",
+            "duration": "Single dose initially, then 81 mg daily indefinitely",
+            "rationale": "Antiplatelet therapy to inhibit thrombus formation"
+          },
+          {
+            "drug": "Ticagrelor",
+            "dose": "180 mg",
+            "route": "PO",
+            "duration": "Single loading dose, then 90 mg BID for 12 months post-PCI",
+            "rationale": "P2Y12 inhibitor for dual antiplatelet therapy to prevent stent thrombosis and recurrent MI"
+          },
+          {
+            "drug": "Nitroglycerin",
+            "dose": "0.4 mg",
+            "route": "SL (sublingual)",
+            "duration": "Every 5 minutes, up to 3 doses (if BP allows)",
+            "rationale": "Vasodilator for chest pain relief and reduction of preload/afterload"
+          },
+          {
+            "drug": "Morphine Sulfate",
+            "dose": "2-4 mg",
+            "route": "IV",
+            "duration": "Titrated as needed for pain",
+            "rationale": "Analgesia, anxiolysis, and venodilation (if nitroglycerin ineffective and BP allows)"
+          },
+          {
+            "drug": "Unfractionated Heparin (UFH) or Enoxaparin",
+            "dose": "UFH: Bolus 60 units/kg (max 4000 units), then infusion 12 units/kg/hr (max 1000 units/hr); Enoxaparin: 1 mg/kg SC BID",
+            "route": "IV (UFH), SC (Enoxaparin)",
+            "duration": "During PCI and post-PCI as indicated",
+            "rationale": "Anticoagulation to prevent thrombus propagation and facilitate revascularization"
+          },
+          {
+            "drug": "Metoprolol",
+            "dose": "5 mg",
+            "route": "IV (if stable and no contraindications)",
+            "duration": "Repeat every 5-10 mins for total 15 mg, then convert to oral",
+            "rationale": "Beta-blockade to reduce myocardial oxygen demand, heart rate, and prevent arrhythmias"
+          },
+          {
+            "drug": "Atorvastatin",
+            "dose": "80 mg",
+            "route": "PO",
+            "duration": "Daily, indefinitely",
+            "rationale": "High-intensity statin therapy for lipid lowering and plaque stabilization"
+          }
+        ],
+        "monitoring": [
+          "Continuous ECG monitoring for arrhythmias and ST segment changes",
+          "Vital signs (BP, HR, RR, SpO2) every 5-15 minutes initially, then hourly",
+          "Pain scale assessment",
+          "Input/Output (I&O)",
+          "Neurological status (especially if sedated or with reperfusion)"
+        ],
+        "consultations": [
+          {
+            "specialty": "Cardiology/Interventional Cardiology",
+            "urgency": "immediate",
+            "reason": "For urgent primary percutaneous coronary intervention (PCI) or thrombolysis, and ongoing management of STEMI"
+          },
+          {
+            "specialty": "Cardiac Surgery",
+            "urgency": "urgent",
+            "reason": "Consider if PCI fails, anatomy unsuitable for PCI, or mechanical complications develop (e.g., VSD, mitral regurgitation)"
+          }
+        ]
+      },
+      "red_flags": [
+        "Persistent chest pain despite initial therapy",
+        "Development of cardiogenic shock (hypotension, signs of hypoperfusion)",
+        "New or worsening heart failure symptoms (e.g., dyspnea, crackles)",
+        "New arrhythmias (e.g., ventricular tachycardia/fibrillation, complete heart block)",
+        "Mechanical complications (e.g., new murmur indicating VSD or papillary muscle rupture)",
+        "Bleeding complications from antithrombotic therapy"
+      ],
+      "patient_education": [
+        "Explanation of STEMI, its causes, and the need for urgent treatment (PCI)",
+        "Importance of medication adherence (antiplatelets, statins, beta-blockers, ACE inhibitors)",
+        "Lifestyle modifications: smoking cessation, healthy diet, regular exercise, weight management, diabetes and blood pressure control",
+        "Recognition of recurrent symptoms and when to seek immediate medical attention",
+        "Cardiac rehabilitation program enrollment"
+      ],
+      "follow_up": {
+        "timing": "Regular follow-up with cardiology team post-discharge (e.g., 1-2 weeks, then monthly/quarterly as needed)",
+        "conditions": "Recurrence of chest pain, shortness of breath, palpitations, swelling in legs, signs of bleeding, or any new concerning symptoms."
+      },
+      "confidence_in_assessment": 0.99,
+      "uncertainties": [
+        "Exact time of symptom onset (patient reported 2 hours, but could be longer or shorter)",
+        "Presence of any contraindications to specific medications (e.g., severe renal impairment for enoxaparin)",
+        "Patient's baseline cardiac function prior to this event",
+        "Specific coronary artery involved (will be determined by angiography)"
+      ]
+    },
+    {
+      "primary_diagnosis": {
+        "name": "ST-Elevation Myocardial Infarction (STEMI), Inferior Wall",
+        "confidence": 0.95,
+        "icd_code": "I21.19",
+        "reasoning": "Classic presentation of sudden crushing substernal chest pain radiating to left arm, with diaphoresis and nausea, in a patient with multiple risk factors (hypertension, diabetes, hyperlipidemia, smoking history). ECG shows ST elevation in inferior leads (II, III, aVF) and elevated troponin confirms myocardial injury."
+      },
+      "differential_diagnoses": [
+        {
+          "name": "Aortic Dissection",
+          "confidence": 0.1,
+          "icd_code": "I71.00",
+          "reasoning": "Can present with severe chest pain radiating to arm, but less likely due to specific ECG changes and troponin elevation pointing to MI; considered in hypertensive patients."
+        },
+        {
+          "name": "Pulmonary Embolism",
+          "confidence": 0.05,
+          "icd_code": "I26.99",
+          "reasoning": "May cause chest pain and diaphoresis, but ECG typically shows right heart strain rather than inferior ST elevation; low likelihood without respiratory symptoms or risk factors like immobility."
+        },
+        {
+          "name": "Acute Pericarditis",
+          "confidence": 0.1,
+          "icd_code": "I30.9",
+          "reasoning": "Can cause diffuse ST elevation and chest pain, but pain is usually pleuritic/positional, and troponin elevation is milder; considered due to ECG changes but mismatched symptom description."
+        }
+      ],
+      "key_findings": [
+        "Sudden onset crushing substernal chest pain radiating to left arm with diaphoresis and nausea",
+        "ST elevation in ECG leads II, III, aVF",
+        "Elevated troponin I (0.8 ng/mL)",
+        "Multiple cardiovascular risk factors: hypertension, type 2 diabetes, hyperlipidemia, 20 pack-year smoking history"
+      ],
+      "diagnostic_tests": [
+        {
+          "test": "Coronary Angiography",
+          "purpose": "To confirm coronary artery occlusion and guide percutaneous coronary intervention (PCI)",
+          "priority": "immediate"
+        },
+        {
+          "test": "Echocardiogram",
+          "purpose": "To assess left ventricular function, wall motion abnormalities, and complications like ventricular septal defect",
+          "priority": "urgent"
+        },
+        {
+          "test": "Repeat Troponin I",
+          "purpose": "To monitor trend and confirm ongoing myocardial injury",
+          "priority": "urgent"
+        },
+        {
+          "test": "Chest CT Angiography",
+          "purpose": "To rule out aortic dissection if clinical suspicion persists",
+          "priority": "routine"
+        }
+      ],
+      "management_plan": {
+        "immediate_actions": [
+          "Activate cardiac catheterization lab for emergent PCI",
+          "Administer oxygen if hypoxic, monitor vital signs continuously"
+        ],
+        "medications": [
+          {
+            "drug": "Aspirin",
+            "dose": "325 mg",
+            "route": "PO",
+            "duration": "Once, then 81 mg daily indefinitely",
+            "rationale": "Antiplatelet therapy to prevent further thrombus formation"
+          },
+          {
+            "drug": "Clopidogrel",
+            "dose": "600 mg loading dose, then 75 mg daily",
+            "route": "PO",
+            "duration": "At least 1 year post-PCI",
+            "rationale": "Dual antiplatelet therapy to reduce risk of stent thrombosis"
+          },
+          {
+            "drug": "Heparin (Unfractionated)",
+            "dose": "60 units/kg IV bolus, then 12 units/kg/hr infusion",
+            "route": "IV",
+            "duration": "Until PCI or 48 hours",
+            "rationale": "Anticoagulation to prevent thrombus propagation during acute phase"
+          },
+          {
+            "drug": "Nitroglycerin",
+            "dose": "0.3-0.6 mg sublingual as needed, or IV infusion if persistent pain",
+            "route": "SL/IV",
+            "duration": "As needed for pain",
+            "rationale": "Vasodilation to relieve ischemic chest pain, avoiding if inferior MI with right ventricular involvement"
+          }
+        ],
+        "monitoring": [
+          "Continuous cardiac rhythm and vital signs",
+          "Every 15 minutes initially, then hourly"
+        ],
+        "consultations": [
+          {
+            "specialty": "Cardiology",
+            "urgency": "immediate",
+            "reason": "For emergent PCI and management of STEMI"
+          },
+          {
+            "specialty": "Endocrinology",
+            "urgency": "routine",
+            "reason": "Optimization of diabetes management post-acute phase, considering impact on cardiovascular risk"
+          }
+        ]
+      },
+      "red_flags": [
+        "Hypotension or signs of cardiogenic shock",
+        "New arrhythmias or heart block",
+        "Worsening chest pain or shortness of breath"
+      ],
+      "patient_education": [
+        "Importance of smoking cessation and lifestyle modifications (diet, exercise) to reduce future cardiac risk, considering patient's age and risk factors",
+        "Adherence to dual antiplatelet therapy to prevent stent complications, with awareness of bleeding risks"
+      ],
+      "follow_up": {
+        "timing": "Cardiology clinic within 1 week post-discharge",
+        "conditions": "Immediate return for recurrent chest pain, shortness of breath, or syncope"
+      },
+      "confidence_in_assessment": 0.95,
+      "uncertainties": [
+        "Exact coronary artery involved and extent of myocardial damage pending angiography",
+        "Potential cultural or socioeconomic barriers to medication adherence and follow-up, as patient demographics may influence compliance"
+      ]
+    }
+  ],
+  "consensus_analysis": {
+    "total_models": 13,
+    "responding_models": 11,
+    "consensus_level": "None",
+    "primary_diagnosis": null,
+    "primary_confidence": 0.0,
+    "alternative_diagnoses": [],
+    "minority_opinions": [],
+    "agreement_scores": {},
+    "geographic_patterns": {
+      "France": [],
+      "USA": [],
+      "China": []
+    },
+    "action_required": "Active clinical judgment and specialist consultation needed",
+    "clinical_recommendation": "No consensus achieved. Comprehensive clinical evaluation required.",
+    "bias_considerations": []
+  }
+}

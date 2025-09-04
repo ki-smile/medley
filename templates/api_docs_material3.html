@@ -1,0 +1,361 @@
+{% extends "base.html" %}
+
+{% block title %}API Documentation - MEDLEY{% endblock %}
+
+{% block styles %}
+<style>
+    .endpoint-card {
+        background: var(--md-sys-color-surface-container-low);
+        border-radius: var(--md-sys-shape-corner-medium);
+        padding: 20px;
+        margin-bottom: 16px;
+        border-left: 4px solid var(--md-sys-color-primary);
+    }
+    
+    .method-badge {
+        display: inline-block;
+        padding: 4px 12px;
+        border-radius: var(--md-sys-shape-corner-full);
+        font-weight: 600;
+        font-size: var(--md-sys-typescale-label-small);
+        margin-right: 12px;
+    }
+    
+    .method-get {
+        background: #4CAF50;
+        color: white;
+    }
+    
+    .method-post {
+        background: #2196F3;
+        color: white;
+    }
+    
+    .method-delete {
+        background: #F44336;
+        color: white;
+    }
+    
+    .code-block {
+        background: var(--md-sys-color-surface-variant);
+        border-radius: var(--md-sys-shape-corner-small);
+        padding: 16px;
+        overflow-x: auto;
+        font-family: 'Courier New', monospace;
+        font-size: 14px;
+        margin: 12px 0;
+    }
+    
+    .param-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 16px 0;
+    }
+    
+    .param-table th {
+        background: var(--md-sys-color-surface-variant);
+        padding: 12px;
+        text-align: left;
+        font-weight: 600;
+    }
+    
+    .param-table td {
+        padding: 12px;
+        border-bottom: 1px solid var(--md-sys-color-outline-variant);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Overview -->
+<div class="md-surface mb-4">
+    <h2 class="md-headline-medium mb-3">📚 API Overview</h2>
+    <p class="md-body-large mb-3">
+        The MEDLEY API provides programmatic access to the medical AI ensemble system. 
+        All endpoints return JSON responses and use standard HTTP status codes.
+    </p>
+    
+    <div class="md-card">
+        <h3 class="md-title-large mb-2">Base URL</h3>
+        <div class="code-block">
+            http://localhost:5000/api
+        </div>
+    </div>
+    
+    <div class="md-card mt-3">
+        <h3 class="md-title-large mb-2">Authentication</h3>
+        <p class="md-body-medium">
+            API key is required for model queries. Set it via the <code>/api/session/set-key</code> endpoint or in the session.
+        </p>
+    </div>
+</div>
+
+<!-- Health & Status -->
+<div class="md-surface mb-4">
+    <h2 class="md-headline-medium mb-3">🏥 Health & Status</h2>
+    
+    <div class="endpoint-card">
+        <div class="mb-2">
+            <span class="method-badge method-get">GET</span>
+            <span class="md-title-medium">/api/health</span>
+        </div>
+        <p class="md-body-medium mb-2">Check system health and status</p>
+        
+        <h4 class="md-title-small mb-2">Response Example:</h4>
+        <div class="code-block">
+{
+  "status": "healthy",
+  "version": "2.0.0",
+  "timestamp": "2025-08-11T12:00:00Z",
+  "services": {
+    "cache": true,
+    "database": true,
+    "orchestrator": true
+  }
+}
+        </div>
+    </div>
+</div>
+
+<!-- Cases -->
+<div class="md-surface mb-4">
+    <h2 class="md-headline-medium mb-3">📋 Medical Cases</h2>
+    
+    <div class="endpoint-card">
+        <div class="mb-2">
+            <span class="method-badge method-get">GET</span>
+            <span class="md-title-medium">/api/cases</span>
+        </div>
+        <p class="md-body-medium mb-2">Get list of pre-defined medical cases</p>
+        
+        <h4 class="md-title-small mb-2">Response Example:</h4>
+        <div class="code-block">
+[
+  {
+    "id": "Case_1",
+    "key": "case_001",
+    "title": "Familial Mediterranean Fever",
+    "specialty": "Rheumatology",
+    "complexity": "High",
+    "description": "Young adult with recurrent fever and abdominal pain",
+    "has_report": true
+  }
+]
+        </div>
+    </div>
+    
+    <div class="endpoint-card">
+        <div class="mb-2">
+            <span class="method-badge method-get">GET</span>
+            <span class="md-title-medium">/api/case/{case_key}/report</span>
+        </div>
+        <p class="md-body-medium mb-2">Get detailed report for a specific case</p>
+        
+        <h4 class="md-title-small mb-2">Parameters:</h4>
+        <table class="param-table">
+            <tr>
+                <th>Parameter</th>
+                <th>Type</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>case_key</td>
+                <td>string</td>
+                <td>Case identifier (e.g., case_001)</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<!-- Analysis -->
+<div class="md-surface mb-4">
+    <h2 class="md-headline-medium mb-3">🔬 Analysis</h2>
+    
+    <div class="endpoint-card">
+        <div class="mb-2">
+            <span class="method-badge method-post">POST</span>
+            <span class="md-title-medium">/api/analyze</span>
+        </div>
+        <p class="md-body-medium mb-2">Start a new medical case analysis</p>
+        
+        <h4 class="md-title-small mb-2">Request Body:</h4>
+        <div class="code-block">
+{
+  "case_text": "Patient presentation details...",
+  "api_key": "sk-or-v1-...",
+  "use_free_models": true,
+  "models": ["model1", "model2"]  // Optional
+}
+        </div>
+        
+        <h4 class="md-title-small mb-2">Response Example:</h4>
+        <div class="code-block">
+{
+  "analysis_id": "custom_20250811_120000",
+  "status": "started",
+  "models_count": 17,
+  "estimated_time": 30
+}
+        </div>
+    </div>
+    
+    <div class="endpoint-card">
+        <div class="mb-2">
+            <span class="method-badge method-get">GET</span>
+            <span class="md-title-medium">/api/analyze/{analysis_id}/status</span>
+        </div>
+        <p class="md-body-medium mb-2">Get status of ongoing analysis</p>
+        
+        <h4 class="md-title-small mb-2">Response Example:</h4>
+        <div class="code-block">
+{
+  "analysis_id": "custom_20250811_120000",
+  "status": "processing",
+  "progress": 45,
+  "completed_models": 8,
+  "total_models": 17
+}
+        </div>
+    </div>
+    
+    <div class="endpoint-card">
+        <div class="mb-2">
+            <span class="method-badge method-delete">DELETE</span>
+            <span class="md-title-medium">/api/analyze/{analysis_id}</span>
+        </div>
+        <p class="md-body-medium mb-2">Cancel ongoing analysis</p>
+    </div>
+</div>
+
+<!-- Session -->
+<div class="md-surface mb-4">
+    <h2 class="md-headline-medium mb-3">🔐 Session Management</h2>
+    
+    <div class="endpoint-card">
+        <div class="mb-2">
+            <span class="method-badge method-post">POST</span>
+            <span class="md-title-medium">/api/session/set-key</span>
+        </div>
+        <p class="md-body-medium mb-2">Set OpenRouter API key for the session</p>
+        
+        <h4 class="md-title-small mb-2">Request Body:</h4>
+        <div class="code-block">
+{
+  "api_key": "sk-or-v1-..."
+}
+        </div>
+    </div>
+    
+    <div class="endpoint-card">
+        <div class="mb-2">
+            <span class="method-badge method-get">GET</span>
+            <span class="md-title-medium">/api/session/status</span>
+        </div>
+        <p class="md-body-medium mb-2">Get current session status</p>
+        
+        <h4 class="md-title-small mb-2">Response Example:</h4>
+        <div class="code-block">
+{
+  "api_key_set": true,
+  "analyses_count": 3,
+  "recent_analyses": ["custom_20250811_120000"]
+}
+        </div>
+    </div>
+</div>
+
+<!-- Code Examples -->
+<div class="md-surface">
+    <h2 class="md-headline-medium mb-3">💻 Code Examples</h2>
+    
+    <div class="md-card mb-3">
+        <h3 class="md-title-large mb-2">Python</h3>
+        <div class="code-block">
+import requests
+
+# Set API key
+response = requests.post('http://localhost:5000/api/session/set-key', 
+    json={'api_key': 'sk-or-v1-...'})
+
+# Start analysis
+response = requests.post('http://localhost:5000/api/analyze',
+    json={
+        'case_text': 'Patient presentation...',
+        'api_key': 'sk-or-v1-...',
+        'use_free_models': True
+    })
+
+analysis_id = response.json()['analysis_id']
+
+# Check status
+response = requests.get(f'http://localhost:5000/api/analyze/{analysis_id}/status')
+print(response.json())
+        </div>
+    </div>
+    
+    <div class="md-card mb-3">
+        <h3 class="md-title-large mb-2">JavaScript</h3>
+        <div class="code-block">
+// Start analysis
+const response = await fetch('http://localhost:5000/api/analyze', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+        case_text: 'Patient presentation...',
+        api_key: 'sk-or-v1-...',
+        use_free_models: true
+    })
+});
+
+const { analysis_id } = await response.json();
+
+// Check status
+const status = await fetch(`http://localhost:5000/api/analyze/${analysis_id}/status`);
+console.log(await status.json());
+        </div>
+    </div>
+    
+    <div class="md-card">
+        <h3 class="md-title-large mb-2">cURL</h3>
+        <div class="code-block">
+# Set API key
+curl -X POST http://localhost:5000/api/session/set-key \
+  -H "Content-Type: application/json" \
+  -d '{"api_key": "sk-or-v1-..."}'
+
+# Start analysis
+curl -X POST http://localhost:5000/api/analyze \
+  -H "Content-Type: application/json" \
+  -d '{
+    "case_text": "Patient presentation...",
+    "api_key": "sk-or-v1-...",
+    "use_free_models": true
+  }'
+
+# Check health
+curl http://localhost:5000/api/health
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Copy code to clipboard
+document.querySelectorAll('.code-block').forEach(block => {
+    block.style.cursor = 'pointer';
+    block.title = 'Click to copy';
+    
+    block.addEventListener('click', function() {
+        const text = this.textContent.trim();
+        navigator.clipboard.writeText(text).then(() => {
+            const original = this.style.background;
+            this.style.background = 'var(--md-sys-color-primary-container)';
+            setTimeout(() => {
+                this.style.background = original;
+            }, 200);
+        });
+    });
+});
+</script>
+{% endblock %}

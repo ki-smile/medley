@@ -1,0 +1,633 @@
+{
+  "case_id": "tmp330njue2",
+  "case_title": "Medical Case from tmp330njue2.txt",
+  "case_description": {
+    "case_id": "tmp330njue2",
+    "title": "Medical Case from tmp330njue2.txt",
+    "patient_info": "",
+    "presentation": "28-year-old woman, recent immigrant from Somalia, presents to emergency department with recurrent episodes of severe abdominal pain, fever spikes to 39.5\u00b0C, and arthritis affecting knees and ankles. Episodes last 2-3 days and resolve spontaneously. She reports similar episodes in family members \"back home.\" Limited English proficiency, no previous medical records available. Physical exam during episode shows peritoneal signs, elevated CRP and ESR. Pain is unresponsive to standard analgesics.",
+    "symptoms": [],
+    "history": null,
+    "physical_exam": null,
+    "labs": null,
+    "imaging": null
+  },
+  "analysis_timestamp": "2025-08-11T14:34:53.094826",
+  "models_queried": 8,
+  "models_responded": 6,
+  "model_responses": [
+    {
+      "model_name": "mistralai/mistral-7b-instruct:free",
+      "origin": "France",
+      "size": "7B",
+      "response": " {\n    \"primary_diagnosis\": {\n        \"name\": \"Reactive Arthritis (Reiter's Syndrome)\",\n        \"confidence\": 0.7,\n        \"icd_code\": \"M45.0\",\n        \"reasoning\": \"Recurrent episodes of abdominal pain, fever, arthritis affecting knees and ankles, peritoneal signs, elevated CRP and ESR, and a history of similar episodes in family members suggest Reiter's Syndrome. The patient is a recent immigrant from Somalia, a region with a high prevalence of enteric infections which are known triggers.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Inflammatory Bowel Disease (IBD)\",\n            \"confidence\": 0.3,\n            \"icd_code\": \"K50-K51\",\n            \"reasoning\": \"Recurrent abdominal pain and fever could be indicative of IBD. However, the absence of diarrhea and weight loss in this case reduces its likelihood.\"\n        },\n        {\n            \"name\": \"Septic Arthritis\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"A40.0\",\n            \"reasoning\": \"Fever and arthritis are symptoms of Septic Arthritis, but the response to standard analgesics and the peritoneal signs suggest an inflammatory rather than infectious process.\"\n        },\n        {\n            \"name\": \"Rheumatoid Arthritis\",\n            \"confidence\": 0.1,\n            \"icd_code\": \"M05.0\",\n            \"reasoning\": \"Although the patient's age is within the range for Rheumatoid Arthritis, the recurrent abdominal pain and fever are not typical symptoms, and the absence of morning stiffness and symmetrical joint involvement makes it less likely.\"\n    }],\n    \"key_findings\": [\n        \"Recurrent episodes of abdominal pain, fever, arthritis affecting knees and ankles, peritoneal signs, elevated CRP and ESR\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Stool culture\",\n            \"purpose\": \"To rule out enteric infections\",\n            \"priority\": \"Urgent\"\n        },\n        {\n            \"test\": \"HLA-B27 testing\",\n            \"purpose\": \"To support the diagnosis of Reiter's Syndrome\",\n            \"priority\": \"Routine\"\n        },\n        {\n            \"test\": \"Antinuclear antibody (ANA) test\",\n            \"purpose\": \"To rule out Rheumatoid Arthritis\",\n            \"priority\": \"Routine\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Admit patient for closer monitoring and pain management\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Nonsteroidal anti-inflammatory drugs (NSAIDs)\",\n                \"dose\": \"As per guidelines\",\n                \"route\": \"PO\",\n                \"duration\": \"Until symptoms improve\",\n                \"rationale\": \"To manage pain and inflammation\"\n            },\n            {\n                \"drug\": \"Antibiotics\",\n                \"dose\": \"As per culture and sensitivity\",\n                \"route\": \"IV\",\n                \"duration\": \"For the duration of the course\",\n                \"rationale\": \"To treat any potential enteric infections\"\n            }\n        ],\n        \"monitoring\": [\n            \"Clinical status, C-reactive protein (CRP), erythrocyte sedimentation rate (ESR), and joint function\",\n            \"Daily\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Rheumatology\",\n                \"urgency\": \"Routine\",\n                \"reason\": \"For further evaluation and management\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Continued fever spikes above 39.5\u00b0C\",\n        \"Worsening joint pain or swelling\"\n    ],\n    \"patient_education\": [\n        \"Inform the patient about the diagnosis and its management\",\n        \"Emphasize the importance of completing the full course of antibiotics, even if symptoms improve\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"Within one week after discharge\",\n        \"conditions\": \"Return immediately if fever persists or worsens, or if there is significant deterioration in joint function\"\n    },\n    \"confidence_in_assessment\": 0.8,\n    \"uncertainties\": [\n        \"The absence of a definitive diagnosis due to limited medical history and availability of tests\",\n        \"Possible cultural or dietary factors that may influence the presentation of symptoms\"\n    ]\n}",
+      "error": null,
+      "timestamp": "2025-08-11T14:33:47.294620",
+      "tokens_used": 2204,
+      "input_tokens": 1018,
+      "output_tokens": 1186,
+      "latency": 10.00364089012146
+    },
+    {
+      "model_name": "google/gemma-2-9b-it:free",
+      "origin": "USA",
+      "size": "9B",
+      "response": ": Please provide more information.",
+      "error": null,
+      "timestamp": "2025-08-11T14:33:49.900669",
+      "tokens_used": 908,
+      "input_tokens": 901,
+      "output_tokens": 7,
+      "latency": 2.601086139678955
+    },
+    {
+      "model_name": "meta-llama/llama-3.2-3b-instruct:free",
+      "origin": "USA",
+      "size": "3B",
+      "response": "{\n    \"primary_diagnosis\": {\n        \"name\": \"Reactive Arthritis\",\n        \"confidence\": 0.8,\n        \"icd_code\": \"M35.9\",\n        \"reasoning\": \"Clinical presentation of recurrent episodes of severe abdominal pain, fever, arthritis, and peritoneal signs in a young woman from Somalia, consistent with reactive arthritis, a type of seronegative spondyloarthritis\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Salmonella Typhi\",\n            \"confidence\": 0.4,\n            \"icd_code\": \"A00.9\",\n            \"reasoning\": \"Similar presentation of abdominal pain, fever, and arthritis in a young woman from Somalia, which may be consistent with enteric fever\"\n        },\n        {\n            \"name\": \"Peptic Ulcer Disease\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"K22.9\",\n            \"reasoning\": \"Common cause of abdominal pain in young adults, which may be considered in differential diagnosis based on symptoms and physical exam findings\"\n        },\n        {\n            \"name\": \"Inflammatory Bowel Disease\",\n            \"confidence\": 0.1,\n            \"icd_code\": \"K50-K59\",\n            \"reasoning\": \"Rare in young adults, but possible consideration based on chronic nature of symptoms and physical exam findings\"\n        }\n    ],\n    \"key_findings\": [\n        \"Recurrent episodes of severe abdominal pain\",\n        \"Fever spikes to 39.5\u00b0C\",\n        \"Arthritis affecting knees and ankles\",\n        \"Peritoneal signs\",\n        \"Elevated CRP and ESR\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Complete Blood Count (CBC)\",\n            \"purpose\": \"To rule out infection or inflammation\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Stool Culture\",\n            \"purpose\": \"To rule out enteric fever\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Imaging studies (e.g., ultrasound or CT scan)\",\n            \"purpose\": \"To evaluate abdominal pain and arthritis\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Administer acetaminophen or ibuprofen for pain control\",\n            \"Order laboratory tests (CBC, stool culture)\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Ibuprofen\",\n                \"dose\": \"400mg PO q 4 hours as needed\",\n                \"route\": \"PO\",\n                \"duration\": \"Until symptoms resolve\",\n                \"rationale\": \"For pain control and inflammation reduction\"\n            }\n        ],\n        \"monitoring\": [\n            \"Monitor for signs of dehydration and electrolyte imbalance\",\n            \"Frequency\": \"Q 8 hours\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Rheumatology\",\n                \"urgency\": \"immediate\",\n                \"reason\": \"For assessment and management of arthritis\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"No previous medical records available\",\n        \"Limited English proficiency\"\n    ],\n    \"patient_education\": [\n        \"Key point 1: Take pain medication as directed to prevent complications\",\n        \"Key point 2: Follow up with rheumatology specialist for further assessment and management of arthritis\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"Within 2 weeks for follow-up appointment with rheumatology specialist\",\n        \"conditions\": \"Conditions requiring immediate return: Fever above 38.5\u00b0C, worsening symptoms\"\n    },\n    \"confidence_in_assessment\": 0.8,\n    \"uncertainties\": [\n        \"Limited information about patient's medical history and social determinants of health\",\n        \"Uncertainty about diagnosis based on physical exam findings alone\"\n    ]\n}",
+      "error": null,
+      "timestamp": "2025-08-11T14:33:56.750288",
+      "tokens_used": 2212,
+      "input_tokens": 1386,
+      "output_tokens": 826,
+      "latency": 6.843947172164917
+    },
+    {
+      "model_name": "qwen/qwen-2.5-coder-32b-instruct",
+      "origin": "China",
+      "size": "32B",
+      "response": "{\n    \"primary_diagnosis\": {\n        \"name\": \"Possible Reactive Arthritis (Reiter's Syndrome)\",\n        \"confidence\": 0.85,\n        \"icd_code\": \"M08.9\",\n        \"reasoning\": \"Recurrent episodes of severe abdominal pain, fever, and arthritis affecting knees and ankles with peritoneal signs and elevated inflammatory markers. Family history of similar episodes suggests genetic predisposition.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Ankylosing Spondylitis\",\n            \"confidence\": 0.1,\n            \"icd_code\": \"M45\",\n            \"reasoning\": \"Arthritis affecting knees and ankles and family history of similar episodes, but usually presents with back pain which is not mentioned here.\"\n        },\n        {\n            \"name\": \"Infectious Arthritis\",\n            \"confidence\": 0.05,\n            \"icd_code\": \"M72\",\n            \"reasoning\": \"Abdominal pain and fever can suggest an infectious etiology, but no specific infection source is evident from the history.\"\n        },\n        {\n            \"name\": \"Gastrointestinal Disease (e.g., IBD)\",\n            \"confidence\": 0.05,\n            \"icd_code\": \"K50, K51\",\n            \"reasoning\": \"Abdominal pain and fever can be associated with inflammatory bowel diseases, but arthritis affecting knees and ankles is less common.\"\n        }\n    ],\n    \"key_findings\": [\n        \"Recurrent episodes of severe abdominal pain and fever\",\n        \"Arthritis affecting knees and ankles\",\n        \"Peritoneal signs and elevated CRP and ESR\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"HLA-B27 Typing\",\n            \"purpose\": \"Rule in or out reactive arthritis\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Stool Culture and PCR for Yersinia, Salmonella, Shigella, Campylobacter\",\n            \"purpose\": \"Rule out infectious etiology\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Urine Culture\",\n            \"purpose\": \"Rule out urinary tract infection\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Administer intravenous fluids and analgesics\",\n            \"Obtain blood cultures and inflammatory markers\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Nonsteroidal anti-inflammatory drugs (NSAIDs)\",\n                \"dose\": \"50-100 mg every 8 hours\",\n                \"route\": \"PO\",\n                \"duration\": \"Until symptoms resolve\",\n                \"rationale\": \"To manage inflammation and pain\"\n            }\n        ],\n        \"monitoring\": [\n            \"Vital signs\",\n            \"Joint swelling and mobility\",\n            \"Fever and abdominal pain\",\n            \"Laboratory values (CRP, ESR)\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Rheumatology\",\n                \"urgency\": \"urgent\",\n                \"reason\": \"For further evaluation and management of suspected reactive arthritis\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Persistent or worsening abdominal pain\",\n        \"Severe joint swelling or inability to bear weight\"\n    ],\n    \"patient_education\": [\n        \"Importance of following up with specialists\",\n        \"Recognizing signs of complications\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"In 2-4 weeks or sooner if symptoms worsen\",\n        \"conditions\": \"Persistent fever, severe joint pain, abdominal pain, or new symptoms\"\n    },\n    \"confidence_in_assessment\": 0.85,\n    \"uncertainties\": [\n        \"Lack of specific infection source identified\",\n        \"Limited English proficiency may affect communication and understanding of instructions\"\n    ]\n}",
+      "error": null,
+      "timestamp": "2025-08-11T14:34:14.847376",
+      "tokens_used": 1656,
+      "input_tokens": 829,
+      "output_tokens": 827,
+      "latency": 18.091524124145508
+    },
+    {
+      "model_name": "google/gemini-2.0-flash-exp:free",
+      "origin": "USA",
+      "size": "Unknown",
+      "response": "```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"Familial Mediterranean Fever (FMF)\",\n        \"confidence\": 0.9,\n        \"icd_code\": \"E85.0\",\n        \"reasoning\": \"Recurrent episodes of fever, abdominal pain, and arthritis, particularly in a young woman of Somali descent with a family history of similar symptoms, strongly suggests FMF. The acute phase reactants (CRP, ESR) are elevated, and the symptoms resolve spontaneously, which is characteristic of FMF.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Other Autoinflammatory Syndromes (e.g., TRAPS, HIDS, CAPS)\",\n            \"confidence\": 0.6,\n            \"icd_code\": \"M04.8\",\n            \"reasoning\": \"While FMF is most likely given the ethnicity, other autoinflammatory syndromes can present with similar symptoms. Further genetic testing is needed to rule them out definitively.\"\n        },\n        {\n            \"name\": \"Systemic Lupus Erythematosus (SLE)\",\n            \"confidence\": 0.4,\n            \"icd_code\": \"M32.9\",\n            \"reasoning\": \"SLE can present with fever, arthritis, and abdominal pain. However, the recurrent, self-limiting nature of the episodes is less typical of SLE. Autoantibody testing is needed to rule this out.\"\n        },\n        {\n            \"name\": \"Infectious Disease (e.g., Tuberculosis, Brucellosis)\",\n            \"confidence\": 0.3,\n            \"icd_code\": \"A15.9\",\n            \"reasoning\": \"Given the patient's recent immigration from Somalia, infectious diseases common in that region should be considered, although the recurrent and self-limiting nature of the episodes makes infection less likely. Cultures and appropriate serological tests are needed.\"\n        }\n    ],\n    \"key_findings\": [\n        \"Recurrent episodes of fever, abdominal pain, and arthritis\",\n        \"Family history of similar symptoms\",\n        \"Elevated CRP and ESR\",\n        \"Somali descent\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"MEFV gene mutation analysis\",\n            \"purpose\": \"Confirm diagnosis of FMF\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Complete Blood Count (CBC) with differential\",\n            \"purpose\": \"Assess for signs of infection or other hematologic abnormalities\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Comprehensive Metabolic Panel (CMP)\",\n            \"purpose\": \"Assess liver and kidney function\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Urinalysis\",\n            \"purpose\": \"Rule out urinary tract infection\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Blood cultures\",\n            \"purpose\": \"Rule out bacteremia\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Autoantibody panel (ANA, anti-dsDNA, ENA)\",\n            \"purpose\": \"Rule out SLE and other autoimmune diseases\",\n            \"priority\": \"routine\"\n        },\n        {\n            \"test\": \"Inflammatory marker panel (IL-1, TNF alpha, etc.)\",\n            \"purpose\": \"Further characterize autoinflammatory process\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Provide supportive care for pain management (consider non-opioid analgesics initially)\",\n            \"Initiate fluid resuscitation if dehydrated\",\n            \"Monitor vital signs closely\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Colchicine\",\n                \"dose\": \"0.6 mg PO twice daily\",\n                \"route\": \"PO\",\n                \"duration\": \"Long-term\",\n                \"rationale\": \"First-line treatment for FMF to prevent recurrent attacks and amyloidosis\"\n            },\n            {\n                \"drug\": \"Ibuprofen or Naproxen\",\n                \"dose\": \"As needed for pain (e.g., Ibuprofen 400-600mg PO q6-8h)\",\n                \"route\": \"PO\",\n                \"duration\": \"PRN\",\n                \"rationale\": \"For pain relief during acute episodes.\"\n            }\n        ],\n        \"monitoring\": [\n            \"Frequency of FMF attacks\",\n            \"Every month initially, then every 3-6 months once stable\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Rheumatology\",\n                \"urgency\": \"urgent\",\n                \"reason\": \"For confirmation of diagnosis and long-term management of FMF\"\n            },\n            {\n                \"specialty\": \"Genetics\",\n                \"urgency\": \"routine\",\n                \"reason\": \"For genetic counseling and family screening\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Persistent fever despite treatment\",\n        \"Development of new or worsening symptoms\",\n        \"Signs of amyloidosis (proteinuria, renal dysfunction)\"\n    ],\n    \"patient_education\": [\n        \"Explain the nature of FMF and its genetic basis.\",\n        \"Emphasize the importance of adherence to colchicine therapy.\",\n        \"Advise on recognizing symptoms of an attack and seeking medical attention when needed.\",\n        \"Discuss the importance of family screening for FMF.\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"1-2 weeks after discharge, then as directed by Rheumatology\",\n        \"conditions\": \"Worsening symptoms, signs of infection, development of new symptoms\"\n    },\n    \"confidence_in_assessment\": 0.85,\n    \"uncertainties\": [\n        \"Confirmation of FMF diagnosis through genetic testing is pending.\",\n        \"Severity and long-term prognosis of FMF in this patient are unknown.\"\n    ]\n}\n```",
+      "error": null,
+      "timestamp": "2025-08-11T14:34:26.306945",
+      "tokens_used": 2243,
+      "input_tokens": 892,
+      "output_tokens": 1351,
+      "latency": 11.45421314239502
+    },
+    {
+      "model_name": "deepseek/deepseek-chat-v3-0324:free",
+      "origin": "China",
+      "size": "Unknown",
+      "response": "```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"Familial Mediterranean Fever\",\n        \"confidence\": 0.85,\n        \"icd_code\": \"E85.0\",\n        \"reasoning\": \"Recurrent episodes of fever, abdominal pain, and arthritis in a patient from an endemic region (Somalia) with a family history of similar episodes strongly suggest FMF. Elevated CRP and ESR during attacks are typical.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Appendicitis\",\n            \"confidence\": 0.3,\n            \"icd_code\": \"K35.80\",\n            \"reasoning\": \"Peritoneal signs and abdominal pain could suggest appendicitis, but the recurrent nature and spontaneous resolution make this less likely.\"\n        },\n        {\n            \"name\": \"Systemic Lupus Erythematosus\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"M32.9\",\n            \"reasoning\": \"Arthritis and fever could be seen in SLE, but the episodic nature and lack of other systemic symptoms make this less likely.\"\n        },\n        {\n            \"name\": \"Inflammatory Bowel Disease\",\n            \"confidence\": 0.15,\n            \"icd_code\": \"K50.90\",\n            \"reasoning\": \"Abdominal pain and elevated inflammatory markers could suggest IBD, but the absence of chronic diarrhea or weight loss makes this less likely.\"\n        }\n    ],\n    \"key_findings\": [\n        \"Recurrent episodes of severe abdominal pain\",\n        \"Fever spikes to 39.5\u00b0C and arthritis affecting knees and ankles\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Genetic testing for MEFV mutations\",\n            \"purpose\": \"Confirm diagnosis of Familial Mediterranean Fever\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Complete blood count (CBC)\",\n            \"purpose\": \"Assess for leukocytosis and anemia\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Serum amyloid A (SAA) protein\",\n            \"purpose\": \"Monitor for amyloidosis risk\",\n            \"priority\": \"urgent\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Provide pain relief with NSAIDs\",\n            \"Ensure hydration\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Colchicine\",\n                \"dose\": \"0.6 mg twice daily\",\n                \"route\": \"PO\",\n                \"duration\": \"Lifelong\",\n                \"rationale\": \"Prophylaxis against attacks and prevention of amyloidosis\"\n            },\n            {\n                \"drug\": \"Ibuprofen\",\n                \"dose\": \"400 mg every 6 hours as needed\",\n                \"route\": \"PO\",\n                \"duration\": \"During attacks\",\n                \"rationale\": \"Symptomatic relief of pain and inflammation\"\n            }\n        ],\n        \"monitoring\": [\n            \"CRP and ESR levels\",\n            \"Every 6 months\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Rheumatology\",\n                \"urgency\": \"urgent\",\n                \"reason\": \"Confirm diagnosis and manage long-term treatment\"\n            },\n            {\n                \"specialty\": \"Genetics\",\n                \"urgency\": \"routine\",\n                \"reason\": \"Family counseling and genetic testing\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Signs of peritonitis\",\n        \"Persistent fever beyond 3 days\"\n    ],\n    \"patient_education\": [\n        \"Importance of adherence to colchicine therapy\",\n        \"Recognizing signs of acute attacks\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"2 weeks\",\n        \"conditions\": \"Worsening pain or fever\"\n    },\n    \"confidence_in_assessment\": 0.8,\n    \"uncertainties\": [\n        \"Exact genetic mutation responsible\",\n        \"Family history details\"\n    ]\n}\n```",
+      "error": null,
+      "timestamp": "2025-08-11T14:34:46.779859",
+      "tokens_used": 1680,
+      "input_tokens": 825,
+      "output_tokens": 855,
+      "latency": 20.464509963989258
+    },
+    {
+      "model_name": "nousresearch/hermes-3-llama-3.1-8b:free",
+      "origin": "USA",
+      "size": "8B",
+      "response": null,
+      "error": "API Error 400: {\"error\":{\"message\":\"nousresearch/hermes-3-llama-3.1-8b:free is not a valid model ID\",\"code\":400},\"user_id\":\"user_311J1DE0saKoskawvWx8XZsOQ1N\"}",
+      "timestamp": "2025-08-11T14:34:46.885374",
+      "tokens_used": 0,
+      "input_tokens": 0,
+      "output_tokens": 0
+    },
+    {
+      "model_name": "liquid/lfm-40b:free",
+      "origin": "USA",
+      "size": "40B",
+      "response": null,
+      "error": "API Error 404: {\"error\":{\"message\":\"No endpoints found for liquid/lfm-40b:free.\",\"code\":404},\"user_id\":\"user_311J1DE0saKoskawvWx8XZsOQ1N\"}",
+      "timestamp": "2025-08-11T14:34:47.088164",
+      "tokens_used": 0,
+      "input_tokens": 0,
+      "output_tokens": 0
+    }
+  ],
+  "parsed_responses": [
+    {
+      "primary_diagnosis": {
+        "name": "Reactive Arthritis (Reiter's Syndrome)",
+        "confidence": 0.7,
+        "icd_code": "M45.0",
+        "reasoning": "Recurrent episodes of abdominal pain, fever, arthritis affecting knees and ankles, peritoneal signs, elevated CRP and ESR, and a history of similar episodes in family members suggest Reiter's Syndrome. The patient is a recent immigrant from Somalia, a region with a high prevalence of enteric infections which are known triggers."
+      },
+      "differential_diagnoses": [
+        {
+          "name": "Inflammatory Bowel Disease (IBD)",
+          "confidence": 0.3,
+          "icd_code": "K50-K51",
+          "reasoning": "Recurrent abdominal pain and fever could be indicative of IBD. However, the absence of diarrhea and weight loss in this case reduces its likelihood."
+        },
+        {
+          "name": "Septic Arthritis",
+          "confidence": 0.2,
+          "icd_code": "A40.0",
+          "reasoning": "Fever and arthritis are symptoms of Septic Arthritis, but the response to standard analgesics and the peritoneal signs suggest an inflammatory rather than infectious process."
+        },
+        {
+          "name": "Rheumatoid Arthritis",
+          "confidence": 0.1,
+          "icd_code": "M05.0",
+          "reasoning": "Although the patient's age is within the range for Rheumatoid Arthritis, the recurrent abdominal pain and fever are not typical symptoms, and the absence of morning stiffness and symmetrical joint involvement makes it less likely."
+        }
+      ],
+      "key_findings": [
+        "Recurrent episodes of abdominal pain, fever, arthritis affecting knees and ankles, peritoneal signs, elevated CRP and ESR"
+      ],
+      "diagnostic_tests": [
+        {
+          "test": "Stool culture",
+          "purpose": "To rule out enteric infections",
+          "priority": "Urgent"
+        },
+        {
+          "test": "HLA-B27 testing",
+          "purpose": "To support the diagnosis of Reiter's Syndrome",
+          "priority": "Routine"
+        },
+        {
+          "test": "Antinuclear antibody (ANA) test",
+          "purpose": "To rule out Rheumatoid Arthritis",
+          "priority": "Routine"
+        }
+      ],
+      "management_plan": {
+        "immediate_actions": [
+          "Admit patient for closer monitoring and pain management"
+        ],
+        "medications": [
+          {
+            "drug": "Nonsteroidal anti-inflammatory drugs (NSAIDs)",
+            "dose": "As per guidelines",
+            "route": "PO",
+            "duration": "Until symptoms improve",
+            "rationale": "To manage pain and inflammation"
+          },
+          {
+            "drug": "Antibiotics",
+            "dose": "As per culture and sensitivity",
+            "route": "IV",
+            "duration": "For the duration of the course",
+            "rationale": "To treat any potential enteric infections"
+          }
+        ],
+        "monitoring": [
+          "Clinical status, C-reactive protein (CRP), erythrocyte sedimentation rate (ESR), and joint function",
+          "Daily"
+        ],
+        "consultations": [
+          {
+            "specialty": "Rheumatology",
+            "urgency": "Routine",
+            "reason": "For further evaluation and management"
+          }
+        ]
+      },
+      "red_flags": [
+        "Continued fever spikes above 39.5\u00b0C",
+        "Worsening joint pain or swelling"
+      ],
+      "patient_education": [
+        "Inform the patient about the diagnosis and its management",
+        "Emphasize the importance of completing the full course of antibiotics, even if symptoms improve"
+      ],
+      "follow_up": {
+        "timing": "Within one week after discharge",
+        "conditions": "Return immediately if fever persists or worsens, or if there is significant deterioration in joint function"
+      },
+      "confidence_in_assessment": 0.8,
+      "uncertainties": [
+        "The absence of a definitive diagnosis due to limited medical history and availability of tests",
+        "Possible cultural or dietary factors that may influence the presentation of symptoms"
+      ]
+    },
+    {
+      "initial_impression": ": Please provide more information.",
+      "differential_diagnoses": [],
+      "alternative_perspectives": "",
+      "next_steps": "",
+      "uncertainties": "",
+      "population_considerations": "",
+      "confidence_score": null,
+      "raw_response": ": Please provide more information."
+    },
+    {
+      "initial_impression": "",
+      "differential_diagnoses": [
+        {
+          "diagnosis": "Inflammatory Bowel Disease",
+          "reasoning": "ndings\"\n        },\n        {\n            \"name\": \"\",\n            \"confidence\": 0.1,\n            \"icd_code\": \"K50-K59\",\n            \"reasoning\": \"Rare in young adults, but possible consideration based "
+        },
+        {
+          "diagnosis": "Reactive Arthritis",
+          "reasoning": "primary_diagnosis\": {\n        \"name\": \"\",\n        \"confidence\": 0.8,\n        \"icd_code\": \"M35.9\",\n        \"reasoning\": \"Clinical presentation of recurrent episodes of severe abdominal pain, fever, art"
+        },
+        {
+          "diagnosis": "reactive arthritis",
+          "reasoning": "primary_diagnosis\": {\n        \"name\": \"Reactive Arthritis\",\n        \"confidence\": 0.8,\n        \"icd_code\": \"M35.9\",\n        \"reasoning\": \"Clinical presentation of recurrent episodes of severe abdomina"
+        }
+      ],
+      "alternative_perspectives": "",
+      "next_steps": "",
+      "uncertainties": "[\n        \"Limited information about patient's medical history and social determinants of health\",\n        \"Uncertainty about diagnosis based on physical exam findings alone\"\n    ]\n}",
+      "population_considerations": "",
+      "confidence_score": 0.8,
+      "raw_response": "{\n    \"primary_diagnosis\": {\n        \"name\": \"Reactive Arthritis\",\n        \"confidence\": 0.8,\n        \"icd_code\": \"M35.9\",\n        \"reasoning\": \"Clinical presentation of recurrent episodes of severe abdominal pain, fever, arthritis, and peritoneal signs in a young woman from Somalia, consistent with reactive arthritis, a type of seronegative spondyloarthritis\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Salmonella Typhi\",\n            \"confidence\": 0.4,\n            \"icd_code\": \"A00.9\",\n            \"reasoning\": \"Similar presentation of abdominal pain, fever, and arthritis in a young woman from Somalia, which may be consistent with enteric fever\"\n        },\n        {\n            \"name\": \"Peptic Ulcer Disease\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"K22.9\",\n            \"reasoning\": \"Common cause of abdominal pain in young adults, which may be considered in differential diagnosis based on symptoms and physical exam findings\"\n        },\n        {\n            \"name\": \"Inflammatory Bowel Disease\",\n            \"confidence\": 0.1,\n            \"icd_code\": \"K50-K59\",\n            \"reasoning\": \"Rare in young adults, but possible consideration based on chronic nature of symptoms and physical exam findings\"\n        }\n    ],\n    \"key_findings\": [\n        \"Recurrent episodes of severe abdominal pain\",\n        \"Fever spikes to 39.5\u00b0C\",\n        \"Arthritis affecting knees and ankles\",\n        \"Peritoneal signs\",\n        \"Elevated CRP and ESR\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Complete Blood Count (CBC)\",\n            \"purpose\": \"To rule out infection or inflammation\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Stool Culture\",\n            \"purpose\": \"To rule out enteric fever\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Imaging studies (e.g., ultrasound or CT scan)\",\n            \"purpose\": \"To evaluate abdominal pain and arthritis\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Administer acetaminophen or ibuprofen for pain control\",\n            \"Order laboratory tests (CBC, stool culture)\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Ibuprofen\",\n                \"dose\": \"400mg PO q 4 hours as needed\",\n                \"route\": \"PO\",\n                \"duration\": \"Until symptoms resolve\",\n                \"rationale\": \"For pain control and inflammation reduction\"\n            }\n        ],\n        \"monitoring\": [\n            \"Monitor for signs of dehydration and electrolyte imbalance\",\n            \"Frequency\": \"Q 8 hours\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Rheumatology\",\n                \"urgency\": \"immediate\",\n                \"reason\": \"For assessment and management of arthritis\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"No previous medical records available\",\n        \"Limited English proficiency\"\n    ],\n    \"patient_education\": [\n        \"Key point 1: Take pain medication as directed to prevent complications\",\n        \"Key point 2: Follow up with rheumatology specialist for further assessment and management of arthritis\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"Within 2 weeks for follow-up appointment with rheumatology specialist\",\n        \"conditions\": \"Conditions requiring immediate return: Fever above 38.5\u00b0C, worsening symptoms\"\n    },\n    \"confidence_in_assessment\": 0.8,\n    \"uncertainties\": [\n        \"Limited information about patient's medical history and social determinants of health\",\n        \"Uncertainty about diagnosis based on physical exam findings alone\"\n    ]\n}"
+    },
+    {
+      "primary_diagnosis": {
+        "name": "Possible Reactive Arthritis (Reiter's Syndrome)",
+        "confidence": 0.85,
+        "icd_code": "M08.9",
+        "reasoning": "Recurrent episodes of severe abdominal pain, fever, and arthritis affecting knees and ankles with peritoneal signs and elevated inflammatory markers. Family history of similar episodes suggests genetic predisposition."
+      },
+      "differential_diagnoses": [
+        {
+          "name": "Ankylosing Spondylitis",
+          "confidence": 0.1,
+          "icd_code": "M45",
+          "reasoning": "Arthritis affecting knees and ankles and family history of similar episodes, but usually presents with back pain which is not mentioned here."
+        },
+        {
+          "name": "Infectious Arthritis",
+          "confidence": 0.05,
+          "icd_code": "M72",
+          "reasoning": "Abdominal pain and fever can suggest an infectious etiology, but no specific infection source is evident from the history."
+        },
+        {
+          "name": "Gastrointestinal Disease (e.g., IBD)",
+          "confidence": 0.05,
+          "icd_code": "K50, K51",
+          "reasoning": "Abdominal pain and fever can be associated with inflammatory bowel diseases, but arthritis affecting knees and ankles is less common."
+        }
+      ],
+      "key_findings": [
+        "Recurrent episodes of severe abdominal pain and fever",
+        "Arthritis affecting knees and ankles",
+        "Peritoneal signs and elevated CRP and ESR"
+      ],
+      "diagnostic_tests": [
+        {
+          "test": "HLA-B27 Typing",
+          "purpose": "Rule in or out reactive arthritis",
+          "priority": "immediate"
+        },
+        {
+          "test": "Stool Culture and PCR for Yersinia, Salmonella, Shigella, Campylobacter",
+          "purpose": "Rule out infectious etiology",
+          "priority": "urgent"
+        },
+        {
+          "test": "Urine Culture",
+          "purpose": "Rule out urinary tract infection",
+          "priority": "routine"
+        }
+      ],
+      "management_plan": {
+        "immediate_actions": [
+          "Administer intravenous fluids and analgesics",
+          "Obtain blood cultures and inflammatory markers"
+        ],
+        "medications": [
+          {
+            "drug": "Nonsteroidal anti-inflammatory drugs (NSAIDs)",
+            "dose": "50-100 mg every 8 hours",
+            "route": "PO",
+            "duration": "Until symptoms resolve",
+            "rationale": "To manage inflammation and pain"
+          }
+        ],
+        "monitoring": [
+          "Vital signs",
+          "Joint swelling and mobility",
+          "Fever and abdominal pain",
+          "Laboratory values (CRP, ESR)"
+        ],
+        "consultations": [
+          {
+            "specialty": "Rheumatology",
+            "urgency": "urgent",
+            "reason": "For further evaluation and management of suspected reactive arthritis"
+          }
+        ]
+      },
+      "red_flags": [
+        "Persistent or worsening abdominal pain",
+        "Severe joint swelling or inability to bear weight"
+      ],
+      "patient_education": [
+        "Importance of following up with specialists",
+        "Recognizing signs of complications"
+      ],
+      "follow_up": {
+        "timing": "In 2-4 weeks or sooner if symptoms worsen",
+        "conditions": "Persistent fever, severe joint pain, abdominal pain, or new symptoms"
+      },
+      "confidence_in_assessment": 0.85,
+      "uncertainties": [
+        "Lack of specific infection source identified",
+        "Limited English proficiency may affect communication and understanding of instructions"
+      ]
+    },
+    {
+      "primary_diagnosis": {
+        "name": "Familial Mediterranean Fever (FMF)",
+        "confidence": 0.9,
+        "icd_code": "E85.0",
+        "reasoning": "Recurrent episodes of fever, abdominal pain, and arthritis, particularly in a young woman of Somali descent with a family history of similar symptoms, strongly suggests FMF. The acute phase reactants (CRP, ESR) are elevated, and the symptoms resolve spontaneously, which is characteristic of FMF."
+      },
+      "differential_diagnoses": [
+        {
+          "name": "Other Autoinflammatory Syndromes (e.g., TRAPS, HIDS, CAPS)",
+          "confidence": 0.6,
+          "icd_code": "M04.8",
+          "reasoning": "While FMF is most likely given the ethnicity, other autoinflammatory syndromes can present with similar symptoms. Further genetic testing is needed to rule them out definitively."
+        },
+        {
+          "name": "Systemic Lupus Erythematosus (SLE)",
+          "confidence": 0.4,
+          "icd_code": "M32.9",
+          "reasoning": "SLE can present with fever, arthritis, and abdominal pain. However, the recurrent, self-limiting nature of the episodes is less typical of SLE. Autoantibody testing is needed to rule this out."
+        },
+        {
+          "name": "Infectious Disease (e.g., Tuberculosis, Brucellosis)",
+          "confidence": 0.3,
+          "icd_code": "A15.9",
+          "reasoning": "Given the patient's recent immigration from Somalia, infectious diseases common in that region should be considered, although the recurrent and self-limiting nature of the episodes makes infection less likely. Cultures and appropriate serological tests are needed."
+        }
+      ],
+      "key_findings": [
+        "Recurrent episodes of fever, abdominal pain, and arthritis",
+        "Family history of similar symptoms",
+        "Elevated CRP and ESR",
+        "Somali descent"
+      ],
+      "diagnostic_tests": [
+        {
+          "test": "MEFV gene mutation analysis",
+          "purpose": "Confirm diagnosis of FMF",
+          "priority": "urgent"
+        },
+        {
+          "test": "Complete Blood Count (CBC) with differential",
+          "purpose": "Assess for signs of infection or other hematologic abnormalities",
+          "priority": "immediate"
+        },
+        {
+          "test": "Comprehensive Metabolic Panel (CMP)",
+          "purpose": "Assess liver and kidney function",
+          "priority": "immediate"
+        },
+        {
+          "test": "Urinalysis",
+          "purpose": "Rule out urinary tract infection",
+          "priority": "immediate"
+        },
+        {
+          "test": "Blood cultures",
+          "purpose": "Rule out bacteremia",
+          "priority": "urgent"
+        },
+        {
+          "test": "Autoantibody panel (ANA, anti-dsDNA, ENA)",
+          "purpose": "Rule out SLE and other autoimmune diseases",
+          "priority": "routine"
+        },
+        {
+          "test": "Inflammatory marker panel (IL-1, TNF alpha, etc.)",
+          "purpose": "Further characterize autoinflammatory process",
+          "priority": "routine"
+        }
+      ],
+      "management_plan": {
+        "immediate_actions": [
+          "Provide supportive care for pain management (consider non-opioid analgesics initially)",
+          "Initiate fluid resuscitation if dehydrated",
+          "Monitor vital signs closely"
+        ],
+        "medications": [
+          {
+            "drug": "Colchicine",
+            "dose": "0.6 mg PO twice daily",
+            "route": "PO",
+            "duration": "Long-term",
+            "rationale": "First-line treatment for FMF to prevent recurrent attacks and amyloidosis"
+          },
+          {
+            "drug": "Ibuprofen or Naproxen",
+            "dose": "As needed for pain (e.g., Ibuprofen 400-600mg PO q6-8h)",
+            "route": "PO",
+            "duration": "PRN",
+            "rationale": "For pain relief during acute episodes."
+          }
+        ],
+        "monitoring": [
+          "Frequency of FMF attacks",
+          "Every month initially, then every 3-6 months once stable"
+        ],
+        "consultations": [
+          {
+            "specialty": "Rheumatology",
+            "urgency": "urgent",
+            "reason": "For confirmation of diagnosis and long-term management of FMF"
+          },
+          {
+            "specialty": "Genetics",
+            "urgency": "routine",
+            "reason": "For genetic counseling and family screening"
+          }
+        ]
+      },
+      "red_flags": [
+        "Persistent fever despite treatment",
+        "Development of new or worsening symptoms",
+        "Signs of amyloidosis (proteinuria, renal dysfunction)"
+      ],
+      "patient_education": [
+        "Explain the nature of FMF and its genetic basis.",
+        "Emphasize the importance of adherence to colchicine therapy.",
+        "Advise on recognizing symptoms of an attack and seeking medical attention when needed.",
+        "Discuss the importance of family screening for FMF."
+      ],
+      "follow_up": {
+        "timing": "1-2 weeks after discharge, then as directed by Rheumatology",
+        "conditions": "Worsening symptoms, signs of infection, development of new symptoms"
+      },
+      "confidence_in_assessment": 0.85,
+      "uncertainties": [
+        "Confirmation of FMF diagnosis through genetic testing is pending.",
+        "Severity and long-term prognosis of FMF in this patient are unknown."
+      ]
+    },
+    {
+      "primary_diagnosis": {
+        "name": "Familial Mediterranean Fever",
+        "confidence": 0.85,
+        "icd_code": "E85.0",
+        "reasoning": "Recurrent episodes of fever, abdominal pain, and arthritis in a patient from an endemic region (Somalia) with a family history of similar episodes strongly suggest FMF. Elevated CRP and ESR during attacks are typical."
+      },
+      "differential_diagnoses": [
+        {
+          "name": "Appendicitis",
+          "confidence": 0.3,
+          "icd_code": "K35.80",
+          "reasoning": "Peritoneal signs and abdominal pain could suggest appendicitis, but the recurrent nature and spontaneous resolution make this less likely."
+        },
+        {
+          "name": "Systemic Lupus Erythematosus",
+          "confidence": 0.2,
+          "icd_code": "M32.9",
+          "reasoning": "Arthritis and fever could be seen in SLE, but the episodic nature and lack of other systemic symptoms make this less likely."
+        },
+        {
+          "name": "Inflammatory Bowel Disease",
+          "confidence": 0.15,
+          "icd_code": "K50.90",
+          "reasoning": "Abdominal pain and elevated inflammatory markers could suggest IBD, but the absence of chronic diarrhea or weight loss makes this less likely."
+        }
+      ],
+      "key_findings": [
+        "Recurrent episodes of severe abdominal pain",
+        "Fever spikes to 39.5\u00b0C and arthritis affecting knees and ankles"
+      ],
+      "diagnostic_tests": [
+        {
+          "test": "Genetic testing for MEFV mutations",
+          "purpose": "Confirm diagnosis of Familial Mediterranean Fever",
+          "priority": "urgent"
+        },
+        {
+          "test": "Complete blood count (CBC)",
+          "purpose": "Assess for leukocytosis and anemia",
+          "priority": "immediate"
+        },
+        {
+          "test": "Serum amyloid A (SAA) protein",
+          "purpose": "Monitor for amyloidosis risk",
+          "priority": "urgent"
+        }
+      ],
+      "management_plan": {
+        "immediate_actions": [
+          "Provide pain relief with NSAIDs",
+          "Ensure hydration"
+        ],
+        "medications": [
+          {
+            "drug": "Colchicine",
+            "dose": "0.6 mg twice daily",
+            "route": "PO",
+            "duration": "Lifelong",
+            "rationale": "Prophylaxis against attacks and prevention of amyloidosis"
+          },
+          {
+            "drug": "Ibuprofen",
+            "dose": "400 mg every 6 hours as needed",
+            "route": "PO",
+            "duration": "During attacks",
+            "rationale": "Symptomatic relief of pain and inflammation"
+          }
+        ],
+        "monitoring": [
+          "CRP and ESR levels",
+          "Every 6 months"
+        ],
+        "consultations": [
+          {
+            "specialty": "Rheumatology",
+            "urgency": "urgent",
+            "reason": "Confirm diagnosis and manage long-term treatment"
+          },
+          {
+            "specialty": "Genetics",
+            "urgency": "routine",
+            "reason": "Family counseling and genetic testing"
+          }
+        ]
+      },
+      "red_flags": [
+        "Signs of peritonitis",
+        "Persistent fever beyond 3 days"
+      ],
+      "patient_education": [
+        "Importance of adherence to colchicine therapy",
+        "Recognizing signs of acute attacks"
+      ],
+      "follow_up": {
+        "timing": "2 weeks",
+        "conditions": "Worsening pain or fever"
+      },
+      "confidence_in_assessment": 0.8,
+      "uncertainties": [
+        "Exact genetic mutation responsible",
+        "Family history details"
+      ]
+    },
+    null,
+    null
+  ],
+  "consensus_analysis": {
+    "total_models": 8,
+    "responding_models": 6,
+    "consensus_level": "Strong",
+    "primary_diagnosis": "Familial Mediterranean Fever (FMF)",
+    "primary_confidence": 0.85,
+    "alternative_diagnoses": [
+      {
+        "diagnosis": "Inflammatory Bowel Disease",
+        "confidence": 0.5,
+        "model_count": 0,
+        "supporting_models": []
+      },
+      {
+        "diagnosis": "Reactive Arthritis",
+        "confidence": 0.5,
+        "model_count": 0,
+        "supporting_models": []
+      },
+      {
+        "diagnosis": "Systemic Juvenile Idiopathic Arthritis (sJIA)",
+        "confidence": 0.5,
+        "model_count": 0,
+        "supporting_models": []
+      }
+    ],
+    "minority_opinions": [
+      {
+        "diagnosis": "Reactive Arthritis",
+        "models": [],
+        "confidence": 0.25
+      },
+      {
+        "diagnosis": "Inflammatory Bowel Disease",
+        "models": [],
+        "confidence": 0.25
+      }
+    ],
+    "agreement_scores": {
+      "Inflammatory Bowel Disease": 0.16666666666666666,
+      "Reactive Arthritis": 0.16666666666666666
+    },
+    "geographic_patterns": {
+      "France": [],
+      "USA": [
+        "Inflammatory Bowel Disease",
+        "Reactive Arthritis"
+      ],
+      "China": []
+    },
+    "action_required": "AI-enhanced clinical judgment recommended",
+    "clinical_recommendation": "1. Obtain a detailed family history, specifically inquiring about similar symptoms in relatives. 2. Order genetic testing for MEFV gene mutations associated with FMF. 3. Consider colchicine trial if FMF is suspected based on clinical presentation and family history, while awaiting genetic test results. 4. Rule out infectious etiologies with appropriate cultures and serologies. 5. Consult with a rheumatologist or geneticist for further evaluation and management.",
+    "bias_considerations": [
+      "The models that provided diagnoses (meta-llama/llama-3.2-3b-instruct) suggested Inflammatory Bowel Disease and Reactive Arthritis. This could reflect a bias towards more common diagnoses in Western populations, as FMF is more prevalent in specific ethnic groups."
+    ]
+  }
+}

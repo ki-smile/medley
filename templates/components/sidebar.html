@@ -1,0 +1,146 @@
+<!-- Recent Analyses Sidebar Component -->
+<div id="recent-sidebar" style="position: fixed; right: -320px; top: 0; width: 320px; height: 100vh; 
+                                 background: var(--md-sys-color-surface); 
+                                 box-shadow: -2px 0 8px rgba(0,0,0,0.1); 
+                                 transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+                                 z-index: 1000; display: flex; flex-direction: column;">
+    
+    <!-- Header -->
+    <div style="padding: 20px; border-bottom: 1px solid var(--md-sys-color-outline-variant); 
+                background: var(--md-sys-color-primary-container);">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h3 style="font-size: var(--md-sys-typescale-title-large); margin: 0;">
+                Recent Analyses
+            </h3>
+            <button onclick="toggleSidebar()" 
+                    style="background: none; border: none; cursor: pointer; padding: 4px;">
+                <span class="material-symbols-rounded">close</span>
+            </button>
+        </div>
+    </div>
+    
+    <!-- Session Stats -->
+    <div style="padding: 16px; background: var(--md-sys-color-surface-variant);">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-size: 12px;">
+            <div>
+                <div style="color: var(--md-sys-color-on-surface-variant);">Session Duration</div>
+                <div style="font-weight: 600;" id="session-duration">--</div>
+            </div>
+            <div>
+                <div style="color: var(--md-sys-color-on-surface-variant);">Total Analyses</div>
+                <div style="font-weight: 600;" id="total-analyses">0</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Recent Analyses List -->
+    <div id="recent-analyses-sidebar" style="flex: 1; overflow-y: auto; padding: 8px 0;">
+        <!-- Will be populated by session.js -->
+    </div>
+    
+    <!-- Actions -->
+    <div style="padding: 16px; border-top: 1px solid var(--md-sys-color-outline-variant);">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+            <button class="btn btn-text" onclick="medleySession.clearRecentAnalyses()" 
+                    style="font-size: 12px; padding: 8px;">
+                <span class="material-symbols-rounded" style="font-size: 16px;">delete</span>
+                Clear All
+            </button>
+            <button class="btn btn-text" onclick="medleySession.exportSession()" 
+                    style="font-size: 12px; padding: 8px;">
+                <span class="material-symbols-rounded" style="font-size: 16px;">download</span>
+                Export
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Toggle Button -->
+<button id="sidebar-toggle" onclick="toggleSidebar()" 
+        style="position: fixed; right: 20px; bottom: 100px; width: 56px; height: 56px; 
+               border-radius: 16px; background: var(--md-sys-color-secondary-container); 
+               color: var(--md-sys-color-on-secondary-container); 
+               display: flex; align-items: center; justify-content: center; 
+               box-shadow: var(--md-sys-elevation-level3); 
+               cursor: pointer; border: none; 
+               transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+               z-index: 999;">
+    <span class="material-symbols-rounded">history</span>
+    <div id="recent-count-badge" 
+         style="position: absolute; top: -4px; right: -4px; 
+                width: 20px; height: 20px; border-radius: 10px; 
+                background: var(--md-sys-color-error); color: white; 
+                font-size: 11px; font-weight: bold; 
+                display: flex; align-items: center; justify-content: center; 
+                display: none;">
+        0
+    </div>
+</button>
+
+<script>
+let sidebarOpen = false;
+
+function toggleSidebar() {
+    const sidebar = document.getElementById('recent-sidebar');
+    const toggle = document.getElementById('sidebar-toggle');
+    
+    sidebarOpen = !sidebarOpen;
+    
+    if (sidebarOpen) {
+        sidebar.style.right = '0';
+        toggle.style.transform = 'scale(0.9)';
+        
+        // Update stats
+        const stats = medleySession.getSessionStats();
+        document.getElementById('session-duration').textContent = stats.sessionDuration;
+        document.getElementById('total-analyses').textContent = stats.totalAnalyses;
+        
+        // Update recent analyses
+        medleySession.updateRecentAnalysesUI();
+    } else {
+        sidebar.style.right = '-320px';
+        toggle.style.transform = 'scale(1)';
+    }
+}
+
+// Update badge count
+function updateRecentBadge() {
+    const recent = medleySession.getRecentAnalyses();
+    const badge = document.getElementById('recent-count-badge');
+    
+    if (recent.length > 0) {
+        badge.textContent = recent.length;
+        badge.style.display = 'flex';
+    } else {
+        badge.style.display = 'none';
+    }
+}
+
+// Initialize on load
+window.addEventListener('load', function() {
+    updateRecentBadge();
+    
+    // Update badge when storage changes
+    window.addEventListener('storage', function(e) {
+        if (e.key === 'medley_recent_analyses') {
+            updateRecentBadge();
+            if (sidebarOpen) {
+                medleySession.updateRecentAnalysesUI();
+            }
+        }
+    });
+});
+
+// Hover effect for toggle button
+document.getElementById('sidebar-toggle').addEventListener('mouseenter', function() {
+    if (!sidebarOpen) {
+        this.style.transform = 'scale(1.1)';
+    }
+});
+
+document.getElementById('sidebar-toggle').addEventListener('mouseleave', function() {
+    if (!sidebarOpen) {
+        this.style.transform = 'scale(1)';
+    }
+});
+</script>

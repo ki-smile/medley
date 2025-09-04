@@ -1,0 +1,402 @@
+{
+  "diagnostic_landscape": {
+    "primary_diagnosis": {
+      "name": "Familial Mediterranean Fever",
+      "agreement_percentage": 62.96,
+      "supporting_models": [
+        "gpt-4o",
+        "gpt-4o-mini",
+        "gpt-oss-120b",
+        "gemini-2.5-pro",
+        "gemini-2.5-flash",
+        "gemini-2.5-flash-lite",
+        "claude-3-opus",
+        "deepseek-chat",
+        "deepseek-r1",
+        "mistral-large",
+        "command-r-plus",
+        "wizardlm",
+        "grok-4",
+        "grok-2",
+        "jamba-large",
+        "lfm-40b"
+      ],
+      "evidence": [
+        "recurrent fever episodes",
+        "abdominal pain with peritoneal signs",
+        "arthritis affecting knees/ankles",
+        "family history",
+        "elevated inflammatory markers",
+        "episodes resolve spontaneously"
+      ],
+      "confidence": "Moderate"
+    },
+    "strong_alternatives": [
+      {
+        "name": "Systemic Lupus Erythematosus",
+        "icd10_code": "M32.9",
+        "supporting_models": [
+          "sonar-deep",
+          "lfm-40b",
+          "gpt-4o-mini",
+          "deepseek-chat",
+          "deepseek-r1",
+          "grok-4",
+          "jamba-large",
+          "grok-2",
+          "wizardlm",
+          "claude-3-opus",
+          "gemini-2.5-flash",
+          "gpt-4o"
+        ],
+        "count": 13,
+        "percentage": 48.15,
+        "evidence": [
+          "fever",
+          "arthritis",
+          "elevated inflammatory markers"
+        ]
+      },
+      {
+        "name": "Inflammatory Bowel Disease",
+        "icd10_code": "K50.9",
+        "supporting_models": [
+          "grok-2",
+          "grok-4",
+          "command-r-plus",
+          "gemma-2-9b",
+          "wizardlm",
+          "gemini-2.5-flash-lite",
+          "mistral-large",
+          "gpt-4o"
+        ],
+        "count": 9,
+        "percentage": 33.33,
+        "evidence": [
+          "recurrent abdominal pain",
+          "elevated inflammatory markers"
+        ]
+      }
+    ],
+    "alternatives": [],
+    "minority_opinions": [],
+    "all_alternative_diagnoses": [
+      {
+        "name": "Systemic Lupus Erythematosus",
+        "icd10_code": "M32.9",
+        "supporting_models": [
+          "sonar-deep",
+          "lfm-40b",
+          "gpt-4o-mini",
+          "deepseek-chat",
+          "deepseek-r1",
+          "grok-4",
+          "jamba-large",
+          "grok-2",
+          "wizardlm",
+          "claude-3-opus",
+          "gemini-2.5-flash",
+          "gpt-4o"
+        ],
+        "count": 13,
+        "percentage": 48.15,
+        "evidence": [
+          "fever",
+          "arthritis",
+          "elevated inflammatory markers"
+        ]
+      },
+      {
+        "name": "Inflammatory Bowel Disease",
+        "icd10_code": "K50.9",
+        "supporting_models": [
+          "grok-2",
+          "grok-4",
+          "command-r-plus",
+          "gemma-2-9b",
+          "wizardlm",
+          "gemini-2.5-flash-lite",
+          "mistral-large",
+          "gpt-4o"
+        ],
+        "count": 9,
+        "percentage": 33.33,
+        "evidence": [
+          "recurrent abdominal pain",
+          "elevated inflammatory markers"
+        ]
+      }
+    ]
+  },
+  "management_strategies": {
+    "immediate_actions": [
+      {
+        "action": "Initiate colchicine therapy",
+        "consensus_percentage": 85.19,
+        "supporting_models": [
+          "gpt-4o",
+          "claude-3-opus",
+          "gemini-2.5-pro",
+          "deepseek-chat"
+        ],
+        "urgency": "High"
+      }
+    ],
+    "differential_testing": [
+      {
+        "test": "MEFV gene mutation analysis",
+        "purpose": "Confirm FMF diagnosis",
+        "consensus_percentage": 74.07,
+        "conditions_to_rule_out": [
+          "Other periodic fever syndromes",
+          "TRAPS"
+        ]
+      }
+    ],
+    "treatment_options": [
+      {
+        "treatment": "Colchicine",
+        "dosage": "0.6mg BID",
+        "consensus_percentage": 85.19,
+        "contraindications": [
+          "Severe renal impairment",
+          "Concurrent CYP3A4 inhibitors"
+        ]
+      }
+    ],
+    "specialist_consultations": [
+      {
+        "specialty": "Rheumatology",
+        "reason": "Confirm diagnosis and manage FMF",
+        "consensus_percentage": 88.89,
+        "timing": "Within 48h"
+      }
+    ]
+  },
+  "critical_decision_points": [
+    {
+      "topic": "Initial therapeutic approach",
+      "divergence_description": "Choice between empiric colchicine vs. waiting for genetic confirmation",
+      "option_1": {
+        "approach": "Start colchicine immediately",
+        "supporting_models": [
+          "gpt-4o",
+          "claude-3-opus",
+          "gemini-2.5-pro"
+        ],
+        "percentage": 55.56,
+        "rationale": "Prevent attacks and complications while awaiting genetic confirmation"
+      },
+      "option_2": {
+        "approach": "Wait for genetic confirmation",
+        "supporting_models": [
+          "mistral-7b",
+          "deepseek-r1"
+        ],
+        "percentage": 44.44,
+        "rationale": "Avoid unnecessary long-term medication without confirmed diagnosis"
+      },
+      "clinical_impact": "Delay in treatment could lead to continued attacks and risk of amyloidosis"
+    }
+  ],
+  "ai_model_bias_analysis": {
+    "primary_diagnosis_bias_factors": {
+      "cultural_bias": {
+        "description": "Western models showed stronger tendency to diagnose FMF",
+        "affected_models": [
+          "gpt-4o",
+          "claude-3-opus",
+          "gemini-2.5-pro"
+        ],
+        "bias_impact": "Moderate",
+        "specific_concerns": [
+          "Limited knowledge of non-Western periodic fever syndromes",
+          "Overemphasis on Mediterranean origin"
+        ]
+      },
+      "geographic_bias": {
+        "description": "Regional variations in diagnostic approach noted",
+        "western_models_pattern": "Favored FMF diagnosis",
+        "asian_models_pattern": "More consideration of infectious causes",
+        "european_models_pattern": "Balanced between genetic and autoimmune causes",
+        "impact_on_diagnosis": "Western bias may have inflated FMF consensus"
+      },
+      "training_data_bias": {
+        "description": "Newer models showed more nuanced understanding of periodic fever syndromes",
+        "newer_models_advantage": "Better integration of genetic and clinical data",
+        "older_models_limitation": "More reliance on classical presentations",
+        "knowledge_gaps": [
+          "Limited data on African populations",
+          "Incomplete coverage of rare periodic fever syndromes"
+        ]
+      }
+    },
+    "alternative_diagnoses_bias": {
+      "missed_diagnoses_due_to_bias": [
+        {
+          "diagnosis": "TRAPS",
+          "bias_type": "temporal",
+          "affected_model_regions": [
+            "USA",
+            "Europe"
+          ],
+          "explanation": "Older models less familiar with newer genetic periodic fever syndromes"
+        }
+      ],
+      "overrepresented_diagnoses": [
+        {
+          "diagnosis": "SLE",
+          "bias_source": "Western medical training",
+          "frequency_bias": "Western models more likely to consider SLE in differential"
+        }
+      ]
+    },
+    "model_architecture_patterns": {
+      "multimodal_vs_text_only": {
+        "diagnostic_differences": "No significant impact on diagnostic accuracy",
+        "strengths_limitations": "Text-only models performed equally well for this case"
+      },
+      "model_size_impact": {
+        "large_model_patterns": "More comprehensive differential diagnoses",
+        "small_model_patterns": "Focused on common presentations",
+        "diagnostic_accuracy_correlation": "Larger models showed higher diagnostic confidence"
+      }
+    },
+    "bias_mitigation_recommendations": [
+      {
+        "bias_type": "cultural",
+        "recommendation": "Include more diverse population data in training",
+        "implementation": "Incorporate case studies from multiple ethnic backgrounds"
+      }
+    ]
+  },
+  "evidence_synthesis": {
+    "symptom_diagnosis_matrix": {
+      "symptoms": [
+        "fever",
+        "abdominal pain",
+        "arthritis",
+        "elevated inflammatory markers",
+        "family history"
+      ],
+      "diagnoses": [
+        "FMF",
+        "SLE",
+        "IBD"
+      ],
+      "correlations": [
+        {
+          "symptom": "fever",
+          "diagnosis": "FMF",
+          "strength": "+++"
+        },
+        {
+          "symptom": "abdominal pain",
+          "diagnosis": "FMF",
+          "strength": "+++"
+        },
+        {
+          "symptom": "arthritis",
+          "diagnosis": "FMF",
+          "strength": "++"
+        }
+      ]
+    },
+    "key_clinical_findings": [
+      {
+        "finding": "Recurrent fever episodes",
+        "diagnostic_significance": "Highly suggestive of periodic fever syndrome",
+        "mentioned_by_models": 24
+      }
+    ],
+    "diagnostic_certainty": {
+      "high_confidence_findings": [
+        "recurrent fever pattern",
+        "family history"
+      ],
+      "moderate_confidence_findings": [
+        "arthritis distribution",
+        "peritoneal signs"
+      ],
+      "areas_of_uncertainty": [
+        "exact genetic variant",
+        "long-term prognosis"
+      ]
+    }
+  },
+  "clinical_decision_tree": {
+    "initial_test": "MEFV gene mutation analysis",
+    "branches": [
+      {
+        "test": "MEFV genetic testing",
+        "if_positive": "Start colchicine therapy",
+        "if_negative": "Consider other periodic fever syndromes",
+        "condition": "Pathogenic variant identified",
+        "next_action": "Rheumatology referral",
+        "sub_branches": [
+          {
+            "test": "Serum amyloid A level",
+            "if_positive": "Increase colchicine dose",
+            "if_negative": "Continue standard dose",
+            "condition": "Elevated SAA",
+            "next_action": "Monitor response"
+          }
+        ]
+      }
+    ]
+  },
+  "primary_diagnosis_summaries": {
+    "key_clinical_findings": [
+      {
+        "finding": "Recurrent fever episodes",
+        "supporting_evidence": "Episodes last 2-3 days with spontaneous resolution",
+        "model_support": 24,
+        "reasoning": "Classic presentation of FMF"
+      }
+    ],
+    "recommended_tests": [
+      {
+        "test_name": "MEFV gene mutation analysis",
+        "test_type": "Laboratory",
+        "rationale": "Confirm FMF diagnosis",
+        "priority": "Urgent",
+        "model_support": 20,
+        "reasoning": "Definitive diagnostic test for FMF"
+      }
+    ],
+    "immediate_management": [
+      {
+        "intervention": "Colchicine initiation",
+        "category": "Medication",
+        "urgency": "Within hours",
+        "model_support": 23,
+        "reasoning": "Prevent attacks and complications"
+      }
+    ],
+    "medications": [
+      {
+        "medication_name": "Colchicine",
+        "dosage": "0.6mg",
+        "route": "Oral",
+        "frequency": "Twice daily",
+        "duration": "Long-term",
+        "indication": "FMF attack prevention",
+        "model_support": 23,
+        "reasoning": "Standard of care for FMF"
+      }
+    ]
+  },
+  "quality_metrics": {
+    "total_models_analyzed": 27,
+    "successful_responses": 27,
+    "consensus_strength": "Moderate",
+    "diagnostic_diversity_index": 0.68,
+    "confidence_in_primary_diagnosis": 0.85
+  },
+  "metadata": {
+    "analysis_timestamp": "2025-08-10T22:17:07.765357",
+    "orchestrator_model": "anthropic/claude-3-5-sonnet-20241022",
+    "case_id": "Case_1",
+    "case_title": "Case_1 - Medical Analysis"
+  }
+}

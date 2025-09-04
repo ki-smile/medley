@@ -1,0 +1,420 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container" style="max-width: 1200px; margin: 0 auto; padding: 24px;">
+    <h1 style="font-size: var(--md-sys-typescale-display-small); margin-bottom: 16px;">
+        API Documentation
+    </h1>
+    <p style="color: var(--md-sys-color-on-surface-variant); margin-bottom: 32px;">
+        REST API endpoints for integrating with MEDLEY's medical AI ensemble system
+    </p>
+
+    <!-- API Overview -->
+    <div class="card" style="padding: 32px; margin-bottom: 24px;">
+        <h2 style="font-size: var(--md-sys-typescale-headline-small); margin-bottom: 24px;">
+            Overview
+        </h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 24px;">
+            <div>
+                <h3 style="font-size: var(--md-sys-typescale-title-medium); margin-bottom: 8px;">Base URL</h3>
+                <code style="background: var(--md-sys-color-surface-variant); padding: 8px; border-radius: 4px; display: block;">
+                    http://localhost:5000/api
+                </code>
+            </div>
+            <div>
+                <h3 style="font-size: var(--md-sys-typescale-title-medium); margin-bottom: 8px;">Authentication</h3>
+                <p style="font-size: 14px;">API key in session or header (optional)</p>
+            </div>
+            <div>
+                <h3 style="font-size: var(--md-sys-typescale-title-medium); margin-bottom: 8px;">Response Format</h3>
+                <p style="font-size: 14px;">JSON (application/json)</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- API Endpoints -->
+    <div class="card" style="padding: 32px;">
+        <h2 style="font-size: var(--md-sys-typescale-headline-small); margin-bottom: 24px;">
+            Endpoints
+        </h2>
+
+        <!-- Health Check -->
+        <div class="endpoint-section" style="margin-bottom: 32px; padding: 24px; background: var(--md-sys-color-surface-variant); border-radius: 8px;">
+            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                <span class="method-badge" style="background: var(--md-sys-color-primary); color: white; padding: 4px 12px; border-radius: 4px; font-weight: 600;">GET</span>
+                <code style="font-size: 18px; font-weight: 500;">/api/health</code>
+            </div>
+            <p style="margin-bottom: 16px;">Check system health and status</p>
+            
+            <h4 style="font-size: var(--md-sys-typescale-title-small); margin-bottom: 8px;">Response</h4>
+            <pre style="background: var(--md-sys-color-surface); padding: 16px; border-radius: 4px; overflow-x: auto;"><code>{
+  "status": "healthy",
+  "timestamp": "2025-08-10T12:00:00Z",
+  "version": "2.0.0",
+  "checks": {
+    "cache_directory": true,
+    "reports_directory": true,
+    "predefined_cases": 12,
+    "cached_reports": 45
+  },
+  "statistics": {
+    "total_cases_available": 12,
+    "models_supported": 31,
+    "countries_represented": 6
+  }
+}</code></pre>
+        </div>
+
+        <!-- Get Cases -->
+        <div class="endpoint-section" style="margin-bottom: 32px; padding: 24px; background: var(--md-sys-color-surface-variant); border-radius: 8px;">
+            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                <span class="method-badge" style="background: var(--md-sys-color-primary); color: white; padding: 4px 12px; border-radius: 4px; font-weight: 600;">GET</span>
+                <code style="font-size: 18px; font-weight: 500;">/api/cases</code>
+            </div>
+            <p style="margin-bottom: 16px;">Get list of all predefined medical cases</p>
+            
+            <h4 style="font-size: var(--md-sys-typescale-title-small); margin-bottom: 8px;">Response</h4>
+            <pre style="background: var(--md-sys-color-surface); padding: 16px; border-radius: 4px; overflow-x: auto;"><code>[
+  {
+    "id": "Case_1",
+    "key": "case_001",
+    "title": "Familial Mediterranean Fever",
+    "file": "case_001_fmf.txt",
+    "specialty": "Rheumatology",
+    "complexity": "High",
+    "description": "Young adult with recurrent fever and abdominal pain",
+    "has_report": true,
+    "report_date": "2025-08-10 10:30"
+  },
+  ...
+]</code></pre>
+        </div>
+
+        <!-- Get Case Report -->
+        <div class="endpoint-section" style="margin-bottom: 32px; padding: 24px; background: var(--md-sys-color-surface-variant); border-radius: 8px;">
+            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                <span class="method-badge" style="background: var(--md-sys-color-primary); color: white; padding: 4px 12px; border-radius: 4px; font-weight: 600;">GET</span>
+                <code style="font-size: 18px; font-weight: 500;">/api/case/{case_key}/report</code>
+            </div>
+            <p style="margin-bottom: 16px;">Get detailed ensemble analysis report for a specific case</p>
+            
+            <h4 style="font-size: var(--md-sys-typescale-title-small); margin-bottom: 8px;">Parameters</h4>
+            <table style="width: 100%; margin-bottom: 16px;">
+                <tr>
+                    <td style="padding: 8px; font-weight: 600;">case_key</td>
+                    <td style="padding: 8px;">string</td>
+                    <td style="padding: 8px;">Case identifier (e.g., case_001)</td>
+                </tr>
+            </table>
+            
+            <h4 style="font-size: var(--md-sys-typescale-title-small); margin-bottom: 8px;">Response</h4>
+            <pre style="background: var(--md-sys-color-surface); padding: 16px; border-radius: 4px; overflow-x: auto;"><code>{
+  "case_info": {
+    "id": "Case_1",
+    "title": "Familial Mediterranean Fever",
+    "specialty": "Rheumatology",
+    "complexity": "High"
+  },
+  "ensemble_data": {
+    "diagnostic_landscape": {
+      "primary_diagnosis": {
+        "name": "Familial Mediterranean Fever",
+        "agreement_percentage": 67.74,
+        "model_count": 21,
+        "supporting_models": ["GPT-4o", "Claude Opus", ...]
+      },
+      "strong_alternatives": [...],
+      "minority_opinions": [...]
+    },
+    "model_responses": [...],
+    "bias_analysis": {...}
+  },
+  "generated_at": "2025-08-10 10:30:00"
+}</code></pre>
+        </div>
+
+        <!-- Get Model Responses -->
+        <div class="endpoint-section" style="margin-bottom: 32px; padding: 24px; background: var(--md-sys-color-surface-variant); border-radius: 8px;">
+            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                <span class="method-badge" style="background: var(--md-sys-color-primary); color: white; padding: 4px 12px; border-radius: 4px; font-weight: 600;">GET</span>
+                <code style="font-size: 18px; font-weight: 500;">/api/case/{case_key}/models</code>
+            </div>
+            <p style="margin-bottom: 16px;">Get individual model responses for a case</p>
+            
+            <h4 style="font-size: var(--md-sys-typescale-title-small); margin-bottom: 8px;">Response</h4>
+            <pre style="background: var(--md-sys-color-surface); padding: 16px; border-radius: 4px; overflow-x: auto;"><code>[
+  {
+    "model_name": "openai/gpt-4o",
+    "model_id": "openai/gpt-4o",
+    "response": "{\"primary_diagnosis\": {...}, ...}",
+    "tokens_used": 1234,
+    "response_time": 2.3,
+    "error": null
+  },
+  ...
+]</code></pre>
+        </div>
+
+        <!-- Download PDF -->
+        <div class="endpoint-section" style="margin-bottom: 32px; padding: 24px; background: var(--md-sys-color-surface-variant); border-radius: 8px;">
+            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                <span class="method-badge" style="background: var(--md-sys-color-primary); color: white; padding: 4px 12px; border-radius: 4px; font-weight: 600;">GET</span>
+                <code style="font-size: 18px; font-weight: 500;">/api/case/{case_key}/pdf</code>
+            </div>
+            <p style="margin-bottom: 16px;">Download PDF report for a case</p>
+            
+            <h4 style="font-size: var(--md-sys-typescale-title-small); margin-bottom: 8px;">Response</h4>
+            <p style="font-size: 14px;">Binary PDF file (application/pdf)</p>
+        </div>
+
+        <!-- Session Management -->
+        <div class="endpoint-section" style="margin-bottom: 32px; padding: 24px; background: var(--md-sys-color-surface-variant); border-radius: 8px;">
+            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                <span class="method-badge" style="background: var(--md-sys-color-secondary); color: white; padding: 4px 12px; border-radius: 4px; font-weight: 600;">POST</span>
+                <code style="font-size: 18px; font-weight: 500;">/api/session/set-key</code>
+            </div>
+            <p style="margin-bottom: 16px;">Set OpenRouter API key in session</p>
+            
+            <h4 style="font-size: var(--md-sys-typescale-title-small); margin-bottom: 8px;">Request Body</h4>
+            <pre style="background: var(--md-sys-color-surface); padding: 16px; border-radius: 4px; overflow-x: auto;"><code>{
+  "api_key": "sk-or-v1-..."
+}</code></pre>
+            
+            <h4 style="font-size: var(--md-sys-typescale-title-small); margin-bottom: 8px;">Response</h4>
+            <pre style="background: var(--md-sys-color-surface); padding: 16px; border-radius: 4px; overflow-x: auto;"><code>{
+  "success": true,
+  "message": "API key set"
+}</code></pre>
+        </div>
+
+        <!-- Performance Metrics -->
+        <div class="endpoint-section" style="margin-bottom: 32px; padding: 24px; background: var(--md-sys-color-surface-variant); border-radius: 8px;">
+            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                <span class="method-badge" style="background: var(--md-sys-color-primary); color: white; padding: 4px 12px; border-radius: 4px; font-weight: 600;">GET</span>
+                <code style="font-size: 18px; font-weight: 500;">/api/performance</code>
+            </div>
+            <p style="margin-bottom: 16px;">Get model performance statistics</p>
+            
+            <h4 style="font-size: var(--md-sys-typescale-title-small); margin-bottom: 8px;">Response</h4>
+            <pre style="background: var(--md-sys-color-surface); padding: 16px; border-radius: 4px; overflow-x: auto;"><code>[
+  {
+    "model_name": "openai/gpt-4o",
+    "consensus_participation_rate": 78.5,
+    "total_cases_analyzed": 12,
+    "unique_diagnoses_count": 15,
+    "average_rating": 4.2
+  },
+  ...
+]</code></pre>
+        </div>
+
+        <!-- WebSocket Events -->
+        <div class="endpoint-section" style="margin-bottom: 32px; padding: 24px; background: var(--md-sys-color-tertiary-container); border-radius: 8px;">
+            <h3 style="font-size: var(--md-sys-typescale-title-large); margin-bottom: 16px;">
+                WebSocket Events
+            </h3>
+            <p style="margin-bottom: 16px;">Real-time communication via Socket.IO</p>
+            
+            <h4 style="font-size: var(--md-sys-typescale-title-small); margin-bottom: 8px;">Connection</h4>
+            <pre style="background: var(--md-sys-color-surface); padding: 16px; border-radius: 4px; overflow-x: auto;"><code>const socket = io('http://localhost:5000');
+
+socket.on('connect', () => {
+    console.log('Connected to MEDLEY server');
+});</code></pre>
+            
+            <h4 style="font-size: var(--md-sys-typescale-title-small); margin-bottom: 8px;">Events</h4>
+            <table style="width: 100%;">
+                <thead>
+                    <tr style="background: var(--md-sys-color-surface);">
+                        <th style="padding: 12px; text-align: left;">Event</th>
+                        <th style="padding: 12px; text-align: left;">Direction</th>
+                        <th style="padding: 12px; text-align: left;">Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="padding: 12px;"><code>analyze_case</code></td>
+                        <td style="padding: 12px;">Client → Server</td>
+                        <td style="padding: 12px;">Start case analysis</td>
+                    </tr>
+                    <tr style="background: var(--md-sys-color-surface);">
+                        <td style="padding: 12px;"><code>analysis_started</code></td>
+                        <td style="padding: 12px;">Server → Client</td>
+                        <td style="padding: 12px;">Analysis has begun</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 12px;"><code>model_progress</code></td>
+                        <td style="padding: 12px;">Server → Client</td>
+                        <td style="padding: 12px;">Model processing update</td>
+                    </tr>
+                    <tr style="background: var(--md-sys-color-surface);">
+                        <td style="padding: 12px;"><code>analysis_complete</code></td>
+                        <td style="padding: 12px;">Server → Client</td>
+                        <td style="padding: 12px;">Analysis finished</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 12px;"><code>error</code></td>
+                        <td style="padding: 12px;">Server → Client</td>
+                        <td style="padding: 12px;">Error occurred</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Error Codes -->
+    <div class="card" style="padding: 32px; margin-top: 24px;">
+        <h2 style="font-size: var(--md-sys-typescale-headline-small); margin-bottom: 24px;">
+            Error Codes
+        </h2>
+        <table style="width: 100%;">
+            <thead>
+                <tr style="background: var(--md-sys-color-surface-variant);">
+                    <th style="padding: 12px; text-align: left;">Code</th>
+                    <th style="padding: 12px; text-align: left;">Description</th>
+                    <th style="padding: 12px; text-align: left;">Example</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="padding: 12px;"><strong>200</strong></td>
+                    <td style="padding: 12px;">Success</td>
+                    <td style="padding: 12px;"><code>{"success": true}</code></td>
+                </tr>
+                <tr style="background: var(--md-sys-color-surface-variant);">
+                    <td style="padding: 12px;"><strong>400</strong></td>
+                    <td style="padding: 12px;">Bad Request</td>
+                    <td style="padding: 12px;"><code>{"error": "Missing required fields"}</code></td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px;"><strong>404</strong></td>
+                    <td style="padding: 12px;">Not Found</td>
+                    <td style="padding: 12px;"><code>{"error": "Case not found"}</code></td>
+                </tr>
+                <tr style="background: var(--md-sys-color-surface-variant);">
+                    <td style="padding: 12px;"><strong>500</strong></td>
+                    <td style="padding: 12px;">Server Error</td>
+                    <td style="padding: 12px;"><code>{"error": "Internal server error"}</code></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Code Examples -->
+    <div class="card" style="padding: 32px; margin-top: 24px;">
+        <h2 style="font-size: var(--md-sys-typescale-headline-small); margin-bottom: 24px;">
+            Code Examples
+        </h2>
+        
+        <!-- Python Example -->
+        <div style="margin-bottom: 24px;">
+            <h3 style="font-size: var(--md-sys-typescale-title-medium); margin-bottom: 12px;">Python</h3>
+            <pre style="background: var(--md-sys-color-surface-variant); padding: 16px; border-radius: 4px; overflow-x: auto;"><code>import requests
+
+# Get all cases
+response = requests.get('http://localhost:5000/api/cases')
+cases = response.json()
+
+# Get specific case report
+case_key = 'case_001'
+response = requests.get(f'http://localhost:5000/api/case/{case_key}/report')
+report = response.json()
+
+print(f"Primary diagnosis: {report['ensemble_data']['diagnostic_landscape']['primary_diagnosis']['name']}")
+print(f"Agreement: {report['ensemble_data']['diagnostic_landscape']['primary_diagnosis']['agreement_percentage']}%")</code></pre>
+        </div>
+
+        <!-- JavaScript Example -->
+        <div style="margin-bottom: 24px;">
+            <h3 style="font-size: var(--md-sys-typescale-title-medium); margin-bottom: 12px;">JavaScript</h3>
+            <pre style="background: var(--md-sys-color-surface-variant); padding: 16px; border-radius: 4px; overflow-x: auto;"><code>// Fetch all cases
+fetch('/api/cases')
+    .then(response => response.json())
+    .then(cases => {
+        console.log(`Found ${cases.length} cases`);
+    });
+
+// Get case report with async/await
+async function getCaseReport(caseKey) {
+    const response = await fetch(`/api/case/${caseKey}/report`);
+    const report = await response.json();
+    
+    const primary = report.ensemble_data.diagnostic_landscape.primary_diagnosis;
+    console.log(`Primary: ${primary.name} (${primary.agreement_percentage}%)`);
+}</code></pre>
+        </div>
+
+        <!-- cURL Example -->
+        <div>
+            <h3 style="font-size: var(--md-sys-typescale-title-medium); margin-bottom: 12px;">cURL</h3>
+            <pre style="background: var(--md-sys-color-surface-variant); padding: 16px; border-radius: 4px; overflow-x: auto;"><code># Check health
+curl http://localhost:5000/api/health
+
+# Get cases
+curl http://localhost:5000/api/cases
+
+# Get case report
+curl http://localhost:5000/api/case/case_001/report
+
+# Set API key
+curl -X POST http://localhost:5000/api/session/set-key \
+     -H "Content-Type: application/json" \
+     -d '{"api_key": "sk-or-v1-..."}'</code></pre>
+        </div>
+    </div>
+
+    <!-- Rate Limits -->
+    <div class="card" style="padding: 32px; margin-top: 24px;">
+        <h2 style="font-size: var(--md-sys-typescale-headline-small); margin-bottom: 24px;">
+            Rate Limits & Best Practices
+        </h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px;">
+            <div>
+                <h3 style="font-size: var(--md-sys-typescale-title-medium); margin-bottom: 12px;">Rate Limits</h3>
+                <ul style="list-style: none; padding: 0;">
+                    <li style="padding: 8px 0;">✓ Default: 100 requests/hour</li>
+                    <li style="padding: 8px 0;">✓ With API key: 1000 requests/hour</li>
+                    <li style="padding: 8px 0;">✓ WebSocket: No limit</li>
+                </ul>
+            </div>
+            <div>
+                <h3 style="font-size: var(--md-sys-typescale-title-medium); margin-bottom: 12px;">Best Practices</h3>
+                <ul style="list-style: none; padding: 0;">
+                    <li style="padding: 8px 0;">✓ Use caching when possible</li>
+                    <li style="padding: 8px 0;">✓ Batch requests efficiently</li>
+                    <li style="padding: 8px 0;">✓ Handle errors gracefully</li>
+                    <li style="padding: 8px 0;">✓ Use WebSocket for real-time updates</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.method-badge {
+    font-family: monospace;
+    font-size: 12px;
+}
+
+code {
+    font-family: 'Monaco', 'Courier New', monospace;
+}
+
+pre {
+    margin: 0;
+}
+
+.endpoint-section:hover {
+    transform: translateY(-2px);
+    transition: transform 0.2s;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+th {
+    font-weight: 600;
+}
+</style>
+{% endblock %}

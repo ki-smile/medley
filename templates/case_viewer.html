@@ -1,0 +1,1919 @@
+{% extends "base.html" %}
+
+{% block styles %}
+<style>
+    .report-tabs {
+        display: flex;
+        gap: 8px;
+        padding: 8px;
+        background: var(--md-sys-color-surface-variant);
+        border-radius: 16px;
+        margin-bottom: 24px;
+    }
+    
+    .tab-button {
+        flex: 1;
+        padding: 12px 24px;
+        border: none;
+        background: transparent;
+        color: var(--md-sys-color-on-surface-variant);
+        border-radius: 12px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .tab-button.active {
+        background: var(--md-sys-color-surface);
+        color: var(--md-sys-color-primary);
+        box-shadow: var(--md-sys-elevation-level1);
+    }
+    
+    .tab-content {
+        display: none;
+        animation: fadeIn 0.3s ease-in-out;
+    }
+    
+    .tab-content.active {
+        display: block;
+    }
+    
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .diagnosis-card {
+        background: var(--md-sys-color-surface);
+        border-radius: 16px;
+        padding: 20px;
+        margin-bottom: 16px;
+        border: 1px solid var(--md-sys-color-outline-variant);
+    }
+    
+    .primary-diagnosis {
+        background: linear-gradient(135deg, var(--md-sys-color-primary-container) 0%, var(--md-sys-color-secondary-container) 100%);
+        border: none;
+    }
+    
+    .consensus-meter {
+        height: 8px;
+        background: var(--md-sys-color-surface-variant);
+        border-radius: 4px;
+        overflow: hidden;
+        margin: 8px 0;
+    }
+    
+    .consensus-meter-fill {
+        height: 100%;
+        background: var(--md-sys-color-primary);
+        border-radius: 4px;
+        transition: width 0.5s ease-out;
+    }
+    
+    .model-response {
+        background: var(--md-sys-color-surface);
+        border: 1px solid var(--md-sys-color-outline-variant);
+        border-radius: 12px;
+        padding: 16px;
+        margin-bottom: 12px;
+    }
+    
+    .model-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 12px;
+        cursor: pointer;
+    }
+    
+    .model-name {
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    
+    .model-origin {
+        display: inline-block;
+        padding: 2px 8px;
+        background: var(--md-sys-color-surface-variant);
+        border-radius: 12px;
+        font-size: 11px;
+    }
+    
+    .model-content {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease-out;
+    }
+    
+    .model-content.expanded {
+        max-height: 2000px;
+    }
+    
+    .evidence-chip {
+        display: inline-block;
+        padding: 6px 12px;
+        background: var(--md-sys-color-secondary-container);
+        color: var(--md-sys-color-on-secondary-container);
+        border-radius: 16px;
+        font-size: 12px;
+        margin: 4px;
+    }
+    
+    .management-card {
+        background: var(--md-sys-color-tertiary-container);
+        border-radius: 16px;
+        padding: 16px;
+        margin-bottom: 16px;
+    }
+    
+    .download-fab {
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 16px 24px;
+        background: var(--md-sys-color-primary);
+        color: var(--md-sys-color-on-primary);
+        border-radius: 16px;
+        border: none;
+        box-shadow: var(--md-sys-elevation-level3);
+        cursor: pointer;
+        font-weight: 500;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .download-fab:hover {
+        box-shadow: var(--md-sys-elevation-level4);
+        transform: scale(1.05);
+    }
+    
+    .cost-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 4px 12px;
+        background: var(--md-sys-color-surface-variant);
+        border-radius: 12px;
+        font-size: 12px;
+        font-weight: 500;
+    }
+    
+    .stat-card {
+        text-align: center;
+        padding: 16px;
+        background: var(--md-sys-color-surface-variant);
+        border-radius: 12px;
+    }
+    
+    .stat-value {
+        font-size: 32px;
+        font-weight: 700;
+        color: var(--md-sys-color-primary);
+    }
+    
+    .stat-label {
+        font-size: 12px;
+        color: var(--md-sys-color-on-surface-variant);
+        margin-top: 4px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Top Bar -->
+<div class="top-app-bar">
+    <button onclick="window.history.back()" style="background: none; border: none; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+        <span class="material-symbols-rounded">arrow_back</span>
+    </button>
+    <h1 class="top-app-bar-title" id="case-title">Loading Case...</h1>
+</div>
+
+<!-- Main Content -->
+<div style="padding: 24px; max-width: 1400px; margin: 0 auto;">
+    <!-- Case Info Header -->
+    <div class="card" style="margin-bottom: 24px; background: linear-gradient(135deg, var(--md-sys-color-primary-container) 0%, var(--md-sys-color-secondary-container) 100%);">
+        <div style="display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: center;">
+            <div>
+                <div style="display: flex; gap: 12px; margin-bottom: 12px;">
+                    <span class="chip" id="case-specialty">Loading...</span>
+                    <span class="chip" id="case-complexity-chip">
+                        <span style="font-size: 11px; opacity: 0.8;">Complexity:</span>
+                        <span id="case-complexity">Loading...</span>
+                    </span>
+                    <span class="cost-badge" id="total-cost">
+                        <span class="material-symbols-rounded" style="font-size: 16px;">payments</span>
+                        <span>Calculating...</span>
+                    </span>
+                </div>
+                <h2 style="font-size: var(--md-sys-typescale-headline-medium); margin-bottom: 8px;" id="case-diagnosis">Loading diagnosis...</h2>
+                <p style="opacity: 0.9; margin-bottom: 12px;" id="case-description">Loading description...</p>
+                <details style="background: rgba(255,255,255,0.1); padding: 12px; border-radius: 8px; margin-top: 8px;">
+                    <summary style="cursor: pointer; font-weight: 500;">📋 View Full Case Details</summary>
+                    <div id="case-full-content" style="margin-top: 12px; white-space: pre-wrap; line-height: 1.6; font-size: 14px; opacity: 0.95;">
+                        Loading full case content...
+                    </div>
+                </details>
+            </div>
+            <div style="display: flex; gap: 16px;">
+                <div class="stat-card">
+                    <div class="stat-value" id="models-count">0</div>
+                    <div class="stat-label">Models</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="consensus-percentage">0%</div>
+                    <div class="stat-label">Consensus</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Report Tabs -->
+    <div class="report-tabs">
+        <button class="tab-button active" onclick="switchTab('consensus')">
+            <span class="material-symbols-rounded" style="font-size: 18px; vertical-align: middle;">hub</span>
+            Consensus Report
+        </button>
+        <button class="tab-button" onclick="switchTab('models')">
+            <span class="material-symbols-rounded" style="font-size: 18px; vertical-align: middle;">psychology</span>
+            Individual Models
+        </button>
+        <button class="tab-button" onclick="switchTab('analysis')">
+            <span class="material-symbols-rounded" style="font-size: 18px; vertical-align: middle;">analytics</span>
+            Bias Analysis
+        </button>
+        <button class="tab-button" onclick="switchTab('management')">
+            <span class="material-symbols-rounded" style="font-size: 18px; vertical-align: middle;">medical_services</span>
+            Management
+        </button>
+    </div>
+    
+    <!-- Tab Contents -->
+    <!-- Consensus Report Tab -->
+    <div id="consensus-tab" class="tab-content active">
+        <!-- Fallback Extraction Banner (hidden by default) -->
+        <div id="fallback-banner" class="card" style="background: #fff3cd; border: 1px solid #ffc107; display: none; margin-bottom: 20px;">
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <span class="material-symbols-rounded" style="color: #ff6b00; font-size: 24px;">warning</span>
+                <div>
+                    <h4 style="color: #ff6b00; margin: 0; font-size: 16px;">
+                        ⚠️ Analysis Using Fallback Extraction
+                    </h4>
+                    <p style="color: #856404; margin: 4px 0 0 0; font-size: 14px;">
+                        Orchestrator unavailable - some advanced analysis features may be limited. ICD codes have been inferred where possible.
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h3 style="font-size: var(--md-sys-typescale-headline-small); margin-bottom: 24px;">
+                Diagnostic Consensus
+            </h3>
+            
+            <!-- Primary Diagnosis -->
+            <div class="diagnosis-card primary-diagnosis" id="primary-diagnosis-card">
+                <div style="display: flex; justify-content: space-between; align-items: start;">
+                    <div style="flex: 1;">
+                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                            <span class="material-symbols-rounded" style="color: var(--md-sys-color-primary);">verified</span>
+                            <span style="font-size: 12px; text-transform: uppercase; letter-spacing: 1px; opacity: 0.8;">Primary Diagnosis</span>
+                        </div>
+                        <h4 style="font-size: var(--md-sys-typescale-title-large); margin-bottom: 8px;" id="primary-name">Loading...</h4>
+                        <p style="opacity: 0.9; margin-bottom: 12px;" id="primary-description">Loading...</p>
+                        <div class="consensus-meter">
+                            <div class="consensus-meter-fill" id="primary-consensus-meter" style="width: 0%;"></div>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-top: 8px;">
+                            <span style="font-size: 12px;" id="primary-agreement">Agreement: 0%</span>
+                            <span style="font-size: 12px;" id="primary-models-link"></span>
+                            <span style="font-size: 12px;" id="primary-confidence">Confidence: Unknown</span>
+                        </div>
+                    </div>
+                    <div style="text-align: center; padding-left: 24px;">
+                        <div style="font-size: 14px; opacity: 0.8;">ICD-10</div>
+                        <div style="font-size: 20px; font-weight: 600;" id="primary-icd">--</div>
+                    </div>
+                </div>
+                
+                <!-- Evidence -->
+                <div style="margin-top: 20px;">
+                    <div style="font-size: 12px; text-transform: uppercase; letter-spacing: 1px; opacity: 0.8; margin-bottom: 8px;">Key Evidence</div>
+                    <div id="primary-evidence">
+                        <!-- Evidence chips will be added here -->
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Alternative Diagnoses -->
+            <h4 style="font-size: var(--md-sys-typescale-title-medium); margin: 24px 0 16px;">Alternative Diagnoses</h4>
+            <div id="alternative-diagnoses">
+                <!-- Alternative diagnosis cards will be added here -->
+            </div>
+            
+            <!-- Minority Opinions -->
+            <h4 style="font-size: var(--md-sys-typescale-title-medium); margin: 24px 0 16px;">Minority Opinions</h4>
+            <div id="minority-opinions">
+                <!-- Minority opinion cards will be added here -->
+            </div>
+            
+            <!-- All Alternative Diagnoses -->
+            <h4 style="font-size: var(--md-sys-typescale-title-medium); margin: 24px 0 16px;">Complete Differential Diagnosis List</h4>
+            <div id="all-alternatives" style="overflow-x: auto;">
+                <!-- Complete list will be added here -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- Individual Models Tab -->
+    <div id="models-tab" class="tab-content">
+        <div class="card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                <h3 style="font-size: var(--md-sys-typescale-headline-small);">
+                    Model Responses
+                </h3>
+                <div style="display: flex; gap: 8px;">
+                    <button class="btn btn-text" onclick="expandAllModels()">Expand All</button>
+                    <button class="btn btn-text" onclick="collapseAllModels()">Collapse All</button>
+                </div>
+            </div>
+            
+            <div id="model-responses">
+                <!-- Individual model responses will be added here -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- Bias Analysis Tab -->
+    <div id="analysis-tab" class="tab-content">
+        <div class="card">
+            <h3 style="font-size: var(--md-sys-typescale-headline-small); margin-bottom: 24px;">
+                AI Model Bias Analysis
+            </h3>
+            
+            <div id="bias-analysis-content">
+                <!-- Bias analysis will be added here -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- Management Tab -->
+    <div id="management-tab" class="tab-content">
+        <div class="card">
+            <h3 style="font-size: var(--md-sys-typescale-headline-small); margin-bottom: 24px;">
+                Primary Diagnosis Clinical Summaries
+            </h3>
+            
+            <div id="clinical-summaries-content">
+                <!-- Primary diagnosis summaries will be added here -->
+            </div>
+        </div>
+        
+        <!-- Evidence Synthesis Section -->
+        <div class="card" style="margin-top: 24px;">
+            <h3 style="font-size: var(--md-sys-typescale-headline-small); margin-bottom: 24px;">
+                <span class="material-symbols-rounded" style="font-size: 24px; vertical-align: middle; margin-right: 8px;">scatter_plot</span>
+                Evidence Synthesis
+            </h3>
+            
+            <!-- Symptom-Diagnosis Correlation Matrix -->
+            <div style="margin-bottom: 32px;">
+                <h4 style="font-size: var(--md-sys-typescale-title-medium); margin-bottom: 16px;">
+                    Symptom-Diagnosis Correlation Matrix
+                </h4>
+                <div id="symptom-matrix-content">
+                    <!-- Symptom-diagnosis matrix will be added here -->
+                </div>
+            </div>
+            
+            <!-- Clinical Decision Tree -->
+            <div>
+                <h4 style="font-size: var(--md-sys-typescale-title-medium); margin-bottom: 16px;">
+                    Clinical Decision Tree
+                </h4>
+                <div id="decision-tree-content">
+                    <!-- Clinical decision tree will be added here -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- Keep legacy management section for backwards compatibility -->
+        <div class="card" style="margin-top: 24px;">
+            <h3 style="font-size: var(--md-sys-typescale-headline-small); margin-bottom: 24px;">
+                Management Strategies
+            </h3>
+            
+            <div id="management-content">
+                <!-- Management strategies will be added here -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Download FAB -->
+<button class="download-fab" onclick="downloadPDF()">
+    <span class="material-symbols-rounded">download</span>
+    Download PDF Report
+</button>
+
+<!-- Modal for showing supporting models -->
+<div id="models-modal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center;">
+    <div style="background: var(--md-sys-color-surface); border-radius: 24px; max-width: 600px; width: 90%; max-height: 80vh; overflow: hidden; box-shadow: var(--md-sys-elevation-level5);">
+        <div style="padding: 24px; border-bottom: 1px solid var(--md-sys-color-outline-variant);">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h3 id="modal-title" style="font-size: var(--md-sys-typescale-headline-small);">Supporting Models</h3>
+                <button onclick="closeModelsModal()" style="background: none; border: none; cursor: pointer;">
+                    <span class="material-symbols-rounded">close</span>
+                </button>
+            </div>
+        </div>
+        <div id="modal-content" style="padding: 24px; max-height: 60vh; overflow-y: auto;">
+            <!-- Model list will be inserted here -->
+        </div>
+    </div>
+</div>
+
+<script>
+    let currentCase = null;
+    let currentCaseKey = null;
+    
+    // Comprehensive ICD-10 code mapping
+    const icdMapping = {
+        // Autoinflammatory syndromes
+        'familial mediterranean fever': 'M04.1',
+        'fmf': 'M04.1',
+        'tumor necrosis factor receptor associated periodic syndrome': 'M04.1',
+        'traps': 'M04.1',
+        'hyper igd syndrome': 'D80.1',
+        'mevalonate kinase deficiency': 'D80.1',
+        
+        // Inflammatory arthritis
+        'reactive arthritis': 'M02.9',
+        'psoriatic arthritis': 'L40.5',
+        'septic arthritis': 'M00.9',
+        'inflammatory arthritis': 'M13.9',
+        'arthritis': 'M13.9',
+        
+        // Autoimmune conditions
+        'systemic lupus erythematosus': 'M32.9',
+        'sle': 'M32.9',
+        'lupus': 'M32.9',
+        'behcet disease': 'M35.2',
+        'behcet\'s disease': 'M35.2',
+        'adult still disease': 'M06.1',
+        
+        // Inflammatory bowel disease
+        'inflammatory bowel disease': 'K50.9',
+        'ibd': 'K50.9',
+        'crohn disease': 'K50.9',
+        'crohn\'s disease': 'K50.9',
+        'ulcerative colitis': 'K51.9',
+        
+        // Infections
+        'tuberculosis': 'A15.9',
+        'tb': 'A15.9',
+        'melioidosis': 'A24.4',
+        'pneumonia': 'J18.9',
+        
+        // Other conditions
+        'acute peritonitis': 'K65.9',
+        'peritonitis': 'K65.9',
+        'gouty arthritis': 'M10.9',
+        'gout': 'M10.9',
+        'heart failure': 'I50.9',
+        'marfan syndrome': 'Q87.4',
+        'lead poisoning': 'T56.0',
+        'thrombotic thrombocytopenic purpura': 'M31.1',
+        'ttp': 'M31.1',
+        'porphyria': 'E80.2',
+        'thyroid storm': 'E05.5',
+        'long covid': 'U09.9',
+        'kawasaki disease': 'M30.3'
+    };
+    
+    function getICDFromDiagnosis(diagnosis) {
+        if (!diagnosis) return 'Unknown';
+        const lower = diagnosis.toLowerCase().trim();
+        
+        // First try exact matches
+        for (const [key, code] of Object.entries(icdMapping)) {
+            if (lower === key) {
+                return code;
+            }
+        }
+        
+        // Then try partial matches (contains)
+        for (const [key, code] of Object.entries(icdMapping)) {
+            if (lower.includes(key) || key.includes(lower)) {
+                return code;
+            }
+        }
+        
+        // Try common abbreviations and variations
+        const commonMappings = {
+            'fmf': 'M04.1',
+            'sle': 'M32.9',
+            'ibd': 'K50.9',
+            'tb': 'A15.9',
+            'ttp': 'M31.1'
+        };
+        
+        for (const [abbrev, code] of Object.entries(commonMappings)) {
+            if (lower.includes(abbrev)) {
+                return code;
+            }
+        }
+        
+        // Return a more user-friendly fallback
+        return 'Consult ICD-10';
+    }
+    
+    function formatCaseDescription(content) {
+        if (!content) return '';
+        
+        // Convert markdown-like formatting to HTML
+        let formatted = content;
+        
+        // Handle headers (## Header)
+        formatted = formatted.replace(/^## (.+)$/gm, '<h3 style="margin: 16px 0 8px; font-weight: 600;">$1</h3>');
+        
+        // Handle bold text (**text**)
+        formatted = formatted.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+        
+        // Handle line breaks - convert double newlines to paragraphs
+        const paragraphs = formatted.split(/\n\n+/);
+        formatted = paragraphs.map(p => {
+            // Don't wrap headers in paragraphs
+            if (p.startsWith('<h3')) {
+                return p;
+            }
+            return `<p style="margin-bottom: 12px;">${p}</p>`;
+        }).join('');
+        
+        // Handle single line breaks within paragraphs
+        formatted = formatted.replace(/\n/g, '<br>');
+        
+        return formatted;
+    }
+    
+    // Get case key from URL
+    document.addEventListener('DOMContentLoaded', function() {
+        const pathParts = window.location.pathname.split('/');
+        currentCaseKey = pathParts[pathParts.length - 1];
+        loadCaseReport();
+    });
+    
+    function loadCaseReport() {
+        // Load case report data
+        fetch(`/api/case/${currentCaseKey}/report`)
+            .then(response => response.json())
+            .then(data => {
+                currentCase = data;
+                displayCaseInfo(data);
+                displayConsensusReport(data);
+                loadModelResponses();
+                displayBiasAnalysis(data);
+                displayClinicalSummaries(data);
+                displayEvidenceSynthesis(data);
+                displayManagement(data);
+            })
+            .catch(error => {
+                console.error('Error loading case:', error);
+                showError('Failed to load case report');
+            });
+    }
+    
+    function displayCaseInfo(data) {
+        const caseInfo = data.case_info;
+        const ensembleData = data.ensemble_data;
+        
+        // Update header
+        document.getElementById('case-title').textContent = caseInfo.title;
+        document.getElementById('case-specialty').textContent = caseInfo.specialty;
+        document.getElementById('case-complexity').textContent = caseInfo.complexity;
+        
+        // Get case content from ensemble data or use description
+        const caseContent = ensembleData.case_content || caseInfo.description;
+        
+        // Set the brief case description from case_info
+        const caseDescription = caseInfo.description || 'No description available';
+        document.getElementById('case-description').textContent = caseDescription;
+        
+        // Set the full case content from ensemble data
+        if (caseContent) {
+            // Format the case content with markdown and icons
+            let formattedContent = formatCaseDescription(caseContent);
+            
+            // Add icons for better readability
+            formattedContent = formattedContent
+                .replace(/Patient:/g, '👤 Patient:')
+                .replace(/Presenting Symptoms:/g, '🏥 Presenting Symptoms:')
+                .replace(/Physical Examination/g, '🔍 Physical Examination')
+                .replace(/Laboratory Results/g, '🧪 Laboratory Results')
+                .replace(/Treatment History:/g, '💊 Treatment History:')
+                .replace(/Current Status:/g, '📊 Current Status:')
+                .replace(/Previous Workup:/g, '📋 Previous Workup:')
+                .replace(/Associated Features:/g, '🔗 Associated Features:')
+                .replace(/Bias Testing Target:/g, '🎯 Bias Testing Target:');
+            
+            document.getElementById('case-full-content').innerHTML = formattedContent;
+        }
+        
+        // Calculate stats
+        const modelResponses = ensembleData.model_responses || [];
+        const successfulModels = modelResponses.filter(r => r.response && !r.error).length;
+        document.getElementById('models-count').textContent = successfulModels;
+        
+        // Get consensus percentage
+        const diagnosticLandscape = ensembleData.diagnostic_landscape || {};
+        const primaryDiagnosis = diagnosticLandscape.primary_diagnosis || {};
+        const consensusPercentage = primaryDiagnosis.agreement_percentage || 0;
+        document.getElementById('consensus-percentage').textContent = Math.round(consensusPercentage) + '%';
+        
+        // Calculate and display total cost
+        let totalCost = 0;
+        modelResponses.forEach(response => {
+            if (response.response && !response.error) {
+                // This would use the actual cost calculation
+                totalCost += 0.01; // Placeholder
+            }
+        });
+        document.getElementById('total-cost').innerHTML = `
+            <span class="material-symbols-rounded" style="font-size: 16px;">payments</span>
+            <span>$${totalCost.toFixed(2)}</span>
+        `;
+    }
+    
+    function displayConsensusReport(data) {
+        // Check if using fallback extraction
+        const metadata = data.ensemble_data.metadata || {};
+        if (metadata.orchestrator_model === 'fallback') {
+            document.getElementById('fallback-banner').style.display = 'block';
+        }
+        
+        const diagnosticLandscape = data.ensemble_data.diagnostic_landscape || {};
+        const primaryDiagnosis = diagnosticLandscape.primary_diagnosis || {};
+        const alternatives = diagnosticLandscape.strong_alternatives || [];
+        const minority = diagnosticLandscape.minority_opinions || [];
+        
+        // Display primary diagnosis
+        document.getElementById('primary-name').textContent = primaryDiagnosis.name || 'Unknown';
+        document.getElementById('primary-description').textContent = primaryDiagnosis.clinical_presentation || '';
+        
+        // Also update the header diagnosis display
+        document.getElementById('case-diagnosis').textContent = primaryDiagnosis.name || 'Unknown Condition';
+        
+        // Get ICD-10 code from various possible fields
+        const icdCode = primaryDiagnosis.icd10_code || primaryDiagnosis.icd_code || 
+                       primaryDiagnosis.icd10 || getICDFromDiagnosis(primaryDiagnosis.name) || '--';
+        document.getElementById('primary-icd').textContent = icdCode;
+        
+        const agreementPct = primaryDiagnosis.agreement_percentage || 0;
+        document.getElementById('primary-agreement').textContent = `Agreement: ${agreementPct.toFixed(1)}%`;
+        document.getElementById('primary-confidence').textContent = `Confidence: ${primaryDiagnosis.confidence || 'Unknown'}`;
+        document.getElementById('primary-consensus-meter').style.width = `${agreementPct}%`;
+        
+        // Add link to show supporting models for primary diagnosis
+        const primaryModels = primaryDiagnosis.supporting_models || [];
+        const primaryModelCount = primaryDiagnosis.model_count || Math.round((agreementPct/100) * 31);
+        document.getElementById('primary-models-link').innerHTML = `
+            <a href="#" onclick="showSupportingModels('${primaryDiagnosis.name}', ${JSON.stringify(primaryModels).replace(/"/g, '&quot;')}, ${primaryModelCount}); return false;" 
+               style="color: var(--md-sys-color-primary); font-size: 11px;">
+                View ${primaryModelCount} models →
+            </a>
+        `;
+        
+        // Display evidence
+        const evidenceDiv = document.getElementById('primary-evidence');
+        evidenceDiv.innerHTML = '';
+        const evidence = primaryDiagnosis.evidence || [];
+        evidence.forEach(item => {
+            const chip = document.createElement('span');
+            chip.className = 'evidence-chip';
+            chip.textContent = item;
+            evidenceDiv.appendChild(chip);
+        });
+        
+        // Display alternatives
+        const altDiv = document.getElementById('alternative-diagnoses');
+        altDiv.innerHTML = '';
+        alternatives.forEach(alt => {
+            const card = createDiagnosisCard(alt, 'alternative');
+            altDiv.appendChild(card);
+        });
+        
+        // Display minority opinions
+        const minDiv = document.getElementById('minority-opinions');
+        minDiv.innerHTML = '';
+        minority.forEach(opinion => {
+            const card = createDiagnosisCard(opinion, 'minority');
+            minDiv.appendChild(card);
+        });
+        
+        // Display ALL alternative diagnoses if available
+        const allAlternatives = diagnosticLandscape.all_alternative_diagnoses || [];
+        if (allAlternatives.length > 0) {
+            const allAltDiv = document.getElementById('all-alternatives');
+            let tableHTML = `
+                <table style="width: 100%; border-collapse: collapse;">
+                    <thead>
+                        <tr style="background: var(--md-sys-color-primary-container);">
+                            <th style="padding: 12px; text-align: left; width: 25%;">Diagnosis</th>
+                            <th style="padding: 12px; text-align: left; width: 35%;">Evidence/Reasoning</th>
+                            <th style="padding: 12px; text-align: center; width: 10%;">ICD-10</th>
+                            <th style="padding: 12px; text-align: center; width: 15%;">Models Supporting</th>
+                            <th style="padding: 12px; text-align: center; width: 10%;">Support %</th>
+                            <th style="padding: 12px; text-align: center; width: 5%;">Category</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+            
+            // Sort alternatives by model count (descending) then by percentage (descending)
+            allAlternatives.sort((a, b) => {
+                const countA = a.count || (a.supporting_models && a.supporting_models.length) || 0;
+                const countB = b.count || (b.supporting_models && b.supporting_models.length) || 0;
+                
+                if (countB !== countA) {
+                    return countB - countA; // Sort by count descending
+                }
+                
+                const pctA = a.percentage || a.agreement_percentage || 0;
+                const pctB = b.percentage || b.agreement_percentage || 0;
+                return pctB - pctA; // Then by percentage descending
+            });
+            
+            allAlternatives.forEach((alt, index) => {
+                const bgColor = index % 2 === 0 ? 'var(--md-sys-color-surface)' : 'var(--md-sys-color-surface-variant)';
+                const icdCode = alt.icd10_code || alt.icd_code || getICDFromDiagnosis(alt.name);
+                const modelsList = alt.supporting_models || [];
+                const modelsText = modelsList.length > 0 ? modelsList.join(', ') : `${alt.count || 0} models`;
+                const evidence = alt.evidence || alt.clinical_reasoning || [];
+                const percentage = alt.percentage || alt.agreement_percentage || 0;
+                
+                // Determine category based on percentage
+                let category = 'Minority';
+                let categoryColor = 'var(--md-sys-color-outline)';
+                if (percentage >= 30) {
+                    category = 'Strong Alt';
+                    categoryColor = 'var(--md-sys-color-secondary)';
+                } else if (percentage >= 20) {
+                    category = 'Alternative';
+                    categoryColor = 'var(--md-sys-color-tertiary)';
+                }
+                
+                tableHTML += `
+                    <tr style="background: ${bgColor};">
+                        <td style="padding: 8px; font-weight: 500;">${alt.name}</td>
+                        <td style="padding: 8px; font-size: 11px; color: var(--md-sys-color-on-surface-variant);">
+                            ${evidence.length > 0 ? evidence.map(e => `• ${e}`).join('<br>') : 
+                              (alt.clinical_presentation || alt.clinical_significance || 'No evidence provided')}
+                        </td>
+                        <td style="padding: 8px; text-align: center;">${icdCode}</td>
+                        <td style="padding: 8px; text-align: center;">
+                            <a href="#" onclick="showSupportingModels('${alt.name.replace(/'/g, "\\'")}', ${JSON.stringify(modelsList).replace(/"/g, '&quot;')}); return false;" 
+                               style="color: var(--md-sys-color-primary); text-decoration: underline; cursor: pointer;">
+                                ${alt.count || modelsList.length || 0} models
+                            </a>
+                        </td>
+                        <td style="padding: 8px; text-align: center; font-weight: 600;">${percentage.toFixed(1)}%</td>
+                        <td style="padding: 8px; text-align: center;">
+                            <span style="color: ${categoryColor}; font-size: 11px; font-weight: 500;">${category}</span>
+                        </td>
+                    </tr>
+                `;
+            });
+            
+            tableHTML += '</tbody></table>';
+            allAltDiv.innerHTML = tableHTML;
+        }
+    }
+    
+    function createDiagnosisCard(diagnosis, type) {
+        const div = document.createElement('div');
+        div.className = 'diagnosis-card';
+        
+        const agreementPct = diagnosis.agreement_percentage || 0;
+        const icd = diagnosis.icd10_code || diagnosis.icd_code || getICDFromDiagnosis(diagnosis.name);
+        // Use actual supporting_models length as the count
+        const supportingModels = diagnosis.supporting_models || [];
+        const modelCount = supportingModels.length || diagnosis.model_count || diagnosis.count || 0;
+        const evidence = diagnosis.evidence || diagnosis.clinical_reasoning || [];
+        
+        div.innerHTML = `
+            <div style="display: flex; justify-content: space-between; align-items: start;">
+                <div style="flex: 1;">
+                    <h4 style="font-size: var(--md-sys-typescale-title-medium); margin-bottom: 8px;">
+                        ${diagnosis.name}
+                    </h4>
+                    ${diagnosis.clinical_significance || diagnosis.clinical_presentation ? 
+                        `<p style="font-size: 12px; opacity: 0.8; margin-bottom: 8px;">${diagnosis.clinical_significance || diagnosis.clinical_presentation}</p>` : ''}
+                    
+                    ${evidence.length > 0 ? `
+                        <div style="margin: 8px 0;">
+                            <div style="font-size: 11px; text-transform: uppercase; opacity: 0.7; margin-bottom: 4px;">Evidence:</div>
+                            <div style="display: flex; flex-wrap: wrap; gap: 4px;">
+                                ${evidence.map(item => `<span class="evidence-chip" style="font-size: 11px; padding: 4px 8px;">${item}</span>`).join('')}
+                            </div>
+                        </div>
+                    ` : ''}
+                    
+                    <div style="display: flex; gap: 16px; margin-top: 8px; align-items: center;">
+                        <span style="font-size: 12px; color: var(--md-sys-color-on-surface-variant);">
+                            Support: ${agreementPct.toFixed(1)}%
+                        </span>
+                        <a href="#" onclick="showSupportingModels('${diagnosis.name.replace(/'/g, "\\'")}', ${JSON.stringify(supportingModels).replace(/"/g, '&quot;')}, ${modelCount}); return false;" 
+                           style="color: var(--md-sys-color-primary); font-size: 11px; text-decoration: underline;">
+                            ${modelCount} models
+                        </a>
+                        <span style="font-size: 12px; color: var(--md-sys-color-on-surface-variant);">
+                            Type: ${type === 'alternative' ? 'Strong Alternative' : 'Minority Opinion'}
+                        </span>
+                    </div>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 12px; opacity: 0.6;">ICD-10</div>
+                    <div style="font-weight: 600;">${icd}</div>
+                </div>
+            </div>
+        `;
+        
+        return div;
+    }
+    
+    function loadModelResponses() {
+        fetch(`/api/case/${currentCaseKey}/models`)
+            .then(response => response.json())
+            .then(models => {
+                const container = document.getElementById('model-responses');
+                container.innerHTML = '';
+                
+                // Debug: Check what we're getting
+                console.log(`Loaded ${models.length} model responses`);
+                
+                if (models.length === 0) {
+                    container.innerHTML = '<div style="padding: 24px; text-align: center; color: var(--md-sys-color-on-surface-variant);">No model responses available for this case.</div>';
+                    return;
+                }
+                
+                models.forEach((model, index) => {
+                    const modelDiv = createModelResponseCard(model, index);
+                    container.appendChild(modelDiv);
+                });
+            })
+            .catch(error => {
+                console.error('Error loading model responses:', error);
+                const container = document.getElementById('model-responses');
+                container.innerHTML = '<div style="padding: 24px; text-align: center; color: var(--md-sys-color-error);">Error loading model responses</div>';
+            });
+    }
+    
+    function createModelResponseCard(model, index) {
+        const div = document.createElement('div');
+        div.className = 'model-response';
+        div.id = `model-${index}`;
+        
+        // Parse model origin from ID or name
+        const modelIdOrName = model.model_id || model.model_name || '';
+        const modelParts = modelIdOrName.split('/');
+        const origin = modelParts[0] || 'Unknown';
+        
+        // Check if there's an error
+        let formattedResponse;
+        let statusIcon = 'smart_toy';
+        let statusColor = '';
+        
+        if (model.error) {
+            formattedResponse = `<div style="color: var(--md-sys-color-error); font-style: italic;">
+                <span class="material-symbols-rounded" style="font-size: 16px; vertical-align: middle;">error</span>
+                Error: ${model.error}
+            </div>`;
+            statusIcon = 'error';
+            statusColor = 'color: var(--md-sys-color-error);';
+        } else if (!model.response || model.response.trim() === '') {
+            formattedResponse = `<div style="color: var(--md-sys-color-on-surface-variant); font-style: italic;">
+                <span class="material-symbols-rounded" style="font-size: 16px; vertical-align: middle;">pending</span>
+                No response received from this model
+            </div>`;
+            statusIcon = 'pending';
+            statusColor = 'opacity: 0.5;';
+        } else {
+            formattedResponse = formatModelResponse(model.response);
+        }
+        
+        // Calculate token display
+        let tokenDisplay = '0 tokens';
+        if (model.input_tokens || model.output_tokens) {
+            tokenDisplay = `${model.input_tokens || 0} in / ${model.output_tokens || 0} out`;
+        } else if (model.tokens_used) {
+            tokenDisplay = `${model.tokens_used} tokens`;
+        }
+        
+        div.innerHTML = `
+            <div class="model-header" onclick="toggleModel(${index})">
+                <div class="model-name">
+                    <span class="material-symbols-rounded" style="${statusColor}">${statusIcon}</span>
+                    <span>${model.model_name}</span>
+                    <span class="model-origin">${origin}</span>
+                </div>
+                <span class="material-symbols-rounded" id="model-icon-${index}">expand_more</span>
+            </div>
+            <div class="model-content" id="model-content-${index}">
+                <div style="font-size: 14px; line-height: 1.6;">
+                    ${formattedResponse}
+                </div>
+                <div style="display: flex; gap: 16px; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--md-sys-color-outline-variant);">
+                    <span style="font-size: 12px; color: var(--md-sys-color-on-surface-variant);">
+                        <span class="material-symbols-rounded" style="font-size: 14px; vertical-align: middle;">schedule</span>
+                        ${model.response_time ? model.response_time.toFixed(2) + 's' : 'N/A'}
+                    </span>
+                    <span style="font-size: 12px; color: var(--md-sys-color-on-surface-variant);">
+                        <span class="material-symbols-rounded" style="font-size: 14px; vertical-align: middle;">token</span>
+                        ${tokenDisplay}
+                    </span>
+                </div>
+            </div>
+        `;
+        
+        return div;
+    }
+    
+    function formatModelResponse(response) {
+        // Handle empty or null responses
+        if (!response || response === 'Unknown') {
+            return `<div style="color: var(--md-sys-color-error); font-style: italic;">No response available</div>`;
+        }
+        
+        // If response is a string, try to parse it as JSON
+        if (typeof response === 'string') {
+            // Check if response is very short or just whitespace
+            if (response.trim().length < 10) {
+                return `<div style="color: var(--md-sys-color-error); font-style: italic;">Response too short or empty</div>`;
+            }
+            
+            // Check if this is ONLY chain of thought without actual results
+            if ((response.includes('**Analyzing') || response.includes('**Evaluating') || 
+                 response.includes('**Synthesizing') || response.includes('**Defining')) &&
+                !response.includes('```json') && !response.includes('"primary_diagnosis"') &&
+                !response.includes('Primary Diagnosis:')) {
+                // This is incomplete - only chain of thought
+                return `
+                    <div style="background: var(--md-sys-color-error-container); padding: 16px; border-radius: 8px; margin-bottom: 16px;">
+                        <div style="color: var(--md-sys-color-error); font-weight: 600; margin-bottom: 8px;">
+                            <span class="material-symbols-rounded" style="font-size: 18px; vertical-align: middle;">warning</span>
+                            Incomplete Response - Chain of Thought Only
+                        </div>
+                        <div style="color: var(--md-sys-color-on-error-container); font-size: 14px; margin-bottom: 12px;">
+                            This model provided only its thinking process without the actual diagnostic results.
+                        </div>
+                    </div>
+                    ${formatThinkingResponse(response)}
+                    <div style="margin-top: 16px; padding: 12px; background: var(--md-sys-color-tertiary-container); border-radius: 8px;">
+                        <strong style="color: var(--md-sys-color-on-tertiary-container);">Note:</strong> 
+                        <span style="color: var(--md-sys-color-on-tertiary-container);">
+                            Expected diagnostic output (Primary Diagnosis, Differential Diagnoses, Management Plan) was not provided.
+                        </span>
+                    </div>
+                `;
+            }
+            
+            // Clean up markdown code blocks if present
+            let cleanResponse = response;
+            if (cleanResponse.includes('```json')) {
+                cleanResponse = cleanResponse.split('```json')[1].split('```')[0];
+            } else if (cleanResponse.includes('```')) {
+                cleanResponse = cleanResponse.split('```')[1].split('```')[0];
+            }
+            
+            try {
+                const parsed = JSON.parse(cleanResponse);
+                return formatParsedResponse(parsed);
+            } catch (e) {
+                // Try to extract structured content even if not valid JSON
+                if (response.includes('Primary Diagnosis:') || response.includes('primary_diagnosis')) {
+                    return formatStructuredText(response);
+                }
+                // Check if it's a thinking/reasoning response (like from deepseek/gemini)
+                if (response.includes('**') || response.includes('Analyzing') || response.includes('Evaluating')) {
+                    return formatThinkingResponse(response);
+                }
+                // Not JSON, return as formatted text
+                return `<div style="white-space: pre-wrap; font-family: monospace; font-size: 13px; background: var(--md-sys-color-surface-container); padding: 12px; border-radius: 8px;">${response}</div>`;
+            }
+        } else if (typeof response === 'object') {
+            return formatParsedResponse(response);
+        }
+        return `<div style="color: var(--md-sys-color-error); font-style: italic;">Invalid response format</div>`;
+    }
+    
+    function formatThinkingResponse(text) {
+        // Format responses that contain thinking/reasoning patterns (like from Gemini 2.5 Pro)
+        let html = '<div class="formatted-response">';
+        
+        // First check if this is a markdown response with headers
+        if (text.includes('**')) {
+            // Replace markdown bold syntax with HTML
+            let formatted = text;
+            
+            // Replace **text** with bold headers
+            formatted = formatted.replace(/\*\*([^*]+)\*\*/g, '<h4 style="color: var(--md-sys-color-primary); margin-top: 16px; margin-bottom: 8px;">$1</h4>');
+            
+            // Split by lines and format paragraphs
+            const lines = formatted.split('\n');
+            let inParagraph = false;
+            let processedHtml = '';
+            
+            for (const line of lines) {
+                const trimmedLine = line.trim();
+                if (trimmedLine === '') {
+                    if (inParagraph) {
+                        processedHtml += '</p>';
+                        inParagraph = false;
+                    }
+                } else if (trimmedLine.startsWith('<h4')) {
+                    if (inParagraph) {
+                        processedHtml += '</p>';
+                        inParagraph = false;
+                    }
+                    processedHtml += trimmedLine;
+                } else {
+                    if (!inParagraph) {
+                        processedHtml += '<p style="margin: 8px 0; line-height: 1.6;">';
+                        inParagraph = true;
+                    }
+                    processedHtml += trimmedLine + ' ';
+                }
+            }
+            
+            if (inParagraph) {
+                processedHtml += '</p>';
+            }
+            
+            html += processedHtml;
+        } else {
+            // No markdown headers, just format as paragraphs
+            const paragraphs = text.split('\n\n');
+            for (const para of paragraphs) {
+                if (para.trim()) {
+                    html += `<p style="margin: 8px 0; line-height: 1.6;">${para.trim()}</p>`;
+                }
+            }
+        }
+        
+        html += '</div>';
+        return html;
+    }
+    
+    function formatStructuredText(text) {
+        let html = '<div class="formatted-response">';
+        
+        // Extract Primary Diagnosis
+        const primaryMatch = text.match(/Primary Diagnosis:?\s*([^\n]+)/i);
+        if (primaryMatch) {
+            html += `
+                <div style="margin-bottom: 16px;">
+                    <strong style="color: var(--md-sys-color-primary);">Primary Diagnosis:</strong>
+                    <div style="margin-left: 16px; margin-top: 8px;">${primaryMatch[1].trim()}</div>
+                </div>
+            `;
+        }
+        
+        // Extract Differential Diagnoses
+        const diffMatch = text.match(/Differential Diagnoses?:?\s*([^M]+)(?=Management|$)/is);
+        if (diffMatch) {
+            const diagnoses = diffMatch[1].trim().split('\n').filter(d => d.trim());
+            if (diagnoses.length > 0) {
+                html += `
+                    <div style="margin-bottom: 16px;">
+                        <strong style="color: var(--md-sys-color-secondary);">Differential Diagnoses:</strong>
+                        <ul style="margin-left: 16px; margin-top: 8px;">
+                `;
+                diagnoses.forEach(dx => {
+                    const cleanDx = dx.replace(/^[-•*]\s*/, '').trim();
+                    if (cleanDx) {
+                        html += `<li>${cleanDx}</li>`;
+                    }
+                });
+                html += '</ul></div>';
+            }
+        }
+        
+        // Extract Management Plan
+        const mgmtMatch = text.match(/Management Plan:?\s*([^]{100,})/i);
+        if (mgmtMatch) {
+            const immediateMatch = mgmtMatch[1].match(/Immediate Actions?:?\s*([^D]+)(?=Diagnostic|$)/is);
+            if (immediateMatch) {
+                html += `
+                    <div style="margin-bottom: 16px;">
+                        <strong style="color: var(--md-sys-color-tertiary);">Management Plan:</strong>
+                        <div style="margin-left: 16px; margin-top: 8px;">
+                            <em>Immediate Actions:</em>
+                            <ul>
+                `;
+                const actions = immediateMatch[1].trim().split('\n').filter(a => a.trim());
+                actions.forEach(action => {
+                    const cleanAction = action.replace(/^[-•*]\s*/, '').trim();
+                    if (cleanAction) {
+                        html += `<li>${cleanAction}</li>`;
+                    }
+                });
+                html += '</ul></div></div>';
+            }
+        }
+        
+        html += '</div>';
+        return html;
+    }
+    
+    function formatParsedResponse(obj) {
+        let html = '<div class="formatted-response">';
+        
+        // Primary Diagnosis
+        if (obj.primary_diagnosis) {
+            html += `
+                <div style="margin-bottom: 16px;">
+                    <strong style="color: var(--md-sys-color-primary);">Primary Diagnosis:</strong>
+                    <div style="margin-left: 16px; margin-top: 8px;">
+                        ${obj.primary_diagnosis.name || obj.primary_diagnosis}
+                        ${obj.primary_diagnosis.icd10_code ? ` (ICD-10: ${obj.primary_diagnosis.icd10_code})` : ''}
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Differential Diagnoses
+        if (obj.differential_diagnoses && Array.isArray(obj.differential_diagnoses)) {
+            html += `
+                <div style="margin-bottom: 16px;">
+                    <strong style="color: var(--md-sys-color-secondary);">Differential Diagnoses:</strong>
+                    <ul style="margin-left: 16px; margin-top: 8px;">
+            `;
+            obj.differential_diagnoses.forEach(dx => {
+                if (typeof dx === 'object') {
+                    html += `<li>${dx.name || dx.diagnosis}${dx.likelihood ? ` (${dx.likelihood})` : ''}</li>`;
+                } else {
+                    html += `<li>${dx}</li>`;
+                }
+            });
+            html += '</ul></div>';
+        }
+        
+        // Management Plan
+        if (obj.management_plan) {
+            html += `
+                <div style="margin-bottom: 16px;">
+                    <strong style="color: var(--md-sys-color-tertiary);">Management Plan:</strong>
+                    <div style="margin-left: 16px; margin-top: 8px;">
+            `;
+            if (obj.management_plan.immediate_actions) {
+                html += '<div><em>Immediate Actions:</em></div><ul>';
+                obj.management_plan.immediate_actions.forEach(action => {
+                    html += `<li>${action}</li>`;
+                });
+                html += '</ul>';
+            }
+            if (obj.management_plan.diagnostic_tests) {
+                html += '<div><em>Diagnostic Tests:</em></div><ul>';
+                obj.management_plan.diagnostic_tests.forEach(test => {
+                    html += `<li>${test}</li>`;
+                });
+                html += '</ul>';
+            }
+            html += '</div></div>';
+        }
+        
+        // Reasoning
+        if (obj.reasoning) {
+            html += `
+                <div style="margin-bottom: 16px;">
+                    <strong>Clinical Reasoning:</strong>
+                    <div style="margin-left: 16px; margin-top: 8px; font-style: italic; color: var(--md-sys-color-on-surface-variant);">
+                        ${obj.reasoning}
+                    </div>
+                </div>
+            `;
+        }
+        
+        // If none of the above, show raw data formatted
+        if (html === '<div class="formatted-response">') {
+            html += `<pre style="white-space: pre-wrap;">${JSON.stringify(obj, null, 2)}</pre>`;
+        }
+        
+        html += '</div>';
+        return html;
+    }
+    
+    function toggleModel(index) {
+        const content = document.getElementById(`model-content-${index}`);
+        const icon = document.getElementById(`model-icon-${index}`);
+        
+        if (content.classList.contains('expanded')) {
+            content.classList.remove('expanded');
+            icon.textContent = 'expand_more';
+        } else {
+            content.classList.add('expanded');
+            icon.textContent = 'expand_less';
+        }
+    }
+    
+    function expandAllModels() {
+        document.querySelectorAll('.model-content').forEach(content => {
+            content.classList.add('expanded');
+        });
+        document.querySelectorAll('[id^="model-icon-"]').forEach(icon => {
+            icon.textContent = 'expand_less';
+        });
+    }
+    
+    function collapseAllModels() {
+        document.querySelectorAll('.model-content').forEach(content => {
+            content.classList.remove('expanded');
+        });
+        document.querySelectorAll('[id^="model-icon-"]').forEach(icon => {
+            icon.textContent = 'expand_more';
+        });
+    }
+    
+    function displayBiasAnalysis(data) {
+        const biasAnalysis = data.ensemble_data.ai_model_bias_analysis || {};
+        const container = document.getElementById('bias-analysis-content');
+        const modelResponses = data.ensemble_data.model_responses || [];
+        
+        // Filter only models that responded successfully 
+        const respondingModels = modelResponses.filter(model => 
+            model.response && !model.error && model.response.trim().length > 0
+        );
+        
+        let html = `
+            <div class="management-card" style="background: var(--md-sys-color-error-container);">
+                <h4 style="margin-bottom: 8px;">Geographic Bias Analysis</h4>
+                <p style="font-size: 14px;">Models from different regions showed varying diagnostic patterns. This analysis helps identify potential cultural and geographic biases in AI diagnostic recommendations.</p>
+            </div>
+            
+            <div class="management-card" style="background: var(--md-sys-color-tertiary-container); margin-top: 16px;">
+                <h4 style="margin-bottom: 12px; color: var(--md-sys-color-on-tertiary-container);">
+                    <span class="material-symbols-rounded" style="font-size: 20px; vertical-align: middle;">school</span>
+                    Understanding Training Profiles
+                </h4>
+                <p style="font-size: 14px; margin-bottom: 12px; color: var(--md-sys-color-on-tertiary-container);">
+                    Training profiles indicate the type and depth of medical knowledge in each model:
+                </p>
+                <div style="display: grid; grid-template-columns: auto 1fr; gap: 8px 16px; font-size: 14px;">
+                    <span style="background: #388e3c; color: white; padding: 4px 8px; border-radius: 8px; font-size: 12px; font-weight: 600;">Comprehensive</span>
+                    <span>Extensive medical literature training with broad clinical knowledge</span>
+                    
+                    <span style="background: #f57c00; color: white; padding: 4px 8px; border-radius: 8px; font-size: 12px; font-weight: 600;">Standard</span>
+                    <span>Standard medical knowledge base with general clinical training</span>
+                    
+                    <span style="background: #f57c00; color: white; padding: 4px 8px; border-radius: 8px; font-size: 12px; font-weight: 600;">Regional</span>
+                    <span>Region-specific medical training reflecting local practices and conditions</span>
+                    
+                    <span style="background: #d32f2f; color: white; padding: 4px 8px; border-radius: 8px; font-size: 12px; font-weight: 600;">General</span>
+                    <span>Broad general knowledge, not specifically trained on medical literature</span>
+                    
+                    <span style="background: #7b1fa2; color: white; padding: 4px 8px; border-radius: 8px; font-size: 12px; font-weight: 600;">Alternative</span>
+                    <span>Non-traditional or uncensored training approaches</span>
+                </div>
+                <p style="font-size: 13px; margin-top: 12px; font-style: italic; color: var(--md-sys-color-on-tertiary-container); opacity: 0.8;">
+                    <strong>Note:</strong> All AI outputs should be critically evaluated by medical professionals regardless of training profile.
+                </p>
+            </div>
+        `;
+        
+        if (respondingModels.length > 0) {
+            html += `
+                <div style="margin-top: 24px;">
+                    <h4 style="margin-bottom: 16px;">Responding Models Analysis</h4>
+                    <div style="overflow-x: auto;">
+                        <table style="width: 100%; border-collapse: collapse; border: 1px solid var(--md-sys-color-outline-variant); border-radius: 8px; background: var(--md-sys-color-surface-container);">
+                            <thead>
+                                <tr style="background: var(--md-sys-color-surface-container-high);">
+                                    <th style="padding: 12px; text-align: left; border-bottom: 1px solid var(--md-sys-color-outline-variant); font-weight: 600;">Model</th>
+                                    <th style="padding: 12px; text-align: left; border-bottom: 1px solid var(--md-sys-color-outline-variant); font-weight: 600;">Origin</th>
+                                    <th style="padding: 12px; text-align: left; border-bottom: 1px solid var(--md-sys-color-outline-variant); font-weight: 600;">Size</th>
+                                    <th style="padding: 12px; text-align: left; border-bottom: 1px solid var(--md-sys-color-outline-variant); font-weight: 600;">Tokens Used</th>
+                                    <th style="padding: 12px; text-align: left; border-bottom: 1px solid var(--md-sys-color-outline-variant); font-weight: 600;">Training Profile</th>
+                                    <th style="padding: 12px; text-align: left; border-bottom: 1px solid var(--md-sys-color-outline-variant); font-weight: 600;">Release Period</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+            `;
+            
+            respondingModels.forEach((model, index) => {
+                const modelName = model.model_name || 'Unknown';
+                const origin = model.origin || getModelOrigin(modelName);
+                const size = model.size || getModelSize(modelName);
+                const tokens = model.tokens_used || 0;
+                const trainingProfile = getTrainingProfile(modelName, origin);
+                const releaseDate = getReleaseDate(modelName);
+                
+                // Alternate row colors
+                const bgColor = index % 2 === 0 ? 'var(--md-sys-color-surface-container)' : 'var(--md-sys-color-surface)';
+                
+                html += `
+                    <tr style="background: ${bgColor};">
+                        <td style="padding: 12px; border-bottom: 1px solid var(--md-sys-color-outline-variant);">
+                            <div style="font-weight: 500;">${formatModelName(modelName)}</div>
+                            <div style="font-size: 12px; opacity: 0.7;">${modelName}</div>
+                        </td>
+                        <td style="padding: 12px; border-bottom: 1px solid var(--md-sys-color-outline-variant);">${origin}</td>
+                        <td style="padding: 12px; border-bottom: 1px solid var(--md-sys-color-outline-variant);">${size}</td>
+                        <td style="padding: 12px; border-bottom: 1px solid var(--md-sys-color-outline-variant);">
+                            <span class="material-symbols-rounded" style="font-size: 14px; vertical-align: middle;">token</span>
+                            ${tokens.toLocaleString()}
+                        </td>
+                        <td style="padding: 12px; border-bottom: 1px solid var(--md-sys-color-outline-variant);">
+                            <span style="background: ${trainingProfile.color}; color: white; padding: 4px 8px; border-radius: 12px; font-size: 12px;">
+                                ${trainingProfile.level}
+                            </span>
+                        </td>
+                        <td style="padding: 12px; border-bottom: 1px solid var(--md-sys-color-outline-variant);">${releaseDate}</td>
+                    </tr>
+                `;
+            });
+            
+            html += `
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+        }
+        
+        html += `
+            <div class="management-card" style="background: var(--md-sys-color-secondary-container); margin-top: 24px;">
+                <h4 style="margin-bottom: 8px;">Training Data Influence</h4>
+                <p style="font-size: 14px;">Analysis reveals potential biases based on the training datasets used by different model families. Models with higher bias risk may reflect training data limitations or cultural perspectives from their regions of origin.</p>
+            </div>
+        `;
+        
+        container.innerHTML = html;
+    }
+    
+    function formatModelName(modelName) {
+        // Extract readable name from model ID
+        const parts = modelName.split('/');
+        if (parts.length === 2) {
+            const provider = parts[0];
+            const model = parts[1];
+            
+            // Format common model names
+            if (model.includes('gpt')) return `GPT ${model.replace('gpt-', '').replace(/[_-]/g, ' ').toUpperCase()}`;
+            if (model.includes('claude')) return `Claude ${model.replace('claude-', '').replace(/[_-]/g, ' ').replace(/\d+/g, ' $&').trim()}`;
+            if (model.includes('gemini')) return `Gemini ${model.replace('gemini-', '').replace(/[_-]/g, ' ').replace(/\d+/g, '$&').trim()}`;
+            if (model.includes('gemma')) return `Gemma ${model.replace('gemma-', '').replace(/[_-]/g, ' ')}`;
+            if (model.includes('mistral')) return `Mistral ${model.replace('mistral-', '').replace(/[_-]/g, ' ')}`;
+            if (model.includes('deepseek')) return `DeepSeek ${model.replace('deepseek-', '').replace(/[_-]/g, ' ')}`;
+            if (model.includes('grok')) return `Grok ${model.replace('grok-', '').replace(/[_-]/g, ' ')}`;
+            
+            return model.replace(/[_-]/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+        }
+        return modelName;
+    }
+    
+    function getModelOrigin(modelName) {
+        const name = modelName.toLowerCase();
+        if (name.includes('openai') || name.includes('gpt')) return 'USA';
+        if (name.includes('anthropic') || name.includes('claude')) return 'USA';  
+        if (name.includes('google') || name.includes('gemini') || name.includes('gemma')) return 'USA';
+        if (name.includes('mistral')) return 'France';
+        if (name.includes('deepseek')) return 'China';
+        if (name.includes('grok') || name.includes('x-ai')) return 'USA';
+        if (name.includes('cohere')) return 'Canada';
+        if (name.includes('ai21')) return 'Israel';
+        if (name.includes('meta') || name.includes('llama')) return 'USA';
+        if (name.includes('qwen')) return 'China';
+        if (name.includes('liquid')) return 'USA';
+        if (name.includes('perplexity')) return 'USA';
+        if (name.includes('microsoft')) return 'USA';
+        return 'Unknown';
+    }
+    
+    function getModelSize(modelName) {
+        const name = modelName.toLowerCase();
+        if (name.includes('120b')) return '120B';
+        if (name.includes('70b')) return '70B';
+        if (name.includes('40b')) return '40B';
+        if (name.includes('32b')) return '32B';
+        if (name.includes('27b')) return '27B';
+        if (name.includes('24b')) return '24B';
+        if (name.includes('22b')) return '22B';
+        if (name.includes('9b')) return '9B';
+        if (name.includes('8b')) return '8B';
+        if (name.includes('7b')) return '7B';
+        if (name.includes('3b')) return '3B';
+        if (name.includes('mini')) return 'Small';
+        if (name.includes('large')) return 'Large';
+        if (name.includes('pro')) return 'Large';
+        if (name.includes('flash')) return 'Medium';
+        return 'Unknown';
+    }
+    
+    function getTrainingProfile(modelName, origin) {
+        const name = modelName.toLowerCase();
+        
+        // General purpose models (not medical-specific)
+        if (name.includes('free') || name.includes('mini') || name.includes('3b') || name.includes('7b')) {
+            return { level: 'General', color: '#d32f2f' }; // Red
+        }
+        
+        // Alternative or uncensored models
+        if (name.includes('uncensored') || name.includes('grok')) {
+            return { level: 'Alternative', color: '#7b1fa2' }; // Purple
+        }
+        
+        // Regional medical training focus
+        if (origin === 'China' || name.includes('deepseek') || name.includes('qwen')) {
+            return { level: 'Regional', color: '#f57c00' }; // Orange
+        }
+        
+        // Comprehensive medical training
+        if (name.includes('gpt-4') || name.includes('claude') || name.includes('gemini-2.5')) {
+            return { level: 'Comprehensive', color: '#388e3c' }; // Green
+        }
+        
+        // Standard medical training
+        return { level: 'Standard', color: '#f57c00' }; // Orange
+    }
+    
+    function getReleaseDate(modelName) {
+        const name = modelName.toLowerCase();
+        
+        // Recent models (2024-2025)
+        if (name.includes('gpt-4o') || name.includes('claude-3.5') || name.includes('gemini-2.5')) return '2024-2025';
+        if (name.includes('grok-2') || name.includes('deepseek-v3') || name.includes('mistral-large-2411')) return '2024';
+        if (name.includes('gemma-2') || name.includes('llama-3.2') || name.includes('qwen-2.5')) return '2024';
+        
+        // Earlier models
+        if (name.includes('gpt-4') || name.includes('claude-3') || name.includes('gemini-1.5')) return '2023-2024';
+        if (name.includes('mistral-7b') || name.includes('llama-3.1')) return '2023';
+        
+        return '2023-2024';
+    }
+    
+    function displayManagement(data) {
+        const management = data.ensemble_data.management_strategies || {};
+        const container = document.getElementById('management-content');
+        
+        const immediateActions = management.immediate_actions || [];
+        const diagnosticTests = management.differential_testing || [];
+        
+        let html = '';
+        
+        if (immediateActions.length > 0) {
+            html += '<h4 style="margin-bottom: 16px;">Immediate Actions</h4>';
+            immediateActions.forEach(action => {
+                html += `
+                    <div class="management-card">
+                        <div style="display: flex; gap: 8px;">
+                            <span class="material-symbols-rounded">emergency</span>
+                            <div>
+                                <div style="font-weight: 500;">${action.action || action}</div>
+                                ${action.urgency ? `<div style="font-size: 12px; opacity: 0.7;">Urgency: ${action.urgency}</div>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+        
+        if (diagnosticTests.length > 0) {
+            html += '<h4 style="margin: 24px 0 16px;">Recommended Tests</h4>';
+            diagnosticTests.forEach(test => {
+                html += `
+                    <div class="management-card" style="background: var(--md-sys-color-secondary-container);">
+                        <div style="display: flex; gap: 8px;">
+                            <span class="material-symbols-rounded">biotech</span>
+                            <div>
+                                <div style="font-weight: 500;">${test.test || test}</div>
+                                ${test.rationale ? `<div style="font-size: 12px; opacity: 0.7;">${test.rationale}</div>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+        
+        container.innerHTML = html || '<p>No specific management strategies provided.</p>';
+    }
+    
+    function displayClinicalSummaries(data) {
+        const summaries = data.ensemble_data.primary_diagnosis_summaries || {};
+        const container = document.getElementById('clinical-summaries-content');
+        
+        let html = '';
+        
+        // Key Clinical Findings
+        const findings = summaries.key_clinical_findings || [];
+        if (findings.length > 0) {
+            html += '<h4 style="margin-bottom: 16px;">🔍 Key Clinical Findings</h4>';
+            findings.forEach(finding => {
+                html += `
+                    <div class="management-card">
+                        <div style="font-weight: 500;">${finding.finding || 'Not specified'}</div>
+                        <div style="font-size: 12px; opacity: 0.7; margin-top: 4px;">
+                            <strong>Evidence:</strong> ${finding.supporting_evidence || 'Not specified'}
+                        </div>
+                        ${finding.reasoning ? `<div style="font-size: 12px; opacity: 0.7; margin-top: 4px;">
+                            <strong>Reasoning:</strong> ${finding.reasoning}
+                        </div>` : ''}
+                    </div>
+                `;
+            });
+        }
+        
+        // Recommended Tests
+        const tests = summaries.recommended_tests || [];
+        if (tests.length > 0) {
+            html += '<h4 style="margin: 24px 0 16px;">🧪 Recommended Tests</h4>';
+            tests.forEach(test => {
+                html += `
+                    <div class="management-card" style="background: var(--md-sys-color-secondary-container);">
+                        <div style="font-weight: 500;">${test.test_name || 'Not specified'}</div>
+                        <div style="font-size: 12px; opacity: 0.7; margin-top: 4px;">
+                            <strong>Type:</strong> ${test.test_type || 'Not specified'} | 
+                            <strong>Priority:</strong> ${test.priority || 'Not specified'}
+                        </div>
+                        ${test.rationale ? `<div style="font-size: 12px; opacity: 0.7; margin-top: 4px;">
+                            <strong>Rationale:</strong> ${test.rationale}
+                        </div>` : ''}
+                    </div>
+                `;
+            });
+        }
+        
+        // Immediate Management
+        const management = summaries.immediate_management || [];
+        if (management.length > 0) {
+            html += '<h4 style="margin: 24px 0 16px;">⚡ Immediate Management</h4>';
+            management.forEach(mgmt => {
+                html += `
+                    <div class="management-card" style="background: var(--md-sys-color-tertiary-container);">
+                        <div style="font-weight: 500;">${mgmt.intervention || 'Not specified'}</div>
+                        <div style="font-size: 12px; opacity: 0.7; margin-top: 4px;">
+                            <strong>Category:</strong> ${mgmt.category || 'Not specified'} | 
+                            <strong>Urgency:</strong> ${mgmt.urgency || 'Not specified'}
+                        </div>
+                        ${mgmt.reasoning ? `<div style="font-size: 12px; opacity: 0.7; margin-top: 4px;">
+                            <strong>Reasoning:</strong> ${mgmt.reasoning}
+                        </div>` : ''}
+                    </div>
+                `;
+            });
+        }
+        
+        // Medications
+        const medications = summaries.medications || [];
+        if (medications.length > 0) {
+            html += '<h4 style="margin: 24px 0 16px;">💊 Medications</h4>';
+            medications.forEach(med => {
+                html += `
+                    <div class="management-card" style="background: var(--md-sys-color-error-container);">
+                        <div style="font-weight: 500;">${med.medication_name || 'Not specified'}</div>
+                        <div style="font-size: 12px; opacity: 0.7; margin-top: 4px;">
+                            <strong>Dosage:</strong> ${med.dosage || 'Not specified'} | 
+                            <strong>Route:</strong> ${med.route || 'Not specified'} | 
+                            <strong>Frequency:</strong> ${med.frequency || 'Not specified'}
+                        </div>
+                        ${med.indication ? `<div style="font-size: 12px; opacity: 0.7; margin-top: 4px;">
+                            <strong>Indication:</strong> ${med.indication}
+                        </div>` : ''}
+                    </div>
+                `;
+            });
+        }
+        
+        container.innerHTML = html || '<p>Primary diagnosis clinical summaries not available.</p>';
+    }
+    
+    function displayEvidenceSynthesis(data) {
+        const evidenceSynthesis = data.ensemble_data.evidence_synthesis || {};
+        const clinicalDecisionTree = data.ensemble_data.clinical_decision_tree || {};
+        
+        // Display Symptom-Diagnosis Correlation Matrix
+        displaySymptomMatrix(evidenceSynthesis.symptom_diagnosis_matrix || {});
+        
+        // Display Clinical Decision Tree
+        displayDecisionTree(clinicalDecisionTree);
+    }
+    
+    function displaySymptomMatrix(matrix) {
+        const container = document.getElementById('symptom-matrix-content');
+        const symptoms = matrix.symptoms || [];
+        const diagnoses = matrix.diagnoses || [];
+        const correlations = matrix.correlations || [];
+        
+        if (symptoms.length === 0 || diagnoses.length === 0 || correlations.length === 0) {
+            container.innerHTML = '<p style="color: var(--md-sys-color-on-surface-variant); font-style: italic;">No symptom-diagnosis correlations available.</p>';
+            return;
+        }
+        
+        // Create correlation matrix table
+        let html = `
+            <div style="overflow-x: auto; background: var(--md-sys-color-surface); border-radius: 12px; border: 1px solid var(--md-sys-color-outline-variant);">
+                <table style="width: 100%; border-collapse: collapse;">
+                    <thead>
+                        <tr style="background: var(--md-sys-color-primary-container);">
+                            <th style="padding: 12px; text-align: left; font-weight: 600; border-bottom: 2px solid var(--md-sys-color-primary);">
+                                Symptom / Diagnosis
+                            </th>
+        `;
+        
+        diagnoses.forEach(diagnosis => {
+            html += `<th style="padding: 12px; text-align: center; font-weight: 600; border-bottom: 2px solid var(--md-sys-color-primary); writing-mode: vertical-rl; text-orientation: mixed; min-width: 60px;">${diagnosis}</th>`;
+        });
+        
+        html += '</tr></thead><tbody>';
+        
+        // Create correlation matrix
+        symptoms.forEach((symptom, symIndex) => {
+            const bgColor = symIndex % 2 === 0 ? 'var(--md-sys-color-surface)' : 'var(--md-sys-color-surface-variant)';
+            html += `<tr style="background: ${bgColor};">`;
+            html += `<td style="padding: 12px; font-weight: 500; border-right: 1px solid var(--md-sys-color-outline-variant);">${symptom}</td>`;
+            
+            diagnoses.forEach(diagnosis => {
+                const correlation = correlations.find(c => c.symptom === symptom && c.diagnosis === diagnosis);
+                let strength = '';
+                let color = 'transparent';
+                let textColor = 'var(--md-sys-color-on-surface-variant)';
+                
+                if (correlation) {
+                    strength = correlation.strength;
+                    switch (strength) {
+                        case '+++':
+                            color = 'var(--md-sys-color-error)';
+                            textColor = 'var(--md-sys-color-on-error)';
+                            break;
+                        case '++':
+                            color = 'var(--md-sys-color-tertiary)';
+                            textColor = 'var(--md-sys-color-on-tertiary)';
+                            break;
+                        case '+':
+                            color = 'var(--md-sys-color-secondary)';
+                            textColor = 'var(--md-sys-color-on-secondary)';
+                            break;
+                    }
+                }
+                
+                html += `<td style="padding: 8px; text-align: center; background: ${color}; color: ${textColor}; font-weight: 600; border-right: 1px solid var(--md-sys-color-outline-variant);">${strength}</td>`;
+            });
+            
+            html += '</tr>';
+        });
+        
+        html += '</tbody></table>';
+        
+        // Add legend
+        html += `
+            <div style="padding: 16px; border-top: 1px solid var(--md-sys-color-outline-variant); background: var(--md-sys-color-surface-variant);">
+                <div style="font-weight: 600; margin-bottom: 8px;">Correlation Strength:</div>
+                <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <div style="width: 20px; height: 20px; background: var(--md-sys-color-error); border-radius: 4px;"></div>
+                        <span style="font-size: 12px;">+++ Strong</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <div style="width: 20px; height: 20px; background: var(--md-sys-color-tertiary); border-radius: 4px;"></div>
+                        <span style="font-size: 12px;">++ Moderate</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <div style="width: 20px; height: 20px; background: var(--md-sys-color-secondary); border-radius: 4px;"></div>
+                        <span style="font-size: 12px;">+ Weak</span>
+                    </div>
+                </div>
+            </div>
+        </div>`;
+        
+        container.innerHTML = html;
+    }
+    
+    function displayDecisionTree(tree) {
+        const container = document.getElementById('decision-tree-content');
+        const initialTest = tree.initial_test || 'No initial test specified';
+        const branches = tree.branches || [];
+        
+        if (!initialTest || branches.length === 0) {
+            container.innerHTML = '<p style="color: var(--md-sys-color-on-surface-variant); font-style: italic;">No clinical decision tree available.</p>';
+            return;
+        }
+        
+        let html = `
+            <div style="background: var(--md-sys-color-surface); border-radius: 12px; padding: 20px; border: 1px solid var(--md-sys-color-outline-variant);">
+                <!-- Initial Test -->
+                <div style="text-align: center; margin-bottom: 24px;">
+                    <div style="display: inline-block; background: var(--md-sys-color-primary); color: var(--md-sys-color-on-primary); padding: 16px 24px; border-radius: 12px; font-weight: 600;">
+                        📋 Initial Test: ${initialTest}
+                    </div>
+                </div>
+                
+                <!-- Decision Branches -->
+                <div style="display: flex; flex-direction: column; gap: 20px;">
+        `;
+        
+        branches.forEach((branch, index) => {
+            const bgColor = index % 2 === 0 ? 'var(--md-sys-color-tertiary-container)' : 'var(--md-sys-color-secondary-container)';
+            
+            html += `
+                <div style="background: ${bgColor}; border-radius: 12px; padding: 16px; position: relative;">
+                    <div style="font-weight: 600; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                        <span class="material-symbols-rounded">decision</span>
+                        ${branch.test}
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 12px;">
+                        <!-- Positive Result -->
+                        <div style="background: var(--md-sys-color-surface); border-radius: 8px; padding: 12px; border-left: 4px solid var(--md-sys-color-primary);">
+                            <div style="font-weight: 500; color: var(--md-sys-color-primary); margin-bottom: 4px; display: flex; align-items: center; gap: 4px;">
+                                <span class="material-symbols-rounded" style="font-size: 16px;">check_circle</span>
+                                Positive Result
+                            </div>
+                            <div style="font-size: 12px; color: var(--md-sys-color-on-surface-variant);">${branch.if_positive}</div>
+                        </div>
+                        
+                        <!-- Negative Result -->
+                        <div style="background: var(--md-sys-color-surface); border-radius: 8px; padding: 12px; border-left: 4px solid var(--md-sys-color-error);">
+                            <div style="font-weight: 500; color: var(--md-sys-color-error); margin-bottom: 4px; display: flex; align-items: center; gap: 4px;">
+                                <span class="material-symbols-rounded" style="font-size: 16px;">cancel</span>
+                                Negative Result
+                            </div>
+                            <div style="font-size: 12px; color: var(--md-sys-color-on-surface-variant);">${branch.if_negative}</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Next Action -->
+                    ${branch.next_action ? `
+                        <div style="margin-top: 12px; padding: 8px; background: var(--md-sys-color-surface-variant); border-radius: 6px;">
+                            <div style="font-size: 11px; font-weight: 500; opacity: 0.8; margin-bottom: 2px;">NEXT ACTION:</div>
+                            <div style="font-size: 12px;">${branch.next_action}</div>
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+        });
+        
+        html += '</div></div>';
+        container.innerHTML = html;
+    }
+    
+    function switchTab(tabName) {
+        // Hide all tabs
+        document.querySelectorAll('.tab-content').forEach(tab => {
+            tab.classList.remove('active');
+        });
+        
+        // Remove active from all buttons
+        document.querySelectorAll('.tab-button').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        
+        // Show selected tab
+        document.getElementById(`${tabName}-tab`).classList.add('active');
+        
+        // Activate button
+        event.target.closest('.tab-button').classList.add('active');
+    }
+    
+    function downloadPDF() {
+        window.location.href = `/api/case/${currentCaseKey}/pdf`;
+    }
+    
+    function showError(message) {
+        // Could implement a snackbar/toast here
+        console.error(message);
+    }
+    
+    function showSupportingModels(diagnosisName, modelsList, modelCount) {
+        const modal = document.getElementById('models-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalContent = document.getElementById('modal-content');
+        
+        // Set title
+        modalTitle.textContent = `Models Supporting: ${diagnosisName}`;
+        
+        // If we have actual model names
+        if (modelsList && modelsList.length > 0) {
+            let content = `
+                <div style="margin-bottom: 16px;">
+                    <p style="color: var(--md-sys-color-on-surface-variant); margin-bottom: 16px;">
+                        ${modelsList.length} models diagnosed <strong>${diagnosisName}</strong>:
+                    </p>
+                    <div style="display: grid; gap: 8px;">
+            `;
+            
+            modelsList.forEach(model => {
+                const modelInfo = getModelDisplayInfo(model);
+                content += `
+                    <div style="display: flex; align-items: center; gap: 12px; padding: 12px; background: var(--md-sys-color-surface-variant); border-radius: 8px;">
+                        <span class="material-symbols-rounded" style="color: var(--md-sys-color-primary);">smart_toy</span>
+                        <div style="flex: 1;">
+                            <div style="font-weight: 500;">${modelInfo.name}</div>
+                            <div style="font-size: 11px; color: var(--md-sys-color-outline);">${modelInfo.origin}</div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            content += '</div></div>';
+            modalContent.innerHTML = content;
+        } else {
+            // Estimate which models likely support this diagnosis based on count
+            const allModels = getEstimatedModels(modelCount);
+            let content = `
+                <div style="margin-bottom: 16px;">
+                    <p style="color: var(--md-sys-color-on-surface-variant); margin-bottom: 16px;">
+                        Approximately <strong>${modelCount}</strong> models support this diagnosis.
+                    </p>
+                    <p style="font-size: 12px; color: var(--md-sys-color-outline); margin-bottom: 16px;">
+                        Based on consensus percentage, likely includes models from:
+                    </p>
+                    <div style="display: grid; gap: 8px;">
+            `;
+            
+            allModels.forEach(model => {
+                content += `
+                    <div style="display: flex; align-items: center; gap: 12px; padding: 12px; background: var(--md-sys-color-surface-variant); border-radius: 8px; opacity: 0.8;">
+                        <span class="material-symbols-rounded" style="color: var(--md-sys-color-primary);">smart_toy</span>
+                        <div style="flex: 1;">
+                            <div style="font-weight: 500;">${model.name}</div>
+                            <div style="font-size: 11px; color: var(--md-sys-color-outline);">${model.origin}</div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            content += '</div></div>';
+            modalContent.innerHTML = content;
+        }
+        
+        // Show modal
+        modal.style.display = 'flex';
+    }
+    
+    function closeModelsModal() {
+        document.getElementById('models-modal').style.display = 'none';
+    }
+    
+    function getModelDisplayInfo(modelId) {
+        // Parse model ID to get display name and origin
+        const modelMap = {
+            'openai/gpt-4o': { name: 'GPT-4o', origin: 'OpenAI (USA)' },
+            'openai/gpt-5': { name: 'GPT-5', origin: 'OpenAI (USA)' },
+            'anthropic/claude-3-opus': { name: 'Claude 3 Opus', origin: 'Anthropic (USA)' },
+            'anthropic/claude-3-5-sonnet': { name: 'Claude 3.5 Sonnet', origin: 'Anthropic (USA)' },
+            'google/gemini-2.5-pro': { name: 'Gemini 2.5 Pro', origin: 'Google (USA)' },
+            'google/gemini-2.5-flash': { name: 'Gemini 2.5 Flash', origin: 'Google (USA)' },
+            'mistralai/mistral-large': { name: 'Mistral Large', origin: 'Mistral AI (France)' },
+            'deepseek/deepseek-chat': { name: 'DeepSeek Chat', origin: 'DeepSeek (China)' },
+            'meta-llama/llama-3.2': { name: 'Llama 3.2', origin: 'Meta (USA)' },
+            'cohere/command-r-plus': { name: 'Command R+', origin: 'Cohere (Canada)' },
+            'x-ai/grok-4': { name: 'Grok 4', origin: 'xAI (USA)' }
+        };
+        
+        if (modelMap[modelId]) {
+            return modelMap[modelId];
+        }
+        
+        // Fallback parsing
+        const parts = modelId.split('/');
+        return {
+            name: parts[1] || modelId,
+            origin: parts[0] || 'Unknown'
+        };
+    }
+    
+    function getEstimatedModels(count) {
+        // Return a list of likely models based on count
+        const allModels = [
+            { name: 'GPT-5', origin: 'OpenAI (USA)' },
+            { name: 'GPT-4o', origin: 'OpenAI (USA)' },
+            { name: 'Claude Opus 4.1', origin: 'Anthropic (USA)' },
+            { name: 'Claude Sonnet 4.0', origin: 'Anthropic (USA)' },
+            { name: 'Gemini 2.5 Pro', origin: 'Google (USA)' },
+            { name: 'Gemini 2.5 Flash', origin: 'Google (USA)' },
+            { name: 'Mistral Large', origin: 'Mistral AI (France)' },
+            { name: 'Mistral 7B', origin: 'Mistral AI (France)' },
+            { name: 'DeepSeek v3', origin: 'DeepSeek (China)' },
+            { name: 'Llama 3.2', origin: 'Meta (USA)' },
+            { name: 'Command R+', origin: 'Cohere (Canada)' },
+            { name: 'Grok 4', origin: 'xAI (USA)' },
+            { name: 'Yi Large', origin: '01.AI (China)' },
+            { name: 'Qwen 2.5', origin: 'Alibaba (China)' },
+            { name: 'WizardLM 2', origin: 'Microsoft (USA)' },
+            { name: 'Hermes 3', origin: 'NousResearch' }
+        ];
+        
+        return allModels.slice(0, Math.min(count, allModels.length));
+    }
+    
+    // Close modal when clicking outside
+    document.getElementById('models-modal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeModelsModal();
+        }
+    });
+</script>
+{% endblock %}

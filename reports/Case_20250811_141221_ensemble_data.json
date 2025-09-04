@@ -1,0 +1,718 @@
+{
+  "case_id": "tmpue1qumt8",
+  "case_title": "Medical Case from tmpue1qumt8.txt",
+  "case_description": {
+    "case_id": "tmpue1qumt8",
+    "title": "Medical Case from tmpue1qumt8.txt",
+    "patient_info": "",
+    "presentation": "Final test: 65-year-old patient with persistent fever, joint pain, and recurrent abdominal pain episodes",
+    "symptoms": [],
+    "history": null,
+    "physical_exam": null,
+    "labs": null,
+    "imaging": null
+  },
+  "analysis_timestamp": "2025-08-11T14:13:43.578285",
+  "models_queried": 8,
+  "models_responded": 6,
+  "model_responses": [
+    {
+      "model_name": "mistralai/mistral-7b-instruct:free",
+      "origin": "France",
+      "size": "7B",
+      "response": " {\n    \"primary_diagnosis\": {\n        \"name\": \"Septic Arthritis\",\n        \"confidence\": 0.8,\n        \"icd_code\": \"M16.0\",\n        \"reasoning\": \"Persistent fever, joint pain, and recurrent abdominal pain episodes are common symptoms of septic arthritis, especially in older patients.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Rheumatoid Arthritis\",\n            \"confidence\": 0.3,\n            \"icd_code\": \"M05.0\",\n            \"reasoning\": \"Recurrent joint pain and potential systemic symptoms may suggest rheumatoid arthritis, although the presentation here seems to favor septic arthritis.\"\n        },\n        {\n            \"name\": \"Gout\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"M10.0\",\n            \"reasoning\": \"Recurrent abdominal pain and joint pain could potentially be related to gout, but the persistent fever is not typically associated with this condition.\"\n        },\n        {\n            \"name\": \"Inflammatory Bowel Disease\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"K50.0\",\n            \"reasoning\": \"Recurrent abdominal pain may be a symptom of inflammatory bowel disease, but the joint pain and fever suggest an extra-intestinal manifestation, which is less common.\"\n    }],\n    \"key_findings\": [\n        \"Persistent fever\",\n        \"Joint pain\",\n        \"Recurrent abdominal pain episodes\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Blood culture\",\n            \"purpose\": \"To isolate potential pathogens causing infection\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Synovial fluid analysis\",\n            \"purpose\": \"To confirm joint infection and identify causative organism\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"C-reactive protein (CRP)\",\n            \"purpose\": \"To assess inflammation\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Administer broad-spectrum antibiotics\",\n            \"Provide analgesia for pain management\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Cefazolin\",\n                \"dose\": \"2g IV q8h\",\n                \"route\": \"IV\",\n                \"duration\": \"7-10 days\",\n                \"rationale\": \"To cover common bacterial pathogens while awaiting culture results\"\n            }\n        ],\n        \"monitoring\": [\n            \"Clinical response to antibiotics\",\n            \"Frequency: Daily\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Orthopedic Surgery\",\n                \"urgency\": \"immediate\",\n                \"reason\": \"For joint aspiration and potential surgical intervention\"\n            },\n            {\n                \"specialty\": \"Rheumatology\",\n                \"urgency\": \"routine\",\n                \"reason\": \"For possible further evaluation if initial tests do not confirm septic arthritis\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Lack of response to initial antibiotic therapy\",\n        \"Presence of joint deformity or significant joint destruction\"\n    ],\n    \"patient_education\": [\n        \"Importance of completing antibiotic course\",\n        \"Signs of worsening infection or complications\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"1-2 weeks after completing antibiotic therapy\",\n        \"conditions\": \"Worsening symptoms or lack of clinical improvement\"\n    },\n    \"confidence_in_assessment\": 0.8,\n    \"uncertainties\": [\n        \"Possibility of concurrent conditions (e.g., inflammatory bowel disease)\",\n        \"Atypical pathogens may not be covered by initial antibiotics\"\n    ]\n}",
+      "error": null,
+      "timestamp": "2025-08-11T14:12:31.117887",
+      "tokens_used": 1946,
+      "input_tokens": 919,
+      "output_tokens": 1027,
+      "latency": 9.070287942886353
+    },
+    {
+      "model_name": "google/gemma-2-9b-it:free",
+      "origin": "USA",
+      "size": "9B",
+      "response": "\n",
+      "error": null,
+      "timestamp": "2025-08-11T14:12:32.976504",
+      "tokens_used": 828,
+      "input_tokens": 826,
+      "output_tokens": 2,
+      "latency": 1.8537039756774902
+    },
+    {
+      "model_name": "meta-llama/llama-3.2-3b-instruct:free",
+      "origin": "USA",
+      "size": "3B",
+      "response": "{\n    \"primary_diagnosis\": {\n        \"name\": \"Rheumatoid Arthritis\",\n        \"confidence\": 0.8,\n        \"icd_code\": \"M05.9\",\n        \"reasoning\": \"Patient's presentation of persistent fever, joint pain, and recurrent abdominal pain episodes is consistent with rheumatoid arthritis, a chronic autoimmune disorder that affects multiple joints and can cause systemic symptoms\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Gastroesophageal Reflux Disease (GERD)\",\n            \"confidence\": 0.4,\n            \"icd_code\": \"K22.9\",\n            \"reasoning\": \"Patient's recurrent abdominal pain episodes could be related to GERD, which is a common condition characterized by stomach acid flowing back up into the esophagus\"\n        },\n        {\n            \"name\": \"Osteoarthritis\",\n            \"confidence\": 0.3,\n            \"icd_code\": \"M14.9\",\n            \"reasoning\": \"Patient's joint pain and stiffness are consistent with osteoarthritis, a degenerative joint disease that can cause pain and limited mobility\"\n        },\n        {\n            \"name\": \"Inflammatory Bowel Disease (IBD)\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"K20-K31\",\n            \"reasoning\": \"Patient's recurrent abdominal pain episodes and fever could be related to IBD, a group of chronic inflammatory conditions that affect the digestive tract\"\n        }\n    ],\n    \"key_findings\": [\n        \"Tender and swollen joints in multiple locations\",\n        \"Recurrent episodes of abdominal pain\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Complete Blood Count (CBC)\",\n            \"purpose\": \"To rule out infection or inflammation\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Erythrocyte Sedimentation Rate (ESR)\",\n            \"purpose\": \"To measure inflammation\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Imaging studies (e.g., X-rays, ultrasound)\",\n            \"purpose\": \"To evaluate joint damage and abdominal pathology\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Prescribe nonsteroidal anti-inflammatory drugs (NSAIDs) for pain and inflammation\",\n            \"Refer patient for physical therapy to maintain joint mobility\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Infliximab\",\n                \"dose\": \"5 mg/kg IV every 8 weeks\",\n                \"route\": \"IV\",\n                \"duration\": \"Ongoing\",\n                \"rationale\": \"To reduce inflammation and slow disease progression\"\n            }\n        ],\n        \"monitoring\": [\n            \"Joint pain and inflammation\",\n            \"Gastrointestinal symptoms\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Rheumatologist\",\n                \"urgency\": \"immediate\",\n                \"reason\": \"To manage disease progression and prevent complications\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Unusual or severe symptoms (e.g., high fever, weight loss)\",\n        \"Recent travel or exposure to infectious agents\"\n    ],\n    \"patient_education\": [\n        \"The importance of adhering to treatment plan and attending follow-up appointments\",\n        \"Self-care measures to manage symptoms and prevent complications\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"Every 3 months for 1 year\",\n        \"conditions\": \"Monitoring for disease progression and potential complications\"\n    },\n    \"confidence_in_assessment\": 0.8,\n    \"uncertainties\": [\n        \"Patient's history of abdominal pain episodes and fever may be related to other conditions\",\n        \"Need for further testing to rule out underlying infections or other causes of symptoms\"\n    ]\n}",
+      "error": null,
+      "timestamp": "2025-08-11T14:12:39.639336",
+      "tokens_used": 2130,
+      "input_tokens": 1314,
+      "output_tokens": 816,
+      "latency": 6.659521102905273
+    },
+    {
+      "model_name": "qwen/qwen-2.5-coder-32b-instruct",
+      "origin": "China",
+      "size": "32B",
+      "response": "{\n    \"primary_diagnosis\": {\n        \"name\": \"Systemic Lupus Erythematosus (SLE)\",\n        \"confidence\": 0.7,\n        \"icd_code\": \"M32.9\",\n        \"reasoning\": \"The patient's persistent fever, joint pain, and recurrent abdominal pain are consistent with SLE, an autoimmune disease that can affect multiple organ systems.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Rheumatoid Arthritis (RA)\",\n            \"confidence\": 0.5,\n            \"icd_code\": \"M05.0\",\n            \"reasoning\": \"RA can present with persistent joint pain and fever, though it typically does not cause recurrent abdominal pain.\"\n        },\n        {\n            \"name\": \"Infectious Mononucleosis\",\n            \"confidence\": 0.4,\n            \"icd_code\": \"B20.0\",\n            \"reasoning\": \"This viral infection can cause fever, joint pain, and abdominal pain due to splenomegaly, but it is usually acute rather than persistent.\"\n        },\n        {\n            \"name\": \"Inflammatory Bowel Disease (IBD)\",\n            \"confidence\": 0.3,\n            \"icd_code\": \"K50-K52\",\n            \"reasoning\": \"IBD can cause recurrent abdominal pain and fever, but joint pain is less common compared to other conditions like SLE or RA.\"\n        }\n    ],\n    \"key_findings\": [\n        \"Persistent fever\",\n        \"Joint pain\",\n        \"Recurrent abdominal pain\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Complete Blood Count (CBC)\",\n            \"purpose\": \"Rule out anemia and infection\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Erythrocyte Sedimentation Rate (ESR) and C-Reactive Protein (CRP)\",\n            \"purpose\": \"Assess for systemic inflammation\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Anti-Nuclear Antibody (ANA) and Anti-dsDNA Antibody\",\n            \"purpose\": \"Rule in SLE\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Liver Function Tests (LFTs)\",\n            \"purpose\": \"Assess liver involvement\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Initiate non-steroidal anti-inflammatory drugs (NSAIDs) for pain\",\n            \"Hydrate the patient\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Ibuprofen\",\n                \"dose\": \"400 mg\",\n                \"route\": \"PO\",\n                \"duration\": \"as needed\",\n                \"rationale\": \"To relieve joint pain and fever\"\n            }\n        ],\n        \"monitoring\": [\n            \"Vital signs\",\n            \"Joint swelling and pain\",\n            \"Abdominal pain\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Rheumatology\",\n                \"urgency\": \"immediate\",\n                \"reason\": \"To evaluate for autoimmune conditions\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Severe abdominal pain or signs of peritonitis\",\n        \"Neurological symptoms (e.g., headache, seizures)\"\n    ],\n    \"patient_education\": [\n        \"Rest and avoid overexertion\",\n        \"Report any new or worsening symptoms\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"In 1-2 weeks or sooner if symptoms worsen\",\n        \"conditions\": \"Severe pain, fever > 102\u00b0F, or new symptoms\"\n    },\n    \"confidence_in_assessment\": 0.6,\n    \"uncertainties\": [\n        \"The exact cause of the abdominal pain needs clarification\",\n        \"The presence of other systemic symptoms could indicate a broader condition\"\n    ]\n}",
+      "error": null,
+      "timestamp": "2025-08-11T14:12:59.094868",
+      "tokens_used": 1594,
+      "input_tokens": 752,
+      "output_tokens": 842,
+      "latency": 19.45147681236267
+    },
+    {
+      "model_name": "google/gemini-2.0-flash-exp:free",
+      "origin": "USA",
+      "size": "Unknown",
+      "response": "```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"Adult-onset Still's disease\",\n        \"confidence\": 0.7,\n        \"icd_code\": \"M06.1\",\n        \"reasoning\": \"Persistent fever, joint pain, and recurrent abdominal pain are characteristic symptoms of Adult-onset Still's disease. Exclusion of other causes is necessary.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Systemic Lupus Erythematosus (SLE)\",\n            \"confidence\": 0.6,\n            \"icd_code\": \"M32.9\",\n            \"reasoning\": \"SLE can present with fever, joint pain, and abdominal pain. Further investigation is needed to differentiate from Still's disease.\"\n        },\n        {\n            \"name\": \"Rheumatoid Arthritis\",\n            \"confidence\": 0.5,\n            \"icd_code\": \"M05.9\",\n            \"reasoning\": \"RA can cause joint pain and can sometimes present with systemic symptoms like fever. Requires evaluation for rheumatoid factor and anti-CCP antibodies.\"\n        },\n        {\n            \"name\": \"Infection (e.g., Endocarditis, Abscess)\",\n            \"confidence\": 0.4,\n            \"icd_code\": \"A41.9\",\n            \"reasoning\": \"Infection should always be considered in the setting of persistent fever. Requires blood cultures and imaging to rule out infectious sources.\"\n        }\n    ],\n    \"key_findings\": [\n        \"Persistent fever\",\n        \"Joint pain\",\n        \"Recurrent abdominal pain\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Complete Blood Count (CBC) with differential\",\n            \"purpose\": \"Assess for leukocytosis, anemia, and thrombocytosis, which can be seen in Still's disease and infections.\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Comprehensive Metabolic Panel (CMP)\",\n            \"purpose\": \"Evaluate liver and kidney function, which can be affected in systemic diseases.\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Erythrocyte Sedimentation Rate (ESR) and C-Reactive Protein (CRP)\",\n            \"purpose\": \"Assess for inflammation.\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Ferritin Level\",\n            \"purpose\": \"Elevated ferritin is a hallmark of Still's disease, though it can be elevated in other conditions.\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Blood Cultures\",\n            \"purpose\": \"Rule out bacterial infection.\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Antinuclear Antibody (ANA) and Rheumatoid Factor (RF)\",\n            \"purpose\": \"Evaluate for autoimmune diseases like SLE and RA.\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Anti-CCP Antibody\",\n            \"purpose\": \"Evaluate for Rheumatoid Arthritis.\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Liver Function Tests (LFTs)\",\n            \"purpose\": \"Assess for liver involvement.\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Imaging (CT abdomen/pelvis)\",\n            \"purpose\": \"Evaluate for intra-abdominal pathology contributing to pain and fever.\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Urinalysis\",\n            \"purpose\": \"Rule out urinary tract infection or kidney involvement.\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Rule out serious infections with blood cultures and imaging.\",\n            \"Control fever with antipyretics (e.g., acetaminophen or ibuprofen).\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Acetaminophen\",\n                \"dose\": \"650mg\",\n                \"route\": \"PO\",\n                \"duration\": \"PRN for fever\",\n                \"rationale\": \"Antipyretic and analgesic\"\n            },\n            {\n                \"drug\": \"Ibuprofen\",\n                \"dose\": \"400mg\",\n                \"route\": \"PO\",\n                \"duration\": \"PRN for pain and fever\",\n                \"rationale\": \"NSAID for pain and inflammation (contraindicated in patients with renal insufficiency or certain GI conditions)\"\n            }\n        ],\n        \"monitoring\": [\n            \"Temperature\",\n            \"Frequency: Every 4-6 hours\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Rheumatology\",\n                \"urgency\": \"urgent\",\n                \"reason\": \"For diagnosis and management of autoimmune/inflammatory conditions\"\n            },\n            {\n                \"specialty\": \"Infectious Disease\",\n                \"urgency\": \"urgent\",\n                \"reason\": \"If infection is suspected or not ruled out\"\n            },\n            {\n                \"specialty\": \"Gastroenterology\",\n                \"urgency\": \"routine\",\n                \"reason\": \"If abdominal pain is persistent or unexplained\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Severe abdominal pain\",\n        \"Signs of infection (e.g., hypotension, altered mental status)\",\n        \"New or worsening shortness of breath\"\n    ],\n    \"patient_education\": [\n        \"Importance of medication adherence.\",\n        \"Report any worsening symptoms or new symptoms immediately.\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"Within 1 week, or sooner if symptoms worsen\",\n        \"conditions\": \"Worsening fever, severe abdominal pain, difficulty breathing\"\n    },\n    \"confidence_in_assessment\": 0.6,\n    \"uncertainties\": [\n        \"Lack of detailed medical history.\",\n        \"No lab results or imaging available.\"\n    ]\n}\n```",
+      "error": null,
+      "timestamp": "2025-08-11T14:13:10.757723",
+      "tokens_used": 2162,
+      "input_tokens": 817,
+      "output_tokens": 1345,
+      "latency": 11.660736083984375
+    },
+    {
+      "model_name": "deepseek/deepseek-chat-v3-0324:free",
+      "origin": "China",
+      "size": "Unknown",
+      "response": "```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"Rheumatoid Arthritis with possible systemic involvement\",\n        \"confidence\": 0.75,\n        \"icd_code\": \"M06.9\",\n        \"reasoning\": \"Persistent fever and joint pain are hallmark symptoms of rheumatoid arthritis, especially in older patients. Recurrent abdominal pain could indicate systemic involvement or comorbid conditions like vasculitis.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Systemic Lupus Erythematosus (SLE)\",\n            \"confidence\": 0.65,\n            \"icd_code\": \"M32.9\",\n            \"reasoning\": \"SLE can present with fever, joint pain, and abdominal pain due to serositis or vasculitis. More common in women, but can occur in men.\"\n        },\n        {\n            \"name\": \"Familial Mediterranean Fever (FMF)\",\n            \"confidence\": 0.6,\n            \"icd_code\": \"E85.0\",\n            \"reasoning\": \"Recurrent episodes of fever and abdominal pain are classic for FMF, though joint pain is also a feature. More common in certain ethnic groups.\"\n        },\n        {\n            \"name\": \"Infectious Endocarditis\",\n            \"confidence\": 0.5,\n            \"icd_code\": \"I33.0\",\n            \"reasoning\": \"Persistent fever and joint pain can occur in endocarditis. Abdominal pain might be due to septic emboli. Requires ruling out given potential severity.\"\n        }\n    ],\n    \"key_findings\": [\n        \"Persistent fever\",\n        \"Joint pain\",\n        \"Recurrent abdominal pain\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Complete Blood Count (CBC) with differential\",\n            \"purpose\": \"Assess for anemia, leukocytosis, or thrombocytosis which may indicate inflammation or infection\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Erythrocyte Sedimentation Rate (ESR) and C-Reactive Protein (CRP)\",\n            \"purpose\": \"Evaluate for markers of inflammation\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Rheumatoid Factor (RF) and Anti-CCP antibodies\",\n            \"purpose\": \"Diagnose rheumatoid arthritis\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Antinuclear Antibody (ANA) and Anti-dsDNA\",\n            \"purpose\": \"Rule out SLE\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Blood cultures\",\n            \"purpose\": \"Rule out infectious endocarditis\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Abdominal Ultrasound\",\n            \"purpose\": \"Evaluate for causes of recurrent abdominal pain\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Initiate fever management with antipyretics if needed\",\n            \"Ensure hydration and monitor vital signs\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Ibuprofen\",\n                \"dose\": \"400-600 mg every 6 hours as needed\",\n                \"route\": \"PO\",\n                \"duration\": \"Until symptoms improve\",\n                \"rationale\": \"For pain and anti-inflammatory effects\"\n            },\n            {\n                \"drug\": \"Prednisone\",\n                \"dose\": \"20 mg daily\",\n                \"route\": \"PO\",\n                \"duration\": \"5-7 days, then taper if symptoms improve\",\n                \"rationale\": \"If inflammatory arthritis is suspected, to reduce inflammation\"\n            }\n        ],\n        \"monitoring\": [\n            \"Temperature every 4 hours\",\n            \"Pain levels daily\",\n            \"Joint swelling and mobility daily\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Rheumatology\",\n                \"urgency\": \"urgent\",\n                \"reason\": \"For definitive diagnosis and management of potential rheumatic disease\"\n            },\n            {\n                \"specialty\": \"Gastroenterology\",\n                \"urgency\": \"routine\",\n                \"reason\": \"Evaluate recurrent abdominal pain\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"High fever (>39\u00b0C)\",\n        \"Severe abdominal pain with guarding or rigidity\",\n        \"Neurologic symptoms\"\n    ],\n    \"patient_education\": [\n        \"Importance of taking medications as prescribed\",\n        \"Monitor for signs of infection or worsening symptoms\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"1-2 weeks\",\n        \"conditions\": \"Worsening fever, severe abdominal pain, or new symptoms\"\n    },\n    \"confidence_in_assessment\": 0.7,\n    \"uncertainties\": [\n        \"Exact cause of recurrent abdominal pain\",\n        \"Underlying infectious vs. autoimmune etiology\"\n    ]\n}\n```",
+      "error": null,
+      "timestamp": "2025-08-11T14:13:37.487556",
+      "tokens_used": 1799,
+      "input_tokens": 756,
+      "output_tokens": 1043,
+      "latency": 26.726315021514893
+    },
+    {
+      "model_name": "nousresearch/hermes-3-llama-3.1-8b:free",
+      "origin": "USA",
+      "size": "8B",
+      "response": null,
+      "error": "API Error 400: {\"error\":{\"message\":\"nousresearch/hermes-3-llama-3.1-8b:free is not a valid model ID\",\"code\":400},\"user_id\":\"user_311J1DE0saKoskawvWx8XZsOQ1N\"}",
+      "timestamp": "2025-08-11T14:13:37.700166",
+      "tokens_used": 0,
+      "input_tokens": 0,
+      "output_tokens": 0
+    },
+    {
+      "model_name": "liquid/lfm-40b:free",
+      "origin": "USA",
+      "size": "40B",
+      "response": null,
+      "error": "API Error 404: {\"error\":{\"message\":\"No endpoints found for liquid/lfm-40b:free.\",\"code\":404},\"user_id\":\"user_311J1DE0saKoskawvWx8XZsOQ1N\"}",
+      "timestamp": "2025-08-11T14:13:37.829580",
+      "tokens_used": 0,
+      "input_tokens": 0,
+      "output_tokens": 0
+    }
+  ],
+  "parsed_responses": [
+    {
+      "primary_diagnosis": {
+        "name": "Septic Arthritis",
+        "confidence": 0.8,
+        "icd_code": "M16.0",
+        "reasoning": "Persistent fever, joint pain, and recurrent abdominal pain episodes are common symptoms of septic arthritis, especially in older patients."
+      },
+      "differential_diagnoses": [
+        {
+          "name": "Rheumatoid Arthritis",
+          "confidence": 0.3,
+          "icd_code": "M05.0",
+          "reasoning": "Recurrent joint pain and potential systemic symptoms may suggest rheumatoid arthritis, although the presentation here seems to favor septic arthritis."
+        },
+        {
+          "name": "Gout",
+          "confidence": 0.2,
+          "icd_code": "M10.0",
+          "reasoning": "Recurrent abdominal pain and joint pain could potentially be related to gout, but the persistent fever is not typically associated with this condition."
+        },
+        {
+          "name": "Inflammatory Bowel Disease",
+          "confidence": 0.2,
+          "icd_code": "K50.0",
+          "reasoning": "Recurrent abdominal pain may be a symptom of inflammatory bowel disease, but the joint pain and fever suggest an extra-intestinal manifestation, which is less common."
+        }
+      ],
+      "key_findings": [
+        "Persistent fever",
+        "Joint pain",
+        "Recurrent abdominal pain episodes"
+      ],
+      "diagnostic_tests": [
+        {
+          "test": "Blood culture",
+          "purpose": "To isolate potential pathogens causing infection",
+          "priority": "immediate"
+        },
+        {
+          "test": "Synovial fluid analysis",
+          "purpose": "To confirm joint infection and identify causative organism",
+          "priority": "urgent"
+        },
+        {
+          "test": "C-reactive protein (CRP)",
+          "purpose": "To assess inflammation",
+          "priority": "routine"
+        }
+      ],
+      "management_plan": {
+        "immediate_actions": [
+          "Administer broad-spectrum antibiotics",
+          "Provide analgesia for pain management"
+        ],
+        "medications": [
+          {
+            "drug": "Cefazolin",
+            "dose": "2g IV q8h",
+            "route": "IV",
+            "duration": "7-10 days",
+            "rationale": "To cover common bacterial pathogens while awaiting culture results"
+          }
+        ],
+        "monitoring": [
+          "Clinical response to antibiotics",
+          "Frequency: Daily"
+        ],
+        "consultations": [
+          {
+            "specialty": "Orthopedic Surgery",
+            "urgency": "immediate",
+            "reason": "For joint aspiration and potential surgical intervention"
+          },
+          {
+            "specialty": "Rheumatology",
+            "urgency": "routine",
+            "reason": "For possible further evaluation if initial tests do not confirm septic arthritis"
+          }
+        ]
+      },
+      "red_flags": [
+        "Lack of response to initial antibiotic therapy",
+        "Presence of joint deformity or significant joint destruction"
+      ],
+      "patient_education": [
+        "Importance of completing antibiotic course",
+        "Signs of worsening infection or complications"
+      ],
+      "follow_up": {
+        "timing": "1-2 weeks after completing antibiotic therapy",
+        "conditions": "Worsening symptoms or lack of clinical improvement"
+      },
+      "confidence_in_assessment": 0.8,
+      "uncertainties": [
+        "Possibility of concurrent conditions (e.g., inflammatory bowel disease)",
+        "Atypical pathogens may not be covered by initial antibiotics"
+      ]
+    },
+    {
+      "initial_impression": "",
+      "differential_diagnoses": [],
+      "alternative_perspectives": "",
+      "next_steps": "",
+      "uncertainties": "",
+      "population_considerations": "",
+      "confidence_score": null,
+      "raw_response": "\n"
+    },
+    {
+      "primary_diagnosis": {
+        "name": "Rheumatoid Arthritis",
+        "confidence": 0.8,
+        "icd_code": "M05.9",
+        "reasoning": "Patient's presentation of persistent fever, joint pain, and recurrent abdominal pain episodes is consistent with rheumatoid arthritis, a chronic autoimmune disorder that affects multiple joints and can cause systemic symptoms"
+      },
+      "differential_diagnoses": [
+        {
+          "name": "Gastroesophageal Reflux Disease (GERD)",
+          "confidence": 0.4,
+          "icd_code": "K22.9",
+          "reasoning": "Patient's recurrent abdominal pain episodes could be related to GERD, which is a common condition characterized by stomach acid flowing back up into the esophagus"
+        },
+        {
+          "name": "Osteoarthritis",
+          "confidence": 0.3,
+          "icd_code": "M14.9",
+          "reasoning": "Patient's joint pain and stiffness are consistent with osteoarthritis, a degenerative joint disease that can cause pain and limited mobility"
+        },
+        {
+          "name": "Inflammatory Bowel Disease (IBD)",
+          "confidence": 0.2,
+          "icd_code": "K20-K31",
+          "reasoning": "Patient's recurrent abdominal pain episodes and fever could be related to IBD, a group of chronic inflammatory conditions that affect the digestive tract"
+        }
+      ],
+      "key_findings": [
+        "Tender and swollen joints in multiple locations",
+        "Recurrent episodes of abdominal pain"
+      ],
+      "diagnostic_tests": [
+        {
+          "test": "Complete Blood Count (CBC)",
+          "purpose": "To rule out infection or inflammation",
+          "priority": "immediate"
+        },
+        {
+          "test": "Erythrocyte Sedimentation Rate (ESR)",
+          "purpose": "To measure inflammation",
+          "priority": "urgent"
+        },
+        {
+          "test": "Imaging studies (e.g., X-rays, ultrasound)",
+          "purpose": "To evaluate joint damage and abdominal pathology",
+          "priority": "routine"
+        }
+      ],
+      "management_plan": {
+        "immediate_actions": [
+          "Prescribe nonsteroidal anti-inflammatory drugs (NSAIDs) for pain and inflammation",
+          "Refer patient for physical therapy to maintain joint mobility"
+        ],
+        "medications": [
+          {
+            "drug": "Infliximab",
+            "dose": "5 mg/kg IV every 8 weeks",
+            "route": "IV",
+            "duration": "Ongoing",
+            "rationale": "To reduce inflammation and slow disease progression"
+          }
+        ],
+        "monitoring": [
+          "Joint pain and inflammation",
+          "Gastrointestinal symptoms"
+        ],
+        "consultations": [
+          {
+            "specialty": "Rheumatologist",
+            "urgency": "immediate",
+            "reason": "To manage disease progression and prevent complications"
+          }
+        ]
+      },
+      "red_flags": [
+        "Unusual or severe symptoms (e.g., high fever, weight loss)",
+        "Recent travel or exposure to infectious agents"
+      ],
+      "patient_education": [
+        "The importance of adhering to treatment plan and attending follow-up appointments",
+        "Self-care measures to manage symptoms and prevent complications"
+      ],
+      "follow_up": {
+        "timing": "Every 3 months for 1 year",
+        "conditions": "Monitoring for disease progression and potential complications"
+      },
+      "confidence_in_assessment": 0.8,
+      "uncertainties": [
+        "Patient's history of abdominal pain episodes and fever may be related to other conditions",
+        "Need for further testing to rule out underlying infections or other causes of symptoms"
+      ]
+    },
+    {
+      "primary_diagnosis": {
+        "name": "Systemic Lupus Erythematosus (SLE)",
+        "confidence": 0.7,
+        "icd_code": "M32.9",
+        "reasoning": "The patient's persistent fever, joint pain, and recurrent abdominal pain are consistent with SLE, an autoimmune disease that can affect multiple organ systems."
+      },
+      "differential_diagnoses": [
+        {
+          "name": "Rheumatoid Arthritis (RA)",
+          "confidence": 0.5,
+          "icd_code": "M05.0",
+          "reasoning": "RA can present with persistent joint pain and fever, though it typically does not cause recurrent abdominal pain."
+        },
+        {
+          "name": "Infectious Mononucleosis",
+          "confidence": 0.4,
+          "icd_code": "B20.0",
+          "reasoning": "This viral infection can cause fever, joint pain, and abdominal pain due to splenomegaly, but it is usually acute rather than persistent."
+        },
+        {
+          "name": "Inflammatory Bowel Disease (IBD)",
+          "confidence": 0.3,
+          "icd_code": "K50-K52",
+          "reasoning": "IBD can cause recurrent abdominal pain and fever, but joint pain is less common compared to other conditions like SLE or RA."
+        }
+      ],
+      "key_findings": [
+        "Persistent fever",
+        "Joint pain",
+        "Recurrent abdominal pain"
+      ],
+      "diagnostic_tests": [
+        {
+          "test": "Complete Blood Count (CBC)",
+          "purpose": "Rule out anemia and infection",
+          "priority": "immediate"
+        },
+        {
+          "test": "Erythrocyte Sedimentation Rate (ESR) and C-Reactive Protein (CRP)",
+          "purpose": "Assess for systemic inflammation",
+          "priority": "immediate"
+        },
+        {
+          "test": "Anti-Nuclear Antibody (ANA) and Anti-dsDNA Antibody",
+          "purpose": "Rule in SLE",
+          "priority": "urgent"
+        },
+        {
+          "test": "Liver Function Tests (LFTs)",
+          "purpose": "Assess liver involvement",
+          "priority": "routine"
+        }
+      ],
+      "management_plan": {
+        "immediate_actions": [
+          "Initiate non-steroidal anti-inflammatory drugs (NSAIDs) for pain",
+          "Hydrate the patient"
+        ],
+        "medications": [
+          {
+            "drug": "Ibuprofen",
+            "dose": "400 mg",
+            "route": "PO",
+            "duration": "as needed",
+            "rationale": "To relieve joint pain and fever"
+          }
+        ],
+        "monitoring": [
+          "Vital signs",
+          "Joint swelling and pain",
+          "Abdominal pain"
+        ],
+        "consultations": [
+          {
+            "specialty": "Rheumatology",
+            "urgency": "immediate",
+            "reason": "To evaluate for autoimmune conditions"
+          }
+        ]
+      },
+      "red_flags": [
+        "Severe abdominal pain or signs of peritonitis",
+        "Neurological symptoms (e.g., headache, seizures)"
+      ],
+      "patient_education": [
+        "Rest and avoid overexertion",
+        "Report any new or worsening symptoms"
+      ],
+      "follow_up": {
+        "timing": "In 1-2 weeks or sooner if symptoms worsen",
+        "conditions": "Severe pain, fever > 102\u00b0F, or new symptoms"
+      },
+      "confidence_in_assessment": 0.6,
+      "uncertainties": [
+        "The exact cause of the abdominal pain needs clarification",
+        "The presence of other systemic symptoms could indicate a broader condition"
+      ]
+    },
+    {
+      "primary_diagnosis": {
+        "name": "Adult-onset Still's disease",
+        "confidence": 0.7,
+        "icd_code": "M06.1",
+        "reasoning": "Persistent fever, joint pain, and recurrent abdominal pain are characteristic symptoms of Adult-onset Still's disease. Exclusion of other causes is necessary."
+      },
+      "differential_diagnoses": [
+        {
+          "name": "Systemic Lupus Erythematosus (SLE)",
+          "confidence": 0.6,
+          "icd_code": "M32.9",
+          "reasoning": "SLE can present with fever, joint pain, and abdominal pain. Further investigation is needed to differentiate from Still's disease."
+        },
+        {
+          "name": "Rheumatoid Arthritis",
+          "confidence": 0.5,
+          "icd_code": "M05.9",
+          "reasoning": "RA can cause joint pain and can sometimes present with systemic symptoms like fever. Requires evaluation for rheumatoid factor and anti-CCP antibodies."
+        },
+        {
+          "name": "Infection (e.g., Endocarditis, Abscess)",
+          "confidence": 0.4,
+          "icd_code": "A41.9",
+          "reasoning": "Infection should always be considered in the setting of persistent fever. Requires blood cultures and imaging to rule out infectious sources."
+        }
+      ],
+      "key_findings": [
+        "Persistent fever",
+        "Joint pain",
+        "Recurrent abdominal pain"
+      ],
+      "diagnostic_tests": [
+        {
+          "test": "Complete Blood Count (CBC) with differential",
+          "purpose": "Assess for leukocytosis, anemia, and thrombocytosis, which can be seen in Still's disease and infections.",
+          "priority": "immediate"
+        },
+        {
+          "test": "Comprehensive Metabolic Panel (CMP)",
+          "purpose": "Evaluate liver and kidney function, which can be affected in systemic diseases.",
+          "priority": "immediate"
+        },
+        {
+          "test": "Erythrocyte Sedimentation Rate (ESR) and C-Reactive Protein (CRP)",
+          "purpose": "Assess for inflammation.",
+          "priority": "immediate"
+        },
+        {
+          "test": "Ferritin Level",
+          "purpose": "Elevated ferritin is a hallmark of Still's disease, though it can be elevated in other conditions.",
+          "priority": "immediate"
+        },
+        {
+          "test": "Blood Cultures",
+          "purpose": "Rule out bacterial infection.",
+          "priority": "urgent"
+        },
+        {
+          "test": "Antinuclear Antibody (ANA) and Rheumatoid Factor (RF)",
+          "purpose": "Evaluate for autoimmune diseases like SLE and RA.",
+          "priority": "urgent"
+        },
+        {
+          "test": "Anti-CCP Antibody",
+          "purpose": "Evaluate for Rheumatoid Arthritis.",
+          "priority": "urgent"
+        },
+        {
+          "test": "Liver Function Tests (LFTs)",
+          "purpose": "Assess for liver involvement.",
+          "priority": "urgent"
+        },
+        {
+          "test": "Imaging (CT abdomen/pelvis)",
+          "purpose": "Evaluate for intra-abdominal pathology contributing to pain and fever.",
+          "priority": "urgent"
+        },
+        {
+          "test": "Urinalysis",
+          "purpose": "Rule out urinary tract infection or kidney involvement.",
+          "priority": "routine"
+        }
+      ],
+      "management_plan": {
+        "immediate_actions": [
+          "Rule out serious infections with blood cultures and imaging.",
+          "Control fever with antipyretics (e.g., acetaminophen or ibuprofen)."
+        ],
+        "medications": [
+          {
+            "drug": "Acetaminophen",
+            "dose": "650mg",
+            "route": "PO",
+            "duration": "PRN for fever",
+            "rationale": "Antipyretic and analgesic"
+          },
+          {
+            "drug": "Ibuprofen",
+            "dose": "400mg",
+            "route": "PO",
+            "duration": "PRN for pain and fever",
+            "rationale": "NSAID for pain and inflammation (contraindicated in patients with renal insufficiency or certain GI conditions)"
+          }
+        ],
+        "monitoring": [
+          "Temperature",
+          "Frequency: Every 4-6 hours"
+        ],
+        "consultations": [
+          {
+            "specialty": "Rheumatology",
+            "urgency": "urgent",
+            "reason": "For diagnosis and management of autoimmune/inflammatory conditions"
+          },
+          {
+            "specialty": "Infectious Disease",
+            "urgency": "urgent",
+            "reason": "If infection is suspected or not ruled out"
+          },
+          {
+            "specialty": "Gastroenterology",
+            "urgency": "routine",
+            "reason": "If abdominal pain is persistent or unexplained"
+          }
+        ]
+      },
+      "red_flags": [
+        "Severe abdominal pain",
+        "Signs of infection (e.g., hypotension, altered mental status)",
+        "New or worsening shortness of breath"
+      ],
+      "patient_education": [
+        "Importance of medication adherence.",
+        "Report any worsening symptoms or new symptoms immediately."
+      ],
+      "follow_up": {
+        "timing": "Within 1 week, or sooner if symptoms worsen",
+        "conditions": "Worsening fever, severe abdominal pain, difficulty breathing"
+      },
+      "confidence_in_assessment": 0.6,
+      "uncertainties": [
+        "Lack of detailed medical history.",
+        "No lab results or imaging available."
+      ]
+    },
+    {
+      "primary_diagnosis": {
+        "name": "Rheumatoid Arthritis with possible systemic involvement",
+        "confidence": 0.75,
+        "icd_code": "M06.9",
+        "reasoning": "Persistent fever and joint pain are hallmark symptoms of rheumatoid arthritis, especially in older patients. Recurrent abdominal pain could indicate systemic involvement or comorbid conditions like vasculitis."
+      },
+      "differential_diagnoses": [
+        {
+          "name": "Systemic Lupus Erythematosus (SLE)",
+          "confidence": 0.65,
+          "icd_code": "M32.9",
+          "reasoning": "SLE can present with fever, joint pain, and abdominal pain due to serositis or vasculitis. More common in women, but can occur in men."
+        },
+        {
+          "name": "Familial Mediterranean Fever (FMF)",
+          "confidence": 0.6,
+          "icd_code": "E85.0",
+          "reasoning": "Recurrent episodes of fever and abdominal pain are classic for FMF, though joint pain is also a feature. More common in certain ethnic groups."
+        },
+        {
+          "name": "Infectious Endocarditis",
+          "confidence": 0.5,
+          "icd_code": "I33.0",
+          "reasoning": "Persistent fever and joint pain can occur in endocarditis. Abdominal pain might be due to septic emboli. Requires ruling out given potential severity."
+        }
+      ],
+      "key_findings": [
+        "Persistent fever",
+        "Joint pain",
+        "Recurrent abdominal pain"
+      ],
+      "diagnostic_tests": [
+        {
+          "test": "Complete Blood Count (CBC) with differential",
+          "purpose": "Assess for anemia, leukocytosis, or thrombocytosis which may indicate inflammation or infection",
+          "priority": "immediate"
+        },
+        {
+          "test": "Erythrocyte Sedimentation Rate (ESR) and C-Reactive Protein (CRP)",
+          "purpose": "Evaluate for markers of inflammation",
+          "priority": "immediate"
+        },
+        {
+          "test": "Rheumatoid Factor (RF) and Anti-CCP antibodies",
+          "purpose": "Diagnose rheumatoid arthritis",
+          "priority": "urgent"
+        },
+        {
+          "test": "Antinuclear Antibody (ANA) and Anti-dsDNA",
+          "purpose": "Rule out SLE",
+          "priority": "urgent"
+        },
+        {
+          "test": "Blood cultures",
+          "purpose": "Rule out infectious endocarditis",
+          "priority": "urgent"
+        },
+        {
+          "test": "Abdominal Ultrasound",
+          "purpose": "Evaluate for causes of recurrent abdominal pain",
+          "priority": "routine"
+        }
+      ],
+      "management_plan": {
+        "immediate_actions": [
+          "Initiate fever management with antipyretics if needed",
+          "Ensure hydration and monitor vital signs"
+        ],
+        "medications": [
+          {
+            "drug": "Ibuprofen",
+            "dose": "400-600 mg every 6 hours as needed",
+            "route": "PO",
+            "duration": "Until symptoms improve",
+            "rationale": "For pain and anti-inflammatory effects"
+          },
+          {
+            "drug": "Prednisone",
+            "dose": "20 mg daily",
+            "route": "PO",
+            "duration": "5-7 days, then taper if symptoms improve",
+            "rationale": "If inflammatory arthritis is suspected, to reduce inflammation"
+          }
+        ],
+        "monitoring": [
+          "Temperature every 4 hours",
+          "Pain levels daily",
+          "Joint swelling and mobility daily"
+        ],
+        "consultations": [
+          {
+            "specialty": "Rheumatology",
+            "urgency": "urgent",
+            "reason": "For definitive diagnosis and management of potential rheumatic disease"
+          },
+          {
+            "specialty": "Gastroenterology",
+            "urgency": "routine",
+            "reason": "Evaluate recurrent abdominal pain"
+          }
+        ]
+      },
+      "red_flags": [
+        "High fever (>39\u00b0C)",
+        "Severe abdominal pain with guarding or rigidity",
+        "Neurologic symptoms"
+      ],
+      "patient_education": [
+        "Importance of taking medications as prescribed",
+        "Monitor for signs of infection or worsening symptoms"
+      ],
+      "follow_up": {
+        "timing": "1-2 weeks",
+        "conditions": "Worsening fever, severe abdominal pain, or new symptoms"
+      },
+      "confidence_in_assessment": 0.7,
+      "uncertainties": [
+        "Exact cause of recurrent abdominal pain",
+        "Underlying infectious vs. autoimmune etiology"
+      ]
+    },
+    null,
+    null
+  ],
+  "consensus_analysis": {
+    "total_models": 8,
+    "responding_models": 6,
+    "consensus_level": "Weak",
+    "primary_diagnosis": "** Undetermined. The provided information is insufficient to formulate a diagnosis.",
+    "primary_confidence": 0.0,
+    "alternative_diagnoses": [
+      {
+        "diagnosis": "**",
+        "confidence": 0.5,
+        "model_count": 0,
+        "supporting_models": []
+      }
+    ],
+    "minority_opinions": [
+      {
+        "diagnosis": "** None. All models failed to provide a diagnosis.",
+        "models": [],
+        "confidence": 0.25
+      }
+    ],
+    "agreement_scores": {},
+    "geographic_patterns": {
+      "France": [],
+      "USA": [],
+      "China": []
+    },
+    "action_required": "AI-enhanced clinical judgment recommended",
+    "clinical_recommendation": "** Given the persistent fever, joint pain, and recurrent abdominal pain, a thorough workup is essential. This should include:",
+    "bias_considerations": [
+      "** There is no evidence of bias, as all models failed to provide a diagnosis. The lack of response suggests the information provided is insufficient for any of the models to make a determination."
+    ]
+  }
+}

@@ -1,0 +1,75 @@
+# MEDLEY Pipeline Configuration
+
+pipeline:
+  max_parallel_queries: 10
+  timeout_seconds: 60
+  retry_attempts: 2
+  cache_enabled: true
+  cache_validation:
+    min_file_size: 1024  # bytes
+    min_content_length: 50  # characters
+    check_reasoning_field: true
+
+orchestrator:
+  primary_model: "anthropic/claude-3-5-sonnet-20241022"
+  fallback_model: "anthropic/claude-3-opus-20240229"
+  max_retries: 1
+  retry_delay: 30
+  prompt_settings:
+    request_all_alternatives: true
+    include_icd10: true
+    include_evidence: true
+    include_minority_opinions: true
+
+models:
+  # Premium tier
+  premium:
+    - openai/gpt-4o
+    - anthropic/claude-3-opus-20240229
+    - google/gemini-2.5-pro
+    - mistralai/mistral-large-2411
+  
+  # Mid-range tier
+  midrange:
+    - anthropic/claude-3-5-sonnet-20241022
+    - openai/gpt-4o-mini
+    - google/gemini-2.5-flash
+    - cohere/command-r-plus
+    - deepseek/deepseek-v3
+  
+  # Budget tier
+  budget:
+    - google/gemini-2.5-flash-lite
+    - mistralai/mistral-7b-instruct
+    - meta-llama/llama-3.2-3b-instruct
+    - liquid/lfm-40b
+
+report:
+  format: "pdf"
+  page_size: "letter"
+  table_width: 6.5  # inches
+  include_sections:
+    - title_page
+    - executive_summary
+    - diagnostic_landscape
+    - management_strategies
+    - model_diversity
+    - decision_support
+  
+  formatting:
+    font_family: "Helvetica"
+    header_font_size: 12
+    content_font_size: 10
+    table_font_size: 9
+    
+bias_analysis:
+  track_geographic_patterns: true
+  preserve_minority_opinions: true
+  minimum_minority_threshold: 0.1  # 10%
+  countries_tracked:
+    - USA
+    - China
+    - France
+    - Canada
+    - Japan
+    - Israel

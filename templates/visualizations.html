@@ -1,0 +1,503 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container" style="max-width: 1400px; margin: 0 auto; padding: 24px;">
+    <h1 style="font-size: var(--md-sys-typescale-display-small); margin-bottom: 16px;">
+        Analytics & Visualizations
+    </h1>
+    <p style="color: var(--md-sys-color-on-surface-variant); margin-bottom: 32px;">
+        Interactive charts and insights from ensemble analysis across all cases
+    </p>
+
+    <!-- Summary Cards -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 32px;">
+        <div class="card" style="padding: 24px; text-align: center;">
+            <div style="font-size: 36px; font-weight: bold; color: var(--md-sys-color-primary);">31</div>
+            <div style="font-size: 14px; color: var(--md-sys-color-on-surface-variant);">AI Models</div>
+        </div>
+        <div class="card" style="padding: 24px; text-align: center;">
+            <div style="font-size: 36px; font-weight: bold; color: var(--md-sys-color-secondary);">12</div>
+            <div style="font-size: 14px; color: var(--md-sys-color-on-surface-variant);">Medical Cases</div>
+        </div>
+        <div class="card" style="padding: 24px; text-align: center;">
+            <div style="font-size: 36px; font-weight: bold; color: var(--md-sys-color-tertiary);">6</div>
+            <div style="font-size: 14px; color: var(--md-sys-color-on-surface-variant);">Countries</div>
+        </div>
+        <div class="card" style="padding: 24px; text-align: center;">
+            <div style="font-size: 36px; font-weight: bold; color: var(--md-sys-color-error);">85%</div>
+            <div style="font-size: 14px; color: var(--md-sys-color-on-surface-variant);">Avg Consensus</div>
+        </div>
+    </div>
+
+    <!-- Chart Grid -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(600px, 1fr)); gap: 24px;">
+        
+        <!-- Model Performance Heatmap -->
+        <div class="card" style="padding: 32px;">
+            <h2 style="font-size: var(--md-sys-typescale-headline-small); margin-bottom: 24px;">
+                Model Agreement Heatmap
+            </h2>
+            <div style="position: relative; height: 400px;">
+                <canvas id="heatmapChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Diagnosis Distribution Pie Chart -->
+        <div class="card" style="padding: 32px;">
+            <h2 style="font-size: var(--md-sys-typescale-headline-small); margin-bottom: 24px;">
+                Primary Diagnosis Distribution
+            </h2>
+            <div style="position: relative; height: 400px;">
+                <canvas id="diagnosisPieChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Bias Distribution Radar Chart -->
+        <div class="card" style="padding: 32px;">
+            <h2 style="font-size: var(--md-sys-typescale-headline-small); margin-bottom: 24px;">
+                Bias Pattern Analysis
+            </h2>
+            <div style="position: relative; height: 400px;">
+                <canvas id="biasRadarChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Response Time Bar Chart -->
+        <div class="card" style="padding: 32px;">
+            <h2 style="font-size: var(--md-sys-typescale-headline-small); margin-bottom: 24px;">
+                Model Response Times
+            </h2>
+            <div style="position: relative; height: 400px;">
+                <canvas id="responseTimeChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Consensus Trends Line Chart -->
+        <div class="card" style="padding: 32px;">
+            <h2 style="font-size: var(--md-sys-typescale-headline-small); margin-bottom: 24px;">
+                Consensus Trends Across Cases
+            </h2>
+            <div style="position: relative; height: 400px;">
+                <canvas id="consensusLineChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Geographic Distribution -->
+        <div class="card" style="padding: 32px;">
+            <h2 style="font-size: var(--md-sys-typescale-headline-small); margin-bottom: 24px;">
+                Model Geographic Distribution
+            </h2>
+            <div style="position: relative; height: 400px;">
+                <canvas id="geographicChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Export Options -->
+    <div class="card" style="padding: 32px; margin-top: 24px;">
+        <h2 style="font-size: var(--md-sys-typescale-headline-small); margin-bottom: 24px;">
+            Export Options
+        </h2>
+        <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+            <button class="btn btn-filled" onclick="exportAllCharts()">
+                <span class="material-symbols-rounded">image</span>
+                Export All Charts as Images
+            </button>
+            <button class="btn btn-tonal" onclick="exportData('csv')">
+                <span class="material-symbols-rounded">table_view</span>
+                Export Data as CSV
+            </button>
+            <button class="btn btn-outlined" onclick="exportData('json')">
+                <span class="material-symbols-rounded">code</span>
+                Export Data as JSON
+            </button>
+            <button class="btn btn-outlined" onclick="generateReport()">
+                <span class="material-symbols-rounded">summarize</span>
+                Generate Analytics Report
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+
+<script>
+// Chart.js default configuration
+Chart.defaults.font.family = 'Inter, sans-serif';
+Chart.defaults.plugins.legend.position = 'bottom';
+Chart.defaults.plugins.legend.labels.padding = 20;
+
+// Material Design 3 color palette
+const colors = {
+    primary: '#2E7D32',
+    secondary: '#43A047',
+    tertiary: '#00695C',
+    error: '#BA1A1A',
+    surface: '#FFFBFE',
+    surfaceVariant: '#E7E0EC',
+    outline: '#79747E'
+};
+
+// Initialize all charts
+window.addEventListener('load', function() {
+    createHeatmap();
+    createDiagnosisPie();
+    createBiasRadar();
+    createResponseTimeChart();
+    createConsensusLine();
+    createGeographicChart();
+});
+
+// Model Agreement Heatmap
+function createHeatmap() {
+    const ctx = document.getElementById('heatmapChart').getContext('2d');
+    
+    // Sample data for demonstration
+    const models = ['GPT-4o', 'Claude', 'Gemini', 'DeepSeek', 'Mistral'];
+    const data = [
+        [100, 82, 79, 45, 58],
+        [82, 100, 75, 48, 61],
+        [79, 75, 100, 51, 55],
+        [45, 48, 51, 100, 65],
+        [58, 61, 55, 65, 100]
+    ];
+    
+    // Create heatmap using scatter plot with colored squares
+    const datasets = [];
+    for (let i = 0; i < models.length; i++) {
+        for (let j = 0; j < models.length; j++) {
+            datasets.push({
+                data: [{x: j, y: i, v: data[i][j]}],
+                backgroundColor: `rgba(46, 125, 50, ${data[i][j]/100})`,
+                pointRadius: 25,
+                pointStyle: 'rectRounded'
+            });
+        }
+    }
+    
+    new Chart(ctx, {
+        type: 'scatter',
+        data: {
+            datasets: datasets
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                x: {
+                    type: 'category',
+                    labels: models,
+                    grid: { display: false }
+                },
+                y: {
+                    type: 'category',
+                    labels: models,
+                    grid: { display: false }
+                }
+            },
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            const i = context.parsed.y;
+                            const j = context.parsed.x;
+                            return `${models[i]} ↔ ${models[j]}: ${context.raw.v}% agreement`;
+                        }
+                    }
+                }
+            }
+        }
+    });
+}
+
+// Diagnosis Distribution Pie Chart
+function createDiagnosisPie() {
+    const ctx = document.getElementById('diagnosisPieChart').getContext('2d');
+    
+    new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: [
+                'Familial Mediterranean Fever',
+                'Crohn Disease',
+                'Marfan Syndrome',
+                'Lead Poisoning',
+                'Other Diagnoses'
+            ],
+            datasets: [{
+                data: [25, 20, 15, 10, 30],
+                backgroundColor: [
+                    colors.primary,
+                    colors.secondary,
+                    colors.tertiary,
+                    '#FFA726',
+                    colors.surfaceVariant
+                ],
+                borderWidth: 2,
+                borderColor: colors.surface
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'right',
+                    labels: {
+                        padding: 15,
+                        font: { size: 12 }
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return context.label + ': ' + context.parsed + '% of cases';
+                        }
+                    }
+                }
+            }
+        }
+    });
+}
+
+// Bias Pattern Radar Chart
+function createBiasRadar() {
+    const ctx = document.getElementById('biasRadarChart').getContext('2d');
+    
+    new Chart(ctx, {
+        type: 'radar',
+        data: {
+            labels: [
+                'Geographic Bias',
+                'Age Bias',
+                'Socioeconomic Bias',
+                'Gender Bias',
+                'Cultural Bias',
+                'Language Bias'
+            ],
+            datasets: [
+                {
+                    label: 'USA Models',
+                    data: [65, 45, 55, 30, 60, 25],
+                    backgroundColor: 'rgba(46, 125, 50, 0.2)',
+                    borderColor: colors.primary,
+                    pointBackgroundColor: colors.primary
+                },
+                {
+                    label: 'Chinese Models',
+                    data: [75, 40, 50, 35, 80, 70],
+                    backgroundColor: 'rgba(186, 26, 26, 0.2)',
+                    borderColor: colors.error,
+                    pointBackgroundColor: colors.error
+                },
+                {
+                    label: 'European Models',
+                    data: [55, 50, 60, 25, 45, 30],
+                    backgroundColor: 'rgba(0, 105, 92, 0.2)',
+                    borderColor: colors.tertiary,
+                    pointBackgroundColor: colors.tertiary
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                r: {
+                    beginAtZero: true,
+                    max: 100,
+                    ticks: {
+                        stepSize: 20
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }
+    });
+}
+
+// Response Time Bar Chart
+function createResponseTimeChart() {
+    const ctx = document.getElementById('responseTimeChart').getContext('2d');
+    
+    const models = [
+        'GPT-4o', 'Claude Opus', 'Gemini Pro', 'DeepSeek V3',
+        'Mistral Large', 'Qwen Max', 'Llama 3', 'Command R+'
+    ];
+    
+    const times = [2.3, 1.8, 2.1, 3.1, 2.5, 2.9, 2.7, 2.4];
+    
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: models,
+            datasets: [{
+                label: 'Response Time (seconds)',
+                data: times,
+                backgroundColor: times.map(t => 
+                    t < 2 ? colors.primary :
+                    t < 2.5 ? colors.secondary :
+                    t < 3 ? colors.tertiary :
+                    colors.error
+                )
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Response Time (seconds)'
+                    }
+                }
+            },
+            plugins: {
+                legend: { display: false }
+            }
+        }
+    });
+}
+
+// Consensus Trends Line Chart
+function createConsensusLine() {
+    const ctx = document.getElementById('consensusLineChart').getContext('2d');
+    
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['Case 1', 'Case 2', 'Case 3', 'Case 4', 'Case 5', 'Case 6',
+                    'Case 7', 'Case 8', 'Case 9', 'Case 10', 'Case 11', 'Case 12'],
+            datasets: [
+                {
+                    label: 'Primary Consensus %',
+                    data: [78, 65, 82, 71, 88, 73, 79, 84, 69, 75, 81, 77],
+                    borderColor: colors.primary,
+                    backgroundColor: 'rgba(46, 125, 50, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                },
+                {
+                    label: 'Strong Alternative %',
+                    data: [15, 25, 12, 20, 8, 18, 14, 10, 22, 17, 13, 16],
+                    borderColor: colors.secondary,
+                    backgroundColor: 'rgba(67, 160, 71, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                },
+                {
+                    label: 'Minority Opinion %',
+                    data: [7, 10, 6, 9, 4, 9, 7, 6, 9, 8, 6, 7],
+                    borderColor: colors.tertiary,
+                    backgroundColor: 'rgba(0, 105, 92, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100,
+                    title: {
+                        display: true,
+                        text: 'Agreement Percentage'
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }
+    });
+}
+
+// Geographic Distribution Chart
+function createGeographicChart() {
+    const ctx = document.getElementById('geographicChart').getContext('2d');
+    
+    new Chart(ctx, {
+        type: 'polarArea',
+        data: {
+            labels: ['🇺🇸 USA', '🇨🇳 China', '🇫🇷 France', '🇨🇦 Canada', '🇬🇧 UK', '🌍 Other'],
+            datasets: [{
+                data: [12, 7, 4, 3, 3, 2],
+                backgroundColor: [
+                    'rgba(46, 125, 50, 0.8)',
+                    'rgba(186, 26, 26, 0.8)',
+                    'rgba(0, 105, 92, 0.8)',
+                    'rgba(255, 167, 38, 0.8)',
+                    'rgba(103, 58, 183, 0.8)',
+                    'rgba(158, 158, 158, 0.8)'
+                ]
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                r: {
+                    beginAtZero: true,
+                    ticks: {
+                        stepSize: 2
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    position: 'right'
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return context.label + ': ' + context.parsed + ' models';
+                        }
+                    }
+                }
+            }
+        }
+    });
+}
+
+// Export functions
+function exportAllCharts() {
+    const charts = [
+        'heatmapChart', 'diagnosisPieChart', 'biasRadarChart',
+        'responseTimeChart', 'consensusLineChart', 'geographicChart'
+    ];
+    
+    charts.forEach((chartId, index) => {
+        const canvas = document.getElementById(chartId);
+        const url = canvas.toDataURL('image/png');
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `medley_chart_${chartId}.png`;
+        setTimeout(() => a.click(), index * 100); // Stagger downloads
+    });
+}
+
+function exportData(format) {
+    // This would export the underlying data
+    alert(`Export as ${format.toUpperCase()} will be implemented with real data integration`);
+}
+
+function generateReport() {
+    // This would generate a comprehensive analytics report
+    alert('Analytics report generation will be implemented with real data integration');
+}
+</script>
+{% endblock %}

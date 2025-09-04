@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MEDLEY - Medical AI Ensemble System</title>
+    <style>
+        /* Karolinska Institutet Color Palette */
+        :root {
+            --ki-dark-plum: #4F0433;
+            --ki-plum-logo: #870052;
+            --ki-orange: #FF876F;
+            --ki-light-orange: #FEEEEB;
+            --ki-light-blue: #EDF4F4;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--ki-light-blue);
+            min-height: 100vh;
+            display: flex;
+            margin: 0;
+        }
+        
+        /* Side Navigation Rail */
+        .nav-rail {
+            width: 80px;
+            background: #FFFFFF;
+            border-right: 1px solid #E7E0EC;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 24px 0;
+            gap: 8px;
+            position: fixed;
+            height: 100vh;
+            left: 0;
+            top: 0;
+            z-index: 100;
+            box-shadow: 2px 0 8px rgba(0,0,0,0.05);
+        }
+        
+        .nav-rail-item {
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #49454F;
+            text-decoration: none;
+            font-size: 24px;
+        }
+        
+        .nav-rail-item:hover {
+            background: var(--ki-light-orange);
+            color: var(--ki-plum-logo);
+        }
+        
+        .nav-rail-item.active {
+            background: var(--ki-orange);
+            color: var(--ki-dark-plum);
+        }
+        
+        .main-container {
+            margin-left: 80px;
+            width: calc(100% - 80px);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+        
+        .hero {
+            text-align: center;
+            color: #1C1B1F;
+            margin-bottom: 60px;
+            padding: 60px 20px;
+            background: linear-gradient(135deg, var(--ki-light-blue) 0%, var(--ki-light-orange) 100%);
+            border-radius: 24px;
+        }
+        
+        .hero h1 {
+            font-size: 56px;
+            margin-bottom: 20px;
+            color: var(--ki-plum-logo);
+        }
+        
+        .hero p {
+            font-size: 24px;
+            color: #49454F;
+            max-width: 800px;
+            margin: 0 auto 40px;
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 16px 32px;
+            font-size: 18px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+        
+        .btn-primary {
+            background: var(--ki-plum-logo);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(135, 0, 82, 0.3);
+            background: var(--ki-dark-plum);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: var(--ki-plum-logo);
+            border: 2px solid var(--ki-plum-logo);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--ki-plum-logo);
+            color: white;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+        
+        .feature-card {
+            background: #FFFFFF;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: all 0.3s;
+            border: 1px solid #E7E0EC;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(135, 0, 82, 0.15);
+            border-color: var(--ki-orange);
+        }
+        
+        .feature-card h3 {
+            color: var(--ki-plum-logo);
+            margin-bottom: 15px;
+            font-size: 24px;
+        }
+        
+        .feature-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            background: #FFFFFF;
+            padding: 40px;
+            border-radius: 16px;
+            margin: 60px 0;
+            flex-wrap: wrap;
+            gap: 30px;
+            border: 1px solid #E7E0EC;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 48px;
+            font-weight: bold;
+            color: var(--ki-plum-logo);
+        }
+        
+        .stat-label {
+            color: #666;
+            margin-top: 10px;
+        }
+        
+        .footer {
+            background: var(--ki-dark-plum);
+            color: var(--ki-light-orange);
+            padding: 40px;
+            text-align: center;
+            margin-top: 60px;
+        }
+        
+        .icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Side Navigation Rail -->
+    <nav class="nav-rail">
+        <div style="font-size: 32px; margin-bottom: 24px; color: var(--ki-plum-logo);">🏥</div>
+        <a href="/" class="nav-rail-item active" title="Home">🏠</a>
+        <a href="/analyze" class="nav-rail-item" title="Analyze Case">🔬</a>
+        <a href="/test" class="nav-rail-item" title="System Status">📊</a>
+        <a href="/api/health" class="nav-rail-item" title="API Health">💚</a>
+        <a href="/docs" class="nav-rail-item" title="Documentation">📚</a>
+        <div style="margin-top: auto; padding: 16px;">
+            <a href="/settings" class="nav-rail-item" title="Settings">⚙️</a>
+        </div>
+    </nav>
+    
+    <div class="main-container">
+        <div class="container">
+        <div class="hero">
+            <h1>🧬 MEDLEY Medical AI System</h1>
+            <p>Ensemble Intelligence for Medical Diagnosis</p>
+            <p style="font-size: 18px; opacity: 0.9;">Harness the power of 17+ AI models to analyze complex medical cases with unprecedented accuracy and diversity of perspective.</p>
+            
+            <div class="buttons">
+                <a href="/analyze" class="btn btn-primary">🔬 Analyze Medical Case</a>
+                <a href="/test" class="btn btn-secondary">📊 View System Status</a>
+            </div>
+        </div>
+        
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-number">17</div>
+                <div class="stat-label">Free AI Models</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">31</div>
+                <div class="stat-label">Total Models</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">6</div>
+                <div class="stat-label">Countries</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">0$</div>
+                <div class="stat-label">Cost (Free Tier)</div>
+            </div>
+        </div>
+        
+        <div class="features">
+            <div class="feature-card">
+                <div class="icon">🤖</div>
+                <h3>Multi-Model Ensemble</h3>
+                <p>Leverage 17 free AI models from leading providers including Google Gemini, Meta Llama, Microsoft Phi, and Mistral for comprehensive analysis.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="icon">🌍</div>
+                <h3>Global Perspective</h3>
+                <p>Models from USA, France, China, and the open-source community provide diverse medical perspectives and reduce cultural bias.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="icon">⚡</div>
+                <h3>Real-Time Analysis</h3>
+                <p>Watch as each model processes your case with live progress updates via WebSocket technology.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="icon">📊</div>
+                <h3>Consensus Building</h3>
+                <p>Advanced algorithms identify primary diagnoses, alternatives, and important minority opinions that shouldn't be overlooked.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="icon">🔒</div>
+                <h3>Privacy First</h3>
+                <p>Your medical data is never stored permanently. All analyses are session-based with automatic cleanup.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="icon">📈</div>
+                <h3>Performance Analytics</h3>
+                <p>Track model accuracy, response times, and consensus patterns with comprehensive analytics dashboard.</p>
+            </div>
+        </div>
+        
+        <div style="background: #FFFFFF; padding: 40px; border-radius: 16px; margin: 60px 0; border: 1px solid #E7E0EC;">
+            <h2 style="color: var(--ki-plum-logo); margin-bottom: 20px; text-align: center;">How It Works</h2>
+            <ol style="max-width: 800px; margin: 0 auto; line-height: 2; font-size: 18px;">
+                <li>📝 Enter your medical case details</li>
+                <li>🤖 17+ AI models analyze the case simultaneously</li>
+                <li>🔄 Real-time progress tracking via WebSocket</li>
+                <li>📊 Consensus algorithm identifies primary diagnosis</li>
+                <li>📋 Comprehensive report with all perspectives</li>
+                <li>💡 Minority opinions preserved for critical insights</li>
+            </ol>
+        </div>
+        </div>
+        
+        <footer class="footer">
+            <p><strong>MEDLEY Medical AI Ensemble System</strong></p>
+            <p>© 2025 SMAILE - Stockholm Medical Artificial Intelligence and Learning Environments</p>
+            <p>Karolinska Institutet | <a href="https://smile.ki.se" style="color: var(--ki-orange);">smile.ki.se</a></p>
+            <p style="margin-top: 20px; opacity: 0.8;">For research and educational purposes only. Not for clinical use.</p>
+        </footer>
+    </div>
+</body>
+</html>

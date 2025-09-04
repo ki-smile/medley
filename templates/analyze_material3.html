@@ -1,0 +1,699 @@
+{% extends "base.html" %}
+
+{% block title %}Analyze Medical Case - MEDLEY{% endblock %}
+
+{% block styles %}
+<style>
+    .model-selection-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 12px;
+        margin-bottom: 24px;
+    }
+    
+    .model-checkbox {
+        display: flex;
+        align-items: center;
+        padding: 12px;
+        background: var(--md-sys-color-surface-container-low);
+        border-radius: var(--md-sys-shape-corner-small);
+        cursor: pointer;
+        transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+        border: 1px solid var(--md-sys-color-outline-variant);
+    }
+    
+    .model-checkbox:hover {
+        background: var(--md-sys-color-surface-container);
+        border-color: var(--md-sys-color-primary);
+    }
+    
+    .model-checkbox input[type="checkbox"] {
+        margin-right: 12px;
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+    }
+    
+    .model-checkbox.selected {
+        background: var(--md-sys-color-primary-container);
+        border-color: var(--md-sys-color-primary);
+    }
+    
+    .progress-container {
+        display: none;
+        position: fixed;
+        top: 64px;
+        left: 80px;
+        right: 0;
+        background: var(--md-sys-color-surface);
+        padding: 16px 24px;
+        border-bottom: 1px solid var(--md-sys-color-outline-variant);
+        z-index: 99;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .progress-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 8px;
+    }
+    
+    .model-response {
+        background: var(--md-sys-color-surface-container-low);
+        border-radius: var(--md-sys-shape-corner-medium);
+        padding: 16px;
+        margin-bottom: 16px;
+        border-left: 4px solid var(--md-sys-color-primary);
+    }
+    
+    .model-response.error {
+        border-left-color: var(--md-sys-color-error);
+    }
+    
+    .diagnosis-category {
+        padding: 8px 16px;
+        border-radius: var(--md-sys-shape-corner-full);
+        display: inline-block;
+        margin: 4px;
+        font-weight: 500;
+    }
+    
+    .diagnosis-primary {
+        background: var(--md-sys-color-primary);
+        color: var(--md-sys-color-on-primary);
+    }
+    
+    .diagnosis-alternative {
+        background: var(--md-sys-color-secondary-container);
+        color: var(--md-sys-color-on-secondary-container);
+    }
+    
+    .diagnosis-minority {
+        background: var(--md-sys-color-tertiary-container);
+        color: var(--md-sys-color-on-tertiary-container);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Progress Container -->
+<div id="progressContainer" class="progress-container">
+    <div class="progress-info">
+        <span class="md-title-medium" id="progressText">Initializing analysis...</span>
+        <span class="md-title-medium" id="progressPercent">0%</span>
+    </div>
+    <div class="md-progress-linear">
+        <div class="md-progress-linear-bar" id="progressBar" style="width: 0%;"></div>
+    </div>
+    <div class="mt-2">
+        <span class="md-body-small" id="currentModel" style="color: var(--md-sys-color-on-surface-variant);"></span>
+    </div>
+</div>
+
+<!-- Main Analysis Form -->
+<div class="md-surface mb-4">
+    <h2 class="md-headline-medium mb-3">📝 Enter Medical Case Details</h2>
+    
+    <form id="analyzeForm">
+        <div class="md-text-field mb-3">
+            <label for="caseText">Case Description</label>
+            <textarea 
+                id="caseText" 
+                name="case_text" 
+                rows="10" 
+                placeholder="Enter detailed medical case information including patient demographics, symptoms, history, examination findings, and any relevant test results..."
+                required
+            ></textarea>
+        </div>
+        
+        <!-- Model Selection Section -->
+        <div class="mb-4">
+            <h3 class="md-title-large mb-2">🤖 Select AI Models</h3>
+            
+            <!-- Quick Selection Buttons -->
+            <div class="flex gap-2 mb-3">
+                <button type="button" class="md-button md-button-tonal" onclick="selectFreeModels()">
+                    Select Free Models Only
+                </button>
+                <button type="button" class="md-button md-button-outlined" onclick="selectAllModels()">
+                    Select All Models
+                </button>
+                <button type="button" class="md-button md-button-outlined" onclick="deselectAllModels()">
+                    Clear Selection
+                </button>
+            </div>
+            
+            <!-- Free Models Toggle -->
+            <div class="md-card mb-3" style="background: var(--md-sys-color-primary-container);">
+                <label class="flex align-center" style="cursor: pointer;">
+                    <input type="checkbox" id="useFreeModels" checked style="width: 24px; height: 24px; margin-right: 12px;">
+                    <div>
+                        <div class="md-title-medium">Use Free Models Only</div>
+                        <div class="md-body-small" style="opacity: 0.8;">17 models available at no cost</div>
+                    </div>
+                </label>
+            </div>
+            
+            <!-- Model Grid -->
+            <div id="modelSelection" class="model-selection-grid" style="display: none;">
+                <!-- Models will be populated here -->
+            </div>
+        </div>
+        
+        <!-- API Key Section -->
+        <div class="md-card mb-4" style="background: var(--md-sys-color-surface-variant);">
+            <h3 class="md-title-medium mb-2">🔑 OpenRouter API Key</h3>
+            <p class="md-body-medium mb-2" style="color: var(--md-sys-color-on-surface-variant);">
+                Required even for free models. Get your key at 
+                <a href="https://openrouter.ai/keys" target="_blank" style="color: var(--md-sys-color-primary);">openrouter.ai/keys</a>
+            </p>
+            <div class="md-text-field">
+                <label for="apiKey">API Key</label>
+                <input 
+                    type="password" 
+                    id="apiKey" 
+                    name="api_key" 
+                    placeholder="sk-or-v1-..."
+                    value="{{ session.get('api_key', '') }}"
+                >
+            </div>
+            <div id="apiKeyStatus" class="mt-2"></div>
+        </div>
+        
+        <!-- Submit Buttons -->
+        <div class="flex gap-2 justify-center">
+            <button type="submit" class="md-button md-button-filled">
+                <span>🚀</span>
+                <span>Start Analysis</span>
+            </button>
+            <button type="button" class="md-button md-button-outlined" onclick="loadSampleCase()">
+                <span>📋</span>
+                <span>Load Sample Case</span>
+            </button>
+        </div>
+    </form>
+</div>
+
+<!-- Results Section -->
+<div id="resultsSection" style="display: none;">
+    <div class="md-surface mb-4">
+        <h2 class="md-headline-medium mb-3">📊 Analysis Results</h2>
+        
+        <!-- Tabs -->
+        <div class="flex gap-2 mb-4" style="border-bottom: 1px solid var(--md-sys-color-outline-variant);">
+            <button class="md-button md-button-text tab-button active" data-tab="consensus">
+                Consensus Report
+            </button>
+            <button class="md-button md-button-text tab-button" data-tab="models">
+                Individual Models
+            </button>
+            <button class="md-button md-button-text tab-button" data-tab="raw">
+                Raw Responses
+            </button>
+        </div>
+        
+        <!-- Tab Content -->
+        <div id="consensusTab" class="tab-content">
+            <div id="consensusReport"></div>
+        </div>
+        
+        <div id="modelsTab" class="tab-content" style="display: none;">
+            <div id="modelResponses"></div>
+        </div>
+        
+        <div id="rawTab" class="tab-content" style="display: none;">
+            <div id="rawResponses"></div>
+        </div>
+    </div>
+    
+    <!-- Action Buttons -->
+    <div class="flex gap-2 justify-center">
+        <button class="md-button md-button-filled" onclick="downloadReport()">
+            <span>📥</span>
+            <span>Download Report</span>
+        </button>
+        <button class="md-button md-button-tonal" onclick="shareAnalysis()">
+            <span>🔗</span>
+            <span>Share Analysis</span>
+        </button>
+        <button class="md-button md-button-outlined" onclick="startNewAnalysis()">
+            <span>🔄</span>
+            <span>New Analysis</span>
+        </button>
+    </div>
+</div>
+
+<!-- Recent Analyses Sidebar -->
+<div class="md-surface">
+    <h3 class="md-title-large mb-3">📚 Recent Analyses</h3>
+    <div id="recentAnalyses">
+        <p class="md-body-medium" style="color: var(--md-sys-color-on-surface-variant);">
+            No recent analyses found. Start your first analysis above!
+        </p>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Global variables
+let currentAnalysisId = null;
+let analysisInProgress = false;
+
+// Model data
+const models = {
+    free: [
+        { id: 'google/gemini-2.0-flash-exp:free', name: 'Gemini 2.0 Flash', provider: 'Google' },
+        { id: 'google/gemini-flash-1.5-8b', name: 'Gemini Flash 1.5 8B', provider: 'Google' },
+        { id: 'google/gemini-flash-1.5-exp', name: 'Gemini Flash 1.5 Exp', provider: 'Google' },
+        { id: 'meta-llama/llama-3.2-3b-instruct:free', name: 'Llama 3.2 3B', provider: 'Meta' },
+        { id: 'meta-llama/llama-3.2-1b-instruct:free', name: 'Llama 3.2 1B', provider: 'Meta' },
+        { id: 'meta-llama/llama-3.1-8b-instruct:free', name: 'Llama 3.1 8B', provider: 'Meta' },
+        { id: 'microsoft/phi-3-medium-128k-instruct:free', name: 'Phi-3 Medium', provider: 'Microsoft' },
+        { id: 'microsoft/phi-3-mini-128k-instruct:free', name: 'Phi-3 Mini', provider: 'Microsoft' },
+        { id: 'mistralai/mistral-7b-instruct:free', name: 'Mistral 7B', provider: 'Mistral' },
+        { id: 'mistralai/codestral-mamba', name: 'Codestral Mamba', provider: 'Mistral' },
+        { id: 'openchat/openchat-7b:free', name: 'OpenChat 7B', provider: 'OpenChat' },
+        { id: 'nousresearch/hermes-3-llama-3.1-405b:free', name: 'Hermes 3 405B', provider: 'Nous' },
+        { id: 'qwen/qwen-2-7b-instruct:free', name: 'Qwen 2 7B', provider: 'Alibaba' },
+        { id: 'huggingfaceh4/zephyr-7b-beta:free', name: 'Zephyr 7B', provider: 'HuggingFace' },
+        { id: 'liquid/lfm-40b:free', name: 'LFM 40B', provider: 'Liquid' },
+        { id: 'thedrummer/rocinante-12b', name: 'Rocinante 12B', provider: 'Community' },
+        { id: 'eva-unit-01/eva-qwen-2.5-14b', name: 'EVA Qwen 2.5 14B', provider: 'Community' }
+    ],
+    paid: [
+        { id: 'anthropic/claude-3.5-sonnet', name: 'Claude 3.5 Sonnet', provider: 'Anthropic' },
+        { id: 'openai/gpt-4o', name: 'GPT-4o', provider: 'OpenAI' },
+        { id: 'google/gemini-pro-1.5', name: 'Gemini Pro 1.5', provider: 'Google' },
+        { id: 'x-ai/grok-beta', name: 'Grok Beta', provider: 'xAI' },
+        { id: 'deepseek/deepseek-chat', name: 'DeepSeek Chat', provider: 'DeepSeek' },
+        { id: 'mistralai/mistral-large', name: 'Mistral Large', provider: 'Mistral' },
+        { id: 'cohere/command-r-plus', name: 'Command R+', provider: 'Cohere' },
+        { id: 'perplexity/llama-3.1-sonar-huge', name: 'Llama 3.1 Sonar', provider: 'Perplexity' },
+        { id: 'ai21/jamba-1-5-large', name: 'Jamba 1.5 Large', provider: 'AI21' },
+        { id: 'databricks/dbrx-instruct', name: 'DBRX Instruct', provider: 'Databricks' },
+        { id: 'sao10k/l3.3-euryale-70b', name: 'Euryale 70B', provider: 'Community' },
+        { id: 'alpindale/magnum-72b', name: 'Magnum 72B', provider: 'Community' },
+        { id: 'anthracite-org/magnum-v4-72b', name: 'Magnum v4 72B', provider: 'Community' },
+        { id: 'cognitivecomputations/dolphin-mixtral-8x22b', name: 'Dolphin Mixtral', provider: 'Cognitive' }
+    ]
+};
+
+// Initialize page
+document.addEventListener('DOMContentLoaded', function() {
+    populateModelSelection();
+    loadRecentAnalyses();
+    setupEventListeners();
+    connectWebSocket();
+});
+
+// Populate model selection grid
+function populateModelSelection() {
+    const container = document.getElementById('modelSelection');
+    let html = '';
+    
+    // Free models
+    html += '<div style="grid-column: 1 / -1;"><h4 class="md-title-medium text-primary">Free Models</h4></div>';
+    models.free.forEach(model => {
+        html += `
+            <label class="model-checkbox" data-model-id="${model.id}">
+                <input type="checkbox" name="models" value="${model.id}" class="model-check free-model" checked>
+                <div>
+                    <div class="md-body-medium">${model.name}</div>
+                    <div class="md-body-small" style="opacity: 0.7;">${model.provider}</div>
+                </div>
+            </label>
+        `;
+    });
+    
+    // Paid models
+    html += '<div style="grid-column: 1 / -1; margin-top: 16px;"><h4 class="md-title-medium">Premium Models</h4></div>';
+    models.paid.forEach(model => {
+        html += `
+            <label class="model-checkbox" data-model-id="${model.id}">
+                <input type="checkbox" name="models" value="${model.id}" class="model-check paid-model">
+                <div>
+                    <div class="md-body-medium">${model.name}</div>
+                    <div class="md-body-small" style="opacity: 0.7;">${model.provider} 💰</div>
+                </div>
+            </label>
+        `;
+    });
+    
+    container.innerHTML = html;
+    
+    // Add checkbox change listeners
+    document.querySelectorAll('.model-checkbox input').forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            const label = this.closest('.model-checkbox');
+            if (this.checked) {
+                label.classList.add('selected');
+            } else {
+                label.classList.remove('selected');
+            }
+        });
+    });
+}
+
+// Model selection functions
+function selectFreeModels() {
+    document.querySelectorAll('.free-model').forEach(cb => {
+        cb.checked = true;
+        cb.closest('.model-checkbox').classList.add('selected');
+    });
+    document.querySelectorAll('.paid-model').forEach(cb => {
+        cb.checked = false;
+        cb.closest('.model-checkbox').classList.remove('selected');
+    });
+}
+
+function selectAllModels() {
+    document.querySelectorAll('.model-check').forEach(cb => {
+        cb.checked = true;
+        cb.closest('.model-checkbox').classList.add('selected');
+    });
+}
+
+function deselectAllModels() {
+    document.querySelectorAll('.model-check').forEach(cb => {
+        cb.checked = false;
+        cb.closest('.model-checkbox').classList.remove('selected');
+    });
+}
+
+// Setup event listeners
+function setupEventListeners() {
+    // Form submission
+    document.getElementById('analyzeForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        if (!analysisInProgress) {
+            startAnalysis();
+        }
+    });
+    
+    // Free models toggle
+    document.getElementById('useFreeModels').addEventListener('change', function() {
+        const modelSelection = document.getElementById('modelSelection');
+        if (this.checked) {
+            modelSelection.style.display = 'none';
+            selectFreeModels();
+        } else {
+            modelSelection.style.display = 'grid';
+        }
+    });
+    
+    // Tab switching
+    document.querySelectorAll('.tab-button').forEach(button => {
+        button.addEventListener('click', function() {
+            const tab = this.dataset.tab;
+            
+            // Update active button
+            document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            
+            // Show/hide content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.style.display = 'none';
+            });
+            document.getElementById(tab + 'Tab').style.display = 'block';
+        });
+    });
+}
+
+// WebSocket connection
+function connectWebSocket() {
+    socket.on('connect', function() {
+        console.log('WebSocket connected');
+    });
+    
+    socket.on('analysis_started', function(data) {
+        console.log('Analysis started:', data);
+        currentAnalysisId = data.analysis_id;
+        showProgress();
+    });
+    
+    socket.on('model_progress', function(data) {
+        if (data.analysis_id === currentAnalysisId) {
+            updateProgress(data.progress, data.status, data.model);
+        }
+    });
+    
+    socket.on('analysis_complete', function(data) {
+        if (data.analysis_id === currentAnalysisId) {
+            hideProgress();
+            displayResults(data.results);
+            loadRecentAnalyses();
+        }
+    });
+    
+    socket.on('analysis_error', function(data) {
+        if (data.analysis_id === currentAnalysisId) {
+            hideProgress();
+            showError(data.error);
+        }
+    });
+}
+
+// Start analysis
+async function startAnalysis() {
+    const caseText = document.getElementById('caseText').value.trim();
+    const apiKey = document.getElementById('apiKey').value.trim();
+    
+    if (!caseText) {
+        showError('Please enter a medical case description');
+        return;
+    }
+    
+    if (!apiKey) {
+        showError('Please enter your OpenRouter API key');
+        return;
+    }
+    
+    // Get selected models
+    const selectedModels = Array.from(document.querySelectorAll('.model-check:checked'))
+        .map(cb => cb.value);
+    
+    if (selectedModels.length === 0) {
+        showError('Please select at least one model');
+        return;
+    }
+    
+    analysisInProgress = true;
+    showProgress();
+    
+    try {
+        const response = await fetch('/api/analyze', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                case_text: caseText,
+                api_key: apiKey,
+                models: selectedModels,
+                use_free_models: document.getElementById('useFreeModels').checked
+            })
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok) {
+            currentAnalysisId = data.analysis_id;
+            // Join WebSocket room for this analysis
+            socket.emit('join_analysis', { analysis_id: currentAnalysisId });
+        } else {
+            throw new Error(data.error || 'Analysis failed');
+        }
+    } catch (error) {
+        hideProgress();
+        showError(error.message);
+        analysisInProgress = false;
+    }
+}
+
+// Progress functions
+function showProgress() {
+    document.getElementById('progressContainer').style.display = 'block';
+    document.getElementById('resultsSection').style.display = 'none';
+}
+
+function hideProgress() {
+    document.getElementById('progressContainer').style.display = 'none';
+    analysisInProgress = false;
+}
+
+function updateProgress(percent, status, model) {
+    document.getElementById('progressBar').style.width = percent + '%';
+    document.getElementById('progressPercent').textContent = Math.round(percent) + '%';
+    document.getElementById('progressText').textContent = status || 'Processing...';
+    if (model) {
+        document.getElementById('currentModel').textContent = `Current: ${model}`;
+    }
+}
+
+// Display results
+function displayResults(results) {
+    document.getElementById('resultsSection').style.display = 'block';
+    
+    // Display consensus report
+    const consensusDiv = document.getElementById('consensusReport');
+    consensusDiv.innerHTML = `
+        <h3 class="md-headline-small mb-3">Primary Diagnoses</h3>
+        <div class="mb-3">
+            ${results.primary_diagnoses.map(d => `
+                <span class="diagnosis-category diagnosis-primary">${d.diagnosis} (${d.confidence}%)</span>
+            `).join('')}
+        </div>
+        
+        <h3 class="md-headline-small mb-3">Alternative Diagnoses</h3>
+        <div class="mb-3">
+            ${results.alternative_diagnoses.map(d => `
+                <span class="diagnosis-category diagnosis-alternative">${d.diagnosis} (${d.confidence}%)</span>
+            `).join('')}
+        </div>
+        
+        <h3 class="md-headline-small mb-3">Minority Opinions</h3>
+        <div class="mb-3">
+            ${results.minority_opinions.map(d => `
+                <span class="diagnosis-category diagnosis-minority">${d.diagnosis} (${d.confidence}%)</span>
+            `).join('')}
+        </div>
+    `;
+    
+    // Display individual model responses
+    const modelsDiv = document.getElementById('modelResponses');
+    modelsDiv.innerHTML = results.model_responses.map(response => `
+        <div class="model-response ${response.error ? 'error' : ''}">
+            <h4 class="md-title-medium mb-2">${response.model}</h4>
+            ${response.error ? 
+                `<p class="text-error">${response.error}</p>` :
+                `<p class="md-body-medium">${response.diagnosis}</p>`
+            }
+        </div>
+    `).join('');
+    
+    // Display raw responses
+    const rawDiv = document.getElementById('rawResponses');
+    rawDiv.innerHTML = `<pre style="white-space: pre-wrap;">${JSON.stringify(results, null, 2)}</pre>`;
+}
+
+// Error handling
+function showError(message) {
+    const alertDiv = document.createElement('div');
+    alertDiv.className = 'md-surface mb-3';
+    alertDiv.style.cssText = 'background: var(--md-sys-color-error-container); color: var(--md-sys-color-on-error-container); padding: 16px; border-radius: 8px;';
+    alertDiv.innerHTML = `
+        <div class="flex align-center justify-between">
+            <span>${message}</span>
+            <button onclick="this.parentElement.parentElement.remove()" class="md-button md-button-text">✕</button>
+        </div>
+    `;
+    document.querySelector('.content').insertBefore(alertDiv, document.querySelector('.content').firstChild);
+}
+
+// Load sample case
+function loadSampleCase() {
+    document.getElementById('caseText').value = `A 45-year-old male presents to the emergency department with sudden onset chest pain that started 2 hours ago. The pain is described as crushing, substernal, and radiates to the left arm. He has been sweating profusely and feels nauseous. 
+
+Past Medical History:
+- Hypertension (diagnosed 5 years ago, on amlodipine)
+- Type 2 Diabetes Mellitus (diagnosed 3 years ago, on metformin)
+- Hyperlipidemia (on atorvastatin)
+- 20 pack-year smoking history, quit 2 years ago
+- Family history of coronary artery disease (father had MI at age 55)
+
+Physical Examination:
+- BP: 150/90 mmHg
+- HR: 95 bpm, regular
+- RR: 22/min
+- O2 Sat: 94% on room air
+- Temperature: 37.2°C
+- Diaphoretic, appears anxious
+- Cardiovascular: Normal S1/S2, no murmurs or gallops
+- Lungs: Clear bilaterally
+- Abdomen: Soft, non-tender
+
+Initial Tests:
+- ECG: ST elevation in leads II, III, and aVF
+- Troponin I: 0.8 ng/mL (elevated)
+- CK-MB: 25 ng/mL (elevated)`;
+}
+
+// Load recent analyses
+async function loadRecentAnalyses() {
+    try {
+        const response = await fetch('/api/analyses/recent');
+        const analyses = await response.json();
+        
+        const container = document.getElementById('recentAnalyses');
+        if (analyses.length > 0) {
+            container.innerHTML = analyses.map(a => `
+                <div class="md-card mb-2">
+                    <div class="flex justify-between align-center">
+                        <div>
+                            <div class="md-body-medium">${a.case_summary}</div>
+                            <div class="md-body-small" style="opacity: 0.7;">${new Date(a.created_at).toLocaleString()}</div>
+                        </div>
+                        <button class="md-button md-button-text" onclick="loadAnalysis('${a.id}')">
+                            View
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+    } catch (error) {
+        console.error('Failed to load recent analyses:', error);
+    }
+}
+
+// Download report
+function downloadReport() {
+    if (!currentAnalysisId) return;
+    window.location.href = `/api/analyze/${currentAnalysisId}/download`;
+}
+
+// Share analysis
+async function shareAnalysis() {
+    if (!currentAnalysisId) return;
+    
+    try {
+        const response = await fetch(`/api/analyze/${currentAnalysisId}/share`, {
+            method: 'POST'
+        });
+        const data = await response.json();
+        
+        const shareUrl = window.location.origin + data.share_url;
+        navigator.clipboard.writeText(shareUrl);
+        
+        showSuccess('Share link copied to clipboard!');
+    } catch (error) {
+        showError('Failed to create share link');
+    }
+}
+
+// Show success message
+function showSuccess(message) {
+    const alertDiv = document.createElement('div');
+    alertDiv.className = 'md-surface mb-3';
+    alertDiv.style.cssText = 'background: var(--md-sys-color-primary-container); color: var(--md-sys-color-on-primary-container); padding: 16px; border-radius: 8px;';
+    alertDiv.innerHTML = `
+        <div class="flex align-center justify-between">
+            <span>✓ ${message}</span>
+            <button onclick="this.parentElement.parentElement.remove()" class="md-button md-button-text">✕</button>
+        </div>
+    `;
+    document.querySelector('.content').insertBefore(alertDiv, document.querySelector('.content').firstChild);
+    
+    setTimeout(() => alertDiv.remove(), 5000);
+}
+
+// Start new analysis
+function startNewAnalysis() {
+    document.getElementById('analyzeForm').reset();
+    document.getElementById('resultsSection').style.display = 'none';
+    currentAnalysisId = null;
+    window.scrollTo(0, 0);
+}
+</script>
+{% endblock %}

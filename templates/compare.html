@@ -1,0 +1,471 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container" style="max-width: 1400px; margin: 0 auto; padding: 24px;">
+    <h1 style="font-size: var(--md-sys-typescale-display-small); margin-bottom: 16px;">
+        Model Comparison
+    </h1>
+    <p style="color: var(--md-sys-color-on-surface-variant); margin-bottom: 32px;">
+        Compare diagnostic outputs from different AI models side by side
+    </p>
+
+    <!-- Case Selector -->
+    <div class="card" style="padding: 24px; margin-bottom: 24px;">
+        <div style="display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: center;">
+            <div>
+                <label style="display: block; margin-bottom: 8px; font-weight: 500;">Select Case</label>
+                <select id="case-selector" onchange="loadCase()" 
+                        style="width: 100%; padding: 12px; border: 1px solid var(--md-sys-color-outline); 
+                               border-radius: 8px; font-size: 16px;">
+                    <option value="">-- Select a case --</option>
+                    <option value="case_001">Case 1: Familial Mediterranean Fever</option>
+                    <option value="case_002">Case 2: Elderly Complex Multi-morbidity</option>
+                    <option value="case_003">Case 3: Socioeconomic Health Disparities</option>
+                    <option value="case_004">Case 4: Marfan Syndrome</option>
+                    <option value="case_005">Case 5: Lead Poisoning</option>
+                </select>
+            </div>
+            <div>
+                <button class="btn btn-tonal" onclick="randomizeSelection()">
+                    <span class="material-symbols-rounded">shuffle</span>
+                    Random Models
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Model Selection -->
+    <div class="card" style="padding: 24px; margin-bottom: 24px;">
+        <h2 style="font-size: var(--md-sys-typescale-headline-small); margin-bottom: 16px;">
+            Select Models to Compare
+        </h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+            <!-- Model 1 Selection -->
+            <div>
+                <label style="display: block; margin-bottom: 8px; font-weight: 500;">
+                    <span style="color: var(--md-sys-color-primary);">● Model 1</span>
+                </label>
+                <select id="model1-selector" onchange="updateComparison()"
+                        style="width: 100%; padding: 12px; border: 2px solid var(--md-sys-color-primary); 
+                               border-radius: 8px; font-size: 16px;">
+                    <option value="">-- Select Model 1 --</option>
+                    <optgroup label="🇺🇸 USA Models">
+                        <option value="gpt-4o">GPT-4o (OpenAI)</option>
+                        <option value="claude-opus">Claude Opus (Anthropic)</option>
+                        <option value="gemini-pro">Gemini Pro (Google)</option>
+                        <option value="grok">Grok (xAI)</option>
+                    </optgroup>
+                    <optgroup label="🇨🇳 Chinese Models">
+                        <option value="deepseek-v3">DeepSeek V3</option>
+                        <option value="qwen-max">Qwen Max</option>
+                        <option value="yi-large">Yi Large</option>
+                    </optgroup>
+                    <optgroup label="🇫🇷 European Models">
+                        <option value="mistral-large">Mistral Large</option>
+                        <option value="mixtral">Mixtral 8x22B</option>
+                    </optgroup>
+                    <optgroup label="🌍 Other Models">
+                        <option value="llama-3">Llama 3 (Meta)</option>
+                        <option value="command-r">Command R+ (Cohere)</option>
+                    </optgroup>
+                </select>
+            </div>
+
+            <!-- Model 2 Selection -->
+            <div>
+                <label style="display: block; margin-bottom: 8px; font-weight: 500;">
+                    <span style="color: var(--md-sys-color-secondary);">● Model 2</span>
+                </label>
+                <select id="model2-selector" onchange="updateComparison()"
+                        style="width: 100%; padding: 12px; border: 2px solid var(--md-sys-color-secondary); 
+                               border-radius: 8px; font-size: 16px;">
+                    <option value="">-- Select Model 2 --</option>
+                    <optgroup label="🇺🇸 USA Models">
+                        <option value="gpt-4o">GPT-4o (OpenAI)</option>
+                        <option value="claude-opus">Claude Opus (Anthropic)</option>
+                        <option value="gemini-pro">Gemini Pro (Google)</option>
+                        <option value="grok">Grok (xAI)</option>
+                    </optgroup>
+                    <optgroup label="🇨🇳 Chinese Models">
+                        <option value="deepseek-v3">DeepSeek V3</option>
+                        <option value="qwen-max">Qwen Max</option>
+                        <option value="yi-large">Yi Large</option>
+                    </optgroup>
+                    <optgroup label="🇫🇷 European Models">
+                        <option value="mistral-large">Mistral Large</option>
+                        <option value="mixtral">Mixtral 8x22B</option>
+                    </optgroup>
+                    <optgroup label="🌍 Other Models">
+                        <option value="llama-3">Llama 3 (Meta)</option>
+                        <option value="command-r">Command R+ (Cohere)</option>
+                    </optgroup>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!-- Comparison Display -->
+    <div id="comparison-section" style="display: none;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+            <!-- Model 1 Response -->
+            <div class="card" style="padding: 24px; border: 2px solid var(--md-sys-color-primary);">
+                <h3 style="font-size: var(--md-sys-typescale-title-large); margin-bottom: 16px; color: var(--md-sys-color-primary);">
+                    <span id="model1-name">Model 1</span>
+                </h3>
+                
+                <!-- Primary Diagnosis -->
+                <div style="margin-bottom: 24px;">
+                    <h4 style="font-size: var(--md-sys-typescale-title-medium); margin-bottom: 12px;">
+                        Primary Diagnosis
+                    </h4>
+                    <div id="model1-primary" style="padding: 16px; background: var(--md-sys-color-primary-container); 
+                                                     border-radius: 8px;">
+                        <div style="font-size: 18px; font-weight: 600;" id="model1-primary-name">--</div>
+                        <div style="font-size: 14px; margin-top: 8px;" id="model1-primary-confidence">--</div>
+                        <div style="font-size: 14px; margin-top: 8px; color: var(--md-sys-color-on-surface-variant);" 
+                             id="model1-primary-reasoning">--</div>
+                    </div>
+                </div>
+
+                <!-- Differential Diagnoses -->
+                <div style="margin-bottom: 24px;">
+                    <h4 style="font-size: var(--md-sys-typescale-title-medium); margin-bottom: 12px;">
+                        Differential Diagnoses
+                    </h4>
+                    <div id="model1-differentials" style="display: grid; gap: 8px;">
+                        <!-- Will be populated dynamically -->
+                    </div>
+                </div>
+
+                <!-- Key Features -->
+                <div style="margin-bottom: 24px;">
+                    <h4 style="font-size: var(--md-sys-typescale-title-medium); margin-bottom: 12px;">
+                        Key Features Identified
+                    </h4>
+                    <div id="model1-features" style="display: flex; flex-wrap: wrap; gap: 8px;">
+                        <!-- Will be populated dynamically -->
+                    </div>
+                </div>
+
+                <!-- Metrics -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                    <div style="text-align: center; padding: 12px; background: var(--md-sys-color-surface-variant); border-radius: 8px;">
+                        <div style="font-size: 20px; font-weight: bold;" id="model1-response-time">--</div>
+                        <div style="font-size: 12px; color: var(--md-sys-color-on-surface-variant);">Response Time</div>
+                    </div>
+                    <div style="text-align: center; padding: 12px; background: var(--md-sys-color-surface-variant); border-radius: 8px;">
+                        <div style="font-size: 20px; font-weight: bold;" id="model1-tokens">--</div>
+                        <div style="font-size: 12px; color: var(--md-sys-color-on-surface-variant);">Tokens Used</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Model 2 Response -->
+            <div class="card" style="padding: 24px; border: 2px solid var(--md-sys-color-secondary);">
+                <h3 style="font-size: var(--md-sys-typescale-title-large); margin-bottom: 16px; color: var(--md-sys-color-secondary);">
+                    <span id="model2-name">Model 2</span>
+                </h3>
+                
+                <!-- Primary Diagnosis -->
+                <div style="margin-bottom: 24px;">
+                    <h4 style="font-size: var(--md-sys-typescale-title-medium); margin-bottom: 12px;">
+                        Primary Diagnosis
+                    </h4>
+                    <div id="model2-primary" style="padding: 16px; background: var(--md-sys-color-secondary-container); 
+                                                     border-radius: 8px;">
+                        <div style="font-size: 18px; font-weight: 600;" id="model2-primary-name">--</div>
+                        <div style="font-size: 14px; margin-top: 8px;" id="model2-primary-confidence">--</div>
+                        <div style="font-size: 14px; margin-top: 8px; color: var(--md-sys-color-on-surface-variant);" 
+                             id="model2-primary-reasoning">--</div>
+                    </div>
+                </div>
+
+                <!-- Differential Diagnoses -->
+                <div style="margin-bottom: 24px;">
+                    <h4 style="font-size: var(--md-sys-typescale-title-medium); margin-bottom: 12px;">
+                        Differential Diagnoses
+                    </h4>
+                    <div id="model2-differentials" style="display: grid; gap: 8px;">
+                        <!-- Will be populated dynamically -->
+                    </div>
+                </div>
+
+                <!-- Key Features -->
+                <div style="margin-bottom: 24px;">
+                    <h4 style="font-size: var(--md-sys-typescale-title-medium); margin-bottom: 12px;">
+                        Key Features Identified
+                    </h4>
+                    <div id="model2-features" style="display: flex; flex-wrap: wrap; gap: 8px;">
+                        <!-- Will be populated dynamically -->
+                    </div>
+                </div>
+
+                <!-- Metrics -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                    <div style="text-align: center; padding: 12px; background: var(--md-sys-color-surface-variant); border-radius: 8px;">
+                        <div style="font-size: 20px; font-weight: bold;" id="model2-response-time">--</div>
+                        <div style="font-size: 12px; color: var(--md-sys-color-on-surface-variant);">Response Time</div>
+                    </div>
+                    <div style="text-align: center; padding: 12px; background: var(--md-sys-color-surface-variant); border-radius: 8px;">
+                        <div style="font-size: 20px; font-weight: bold;" id="model2-tokens">--</div>
+                        <div style="font-size: 12px; color: var(--md-sys-color-on-surface-variant);">Tokens Used</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Agreement Analysis -->
+        <div class="card" style="padding: 24px; margin-top: 24px;">
+            <h3 style="font-size: var(--md-sys-typescale-headline-small); margin-bottom: 16px;">
+                Agreement Analysis
+            </h3>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+                <div style="text-align: center; padding: 16px; background: var(--md-sys-color-surface-variant); border-radius: 8px;">
+                    <div style="font-size: 36px; font-weight: bold;" id="agreement-score">--</div>
+                    <div style="font-size: 14px; color: var(--md-sys-color-on-surface-variant);">Agreement Score</div>
+                </div>
+                
+                <div style="padding: 16px;">
+                    <h4 style="font-size: var(--md-sys-typescale-title-small); margin-bottom: 8px;">
+                        Agreed Diagnoses
+                    </h4>
+                    <div id="agreed-diagnoses" style="display: flex; flex-wrap: wrap; gap: 8px;">
+                        <!-- Will be populated dynamically -->
+                    </div>
+                </div>
+                
+                <div style="padding: 16px;">
+                    <h4 style="font-size: var(--md-sys-typescale-title-small); margin-bottom: 8px;">
+                        Unique to Model 1
+                    </h4>
+                    <div id="unique-model1" style="display: flex; flex-wrap: wrap; gap: 8px;">
+                        <!-- Will be populated dynamically -->
+                    </div>
+                </div>
+                
+                <div style="padding: 16px;">
+                    <h4 style="font-size: var(--md-sys-typescale-title-small); margin-bottom: 8px;">
+                        Unique to Model 2
+                    </h4>
+                    <div id="unique-model2" style="display: flex; flex-wrap: wrap; gap: 8px;">
+                        <!-- Will be populated dynamically -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+let currentCaseData = null;
+let modelResponses = {};
+
+function loadCase() {
+    const caseKey = document.getElementById('case-selector').value;
+    if (!caseKey) {
+        document.getElementById('comparison-section').style.display = 'none';
+        return;
+    }
+    
+    // Fetch model responses for the selected case
+    fetch(`/api/case/${caseKey}/models`)
+        .then(response => response.json())
+        .then(data => {
+            modelResponses = {};
+            data.forEach(response => {
+                // Extract model ID from the full model name
+                const modelId = response.model_name.split('/').pop().toLowerCase().replace(/[^a-z0-9-]/g, '-');
+                modelResponses[modelId] = response;
+            });
+            updateComparison();
+        })
+        .catch(error => {
+            console.error('Error loading case:', error);
+            alert('Failed to load case data');
+        });
+}
+
+function updateComparison() {
+    const model1 = document.getElementById('model1-selector').value;
+    const model2 = document.getElementById('model2-selector').value;
+    const caseKey = document.getElementById('case-selector').value;
+    
+    if (!model1 || !model2 || !caseKey) {
+        document.getElementById('comparison-section').style.display = 'none';
+        return;
+    }
+    
+    document.getElementById('comparison-section').style.display = 'block';
+    
+    // Update model names
+    document.getElementById('model1-name').textContent = document.querySelector(`#model1-selector option[value="${model1}"]`).textContent;
+    document.getElementById('model2-name').textContent = document.querySelector(`#model2-selector option[value="${model2}"]`).textContent;
+    
+    // Parse and display model responses
+    displayModelResponse(model1, 'model1');
+    displayModelResponse(model2, 'model2');
+    
+    // Calculate agreement
+    calculateAgreement(model1, model2);
+}
+
+function displayModelResponse(modelId, prefix) {
+    const response = modelResponses[modelId];
+    
+    if (!response || !response.response) {
+        document.getElementById(`${prefix}-primary-name`).textContent = 'No response available';
+        document.getElementById(`${prefix}-primary-confidence`).textContent = '';
+        document.getElementById(`${prefix}-primary-reasoning`).textContent = '';
+        document.getElementById(`${prefix}-differentials`).innerHTML = '';
+        document.getElementById(`${prefix}-features`).innerHTML = '';
+        document.getElementById(`${prefix}-response-time`).textContent = '--';
+        document.getElementById(`${prefix}-tokens`).textContent = '--';
+        return;
+    }
+    
+    // Parse the response (assuming JSON format)
+    let parsedResponse;
+    try {
+        let responseText = response.response;
+        if (responseText.includes('```json')) {
+            responseText = responseText.split('```json')[1].split('```')[0];
+        } else if (responseText.includes('```')) {
+            responseText = responseText.split('```')[1].split('```')[0];
+        }
+        parsedResponse = JSON.parse(responseText);
+    } catch (e) {
+        // Fallback for non-JSON responses
+        parsedResponse = {
+            primary_diagnosis: { name: 'Unable to parse response', confidence: 'N/A' },
+            differential_diagnoses: []
+        };
+    }
+    
+    // Display primary diagnosis
+    const primary = parsedResponse.primary_diagnosis || {};
+    document.getElementById(`${prefix}-primary-name`).textContent = primary.name || 'Not specified';
+    document.getElementById(`${prefix}-primary-confidence`).textContent = 
+        primary.confidence ? `Confidence: ${primary.confidence}` : '';
+    document.getElementById(`${prefix}-primary-reasoning`).textContent = 
+        primary.reasoning || primary.rationale || '';
+    
+    // Display differentials
+    const differentials = parsedResponse.differential_diagnoses || [];
+    const diffContainer = document.getElementById(`${prefix}-differentials`);
+    diffContainer.innerHTML = differentials.slice(0, 5).map(diff => `
+        <div style="padding: 8px; background: var(--md-sys-color-surface-variant); border-radius: 4px;">
+            <strong>${diff.name || diff}</strong>
+            ${diff.probability ? ` (${diff.probability})` : ''}
+        </div>
+    `).join('');
+    
+    // Display key features
+    const features = parsedResponse.key_features || parsedResponse.clinical_features || [];
+    const featuresContainer = document.getElementById(`${prefix}-features`);
+    featuresContainer.innerHTML = features.slice(0, 8).map(feature => `
+        <span class="chip">${feature}</span>
+    `).join('');
+    
+    // Display metrics
+    document.getElementById(`${prefix}-response-time`).textContent = 
+        response.response_time ? `${response.response_time.toFixed(1)}s` : '--';
+    document.getElementById(`${prefix}-tokens`).textContent = 
+        response.tokens_used || response.output_tokens || '--';
+}
+
+function calculateAgreement(model1Id, model2Id) {
+    const response1 = modelResponses[model1Id];
+    const response2 = modelResponses[model2Id];
+    
+    if (!response1 || !response2) {
+        document.getElementById('agreement-score').textContent = 'N/A';
+        return;
+    }
+    
+    // Extract diagnoses from both models
+    const diagnoses1 = extractDiagnoses(response1.response);
+    const diagnoses2 = extractDiagnoses(response2.response);
+    
+    // Calculate agreement
+    const agreed = diagnoses1.filter(d => diagnoses2.includes(d));
+    const unique1 = diagnoses1.filter(d => !diagnoses2.includes(d));
+    const unique2 = diagnoses2.filter(d => !diagnoses1.includes(d));
+    
+    const agreementScore = diagnoses1.length + diagnoses2.length > 0 
+        ? Math.round((agreed.length * 2) / (diagnoses1.length + diagnoses2.length) * 100)
+        : 0;
+    
+    // Display results
+    document.getElementById('agreement-score').textContent = agreementScore + '%';
+    
+    document.getElementById('agreed-diagnoses').innerHTML = agreed.map(d => 
+        `<span class="chip selected">${d}</span>`
+    ).join('');
+    
+    document.getElementById('unique-model1').innerHTML = unique1.map(d => 
+        `<span class="chip" style="background: var(--md-sys-color-primary-container);">${d}</span>`
+    ).join('');
+    
+    document.getElementById('unique-model2').innerHTML = unique2.map(d => 
+        `<span class="chip" style="background: var(--md-sys-color-secondary-container);">${d}</span>`
+    ).join('');
+}
+
+function extractDiagnoses(responseText) {
+    const diagnoses = [];
+    
+    try {
+        let text = responseText;
+        if (text.includes('```json')) {
+            text = text.split('```json')[1].split('```')[0];
+        } else if (text.includes('```')) {
+            text = text.split('```')[1].split('```')[0];
+        }
+        
+        const parsed = JSON.parse(text);
+        
+        if (parsed.primary_diagnosis) {
+            diagnoses.push(parsed.primary_diagnosis.name || parsed.primary_diagnosis);
+        }
+        
+        if (parsed.differential_diagnoses) {
+            parsed.differential_diagnoses.forEach(diff => {
+                diagnoses.push(diff.name || diff);
+            });
+        }
+    } catch (e) {
+        // Fallback: extract common diagnosis terms from text
+        const commonDiagnoses = [
+            'Familial Mediterranean Fever', 'Crohn Disease', 'Systemic Lupus Erythematosus',
+            'Adult-Onset Still\'s Disease', 'Behçet\'s Disease', 'Tuberculosis',
+            'Marfan Syndrome', 'Lead Poisoning', 'Heart Failure'
+        ];
+        
+        commonDiagnoses.forEach(diagnosis => {
+            if (responseText.toLowerCase().includes(diagnosis.toLowerCase())) {
+                diagnoses.push(diagnosis);
+            }
+        });
+    }
+    
+    return [...new Set(diagnoses)]; // Remove duplicates
+}
+
+function randomizeSelection() {
+    const models = [
+        'gpt-4o', 'claude-opus', 'gemini-pro', 'grok',
+        'deepseek-v3', 'qwen-max', 'yi-large',
+        'mistral-large', 'mixtral', 'llama-3', 'command-r'
+    ];
+    
+    // Randomly select two different models
+    const shuffled = models.sort(() => 0.5 - Math.random());
+    
+    document.getElementById('model1-selector').value = shuffled[0];
+    document.getElementById('model2-selector').value = shuffled[1];
+    
+    updateComparison();
+}
+</script>
+{% endblock %}

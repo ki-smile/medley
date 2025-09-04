@@ -1,0 +1,320 @@
+{% extends "base.html" %}
+
+{% block title %}Model Comparison - MEDLEY{% endblock %}
+
+{% block content %}
+<!-- Model Selection -->
+<div class="md-surface mb-4">
+    <h2 class="md-headline-medium mb-3">🔍 Select Models to Compare</h2>
+    
+    <div class="flex gap-3 mb-4">
+        <div class="md-text-field" style="flex: 1;">
+            <label for="model1">Model 1</label>
+            <select id="model1" style="width: 100%; padding: 12px; border: 1px solid var(--md-sys-color-outline); border-radius: 4px;">
+                <option value="gemini-flash">Gemini 2.0 Flash (Google)</option>
+                <option value="llama-3.2">Llama 3.2 3B (Meta)</option>
+                <option value="phi-3">Phi-3 Medium (Microsoft)</option>
+                <option value="mistral-7b">Mistral 7B (Mistral)</option>
+                <option value="qwen-2">Qwen 2 7B (Alibaba)</option>
+            </select>
+        </div>
+        
+        <div class="md-text-field" style="flex: 1;">
+            <label for="model2">Model 2</label>
+            <select id="model2" style="width: 100%; padding: 12px; border: 1px solid var(--md-sys-color-outline); border-radius: 4px;">
+                <option value="llama-3.2">Llama 3.2 3B (Meta)</option>
+                <option value="gemini-flash">Gemini 2.0 Flash (Google)</option>
+                <option value="phi-3">Phi-3 Medium (Microsoft)</option>
+                <option value="mistral-7b">Mistral 7B (Mistral)</option>
+                <option value="qwen-2">Qwen 2 7B (Alibaba)</option>
+            </select>
+        </div>
+    </div>
+    
+    <button class="md-button md-button-filled" onclick="compareModels()">
+        📊 Compare Models
+    </button>
+</div>
+
+<!-- Comparison Results -->
+<div id="comparisonResults" style="display: none;">
+    <!-- Performance Metrics -->
+    <div class="md-surface mb-4">
+        <h2 class="md-headline-medium mb-3">📈 Performance Metrics</h2>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+            <div class="md-card">
+                <h3 class="md-title-large mb-3" id="model1Name">Model 1</h3>
+                <div class="metric-row">
+                    <span class="md-body-medium">Accuracy:</span>
+                    <span class="md-title-medium text-primary" id="model1Accuracy">92%</span>
+                </div>
+                <div class="metric-row">
+                    <span class="md-body-medium">Avg Response Time:</span>
+                    <span class="md-title-medium" id="model1ResponseTime">1.8s</span>
+                </div>
+                <div class="metric-row">
+                    <span class="md-body-medium">Success Rate:</span>
+                    <span class="md-title-medium" id="model1SuccessRate">95%</span>
+                </div>
+                <div class="metric-row">
+                    <span class="md-body-medium">Cost per Query:</span>
+                    <span class="md-title-medium" id="model1Cost">$0.00</span>
+                </div>
+            </div>
+            
+            <div class="md-card">
+                <h3 class="md-title-large mb-3" id="model2Name">Model 2</h3>
+                <div class="metric-row">
+                    <span class="md-body-medium">Accuracy:</span>
+                    <span class="md-title-medium text-primary" id="model2Accuracy">89%</span>
+                </div>
+                <div class="metric-row">
+                    <span class="md-body-medium">Avg Response Time:</span>
+                    <span class="md-title-medium" id="model2ResponseTime">2.1s</span>
+                </div>
+                <div class="metric-row">
+                    <span class="md-body-medium">Success Rate:</span>
+                    <span class="md-title-medium" id="model2SuccessRate">93%</span>
+                </div>
+                <div class="metric-row">
+                    <span class="md-body-medium">Cost per Query:</span>
+                    <span class="md-title-medium" id="model2Cost">$0.00</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Diagnostic Comparison -->
+    <div class="md-surface mb-4">
+        <h2 class="md-headline-medium mb-3">🩺 Diagnostic Comparison</h2>
+        
+        <div class="md-card mb-3">
+            <h3 class="md-title-large mb-3">Sample Case Analysis</h3>
+            <p class="md-body-medium mb-3" style="color: var(--md-sys-color-on-surface-variant);">
+                45-year-old male with chest pain, shortness of breath, and diaphoresis...
+            </p>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+                <div style="background: var(--md-sys-color-surface-variant); padding: 16px; border-radius: 8px;">
+                    <h4 class="md-title-medium mb-2" style="color: var(--md-sys-color-primary);">Model 1 Diagnosis</h4>
+                    <ul class="md-body-medium">
+                        <li>Primary: Acute Myocardial Infarction (85%)</li>
+                        <li>Alternative: Unstable Angina (10%)</li>
+                        <li>Alternative: Pulmonary Embolism (5%)</li>
+                    </ul>
+                </div>
+                
+                <div style="background: var(--md-sys-color-surface-variant); padding: 16px; border-radius: 8px;">
+                    <h4 class="md-title-medium mb-2" style="color: var(--md-sys-color-primary);">Model 2 Diagnosis</h4>
+                    <ul class="md-body-medium">
+                        <li>Primary: Acute Myocardial Infarction (78%)</li>
+                        <li>Alternative: Pulmonary Embolism (15%)</li>
+                        <li>Alternative: Panic Attack (7%)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Strengths & Weaknesses -->
+    <div class="md-surface mb-4">
+        <h2 class="md-headline-medium mb-3">💪 Strengths & Weaknesses</h2>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+            <div class="md-card">
+                <h3 class="md-title-large mb-3">Model 1</h3>
+                <div class="mb-3">
+                    <h4 class="md-title-medium text-primary mb-2">✓ Strengths</h4>
+                    <ul class="md-body-medium">
+                        <li>Excellent at cardiovascular diagnoses</li>
+                        <li>Fast response times</li>
+                        <li>High accuracy on common conditions</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="md-title-medium" style="color: var(--md-sys-color-error);">✗ Weaknesses</h4>
+                    <ul class="md-body-medium">
+                        <li>Less effective with rare diseases</li>
+                        <li>May miss cultural context</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="md-card">
+                <h3 class="md-title-large mb-3">Model 2</h3>
+                <div class="mb-3">
+                    <h4 class="md-title-medium text-primary mb-2">✓ Strengths</h4>
+                    <ul class="md-body-medium">
+                        <li>Good at differential diagnosis</li>
+                        <li>Considers wider range of possibilities</li>
+                        <li>Strong in neurological cases</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="md-title-medium" style="color: var(--md-sys-color-error);">✗ Weaknesses</h4>
+                    <ul class="md-body-medium">
+                        <li>Slower response times</li>
+                        <li>May over-diagnose rare conditions</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Visual Comparison -->
+    <div class="md-surface">
+        <h2 class="md-headline-medium mb-3">📊 Visual Comparison</h2>
+        
+        <div class="md-card">
+            <canvas id="comparisonChart" style="max-height: 400px;"></canvas>
+        </div>
+        
+        <div class="flex gap-2 mt-3 justify-center">
+            <button class="md-button md-button-tonal" onclick="updateChart('radar')">Radar Chart</button>
+            <button class="md-button md-button-outlined" onclick="updateChart('bar')">Bar Chart</button>
+            <button class="md-button md-button-outlined" onclick="exportComparison()">📥 Export Report</button>
+        </div>
+    </div>
+</div>
+
+<style>
+.metric-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--md-sys-color-outline-variant);
+}
+
+.metric-row:last-child {
+    border-bottom: none;
+}
+</style>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+let comparisonChart = null;
+
+function compareModels() {
+    const model1 = document.getElementById('model1').value;
+    const model2 = document.getElementById('model2').value;
+    
+    if (model1 === model2) {
+        alert('Please select different models to compare');
+        return;
+    }
+    
+    // Show results
+    document.getElementById('comparisonResults').style.display = 'block';
+    
+    // Update model names
+    const model1Text = document.getElementById('model1').options[document.getElementById('model1').selectedIndex].text;
+    const model2Text = document.getElementById('model2').options[document.getElementById('model2').selectedIndex].text;
+    
+    document.getElementById('model1Name').textContent = model1Text;
+    document.getElementById('model2Name').textContent = model2Text;
+    
+    // Simulate loading metrics
+    loadModelMetrics(model1, model2);
+    
+    // Create comparison chart
+    createComparisonChart(model1Text, model2Text);
+    
+    // Scroll to results
+    document.getElementById('comparisonResults').scrollIntoView({ behavior: 'smooth' });
+}
+
+function loadModelMetrics(model1, model2) {
+    // Simulated metrics - in production, fetch from API
+    const metrics = {
+        'gemini-flash': { accuracy: 92, responseTime: 1.8, successRate: 95, cost: 0 },
+        'llama-3.2': { accuracy: 89, responseTime: 2.1, successRate: 93, cost: 0 },
+        'phi-3': { accuracy: 87, responseTime: 1.9, successRate: 91, cost: 0 },
+        'mistral-7b': { accuracy: 90, responseTime: 2.3, successRate: 94, cost: 0 },
+        'qwen-2': { accuracy: 88, responseTime: 2.0, successRate: 92, cost: 0 }
+    };
+    
+    // Update Model 1 metrics
+    document.getElementById('model1Accuracy').textContent = metrics[model1].accuracy + '%';
+    document.getElementById('model1ResponseTime').textContent = metrics[model1].responseTime + 's';
+    document.getElementById('model1SuccessRate').textContent = metrics[model1].successRate + '%';
+    document.getElementById('model1Cost').textContent = '$' + metrics[model1].cost.toFixed(2);
+    
+    // Update Model 2 metrics
+    document.getElementById('model2Accuracy').textContent = metrics[model2].accuracy + '%';
+    document.getElementById('model2ResponseTime').textContent = metrics[model2].responseTime + 's';
+    document.getElementById('model2SuccessRate').textContent = metrics[model2].successRate + '%';
+    document.getElementById('model2Cost').textContent = '$' + metrics[model2].cost.toFixed(2);
+}
+
+function createComparisonChart(model1Name, model2Name) {
+    const ctx = document.getElementById('comparisonChart').getContext('2d');
+    
+    if (comparisonChart) {
+        comparisonChart.destroy();
+    }
+    
+    comparisonChart = new Chart(ctx, {
+        type: 'radar',
+        data: {
+            labels: ['Accuracy', 'Speed', 'Reliability', 'Coverage', 'Consistency'],
+            datasets: [
+                {
+                    label: model1Name,
+                    data: [92, 85, 95, 88, 90],
+                    borderColor: 'rgba(46, 125, 50, 1)',
+                    backgroundColor: 'rgba(46, 125, 50, 0.2)'
+                },
+                {
+                    label: model2Name,
+                    data: [89, 78, 93, 92, 85],
+                    borderColor: 'rgba(255, 152, 0, 1)',
+                    backgroundColor: 'rgba(255, 152, 0, 0.2)'
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                r: {
+                    beginAtZero: true,
+                    max: 100
+                }
+            }
+        }
+    });
+}
+
+function updateChart(type) {
+    if (!comparisonChart) return;
+    
+    const data = comparisonChart.data;
+    comparisonChart.destroy();
+    
+    const ctx = document.getElementById('comparisonChart').getContext('2d');
+    
+    comparisonChart = new Chart(ctx, {
+        type: type,
+        data: data,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: type === 'bar' ? {
+                y: { beginAtZero: true, max: 100 }
+            } : {
+                r: { beginAtZero: true, max: 100 }
+            }
+        }
+    });
+}
+
+function exportComparison() {
+    alert('Exporting comparison report...');
+    // Implementation would generate PDF/CSV report
+}
+</script>
+{% endblock %}

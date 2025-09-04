@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container" style="max-width: 1200px; margin: 0 auto; padding: 24px;">
+    <!-- Shared Analysis Header -->
+    <div class="card" style="padding: 24px; margin-bottom: 24px; background: var(--md-sys-color-primary-container);">
+        <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
+            <span class="material-symbols-rounded" style="font-size: 32px; color: var(--md-sys-color-primary);">share</span>
+            <div>
+                <h1 style="margin: 0; color: var(--md-sys-color-on-primary-container);">Shared Analysis</h1>
+                <p style="margin: 4px 0 0 0; color: var(--md-sys-color-on-primary-container); opacity: 0.8;">
+                    {{ analysis.title or 'Medical Case Analysis' }}
+                </p>
+            </div>
+        </div>
+        
+        <div style="display: flex; flex-wrap: wrap; gap: 24px; color: var(--md-sys-color-on-primary-container);">
+            <div>
+                <span class="material-symbols-rounded" style="vertical-align: middle; margin-right: 4px;">schedule</span>
+                {{ analysis.completed_at[:10] if analysis.completed_at else 'In Progress' }}
+            </div>
+            <div>
+                <span class="material-symbols-rounded" style="vertical-align: middle; margin-right: 4px;">psychology</span>
+                {{ analysis.models_responded or 0 }} models responded
+            </div>
+            <div>
+                <span class="material-symbols-rounded" style="vertical-align: middle; margin-right: 4px;">trending_up</span>
+                {{ analysis.consensus_rate|round(1) if analysis.consensus_rate else 0 }}% consensus
+            </div>
+        </div>
+    </div>
+
+    <!-- Analysis Results Summary -->
+    <div class="card" style="padding: 32px; margin-bottom: 24px;">
+        <h2 style="margin-bottom: 24px;">Analysis Summary</h2>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; margin-bottom: 32px;">
+            <div style="text-align: center; padding: 16px; background: var(--md-sys-color-primary-container); border-radius: 12px;">
+                <div style="font-size: 36px; font-weight: bold; color: var(--md-sys-color-primary); margin-bottom: 8px;">
+                    {{ analysis.models_responded or 0 }}
+                </div>
+                <div style="color: var(--md-sys-color-on-primary-container);">Models Responded</div>
+            </div>
+            
+            <div style="text-align: center; padding: 16px; background: var(--md-sys-color-secondary-container); border-radius: 12px;">
+                <div style="font-size: 36px; font-weight: bold; color: var(--md-sys-color-secondary); margin-bottom: 8px;">
+                    {{ analysis.consensus_rate|round(1) if analysis.consensus_rate else 0 }}%
+                </div>
+                <div style="color: var(--md-sys-color-on-secondary-container);">Consensus Rate</div>
+            </div>
+            
+            <div style="text-align: center; padding: 16px; background: var(--md-sys-color-tertiary-container); border-radius: 12px;">
+                <div style="font-size: 36px; font-weight: bold; color: var(--md-sys-color-tertiary); margin-bottom: 8px;">
+                    {{ analysis.unique_diagnoses or 1 }}
+                </div>
+                <div style="color: var(--md-sys-color-on-tertiary-container);">Unique Diagnoses</div>
+            </div>
+            
+            <div style="text-align: center; padding: 16px; background: var(--md-sys-color-surface-variant); border-radius: 12px;">
+                <div style="font-size: 36px; font-weight: bold; color: var(--md-sys-color-on-surface); margin-bottom: 8px;">
+                    {{ analysis.duration_seconds or 0 }}s
+                </div>
+                <div style="color: var(--md-sys-color-on-surface-variant);">Analysis Time</div>
+            </div>
+        </div>
+
+        <!-- Primary Diagnosis -->
+        <div style="margin-bottom: 24px; padding: 24px; background: var(--md-sys-color-primary-container); border-radius: 12px;">
+            <h3 style="margin-bottom: 12px; color: var(--md-sys-color-on-primary-container); display: flex; align-items: center; gap: 8px;">
+                <span class="material-symbols-rounded">medical_services</span>
+                Primary Diagnosis
+            </h3>
+            <div style="font-size: 20px; font-weight: 500; color: var(--md-sys-color-on-primary-container);">
+                {{ analysis.primary_diagnosis or 'Analysis in progress...' }}
+            </div>
+        </div>
+
+        <!-- View Full Report Button -->
+        <div style="text-align: center;">
+            <a href="/case/{{ analysis.id }}" class="btn btn-filled" style="padding: 16px 32px;">
+                <span class="material-symbols-rounded">visibility</span>
+                View Full Report
+            </a>
+        </div>
+    </div>
+
+    <!-- Disclaimer -->
+    <div class="card" style="padding: 16px; background: var(--md-sys-color-error-container);">
+        <div style="display: flex; gap: 12px; color: var(--md-sys-color-on-error-container);">
+            <span class="material-symbols-rounded">warning</span>
+            <div style="font-size: 14px;">
+                <strong>Medical Disclaimer:</strong> This analysis is for research and educational purposes only. 
+                It is not intended as medical advice. Always consult qualified healthcare professionals for medical decisions.
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 100px;
+    text-decoration: none;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-filled {
+    background: var(--md-sys-color-primary);
+    color: var(--md-sys-color-on-primary);
+}
+
+.btn-filled:hover {
+    background: color-mix(in srgb, var(--md-sys-color-primary) 90%, black);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    transform: translateY(-2px);
+}
+
+.card {
+    background: var(--md-sys-color-surface);
+    border-radius: 16px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+</style>
+{% endblock %}

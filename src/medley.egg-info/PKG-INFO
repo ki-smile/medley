@@ -1,0 +1,231 @@
+Metadata-Version: 2.4
+Name: medley
+Version: 0.1.0
+Summary: Medical AI Ensemble - Multi-LLM diagnostic system with bias-aware consensus
+Author-email: Your Name <your.email@example.com>
+License: MIT
+Project-URL: Homepage, https://github.com/yourusername/medley
+Project-URL: Documentation, https://medley.readthedocs.io
+Project-URL: Repository, https://github.com/yourusername/medley
+Project-URL: Issues, https://github.com/yourusername/medley/issues
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Healthcare Industry
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Topic :: Scientific/Engineering :: Medical Science Apps.
+Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: AUTHORS.md
+Requires-Dist: requests>=2.31.0
+Requires-Dist: pyyaml>=6.0
+Requires-Dist: python-dotenv>=1.0.0
+Requires-Dist: click>=8.1.0
+Requires-Dist: rich>=13.0.0
+Requires-Dist: aiohttp>=3.9.0
+Requires-Dist: asyncio>=3.4.3
+Requires-Dist: pydantic>=2.0.0
+Requires-Dist: sqlalchemy>=2.0.0
+Requires-Dist: jinja2>=3.1.0
+Provides-Extra: web
+Requires-Dist: flask>=3.0.0; extra == "web"
+Requires-Dist: flask-socketio>=5.3.0; extra == "web"
+Requires-Dist: flask-cors>=4.0.0; extra == "web"
+Provides-Extra: dev
+Requires-Dist: pytest>=7.4.0; extra == "dev"
+Requires-Dist: pytest-asyncio>=0.21.0; extra == "dev"
+Requires-Dist: pytest-cov>=4.1.0; extra == "dev"
+Requires-Dist: black>=23.0.0; extra == "dev"
+Requires-Dist: isort>=5.12.0; extra == "dev"
+Requires-Dist: mypy>=1.5.0; extra == "dev"
+Requires-Dist: flake8>=6.1.0; extra == "dev"
+Provides-Extra: reports
+Requires-Dist: weasyprint>=60.0; extra == "reports"
+Requires-Dist: matplotlib>=3.7.0; extra == "reports"
+Requires-Dist: plotly>=5.17.0; extra == "reports"
+Dynamic: license-file
+
+# Medley - Medical AI Ensemble System
+
+A bias-aware multi-model diagnostic framework that orchestrates multiple Large Language Models (LLMs) to provide diverse diagnostic perspectives for complex medical cases.
+
+**Author:** Farhad Abtahi  
+**Developed by:** SMAILE (Stockholm Medical AI Lab for Enhancement) at Karolinska Institutet  
+**Website:** [smile.ki.se](https://smile.ki.se)
+
+## 🎯 Overview
+
+Medley implements the concepts from "Embracing Imperfection: A Perspective on Leveraging Bias and Hallucination in Medical AI for Enhanced Human Decision-Making." It presents physicians with consensus views and alternative opinions rather than single AI recommendations.
+
+## 🚀 Quick Start
+
+### Installation
+
+```bash
+# Clone the repository
+cd medley
+
+# Install in development mode
+pip install -e .
+
+# Or install dependencies directly
+pip install -r requirements.txt
+```
+
+### Setup
+
+1. Get an OpenRouter API key from [OpenRouter](https://openrouter.ai/)
+
+2. Set your API key:
+```bash
+export OPENROUTER_API_KEY='your-api-key-here'
+```
+
+3. Initialize Medley:
+```bash
+medley setup
+```
+
+### Basic Usage
+
+Analyze a medical case:
+```bash
+medley analyze usecases/case_001_fmf.txt
+```
+
+With specific model:
+```bash
+medley analyze usecases/case_001_fmf.txt --model gemini-2.5-pro
+```
+
+Save results:
+```bash
+medley analyze usecases/case_001_fmf.txt --output results.txt
+```
+
+JSON output:
+```bash
+medley analyze usecases/case_001_fmf.txt --json --output results.json
+```
+
+## 📁 Project Structure
+
+```
+medley/
+├── src/medley/
+│   ├── models/          # LLM integration
+│   ├── processors/      # Case processing & caching
+│   ├── utils/          # Configuration & validation
+│   └── cli.py          # Command-line interface
+├── usecases/           # Medical test cases
+├── cache/              # Response caching
+├── config/             # Configuration files
+└── reports/            # Generated reports
+```
+
+## 🔧 Commands
+
+- `medley analyze <case>` - Analyze a medical case
+- `medley setup` - Initialize configuration
+- `medley test` - Test API connection
+- `medley cache-stats` - View cache statistics
+- `medley clear-cache <case_id>` - Clear cache for a case
+- `medley validate` - Validate cache integrity
+
+## 🧪 Test Cases
+
+The `usecases/` directory contains 12 evaluation cases testing different biases:
+
+1. **case_001_fmf.txt** - Cultural/geographic bias (Somali patient with FMF)
+2. **case_002_elderly.txt** - Age/gender bias (elderly woman)
+3. **case_003_homeless.txt** - Socioeconomic bias (homeless patient)
+4. **case_004_rare_genetic.txt** - Rare disease recognition
+5. **case_005_environmental.txt** - Environmental exposure bias
+6. **case_006_disability_communication.txt** - Disability & communication barriers (deaf patient)
+7. **case_007_gender_identity.txt** - Gender identity & diagnostic anchoring
+8. **case_008_rural_healthcare.txt** - Rural healthcare & resource limitations
+9. **case_009_weight_bias.txt** - Weight bias & symptom minimization
+10. **case_010_migration_trauma.txt** - Migration status & trauma history
+11. **case_011_ethnic_medication.txt** - Ethnic background & medication interactions
+12. **case_012_silent_organ_damage.txt** - Silent organ damage & clinical anchoring (hypertensive crisis)
+
+## 🏗️ Development Phases
+
+### Phase 1: Core Foundation ✅
+- [x] Configuration management
+- [x] OpenRouter API client
+- [x] Case file reader
+- [x] Response parser
+- [x] Cache manager
+- [x] CLI interface
+
+### Phase 2: Multi-Model Ensemble (Next)
+- [ ] Parallel model querying
+- [ ] Consensus algorithms
+- [ ] Bias detection
+- [ ] SQLite metadata
+
+### Phase 3: Web Interface (Future)
+- [ ] Flask dashboard
+- [ ] Real-time monitoring
+- [ ] Report generation
+- [ ] Docker deployment
+
+## 🔑 Configuration
+
+### Environment Variables
+- `OPENROUTER_API_KEY` - Your OpenRouter API key (required)
+- `MEDLEY_CACHE_DIR` - Cache directory (default: `./cache`)
+- `MEDLEY_REPORTS_DIR` - Reports directory (default: `./reports`)
+
+### Model Configuration
+Edit `config/models.yaml` to add/modify models:
+```yaml
+gemini-2.5-pro:
+  name: "Gemini 2.5 Pro"
+  provider: "google"
+  model_id: "google/gemini-2.0-flash-exp:free"
+  max_tokens: 8192
+  temperature: 0.7
+```
+
+## 📊 Cache Management
+
+Medley implements intelligent caching to minimize API costs:
+
+```bash
+# View cache statistics
+medley cache-stats
+
+# Clear specific case cache
+medley clear-cache case_001
+
+# Validate cache integrity
+medley validate
+```
+
+## 🤝 Contributing
+
+This is Phase 1 of a larger project. Contributions welcome for:
+- Additional model integrations
+- Enhanced parsing algorithms
+- Web interface development
+- Testing and documentation
+
+## 📝 License
+
+MIT License - See LICENSE file for details
+
+## ⚠️ Disclaimer
+
+This is a research tool for exploring AI bias in medical diagnosis. Not intended for clinical use. Always consult qualified healthcare professionals for medical decisions.
+
+## 🔗 Links
+
+- [OpenRouter API](https://openrouter.ai/)
+- [Project Documentation](docs/)
+- [Issue Tracker](https://github.com/yourusername/medley/issues)

@@ -1,0 +1,543 @@
+{% extends "base.html" %}
+
+{% block title %}Settings - MEDLEY{% endblock %}
+
+{% block content %}
+<!-- API Configuration -->
+<div class="md-surface mb-4">
+    <h2 class="md-headline-medium mb-4">🔑 API Configuration</h2>
+    
+    <div class="md-card mb-3">
+        <h3 class="md-title-large mb-3">OpenRouter API Key</h3>
+        <p class="md-body-medium mb-3" style="color: var(--md-sys-color-on-surface-variant);">
+            Your API key is required to access AI models, even free ones. Get your key at 
+            <a href="https://openrouter.ai/keys" target="_blank" style="color: var(--md-sys-color-primary);">openrouter.ai/keys</a>
+        </p>
+        
+        <div class="md-text-field mb-3">
+            <label for="apiKey">API Key</label>
+            <input type="password" id="apiKey" placeholder="sk-or-v1-..." value="{{ session.get('api_key', '') }}">
+        </div>
+        
+        <div class="flex gap-2">
+            <button class="md-button md-button-filled" onclick="saveApiKey()">
+                💾 Save API Key
+            </button>
+            <button class="md-button md-button-outlined" onclick="testApiKey()">
+                🧪 Test Connection
+            </button>
+            <button class="md-button md-button-text" onclick="clearApiKey()">
+                🗑️ Clear
+            </button>
+        </div>
+        
+        <div id="apiStatus" class="mt-3"></div>
+    </div>
+    
+    <div class="md-card">
+        <h3 class="md-title-large mb-3">API Usage</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+            <div>
+                <div class="md-body-small" style="color: var(--md-sys-color-on-surface-variant);">Total Requests</div>
+                <div class="md-headline-small text-primary">{{ api_stats.total_requests|default(0) }}</div>
+            </div>
+            <div>
+                <div class="md-body-small" style="color: var(--md-sys-color-on-surface-variant);">Tokens Used</div>
+                <div class="md-headline-small text-primary">{{ api_stats.tokens_used|default(0) }}</div>
+            </div>
+            <div>
+                <div class="md-body-small" style="color: var(--md-sys-color-on-surface-variant);">Total Cost</div>
+                <div class="md-headline-small text-primary">${{ api_stats.total_cost|default('0.00') }}</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Model Selection -->
+<div class="md-surface mb-4">
+    <h2 class="md-headline-medium mb-4">🤖 Model Selection</h2>
+    
+    <div class="md-card mb-3">
+        <h3 class="md-title-large mb-3">Default Model Set</h3>
+        
+        <div class="flex gap-3 mb-3">
+            <label class="flex align-center">
+                <input type="radio" name="modelSet" value="free" id="freeModels" checked style="margin-right: 8px;">
+                <span class="md-body-large">Free Models Only (17 models)</span>
+            </label>
+            <label class="flex align-center">
+                <input type="radio" name="modelSet" value="all" id="allModels" style="margin-right: 8px;">
+                <span class="md-body-large">All Models (31 models)</span>
+            </label>
+            <label class="flex align-center">
+                <input type="radio" name="modelSet" value="custom" id="customModels" style="margin-right: 8px;">
+                <span class="md-body-large">Custom Selection</span>
+            </label>
+        </div>
+        
+        <div id="customModelSelection" style="display: none;">
+            <h4 class="md-title-medium mb-2">Select Models:</h4>
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 8px; max-height: 400px; overflow-y: auto; padding: 8px; background: var(--md-sys-color-surface-variant); border-radius: 8px;">
+                <!-- Models will be populated here -->
+            </div>
+        </div>
+        
+        <button class="md-button md-button-filled mt-3" onclick="saveModelSelection()">
+            💾 Save Selection
+        </button>
+    </div>
+    
+    <div class="md-card">
+        <h3 class="md-title-large mb-3">Cost Estimator</h3>
+        <p class="md-body-medium mb-3" style="color: var(--md-sys-color-on-surface-variant);">
+            Estimated cost per analysis based on selected models:
+        </p>
+        <div class="md-headline-large text-primary" id="costEstimate">$0.00</div>
+        <p class="md-body-small mt-2" style="color: var(--md-sys-color-on-surface-variant);">
+            * Free models have no cost. Premium models charge per token.
+        </p>
+    </div>
+</div>
+
+<!-- Cache Settings -->
+<div class="md-surface mb-4">
+    <h2 class="md-headline-medium mb-4">💾 Cache Settings</h2>
+    
+    <div class="md-card mb-3">
+        <h3 class="md-title-large mb-3">Cache Management</h3>
+        
+        <div class="mb-3">
+            <label class="flex align-center mb-2">
+                <input type="checkbox" id="enableCache" checked style="margin-right: 8px;">
+                <span class="md-body-large">Enable Response Caching</span>
+            </label>
+            <p class="md-body-small" style="color: var(--md-sys-color-on-surface-variant); margin-left: 28px;">
+                Cache AI responses to reduce API calls and costs
+            </p>
+        </div>
+        
+        <div class="mb-3">
+            <label class="md-body-medium">Cache Duration (hours)</label>
+            <input type="number" id="cacheDuration" value="24" min="1" max="168" style="width: 100px; padding: 8px; margin-left: 8px;">
+        </div>
+        
+        <div class="flex gap-2">
+            <button class="md-button md-button-tonal" onclick="viewCacheStats()">
+                📊 View Statistics
+            </button>
+            <button class="md-button md-button-outlined" onclick="clearCache()">
+                🗑️ Clear Cache
+            </button>
+        </div>
+        
+        <div id="cacheStats" class="mt-3"></div>
+    </div>
+</div>
+
+<!-- Analysis Settings -->
+<div class="md-surface mb-4">
+    <h2 class="md-headline-medium mb-4">⚙️ Analysis Settings</h2>
+    
+    <div class="md-card">
+        <h3 class="md-title-large mb-3">Analysis Options</h3>
+        
+        <div class="mb-3">
+            <label class="flex align-center mb-2">
+                <input type="checkbox" id="parallelQueries" checked style="margin-right: 8px;">
+                <span class="md-body-large">Parallel Model Queries</span>
+            </label>
+            <p class="md-body-small" style="color: var(--md-sys-color-on-surface-variant); margin-left: 28px;">
+                Query multiple models simultaneously for faster results
+            </p>
+        </div>
+        
+        <div class="mb-3">
+            <label class="flex align-center mb-2">
+                <input type="checkbox" id="preserveMinority" checked style="margin-right: 8px;">
+                <span class="md-body-large">Preserve Minority Opinions</span>
+            </label>
+            <p class="md-body-small" style="color: var(--md-sys-color-on-surface-variant); margin-left: 28px;">
+                Include dissenting diagnoses even with low consensus
+            </p>
+        </div>
+        
+        <div class="mb-3">
+            <label class="flex align-center mb-2">
+                <input type="checkbox" id="biasDetection" checked style="margin-right: 8px;">
+                <span class="md-body-large">Enable Bias Detection</span>
+            </label>
+            <p class="md-body-small" style="color: var(--md-sys-color-on-surface-variant); margin-left: 28px;">
+                Analyze and report potential biases in model responses
+            </p>
+        </div>
+        
+        <div class="mb-3">
+            <label class="md-body-medium">Timeout per Model (seconds)</label>
+            <input type="number" id="modelTimeout" value="30" min="10" max="120" style="width: 100px; padding: 8px; margin-left: 8px;">
+        </div>
+        
+        <button class="md-button md-button-filled" onclick="saveAnalysisSettings()">
+            💾 Save Settings
+        </button>
+    </div>
+</div>
+
+<!-- Export/Import -->
+<div class="md-surface">
+    <h2 class="md-headline-medium mb-4">📤 Export & Import</h2>
+    
+    <div class="md-card">
+        <h3 class="md-title-large mb-3">Configuration Management</h3>
+        
+        <div class="flex gap-3">
+            <button class="md-button md-button-tonal" onclick="exportSettings()">
+                📥 Export Settings
+            </button>
+            <button class="md-button md-button-outlined" onclick="document.getElementById('importFile').click()">
+                📤 Import Settings
+            </button>
+            <button class="md-button md-button-text" onclick="resetDefaults()">
+                🔄 Reset to Defaults
+            </button>
+        </div>
+        
+        <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importSettings(this)">
+        
+        <div id="importStatus" class="mt-3"></div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Model data
+const models = {
+    free: [
+        'google/gemini-2.0-flash-exp:free',
+        'google/gemini-flash-1.5-8b',
+        'meta-llama/llama-3.2-3b-instruct:free',
+        'microsoft/phi-3-medium-128k-instruct:free',
+        'mistralai/mistral-7b-instruct:free',
+        // ... add all free models
+    ],
+    paid: [
+        'anthropic/claude-3.5-sonnet',
+        'openai/gpt-4o',
+        'google/gemini-pro-1.5',
+        // ... add all paid models
+    ]
+};
+
+// Initialize settings
+document.addEventListener('DOMContentLoaded', function() {
+    loadCurrentSettings();
+    populateModelSelection();
+    
+    // Model set radio buttons
+    document.querySelectorAll('input[name="modelSet"]').forEach(radio => {
+        radio.addEventListener('change', function() {
+            document.getElementById('customModelSelection').style.display = 
+                this.value === 'custom' ? 'block' : 'none';
+            updateCostEstimate();
+        });
+    });
+});
+
+// Save API key
+async function saveApiKey() {
+    const apiKey = document.getElementById('apiKey').value.trim();
+    
+    if (!apiKey) {
+        showStatus('apiStatus', 'Please enter an API key', 'error');
+        return;
+    }
+    
+    try {
+        const response = await fetch('/api/session/set-key', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ api_key: apiKey })
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok) {
+            showStatus('apiStatus', '✓ API key saved successfully', 'success');
+        } else {
+            showStatus('apiStatus', data.error || 'Failed to save API key', 'error');
+        }
+    } catch (error) {
+        showStatus('apiStatus', 'Error saving API key', 'error');
+    }
+}
+
+// Test API key
+async function testApiKey() {
+    const apiKey = document.getElementById('apiKey').value.trim();
+    
+    if (!apiKey) {
+        showStatus('apiStatus', 'Please enter an API key first', 'error');
+        return;
+    }
+    
+    showStatus('apiStatus', 'Testing connection...', 'info');
+    
+    try {
+        const response = await fetch('/api/test-connection', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ api_key: apiKey })
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok && data.success) {
+            showStatus('apiStatus', '✓ Connection successful! All models accessible.', 'success');
+        } else {
+            const errorMsg = data.error || 'Connection failed. Please check your API key.';
+            showStatus('apiStatus', `✗ ${errorMsg}`, 'error');
+        }
+    } catch (error) {
+        showStatus('apiStatus', `✗ Connection test failed: ${error.message}`, 'error');
+    }
+}
+
+// Clear API key
+function clearApiKey() {
+    document.getElementById('apiKey').value = '';
+    showStatus('apiStatus', 'API key cleared', 'info');
+}
+
+// Populate model selection
+function populateModelSelection() {
+    const container = document.getElementById('customModelSelection').querySelector('div');
+    let html = '';
+    
+    // Free models
+    html += '<div style="grid-column: 1 / -1; font-weight: 500;">Free Models:</div>';
+    models.free.forEach(model => {
+        const name = model.split('/')[1].split(':')[0];
+        html += `
+            <label class="flex align-center">
+                <input type="checkbox" value="${model}" class="model-checkbox" style="margin-right: 8px;">
+                <span class="md-body-small">${name}</span>
+            </label>
+        `;
+    });
+    
+    // Paid models
+    html += '<div style="grid-column: 1 / -1; font-weight: 500; margin-top: 16px;">Premium Models:</div>';
+    models.paid.forEach(model => {
+        const name = model.split('/')[1];
+        html += `
+            <label class="flex align-center">
+                <input type="checkbox" value="${model}" class="model-checkbox" style="margin-right: 8px;">
+                <span class="md-body-small">${name} 💰</span>
+            </label>
+        `;
+    });
+    
+    container.innerHTML = html;
+}
+
+// Update cost estimate
+function updateCostEstimate() {
+    const modelSet = document.querySelector('input[name="modelSet"]:checked').value;
+    let estimate = '$0.00';
+    
+    if (modelSet === 'all') {
+        estimate = '~$0.15';
+    } else if (modelSet === 'custom') {
+        const selected = document.querySelectorAll('.model-checkbox:checked');
+        let cost = 0;
+        selected.forEach(cb => {
+            if (!cb.value.includes(':free')) {
+                cost += 0.01; // Rough estimate
+            }
+        });
+        estimate = cost > 0 ? `~$${cost.toFixed(2)}` : '$0.00';
+    }
+    
+    document.getElementById('costEstimate').textContent = estimate;
+}
+
+// Save model selection
+function saveModelSelection() {
+    const modelSet = document.querySelector('input[name="modelSet"]:checked').value;
+    const settings = { model_set: modelSet };
+    
+    if (modelSet === 'custom') {
+        settings.custom_models = Array.from(document.querySelectorAll('.model-checkbox:checked'))
+            .map(cb => cb.value);
+    }
+    
+    localStorage.setItem('medley_model_settings', JSON.stringify(settings));
+    showStatus('customModelSelection', '✓ Model selection saved', 'success');
+}
+
+// View cache statistics
+async function viewCacheStats() {
+    try {
+        const response = await fetch('/api/cache/stats');
+        const stats = await response.json();
+        
+        const html = `
+            <div class="md-surface-variant p-3">
+                <div class="flex justify-between mb-2">
+                    <span>Cached Files:</span>
+                    <strong>${stats.file_count || 0}</strong>
+                </div>
+                <div class="flex justify-between mb-2">
+                    <span>Cache Size:</span>
+                    <strong>${stats.formatted_size || '0 B'}</strong>
+                </div>
+                <div class="flex justify-between">
+                    <span>Total Size (bytes):</span>
+                    <strong>${stats.total_size || 0}</strong>
+                </div>
+            </div>
+        `;
+        
+        document.getElementById('cacheStats').innerHTML = html;
+    } catch (error) {
+        document.getElementById('cacheStats').innerHTML = 
+            '<div class="text-error">Failed to load cache statistics</div>';
+    }
+}
+
+// Clear cache
+async function clearCache() {
+    if (!confirm('Are you sure you want to clear all cached responses?')) {
+        return;
+    }
+    
+    try {
+        const response = await fetch('/api/cache/clear', { method: 'POST' });
+        
+        if (response.ok) {
+            showStatus('cacheStats', '✓ Cache cleared successfully', 'success');
+            viewCacheStats();
+        } else {
+            showStatus('cacheStats', '✗ Failed to clear cache', 'error');
+        }
+    } catch (error) {
+        showStatus('cacheStats', '✗ Error clearing cache', 'error');
+    }
+}
+
+// Save analysis settings
+function saveAnalysisSettings() {
+    const settings = {
+        parallel_queries: document.getElementById('parallelQueries').checked,
+        preserve_minority: document.getElementById('preserveMinority').checked,
+        bias_detection: document.getElementById('biasDetection').checked,
+        model_timeout: document.getElementById('modelTimeout').value,
+        cache_enabled: document.getElementById('enableCache').checked,
+        cache_duration: document.getElementById('cacheDuration').value
+    };
+    
+    localStorage.setItem('medley_analysis_settings', JSON.stringify(settings));
+    showStatus('importStatus', '✓ Settings saved successfully', 'success');
+}
+
+// Export settings
+function exportSettings() {
+    const settings = {
+        model_settings: JSON.parse(localStorage.getItem('medley_model_settings') || '{}'),
+        analysis_settings: JSON.parse(localStorage.getItem('medley_analysis_settings') || '{}'),
+        timestamp: new Date().toISOString()
+    };
+    
+    const blob = new Blob([JSON.stringify(settings, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `medley_settings_${Date.now()}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+}
+
+// Import settings
+function importSettings(input) {
+    const file = input.files[0];
+    if (!file) return;
+    
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        try {
+            const settings = JSON.parse(e.target.result);
+            
+            if (settings.model_settings) {
+                localStorage.setItem('medley_model_settings', JSON.stringify(settings.model_settings));
+            }
+            
+            if (settings.analysis_settings) {
+                localStorage.setItem('medley_analysis_settings', JSON.stringify(settings.analysis_settings));
+            }
+            
+            loadCurrentSettings();
+            showStatus('importStatus', '✓ Settings imported successfully', 'success');
+        } catch (error) {
+            showStatus('importStatus', '✗ Invalid settings file', 'error');
+        }
+    };
+    
+    reader.readAsText(file);
+}
+
+// Reset to defaults
+function resetDefaults() {
+    if (!confirm('Are you sure you want to reset all settings to defaults?')) {
+        return;
+    }
+    
+    localStorage.removeItem('medley_model_settings');
+    localStorage.removeItem('medley_analysis_settings');
+    
+    loadCurrentSettings();
+    showStatus('importStatus', '✓ Settings reset to defaults', 'success');
+}
+
+// Load current settings
+function loadCurrentSettings() {
+    // Model settings
+    const modelSettings = JSON.parse(localStorage.getItem('medley_model_settings') || '{"model_set": "free"}');
+    document.getElementById(modelSettings.model_set + 'Models').checked = true;
+    
+    if (modelSettings.model_set === 'custom' && modelSettings.custom_models) {
+        document.getElementById('customModelSelection').style.display = 'block';
+        modelSettings.custom_models.forEach(model => {
+            const checkbox = document.querySelector(`.model-checkbox[value="${model}"]`);
+            if (checkbox) checkbox.checked = true;
+        });
+    }
+    
+    // Analysis settings
+    const analysisSettings = JSON.parse(localStorage.getItem('medley_analysis_settings') || '{}');
+    document.getElementById('parallelQueries').checked = analysisSettings.parallel_queries !== false;
+    document.getElementById('preserveMinority').checked = analysisSettings.preserve_minority !== false;
+    document.getElementById('biasDetection').checked = analysisSettings.bias_detection !== false;
+    document.getElementById('modelTimeout').value = analysisSettings.model_timeout || 30;
+    document.getElementById('enableCache').checked = analysisSettings.cache_enabled !== false;
+    document.getElementById('cacheDuration').value = analysisSettings.cache_duration || 24;
+    
+    updateCostEstimate();
+}
+
+// Show status message
+function showStatus(elementId, message, type) {
+    const element = document.getElementById(elementId);
+    const colorClass = type === 'success' ? 'text-primary' : 
+                       type === 'error' ? 'text-error' : 
+                       'md-body-medium';
+    
+    element.innerHTML = `<div class="${colorClass}">${message}</div>`;
+    
+    if (type !== 'info') {
+        setTimeout(() => {
+            element.innerHTML = '';
+        }, 5000);
+    }
+}
+</script>
+{% endblock %}

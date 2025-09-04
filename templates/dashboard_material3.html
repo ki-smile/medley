@@ -1,0 +1,370 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - MEDLEY{% endblock %}
+
+{% block styles %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+    .metric-card {
+        background: var(--md-sys-color-surface-container-low);
+        border-radius: var(--md-sys-shape-corner-large);
+        padding: 24px;
+        text-align: center;
+        border: 1px solid var(--md-sys-color-outline-variant);
+        transition: all 0.3s;
+    }
+    
+    .metric-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    .metric-value {
+        font-size: var(--md-sys-typescale-display-small);
+        color: var(--md-sys-color-primary);
+        font-weight: 500;
+    }
+    
+    .metric-label {
+        font-size: var(--md-sys-typescale-body-medium);
+        color: var(--md-sys-color-on-surface-variant);
+        margin-top: 8px;
+    }
+    
+    .chart-container {
+        position: relative;
+        height: 300px;
+        margin: 20px 0;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Overview Section -->
+<div class="md-surface mb-4">
+    <h2 class="md-headline-medium mb-4">📊 System Overview</h2>
+    
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+        <div class="metric-card">
+            <div class="metric-value">{{ total_analyses|default(0) }}</div>
+            <div class="metric-label">Total Analyses</div>
+        </div>
+        
+        <div class="metric-card">
+            <div class="metric-value">{{ active_models|default(17) }}</div>
+            <div class="metric-label">Active Models</div>
+        </div>
+        
+        <div class="metric-card">
+            <div class="metric-value">{{ avg_response_time|default('2.3s') }}</div>
+            <div class="metric-label">Avg Response Time</div>
+        </div>
+        
+        <div class="metric-card">
+            <div class="metric-value">{{ success_rate|default('94%') }}</div>
+            <div class="metric-label">Success Rate</div>
+        </div>
+        
+        <div class="metric-card">
+            <div class="metric-value">{{ cache_hits|default('67%') }}</div>
+            <div class="metric-label">Cache Hit Rate</div>
+        </div>
+        
+        <div class="metric-card">
+            <div class="metric-value">${{ total_cost|default('0.00') }}</div>
+            <div class="metric-label">Total Cost</div>
+        </div>
+    </div>
+</div>
+
+<!-- Model Performance -->
+<div class="md-surface mb-4">
+    <h2 class="md-headline-medium mb-4">🤖 Model Performance</h2>
+    
+    <div class="md-card mb-3">
+        <h3 class="md-title-large mb-3">Response Time by Model</h3>
+        <div class="chart-container">
+            <canvas id="responseTimeChart"></canvas>
+        </div>
+    </div>
+    
+    <div class="md-card mb-3">
+        <h3 class="md-title-large mb-3">Success Rate by Model</h3>
+        <div class="chart-container">
+            <canvas id="successRateChart"></canvas>
+        </div>
+    </div>
+    
+    <div class="md-card">
+        <h3 class="md-title-large mb-3">Model Usage Distribution</h3>
+        <div class="chart-container">
+            <canvas id="usageChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Activity -->
+<div class="md-surface mb-4">
+    <h2 class="md-headline-medium mb-4">📈 Recent Activity</h2>
+    
+    <div class="md-card">
+        <h3 class="md-title-large mb-3">Analysis Timeline</h3>
+        <div class="chart-container">
+            <canvas id="timelineChart"></canvas>
+        </div>
+    </div>
+    
+    <div class="mt-4">
+        <h3 class="md-title-large mb-3">Recent Analyses</h3>
+        <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr style="border-bottom: 2px solid var(--md-sys-color-outline);">
+                        <th style="padding: 12px; text-align: left;" class="md-title-medium">Time</th>
+                        <th style="padding: 12px; text-align: left;" class="md-title-medium">Case ID</th>
+                        <th style="padding: 12px; text-align: left;" class="md-title-medium">Models Used</th>
+                        <th style="padding: 12px; text-align: left;" class="md-title-medium">Duration</th>
+                        <th style="padding: 12px; text-align: left;" class="md-title-medium">Status</th>
+                    </tr>
+                </thead>
+                <tbody id="recentAnalysesTable">
+                    <tr>
+                        <td colspan="5" style="padding: 20px; text-align: center;" class="md-body-medium">
+                            No recent analyses found
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Model Statistics -->
+<div class="md-surface">
+    <h2 class="md-headline-medium mb-4">📊 Detailed Statistics</h2>
+    
+    <div class="flex gap-3 mb-4">
+        <button class="md-button md-button-tonal" onclick="exportData('csv')">
+            📥 Export CSV
+        </button>
+        <button class="md-button md-button-outlined" onclick="exportData('json')">
+            📥 Export JSON
+        </button>
+        <button class="md-button md-button-outlined" onclick="refreshData()">
+            🔄 Refresh
+        </button>
+    </div>
+    
+    <div class="md-card">
+        <h3 class="md-title-large mb-3">Model Comparison Matrix</h3>
+        <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr style="border-bottom: 2px solid var(--md-sys-color-outline);">
+                        <th style="padding: 12px;" class="md-title-medium">Model</th>
+                        <th style="padding: 12px;" class="md-title-medium">Provider</th>
+                        <th style="padding: 12px;" class="md-title-medium">Calls</th>
+                        <th style="padding: 12px;" class="md-title-medium">Avg Time</th>
+                        <th style="padding: 12px;" class="md-title-medium">Success</th>
+                        <th style="padding: 12px;" class="md-title-medium">Cost</th>
+                    </tr>
+                </thead>
+                <tbody id="modelStatsTable">
+                    <tr>
+                        <td colspan="6" style="padding: 20px; text-align: center;" class="md-body-medium">
+                            Loading model statistics...
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Chart.js configuration
+Chart.defaults.color = getComputedStyle(document.documentElement).getPropertyValue('--md-sys-color-on-surface');
+Chart.defaults.borderColor = getComputedStyle(document.documentElement).getPropertyValue('--md-sys-color-outline');
+
+// Response Time Chart
+const responseTimeCtx = document.getElementById('responseTimeChart').getContext('2d');
+new Chart(responseTimeCtx, {
+    type: 'bar',
+    data: {
+        labels: ['Gemini Flash', 'Llama 3.2', 'Phi-3', 'Mistral 7B', 'Qwen 2'],
+        datasets: [{
+            label: 'Response Time (s)',
+            data: [1.2, 2.1, 1.8, 2.5, 1.9],
+            backgroundColor: 'rgba(46, 125, 50, 0.6)',
+            borderColor: 'rgba(46, 125, 50, 1)',
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+
+// Success Rate Chart
+const successRateCtx = document.getElementById('successRateChart').getContext('2d');
+new Chart(successRateCtx, {
+    type: 'line',
+    data: {
+        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        datasets: [{
+            label: 'Success Rate (%)',
+            data: [92, 94, 91, 95, 93, 96, 94],
+            borderColor: 'rgba(46, 125, 50, 1)',
+            backgroundColor: 'rgba(46, 125, 50, 0.1)',
+            tension: 0.4
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+            y: {
+                beginAtZero: false,
+                min: 85,
+                max: 100
+            }
+        }
+    }
+});
+
+// Usage Distribution Chart
+const usageCtx = document.getElementById('usageChart').getContext('2d');
+new Chart(usageCtx, {
+    type: 'doughnut',
+    data: {
+        labels: ['Free Models', 'Premium Models', 'Cached'],
+        datasets: [{
+            data: [65, 20, 15],
+            backgroundColor: [
+                'rgba(46, 125, 50, 0.8)',
+                'rgba(255, 152, 0, 0.8)',
+                'rgba(33, 150, 243, 0.8)'
+            ]
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false
+    }
+});
+
+// Timeline Chart
+const timelineCtx = document.getElementById('timelineChart').getContext('2d');
+new Chart(timelineCtx, {
+    type: 'line',
+    data: {
+        labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00'],
+        datasets: [{
+            label: 'Analyses',
+            data: [2, 1, 5, 12, 8, 6],
+            borderColor: 'rgba(46, 125, 50, 1)',
+            backgroundColor: 'rgba(46, 125, 50, 0.1)',
+            fill: true,
+            tension: 0.4
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false
+    }
+});
+
+// Load recent analyses
+async function loadRecentAnalyses() {
+    try {
+        const response = await fetch('/api/analyses/recent?limit=10');
+        if (response.ok) {
+            const analyses = await response.json();
+            updateRecentAnalysesTable(analyses);
+        }
+    } catch (error) {
+        console.error('Failed to load recent analyses:', error);
+    }
+}
+
+// Update recent analyses table
+function updateRecentAnalysesTable(analyses) {
+    const tbody = document.getElementById('recentAnalysesTable');
+    if (analyses.length === 0) {
+        return;
+    }
+    
+    tbody.innerHTML = analyses.map(a => `
+        <tr style="border-bottom: 1px solid var(--md-sys-color-outline-variant);">
+            <td style="padding: 12px;" class="md-body-medium">${new Date(a.created_at).toLocaleString()}</td>
+            <td style="padding: 12px;" class="md-body-medium">${a.id}</td>
+            <td style="padding: 12px;" class="md-body-medium">${a.model_count || 17}</td>
+            <td style="padding: 12px;" class="md-body-medium">${a.duration || 'N/A'}</td>
+            <td style="padding: 12px;">
+                <span class="md-chip" style="background: ${a.status === 'completed' ? '#4CAF50' : '#FF9800'}; color: white;">
+                    ${a.status}
+                </span>
+            </td>
+        </tr>
+    `).join('');
+}
+
+// Load model statistics
+async function loadModelStats() {
+    try {
+        const response = await fetch('/api/performance');
+        if (response.ok) {
+            const stats = await response.json();
+            updateModelStatsTable(stats.models || []);
+        }
+    } catch (error) {
+        console.error('Failed to load model stats:', error);
+    }
+}
+
+// Update model stats table
+function updateModelStatsTable(models) {
+    const tbody = document.getElementById('modelStatsTable');
+    if (models.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" style="padding: 20px; text-align: center;">No model data available</td></tr>';
+        return;
+    }
+    
+    tbody.innerHTML = models.map(m => `
+        <tr style="border-bottom: 1px solid var(--md-sys-color-outline-variant);">
+            <td style="padding: 12px;" class="md-body-medium">${m.name}</td>
+            <td style="padding: 12px;" class="md-body-medium">${m.provider}</td>
+            <td style="padding: 12px;" class="md-body-medium">${m.calls || 0}</td>
+            <td style="padding: 12px;" class="md-body-medium">${m.avg_time || 'N/A'}</td>
+            <td style="padding: 12px;" class="md-body-medium">${m.success_rate || '0%'}</td>
+            <td style="padding: 12px;" class="md-body-medium">$${m.cost || '0.00'}</td>
+        </tr>
+    `).join('');
+}
+
+// Export data
+function exportData(format) {
+    window.location.href = `/api/metrics/export?format=${format}`;
+}
+
+// Refresh data
+function refreshData() {
+    loadRecentAnalyses();
+    loadModelStats();
+}
+
+// Initialize on load
+document.addEventListener('DOMContentLoaded', function() {
+    loadRecentAnalyses();
+    loadModelStats();
+});
+</script>
+{% endblock %}

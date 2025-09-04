@@ -1,0 +1,2036 @@
+{
+  "case_id": "Case_13",
+  "case_title": "Case_13 - Medical Analysis",
+  "case_content": "Complex Urology Case Presentation\n\nPatient Demographics\nAge: 24 years old\nSex: Male\nEthnicity: Middle Eastern (Iranian heritage)\nOccupation: Graduate student in chemistry\n\nChief Complaint\n\"Burning when I urinate and blood in my urine for the past 6 months, on and off\"\n\nHistory of Present Illness\n24-year-old male presents with a 6-month history of intermittent dysuria, gross hematuria, and suprapubic discomfort. Episodes occur every 2-3 weeks, last 3-5 days, then resolve completely. Patient reports no fever during episodes. Pain is described as \"deep burning\" both during and after urination. Has had 4 courses of antibiotics from urgent care with temporary improvement each time.\n\nRecently developed new symptoms: bilateral flank pain, decreased urine output, and weight gain of 8 lbs over 2 weeks. Denies recent travel, new sexual partners, or illicit drug use. Reports family history of \"kidney problems\" in paternal uncle.\n\nPast Medical History\n- Recurrent \"kidney stones\" as teenager (no documentation available)\n- Treated for depression with sertraline 50mg daily for 2 years\n- No known allergies\n\nSocial History\n- PhD student in organic chemistry, works with various solvents and compounds\n- Denies tobacco use\n- Social alcohol use (2-3 drinks/week)\n- Sexually active with one female partner for 8 months\n- Recent immigrant (3 years ago), limited family medical records\n\nPhysical Examination\n- Vital Signs: BP 145/92, HR 88, Temp 37.1\u00b0C, RR 16\n- General: Mild periorbital edema, appears fatigued\n- Genitourinary: No penile discharge, testes normal, mild suprapubic tenderness\n- Costovertebral angle: Bilateral tenderness\n- Extremities: 1+ pitting edema to mid-shins\n\nLaboratory Results\n\nUrinalysis (during symptomatic episode)\n- Color: Dark amber with visible blood\n- Protein: 3+ (300 mg/dL)\n- Blood: 3+\n- RBC: >50/hpf, many dysmorphic\n- WBC: 15-20/hpf\n- Nitrites: Negative\n- Leukocyte esterase: 2+\n- Casts: 3-5 RBC casts/lpf, 1-2 granular casts/lpf\n\nUrine Culture\n- Day 1: Mixed flora <10,000 CFU/mL\n- Day 3: No growth\n\nSerum Chemistry\n- Creatinine: 2.1 mg/dL (baseline unknown)\n- BUN: 45 mg/dL\n- eGFR: 42 mL/min/1.73m\u00b2\n- Sodium: 138 mEq/L\n- Potassium: 4.8 mEq/L\n- Chloride: 104 mEq/L\n\nAdditional Labs\n- CBC: WBC 8,200, Hgb 11.2 g/dL, Plt 180,000\n- ESR: 45 mm/hr\n- CRP: 12 mg/L\n- C3: 45 mg/dL (Low, normal 90-180)\n- C4: 8 mg/dL (Low, normal 10-40)\n- ANA: Positive, 1:160 homogeneous pattern\n- Anti-dsDNA: Pending\n- ANCA: Pending\n\nImaging\n- Renal Ultrasound: Bilateral increased echogenicity, no hydronephrosis, no obvious stones\n- CT Abdomen/Pelvis (non-contrast): Bilateral renal enlargement, no stones identified",
+  "model_responses": [
+    {
+      "model_name": "google/gemma-3-27b-it/free",
+      "response": ":\n```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"Lupus Nephritis\",\n        \"confidence\": 0.85,\n        \"icd_code\": \"N03.2\",\n        \"reasoning\": \"The constellation of symptoms \u2013 intermittent hematuria, dysuria, flank pain, proteinuria (3+), RBC casts, decreased urine output, elevated creatinine (eGFR 42), low C3/C4 complement levels, positive ANA with a homogeneous pattern, and fatigue \u2013 strongly suggests a systemic autoimmune process affecting the kidneys. The patient's age, recent immigrant status (potentially exposing to different environmental triggers), and family history of kidney problems support this. Recurrent 'kidney stones' in the past could have been early manifestations of lupus nephritis. While the urine cultures were negative, this is common in lupus nephritis as it's... [truncated]",
+      "response_time": 1.0,
+      "cached": true,
+      "case_id": "Case_13",
+      "timestamp": "2025-08-11T21:59:35.285153",
+      "tokens_used": 2589,
+      "input_tokens": 0,
+      "output_tokens": 0
+    },
+    {
+      "model_name": "mistralai/mistral-7b-instruct",
+      "response": " {\n    \"primary_diagnosis\": {\n        \"name\": \"Most likely: IgA Nephropathy (Berger's Disease)\",\n        \"confidence\": 0.8,\n        \"icd_code\": \"B80.1\",\n        \"reasoning\": \"Chronic hematuria, proteinuria, and renal dysfunction with the presence of RBC casts in urinalysis, positive ANA with homogeneous pattern, and elevated CRP and ESR\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Alternative 1: Renal Cell Carcinoma\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"C64.9\",\n            \"reasoning\": \"Bilateral flank pain, renal enlargement on CT, and positive family history of kidney problems\"\n        },\n        {\n            \"name\": \"Alternative 2: Chronic Pyelonephritis\",\n            \"confidence\": 0.1,\n            \"icd_code\": \"N10.9\",\n            \"reasoning\": \"Recurrent symptoms of dysuria, hematuria, and suprapubic discomfort, with mixed bacterial growth in urine culture (albeit low count)\"\n        },\n        {\n            \"name\": \"Alternative 3: Medication-induced Nephropathy (Sertraline)\",\n            \"confidence\": 0.1,\n            \"icd_code\": \"T40.40\",\n            \"reasoning\": \"Use of sertraline, a medication known to cause nephropathy in some cases\"\n    }],\n    \"key_findings\": [\n        \"Chronic hematuria, proteinuria, and renal dysfunction\",\n        \"Bilateral flank pain, decreased urine output, and weight gain\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Renal biopsy\",\n            \"purpose\": \"To confirm the diagnosis of IgA Nephropathy\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Anti-dsDNA\",\n            \"purpose\": \"To support or rule out systemic lupus erythematosus\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Urine protein electrophoresis\",\n            \"purpose\": \"To evaluate for possible multiple myeloma\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Hospital admission for further evaluation and management\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Antihypertensives\",\n                \"dose\": \"As prescribed by nephrologist\",\n                \"route\": \"PO\",\n                \"duration\": \"Indefinite\",\n                \"rationale\": \"For blood pressure control\"\n            },\n            {\n                \"drug\": \"ACE inhibitor or ARB\",\n                \"dose\": \"As prescribed by nephrologist\",\n                \"route\": \"PO\",\n                \"duration\": \"Indefinite\",\n                \"rationale\": \"For renal protection and management of proteinuria\"\n            }\n        ],\n        \"monitoring\": [\n            \"Blood pressure, creatinine, eGFR, and urine protein-creatinine ratio\",\n            \"Frequency: Daily in hospital, then weekly as an outpatient\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Nephrology\",\n                \"urgency\": \"immediate\",\n                \"reason\": \"To manage kidney disease and determine the need for renal biopsy\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Persistent or worsening renal function\",\n        \"New onset of hypertension or seizures\"\n    ],\n    \"patient_education\": [\n        \"Avoid exposure to potential nephrotoxic substances (e.g., certain medications, solvents)\",\n        \"Maintain a healthy diet and exercise routine to support kidney health\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"1 week after discharge, then as directed by nephrologist\",\n        \"conditions\": \"Return immediately if new onset of gross hematuria, worsening symptoms, or signs of infection\"\n    },\n    \"confidence_in_assessment\": 0.8,\n    \"uncertainties\": [\n        \"Possible contribution of medication (sertraline) to the kidney disease\",\n        \"Possible alternative diagnoses with lower confidence levels\"\n    ]\n}",
+      "response_time": 25.012063026428223,
+      "cached": true,
+      "case_id": "Case_13",
+      "timestamp": "2025-08-11T21:27:03.519140",
+      "tokens_used": 2963,
+      "input_tokens": 1818,
+      "output_tokens": 1145
+    },
+    {
+      "model_name": "anthropic/claude-sonnet-4",
+      "response": "{\n    \"primary_diagnosis\": {\n        \"name\": \"Systemic Lupus Erythematosus with Lupus Nephritis\",\n        \"confidence\": 0.85,\n        \"icd_code\": \"M32.14\",\n        \"reasoning\": \"Young male with episodic hematuria, proteinuria, dysmorphic RBCs, RBC casts, hypocomplementemia (low C3/C4), positive ANA with homogeneous pattern, acute kidney injury, hypertension, and edema. The episodic nature with complete resolution between episodes is characteristic of lupus flares. Iranian heritage increases risk for SLE.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"IgA Nephropathy\",\n            \"confidence\": 0.7,\n            \"icd_code\": \"N02.8\",\n            \"reasoning\": \"Episodic gross hematuria in young male, especially with possible preceding infections. However, the systemic fe... [truncated]",
+      "response_time": 1.0,
+      "cached": true,
+      "case_id": "Case_13",
+      "timestamp": "2025-08-11T22:00:29.425864",
+      "tokens_used": 3045,
+      "input_tokens": 0,
+      "output_tokens": 0
+    },
+    {
+      "model_name": "x-ai/grok-4",
+      "response": "{\n  \"primary_diagnosis\": \"Systemic Lupus Erythematosus (SLE) with Lupus Nephritis\",\n  \"differential_diagnoses\": [\n    \"IgA Nephropathy (Berger's Disease)\",\n    \"Membranoproliferative Glomerulonephritis (MPGN)\",\n    \"ANCA-Associated Vasculitis (e.g., Granulomatosis with Polyangiitis)\",\n    \"Post-Infectious Glomerulonephritis\",\n    \"Chemical-Induced Nephrotoxicity (occupational exposure)\",\n    \"Hereditary Nephritis (e.g., Alport Syndrome, given family history)\"\n  ],\n  \"key_findings\": [\n    \"Intermittent dysuria, gross hematuria, and suprapubic pain for 6 months, with recent acute worsening including bilateral flank pain, oliguria, edema, and weight gain\",\n    \"Physical exam: Hypertension (145/92), periorbital and lower extremity edema, bilateral CVA tenderness\",\n    \"Urinalysis: Proteinuria ... [truncated]",
+      "response_time": 1.0,
+      "cached": true,
+      "case_id": "Case_13",
+      "timestamp": "2025-08-11T22:02:39.368618",
+      "tokens_used": 0,
+      "input_tokens": 0,
+      "output_tokens": 0
+    },
+    {
+      "model_name": "openai/gpt-oss-120b",
+      "response": "We need to produce JSON only. Provide diagnostic assessment. Likely primary diagnosis: IgA nephropathy (IgA nephropathy causing hematuria, proteinuria, renal dysfunction, low complement? Actually IgA usually normal complement. Low C3/C4 suggests complement-mediated disease like lupus nephritis, or membranoproliferative GN (MPGN) or post-infectious GN (low C3). But ANA positive, low complement both C3 and C4 low, suggests systemic lupus erythematosus (SLE) with lupus nephritis. Age 24 male, but lupus can affect males. RBC casts, proteinuria 3+, renal dysfunction, edema. Could be lupus nephritis (class III/IV). Also could be ANCA-associated vasculitis (e.g., microscopic polyangiitis) but complement usually normal. Low complement suggests immune complex disease: lupus, MPGN, post-infectious (... [truncated]",
+      "response_time": 3.8946430683135986,
+      "cached": true,
+      "case_id": "Case_13",
+      "timestamp": "2025-08-11T21:24:48.976572",
+      "tokens_used": 3509,
+      "input_tokens": 1509,
+      "output_tokens": 2000
+    },
+    {
+      "model_name": "cohere/command-r",
+      "response": "{\n    \"primary_diagnosis\": {\n        \"name\": \"Acute Pyelonephritis with Renal Parenchymal Disease\",\n        \"confidence\": 0.85,\n        \"icd_code\": \"N10.9\",\n        \"reasoning\": \"Pyelonephritis is a likely cause of the patient's symptoms, given the history of recurrent urinary tract infections, bilateral flank pain, and positive urinalysis with leukocyte esterase and nitrites. The renal ultrasound and CT findings suggest bilateral renal abnormalities.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Interstitial Nephritis\",\n            \"confidence\": 0.1,\n            \"icd_code\": \"N04.9\",\n            \"reasoning\": \"The acute onset of symptoms, bilateral involvement, and pending ANA/anti-dsDNA results make this a consideration. However, the lack of renal failure and norma... [truncated]",
+      "response_time": 8.158031225204468,
+      "cached": true,
+      "case_id": "Case_13",
+      "timestamp": "2025-08-11T21:32:28.621024",
+      "tokens_used": 2530,
+      "input_tokens": 1533,
+      "output_tokens": 997
+    },
+    {
+      "model_name": "openai/gpt-4-turbo",
+      "response": "{\n    \"primary_diagnosis\": {\n        \"name\": \"Glomerulonephritis\",\n        \"confidence\": 0.85,\n        \"icd_code\": \"N05\",\n        \"reasoning\": \"The patient presents with symptoms and lab findings indicative of glomerular disease, including dysmorphic RBCs, RBC casts, proteinuria, and renal function impairment. The presence of low complement levels and positive ANA suggest an autoimmune etiology.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Lupus Nephritis\",\n            \"confidence\": 0.75,\n            \"icd_code\": \"M32.14\",\n            \"reasoning\": \"Positive ANA and low complement levels are suggestive, awaiting anti-dsDNA results which could confirm diagnosis.\"\n        },\n        {\n            \"name\": \"IgA Nephropathy\",\n            \"confidence\": 0.6,\n            \"i... [truncated]",
+      "response_time": 1.0,
+      "cached": true,
+      "case_id": "Case_13",
+      "timestamp": "2025-08-11T22:01:18.155348",
+      "tokens_used": 1932,
+      "input_tokens": 0,
+      "output_tokens": 0
+    },
+    {
+      "model_name": "deepseek/deepseek-chat",
+      "response": "{\n    \"primary_diagnosis\": {\n        \"name\": \"Lupus Nephritis\",\n        \"confidence\": 0.9,\n        \"icd_code\": \"M32.14\",\n        \"reasoning\": \"The patient presents with hematuria, proteinuria, RBC casts, and elevated creatinine, indicative of glomerulonephritis. Low C3 and C4 complement levels, along with a positive ANA, strongly suggest systemic lupus erythematosus (SLE) with renal involvement. The absence of infection and the family history of kidney problems further support this diagnosis.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"IgA Nephropathy\",\n            \"confidence\": 0.7,\n            \"icd_code\": \"N02.8\",\n            \"reasoning\": \"This condition can present with episodic hematuria, proteinuria, and RBC casts. However, the absence of a recent upper resp... [truncated]",
+      "response_time": 9.91514801979065,
+      "cached": true,
+      "case_id": "Case_13",
+      "timestamp": "2025-08-11T21:27:13.436638",
+      "tokens_used": 2352,
+      "input_tokens": 1448,
+      "output_tokens": 904
+    },
+    {
+      "model_name": "google/gemini-2.5-pro",
+      "response": "**1. Analyzing the Case**\n\nI'm beginning to dissect the medical case. My primary focus is extracting key patient details \u2013 age, ethnicity, and occupation, which are critical for further analysis. Additionally, I've zeroed in on the chief complaint: intermittent dysuria and gross hematuria, which I will interpret and integrate. I will structure this data into a JSON object for a structured format, to aid with future processes.\n\n\n**2. Structuring Data**\n\nI've now successfully constructed the preliminary JSON object. I've included the patient's demographics, chief complaint, and detailed history of present illness (HPI), including recent developments like flank pain and edema. The past medical history (PMH), social history, and physical exam findings, including vital signs, are also integrate... [truncated]",
+      "response_time": 22.029000282287598,
+      "cached": true,
+      "case_id": "Case_13",
+      "timestamp": "2025-08-11T21:25:50.018362",
+      "tokens_used": 3553,
+      "input_tokens": 1554,
+      "output_tokens": 1999
+    },
+    {
+      "model_name": "deepseek/deepseek-r1",
+      "response": "Okay, let's tackle this medical case. The patient is a 24-year-old male with a 6-month history of intermittent dysuria, hematuria, and suprapubic discomfort. Recent symptoms include flank pain, decreased urine output, and weight gain. His labs show elevated creatinine, proteinuria, hematuria with dysmorphic RBCs and RBC casts. Complement levels are low, ANA is positive. Imaging shows bilateral renal enlargement.\n\nFirst, the key findings here point towards a glomerular disease. The presence of dysmorphic RBCs, RBC casts, proteinuria, and low C3/C4 suggests immune complex-mediated glomerulonephritis. The recurrent nature and response to antibiotics (even temporarily) might have been misleading, but the lack of culture growth and absence of infection signs point elsewhere.\n\nThe top differenti... [truncated]",
+      "response_time": 16.85216188430786,
+      "cached": true,
+      "case_id": "Case_13",
+      "timestamp": "2025-08-11T21:27:30.289993",
+      "tokens_used": 2934,
+      "input_tokens": 1450,
+      "output_tokens": 1484
+    },
+    {
+      "model_name": "anthropic/claude-3.5-haiku-20241022",
+      "response": "{\n    \"primary_diagnosis\": \"IgA Nephropathy with Possible Lupus Nephritis\",\n    \"differential_diagnoses\": [\n        \"Chronic Glomerulonephritis\",\n        \"ANCA-Associated Vasculitis\",\n        \"Systemic Lupus Erythematosus\",\n        \"Hereditary Nephritis\"\n    ],\n    \"key_findings\": [\n        \"Recurrent hematuria\",\n        \"Proteinuria\",\n        \"Reduced kidney function\",\n        \"Positive ANA\",\n        \"Low complement levels\",\n        \"Dysmorphic RBCs\",\n        \"RBC casts\"\n    ],\n    \"diagnostic_tests\": [\n        \"Kidney biopsy (urgent)\",\n        \"Anti-dsDNA confirmation\",\n        \"ANCA panel\",\n        \"Complete autoimmune workup\"\n    ],\n    \"management_plan\": [\n        \"Renal consultation\",\n        \"Potential immunosuppressive therapy\",\n        \"ACE inhibitor or ARB for kidney protection\",... [truncated]",
+      "response_time": 1.0,
+      "cached": true,
+      "case_id": "Case_13",
+      "timestamp": "2025-08-11T22:02:03.303222",
+      "tokens_used": 0,
+      "input_tokens": 0,
+      "output_tokens": 0
+    },
+    {
+      "model_name": "openai/gpt-oss-20b/free",
+      "response": "{\"primary_diagnosis\":{\"name\":\"Systemic Lupus Erythematosus with Class III/IV Lupus Nephritis\",\"confidence\":0.85,\"icd_code\":\"M32.4\",\"reasoning\":\"The patient presents with hematuria, proteinuria, RBC casts, and dysmorphic RBCs indicating glomerular bleeding. Low complement C3 and C4, positive ANA 1:160, and elevated ESR/CRP support an immune complex mediated process. The acute rise in creatinine, hypertension, edema, and bilateral renal enlargement are classic for lupus nephritis. The intermittent dysuria and prior antibiotic courses are likely secondary to urinary tract infections, but the systemic findings point to SLE as the underlying etiology.\"},\"differential_diagnoses\":[{\"name\":\"IgA Nephropathy\",\"confidence\":0.25,\"icd_code\":\"N00.4\",\"reasoning\":\"IgA nephropathy can present with hematuria and proteinuria, but it typically does not cause low complement levels or ANA positivity. The presence of low C3/C4 and ANA makes this less likely.\"},{\"name\":\"Post\u2011streptococcal Glomerulonephritis\",\"confidence\":0.15,\"icd_code\":\"N00.0\",\"reasoning\":\"Post\u2011streptococcal GN can cause low C3 but usually has normal C4 and is associated with a recent streptococcal infection, which is not reported.\"},{\"name\":\"Acute Interstitial Nephritis\",\"confidence\":0.10,\"icd_code\":\"N04.1\",\"reasoning\":\"AIN can cause renal dysfunction and eosinophiluria, but RBC casts and dysmorphic RBCs are not typical. Also complement levels are usually normal.\"},{\"name\":\"Membranoproliferative Glomerulonephritis\",\"confidence\":0.10,\"icd_code\":\"N00.6\",\"reasoning\":\"MPGN can present with low complement and proteinuria, but ANA positivity is less common.\"},{\"name\":\"Urinary Tract Infection\",\"confidence\":0.05,\"icd_code\":\"N39.0\",\"reasoning\":\"Urinary symptoms and mixed flora on culture suggest infection, but the systemic findings and renal involvement exceed a simple UTI.\"}],\"key_findings\":[\"Dysmorphic RBCs and RBC casts on urinalysis\",\"Low complement C3 and C4 with positive ANA\",\"Rapidly rising creatinine and bilateral renal enlargement\",\"Hypertension and edema\"],\"diagnostic_tests\":[{\"test\":\"Serum anti\u2011dsDNA antibody\",\"purpose\":\"Confirm SLE activity and correlate with renal disease\",\"priority\":\"urgent\"},{\"test\":\"Renal biopsy\",\"purpose\":\"Determine lupus nephritis class and guide therapy\",\"priority\":\"urgent\"},{\"test\":\"ANCA panel\",\"purpose\":\"Exclude ANCA\u2011associated vasculitis\",\"priority\":\"routine\"},{\"test\":\"Hepatitis B & C serology\",\"purpose\":\"Rule out hepatitis\u2011associated GN\",\"priority\":\"routine\"},{\"test\":\"Urine culture with sensitivity\",\"purpose\":\"Identify and treat any active infection\",\"priority\":\"immediate\"},{\"test\":\"Serum albumin\",\"purpose\":\"Assess hypoalbuminemia and guide ACEi/ARB therapy\",\"priority\":\"routine\"}],\"management_plan\":{\"immediate_actions\":[\"Order urgent anti\u2011dsDNA and renal biopsy\",\"Start empiric high\u2011dose IV methylprednisolone 500 mg daily for 3 days\",\"Initiate ACE inhibitor (lisinopril 10 mg daily) for proteinuria BP control\",\"Provide hydration and monitor urine output\",\"Order repeat urinalysis and serum creatinine in 48 hours\"],\"medications\":[{\"drug\":\"Methylprednisolone\",\"dose\":\"500 mg\",\"route\":\"IV\",\"duration\":\"3 days\",\"rationale\":\"Rapid control of active lupus nephritis\"},{\"drug\":\"Lisinopril\",\"dose\":\"10 mg\",\"route\":\"PO\",\"duration\":\"ongoing\",\"rationale\":\"Reduce proteinuria control hypertension\"},{\"drug\":\"Hydroxychloroquine\",\"dose\":\"200 mg\",\"route\":\"PO\",\"duration\":\"ongoing\",\"rationale\":\"Disease\u2011modifying therapy for SLE\"},{\"drug\":\"Probenecid\",\"dose\":\"250 mg\",\"route\":\"PO\",\"duration\":\"as needed\",\"rationale\":\"Prevent uric acid nephropathy if hyperuricemia develops\"}],\"monitoring\":[\"Serum creatinine and eGFR\",\"Urine protein/creatinine ratio\",\"Blood pressure\",\"CBC (for steroid side effects)\",\"Serum electrolytes (especially potassium)\"],\"consultations\":[{\"specialty\":\"Nephrology\",\"urgency\":\"immediate\",\"reason\":\"Renal biopsy and management of lupus nephritis\"},{\"specialty\":\"Rheumatology\",\"urgency\":\"immediate\",\"reason\":\"Confirm SLE diagnosis and initiate disease\u2011modifying therapy\"}]},\"red_flags\":[\"Rapidly rising creatinine (>0.5 mg/dL in 48 hrs)\",\"Severe hypertension (>180/110 mmHg)\",\"Active urinary sediment with >50 RBC/hpf\",\"Systemic symptoms (fever, rash, arthritis)\",\"Signs of infection (fever, chills)\"],\"patient_education\":[\"Take medications exactly as prescribed; do not skip doses of steroids or hydroxychloroquine\",\"Maintain adequate hydration; avoid NSAIDs and nephrotoxic drugs\",\"Monitor for signs of infection (fever, chills) and report promptly\",\"Keep a log of blood pressure and urine output\",\"Attend all follow\u2011up appointments and labs\"],\"follow_up\":{\"timing\":\"2 weeks for repeat labs and clinical assessment; 1 month for nephrology review\",\"conditions\":\"Return sooner if worsening edema, hypertension, decreased urine output, or new systemic symptoms\"},\"confidence_in_assessment\":0.85,\"uncertainties\":[\"Exact lupus nephritis class (needs biopsy), potential need for additional immunosuppressants (e.g., mycophenolate mofetil)\",\"Differential diagnosis of other complement\u2011consuming GN (e.g., MPGN) cannot be excluded without biopsy\"]}",
+      "response_time": 1.0,
+      "cached": true,
+      "case_id": "Case_13",
+      "timestamp": "2025-08-11T22:00:01.045171",
+      "tokens_used": 3086,
+      "input_tokens": 0,
+      "output_tokens": 0
+    },
+    {
+      "model_name": "mistralai/mistral-7b-instruct/free",
+      "response": " {\n    \"primary_diagnosis\": {\n        \"name\": \"IgA Nephropathy (Berger's Disease)\",\n        \"confidence\": 0.8,\n        \"icd_code\": \"B23.0\",\n        \"reasoning\": \"The patient's symptoms of hematuria, proteinuria, and renal dysfunction, along with the positive ANA and low C3 and C4 levels, suggest a glomerular disease. The patient's Middle Eastern ethnicity and history of recurrent kidney stones may be relevant risk factors. The normal renal ultrasound and non-contrast CT scan do not rule out glomerular disease as the primary diagnosis.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Renal Cell Carcinoma\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"C64.9\",\n            \"reasoning\": \"The patient's symptoms, along with the bilateral renal enlargement on imaging, could potentially suggest a renal mass. However, the absence of hydronephrosis and the negative urine culture argue against this diagnosis.\"\n        },\n        {\n            \"name\": \"Pyelonephritis\",\n            \"confidence\": 0.1,\n            \"icd_code\": \"N10.9\",\n            \"reasoning\": \"The patient's history of recurrent urinary symptoms and positive urinalysis findings could suggest a urinary tract infection. However, the lack of fever, temporary improvement with antibiotics, and normal urine culture on multiple occasions argue against this diagnosis.\"\n        }\n    ],\n    \"key_findings\": [\"Hematuria\", \"Proteinuria\", \"Renal dysfunction\", \"Bilateral renal enlargement\", \"Positive ANA\", \"Low C3 and C4 levels\"],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Renal biopsy\",\n            \"purpose\": \"To confirm the diagnosis of IgA Nephropathy and assess the severity of the disease\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Anti-dsDNA and ANCA\",\n            \"purpose\": \"To further evaluate for other glomerular diseases\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\"Refer to a nephrologist\", \"Initiate ACE inhibitor therapy to control blood pressure and protect the kidneys\"],\n        \"medications\": [\n            {\n                \"drug\": \"Lisinopril\",\n                \"dose\": \"5mg daily\",\n                \"route\": \"Oral\",\n                \"duration\": \"Long-term\",\n                \"rationale\": \"To control blood pressure and protect the kidneys\"\n            }\n        ],\n        \"monitoring\": [\"Blood pressure\", \"Creatinine level\", \"Proteinuria\"],\n        \"consultations\": [\n            {\n                \"specialty\": \"Nephrology\",\n                \"urgency\": \"immediate\",\n                \"reason\": \"To confirm the diagnosis and manage the disease\"\n            }\n        ]\n    },\n    \"red_flags\": [\"Worsening renal function\", \"Hypertensive emergency\"],\n    \"patient_education\": [\"Avoid NSAIDs as they can worsen kidney function\", \"Maintain a healthy diet and lifestyle to slow the progression of kidney disease\"],\n    \"follow_up\": {\n        \"timing\": \"1 month after nephrology consultation\",\n        \"conditions\": \"Worsening symptoms, rapidly declining kidney function\"\n    },\n    \"confidence_in_assessment\": 0.8,\n    \"uncertainties\": [\"The patient's history of recurrent kidney stones may be a confounding factor\", \"The absence of hydronephrosis and stones on imaging does not completely rule out other renal diseases\"]\n}",
+      "response_time": 1.0,
+      "cached": true,
+      "case_id": "Case_13",
+      "timestamp": "2025-08-11T21:23:29.271062",
+      "tokens_used": 2483,
+      "input_tokens": 0,
+      "output_tokens": 0
+    },
+    {
+      "model_name": "anthropic/claude-3.5-sonnet-20241022",
+      "response": "{\n  \"primary_diagnosis\": \"IgA Nephropathy vs. Lupus Nephritis\",\n  \"differential_diagnoses\": [\n    \"IgA Nephropathy\",\n    \"Lupus Nephritis Class III/IV\",\n    \"Post-infectious Glomerulonephritis\",\n    \"ANCA-associated Vasculitis\",\n    \"Thin Basement Membrane Disease\",\n    \"Chemical-induced Nephropathy\"\n  ],\n  \"key_findings\": [\n    \"Young male with recurrent hematuria and proteinuria\",\n    \"Dysmorphic RBCs and RBC casts\",\n    \"Declining renal function (eGFR 42)\",\n    \"Low complement levels (C3, C4)\",\n    \"Positive ANA\",\n    \"Bilateral renal enlargement on imaging\",\n    \"Occupational exposure to chemicals\",\n    \"Family history of kidney disease\"\n  ],\n  \"diagnostic_tests\": [\n    \"Renal biopsy (urgent)\",\n    \"Complete serologic workup including anti-dsDNA, ANCA\",\n    \"24-hour urine protein colle... [truncated]",
+      "response_time": 1.0,
+      "cached": true,
+      "case_id": "Case_13",
+      "timestamp": "2025-08-11T21:31:26.420017",
+      "tokens_used": 0,
+      "input_tokens": 0,
+      "output_tokens": 0
+    },
+    {
+      "model_name": "perplexity/sonar-deep-research",
+      "response": "This is a complex case involving a 24-year-old Iranian male with a 6-month history of intermittent hematuria and dysuria, now presenting with acute kidney injury, hypertension, edema, and laboratory findings suggestive of glomerulonephritis.\n\nLet me analyze the key findings:\n\n1. Clinical presentation:\n- 6 months of intermittent gross hematuria and dysuria\n- Recent development of AKI, hypertension, edema, weight gain\n- Young male of Middle Eastern descent\n- Family history of \"kidney problems\"\n\n2. Laboratory findings:\n- Elevated creatinine (2.1 mg/dL) and BUN (45 mg/dL) with reduced eGFR (42)\n- Urinalysis showing: proteinuria (3+), hematuria (3+), dysmorphic RBCs, RBC casts\n- Hypocomplementemia: Low C3 (45) and C4 (8)\n- Positive ANA 1:160 homogeneous pattern\n- Pending anti-dsDNA and ANCA res... [truncated]",
+      "response_time": 65.98812532424927,
+      "cached": true,
+      "case_id": "Case_13",
+      "timestamp": "2025-08-11T22:14:38.484708",
+      "tokens_used": 3405,
+      "input_tokens": 1445,
+      "output_tokens": 1960
+    },
+    {
+      "model_name": "ai21/jamba-large-1.7",
+      "response": "{\n    \"primary_diagnosis\": {\n        \"name\": \"Lupus Nephritis\",\n        \"confidence\": 0.85,\n        \"icd_code\": \"M32.14\",\n        \"reasoning\": \"The patient's presentation, including hematuria, proteinuria, bilateral flank pain, low C3 and C4 levels, and positive ANA with a homogeneous pattern, strongly suggests lupus nephritis. The patient's history of recurrent kidney stones, which could have been misdiagnosed, also supports this diagnosis. The decreased kidney function (eGFR 42 mL/min/1.73m\u00b2) and elevated creatinine (2.1 mg/dL) further indicate renal involvement.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"IgA Nephropathy (Berger's Disease)\",\n            \"confidence\": 0.65,\n            \"icd_code\": \"N02.0\",\n            \"reasoning\": \"IgA nephropathy presents with... [truncated]",
+      "response_time": 26.51743483543396,
+      "cached": true,
+      "case_id": "Case_13",
+      "timestamp": "2025-08-11T21:32:55.267069",
+      "tokens_used": 3005,
+      "input_tokens": 1698,
+      "output_tokens": 1307
+    },
+    {
+      "model_name": "google/gemini-2.5-flash-lite",
+      "response": "```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"Lupus Nephritis (Class III or IV)\",\n        \"confidence\": 0.9,\n        \"icd_code\": \"N04.1\",\n        \"reasoning\": \"The patient presents with a constellation of symptoms and laboratory findings highly suggestive of lupus nephritis: active urinary sediment with dysmorphic RBCs and RBC casts, significant proteinuria (3+), elevated creatinine and BUN indicating renal dysfunction, and systemic inflammatory markers (elevated ESR and CRP). The positive ANA and low complement levels (C3 and C4) are classic serological markers for Systemic Lupus Erythematosus (SLE), which frequently involves the kidneys. The bilateral flank pain, edema, and weight gain are also consistent with acute kidney injury secondary to inflammatory renal disease. The inter... [truncated]",
+      "response_time": 6.353575944900513,
+      "cached": true,
+      "case_id": "Case_13",
+      "timestamp": "2025-08-11T21:26:09.532495",
+      "tokens_used": 3470,
+      "input_tokens": 1554,
+      "output_tokens": 1916
+    },
+    {
+      "model_name": "mistralai/mistral-large-2411",
+      "response": "```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"IgA Nephropathy\",\n        \"confidence\": 0.8,\n        \"icd_code\": \"N08.0\",\n        \"reasoning\": \"Chronic hematuria, dysmorphic RBCs, proteinuria, low complement levels, and bilateral renal enlargement suggest glomerulonephritis. IgA nephropathy is the most common glomerulonephritis worldwide and fits with the patient's age and symptoms.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Lupus Nephritis\",\n            \"confidence\": 0.6,\n            \"icd_code\": \"M32.14\",\n            \"reasoning\": \"Positive ANA, low complement levels, and proteinuria are consistent with lupus nephritis. However, the patient's age and sex make this less likely.\"\n        },\n        {\n            \"name\": \"Post-Infectious Glomerulonephritis\",\n... [truncated]",
+      "response_time": 21.18046474456787,
+      "cached": true,
+      "case_id": "Case_13",
+      "timestamp": "2025-08-11T21:26:38.325417",
+      "tokens_used": 2973,
+      "input_tokens": 1815,
+      "output_tokens": 1158
+    },
+    {
+      "model_name": "cohere/command-r-plus",
+      "response": "{\n  \"primary_diagnosis\": \"Intermittent hematuria with dysuria, likely glomerulonephritis with a possibility of an autoimmune etiology, and bilateral renal enlargement.\",\n  \"differential_diagnoses\": [\n    \"IgA nephropathy (most common glomerulonephritis worldwide)\", \n    \"Lupus nephritis (especially with positive ANA)\", \n    \"Post-infectious glomerulonephritis (PIGN)\", \n    \"Anti-glomerular basement membrane (GBM) disease (given the rapid decline in renal function)\", \n    \"Membranous nephropathy (with autoimmune features)\", \n    \"Thin basement membrane disease (TBMD)\", \n    \"Chronic interstitial nephritis (given chemical exposure)\"\n  ],\n  \"key_findings\": [\n    \"Intermittent gross hematuria with dysuria, resolving completely between episodes.\", \n    \"Elevated creatinine, reduced eGFR, and bi... [truncated]",
+      "response_time": 1.0,
+      "cached": true,
+      "case_id": "Case_13",
+      "timestamp": "2025-08-11T22:02:56.522992",
+      "tokens_used": 0,
+      "input_tokens": 0,
+      "output_tokens": 0
+    },
+    {
+      "model_name": "microsoft/wizardlm-2-8x22b",
+      "response": " ```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"Rapidly Progressive Glomerulonephritis (RPGN)\",\n        \"confidence\": 0.8,\n        \"icd_code\": \"N00.0\",\n        \"reasoning\": \"The presence of RBC casts, proteinuria, hematuria, and rapid decline in renal function with a history of intermittent symptoms and family history of kidney problems suggest a glomerulonephritis. The low C3 and C4 levels, along with a positive ANA, are indicative of an immune-complex mediated glomerulonephritis, which can progress rapidly.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"IgA Nephropathy\",\n            \"confidence\": 0.6,\n            \"icd_code\": \"N01.1\",\n            \"reasoning\": \"Recurrent gross hematuria, especially in a young male, is common in IgA nephropathy. The absence of... [truncated]",
+      "response_time": 45.587799072265625,
+      "cached": true,
+      "case_id": "Case_13",
+      "timestamp": "2025-08-11T22:15:24.074694",
+      "tokens_used": 3118,
+      "input_tokens": 1849,
+      "output_tokens": 1269
+    },
+    {
+      "model_name": "x-ai/grok-2-1212",
+      "response": "{\n    \"primary_diagnosis\": {\n        \"name\": \"Lupus nephritis\",\n        \"confidence\": 0.8,\n        \"icd_code\": \"M32.14\",\n        \"reasoning\": \"Patient's symptoms of hematuria, proteinuria, and renal dysfunction, combined with low C3 and C4 levels and positive ANA, suggest an autoimmune process affecting the kidneys, most likely lupus nephritis.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"IgA nephropathy\",\n            \"confidence\": 0.6,\n            \"icd_code\": \"N02.8\",\n            \"reasoning\": \"Hematuria and renal dysfunction could be due to IgA nephropathy, though the low complement levels and positive ANA are less typical.\"\n        },\n        {\n            \"name\": \"ANCA-associated vasculitis\",\n            \"confidence\": 0.5,\n            \"icd_code\": \"M31.7\",\n     ... [truncated]",
+      "response_time": 10.287477970123291,
+      "cached": true,
+      "case_id": "Case_13",
+      "timestamp": "2025-08-11T22:15:59.896809",
+      "tokens_used": 2394,
+      "input_tokens": 1461,
+      "output_tokens": 933
+    },
+    {
+      "model_name": "google/gemma-2-9b-it",
+      "response": "{\n    \"primary_diagnosis\": {\n        \"name\": \"Lupus nephritis\",\n        \"confidence\": 0.7,\n        \"icd_code\": \"N17.0\",\n        \"reasoning\": \"The combination of hematuria, proteinuria, RBC casts, elevated creatinine, decreased eGFR, positive ANA with a homogeneous pattern, low C3 and C4, and bilateral renal enlargement strongly suggests lupus nephritis.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"IgA nephropathy\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"N03.9\",\n            \"reasoning\": \"Persistent hematuria and the presence of RBC casts are consistent with IgA nephropathy. However, the absence of IgA nephropathy in the urinalysis and the positive ANA argue against this diagnosis.\"\n        },\n        {\n            \"name\": \"Polycystic kidney disease\",\n            \"confidence\": 0.1,\n            \"icd_code\": \"E31.1\",\n            \"reasoning\": \"The patient's family history of 'kidney problems' raises the possibility of PKD. However, the ultrasound did not show typical cystic changes, and the clinical presentation is more suggestive of glomerulonephritis.\"\n        },\n        {\n            \"name\": \"Acute interstitial nephritis\",\n            \"confidence\": 0.05,\n            \"icd_code\": \"N17.9\",\n            \"reasoning\": \"The patient's recent antibiotic use could potentially contribute to acute interstitial nephritis. However, the lack of fever and the presence of renal enlargement make this diagnosis less likely.\"\n        }\n    ],\n    \"key_findings\": [\n        \"Gross hematuria with dysmorphic RBCs\",\n        \"Proteinuria with RBC casts\",\n        \"Elevated creatinine and decreased eGFR\",\n        \"Positive ANA with a homogeneous pattern and low complement levels\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Anti-dsDNA antibody\",\n            \"purpose\": \"Confirm lupus diagnosis\",\n            \"priority\": \"Immediate\"\n        },\n        {\n            \"test\": \"ANCA panel\",\n            \"purpose\": \"Rule out ANCA-associated vasculitis\",\n            \"priority\": \"Urgent\"\n        },\n        {\n            \"test\": \"Renal biopsy\",\n            \"purpose\": \"Definitive diagnosis and classification of glomerulonephritis\",\n            \"priority\": \"Urgent\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Hospital admission for close monitoring\",\n            \"Initiation of high-dose corticosteroids\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Prednisone\",\n                \"dose\": \"1mg/kg/day\",\n                \"route\": \"Oral\",\n                \"duration\": \"Indefinitely, tapered as tolerated\",\n                \"rationale\": \"To suppress inflammation and treat active lupus nephritis\"\n            }\n        ],\n        \"monitoring\": [\n            \"Daily blood pressure and weight\",\n            \"Repeat creatinine and eGFR every 2 days\",\n            \"Urine protein and creatinine ratio daily\",\n            \"Complete blood count and electrolytes\",\n            \"Side effects of corticosteroids\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Nephrology\",\n                \"urgency\": \"Immediate\",\n                \"reason\": \"For management of lupus nephritis and renal function monitoring\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Rapidly declining renal function\",\n        \"Development of nephrotic syndrome (significant proteinuria and hypoalbuminemia)\",\n        \"Signs of infection or sepsis\",\n        \"Neurological symptoms\"\n    ],\n    \"patient_education\": [\n        \"Lupus is a chronic autoimmune disease that can affect multiple organs, including the kidneys.\",\n        \"Treatment involves medications to suppress the immune system and manage symptoms.\",\n        \"It's important to follow up regularly with your nephrologist and report any changes in your health.\",\n        \"Lifestyle modifications, such as stress management and sun protection, may also be beneficial.\",\n        \"Information about lupus and support groups can be found through the Lupus Foundation of America.\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"Weekly for the first month, then monthly\",\n        \"conditions\": \"Immediately return if you experience any signs of infection, such as fever, chills, or cough; worsening kidney function, such as decreased urine output or swelling; or new or worsening pain.\"\n    },\n    \"confidence_in_assessment\": 0.7,\n    \"uncertainties\": [\n        \"The exact type of lupus nephritis will require a renal biopsy to confirm.\",\n        \"The long-term prognosis depends on the severity of kidney involvement and the patient's response to treatment.\"\n    ]\n} \n",
+      "response_time": 2.7365639209747314,
+      "cached": true,
+      "case_id": "Case_13",
+      "timestamp": "2025-08-11T21:26:12.366079",
+      "tokens_used": 2653,
+      "input_tokens": 1563,
+      "output_tokens": 1090
+    },
+    {
+      "model_name": "google/gemma-3-4b-it/free",
+      "response": "```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"Systemic Lupus Erythematosus (SLE) with Nephritis\",\n        \"confidence\": 0.85,\n        \"icd_code\": \"M32.0\",\n        \"reasoning\": \"The patient presents with a constellation of symptoms suggestive of SLE, including dysuria, hematuria, flank pain, decreased urine output, weight gain, bilateral C3 and C4 complement deficiencies, proteinuria, positive ANA with a homogeneous pattern, and ESR elevation. The renal ultrasound and CT findings of bilateral renal enlargement are consistent with lupus nephritis. The recurrent urinary tract infections, while treated with antibiotics, suggest an underlying immune dysregulation. The periorbital edema and fatigue further support the diagnosis.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"IgA Nephropathy\",\n            \"confidence\": 0.20,\n            \"icd_code\": \"N03.0\",\n            \"reasoning\": \"Recurrent kidney stones in the past could suggest IgA nephropathy. However, the presence of proteinuria, complement deficiencies, ANA positivity, and flank pain make SLE more likely.\"\n        },\n        {\n            \"name\": \"Pyelonephritis\",\n            \"confidence\": 0.15,\n            \"icd_code\": \"N39.0\",\n            \"reasoning\": \"While the initial urine culture was negative, recurrent episodes of dysuria and hematuria could represent pyelonephritis. However, the persistent symptoms, proteinuria, and autoimmune markers point away from a simple bacterial infection.\"\n        }\n    ],\n    \"key_findings\": [\n        \"Dysuria and gross hematuria\",\n        \"Bilateral flank pain and decreased urine output\",\n        \"Proteinuria (3+)\",\n        \"Low C3 and C4 complement levels\",\n        \"Positive ANA with homogeneous pattern\",\n        \"Elevated ESR and CRP\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Anti-dsDNA antibody testing\",\n            \"purpose\": \"To further evaluate for SLE and assess disease activity\",\n            \"priority\": \"Urgent\"\n        },\n        {\n            \"test\": \"Renal Biopsy\",\n            \"purpose\": \"To confirm lupus nephritis, determine the stage of disease, and assess renal function\",\n            \"priority\": \"Urgent\"\n        },\n        {\n            \"test\": \"Repeat urine culture\",\n            \"purpose\": \"To rule out persistent bacterial infection\",\n            \"priority\": \"Routine\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Initiate intravenous fluids for hydration\",\n            \"Start empiric immunosuppression (e.g., corticosteroids) pending biopsy results\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Prednisone\",\n                \"dose\": \"10mg daily\",\n                \"route\": \"Oral\",\n                \"duration\": \"Initially 1-2mg daily, tapering as tolerated\",\n                \"rationale\": \"To suppress the immune system and reduce inflammation\"\n            }\n        ],\n        \"monitoring\": [\n            \"Serum creatinine and BUN\",\n            \"Urine protein-to-creatinine ratio\",\n            \"Complete blood count (CBC)\",\n            \"Complement levels (C3, C4)\",\n            \"ANA and anti-dsDNA titers\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Nephrology\",\n                \"urgency\": \"Urgent\",\n                \"reason\": \"For management of lupus nephritis and renal function monitoring\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Significant proteinuria\",\n        \"Decreased eGFR\",\n        \"Worsening renal function\",\n        \"Development of hypertension\"\n    ],\n    \"patient_education\": [\n        \"Explain the diagnosis of SLE and the importance of long-term management\",\n        \"Educate on potential side effects of corticosteroids\",\n        \"Advise on lifestyle modifications (e.g., low-sodium diet, regular exercise)\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"Within 24-48 hours for initial assessment and initiation of treatment, then weekly for monitoring\",\n        \"conditions\": \"Return sooner if symptoms worsen, renal function declines, or new symptoms develop\"\n    },\n    \"confidence_in_assessment\": 0.85,\n    \"uncertainties\": [\n        \"The absence of renal stones on CT scan does not exclude IgA nephropathy.\",\n        \"The exact stage and severity of lupus nephritis are currently unknown and require renal biopsy.\"\n    ]\n}\n```",
+      "response_time": 1.0,
+      "cached": true,
+      "case_id": "Case_13",
+      "timestamp": "2025-08-11T21:23:05.184775",
+      "tokens_used": 1303,
+      "input_tokens": 0,
+      "output_tokens": 0
+    },
+    {
+      "model_name": "openai/gpt-4o",
+      "response": "```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"IgA Nephropathy (Berger's Disease)\",\n        \"confidence\": 0.8,\n        \"icd_code\": \"N02.8\",\n        \"reasoning\": \"The patient's symptoms, including recurrent episodes of hematuria, proteinuria, and dysmorphic RBCs with RBC casts, along with low complement levels, suggest a glomerulonephritis. IgA nephropathy is common in this demographic and fits the clinical presentation.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Lupus Nephritis\",\n            \"confidence\": 0.6,\n            \"icd_code\": \"M32.14\",\n            \"reasoning\": \"Positive ANA and low complement levels are consistent with lupus nephritis. However, the absence of other systemic lupus erythematosus symptoms lowers confidence.\"\n        },\n        {\n    ... [truncated]",
+      "response_time": 20.32145380973816,
+      "cached": true,
+      "case_id": "Case_13",
+      "timestamp": "2025-08-11T21:24:28.888724",
+      "tokens_used": 2291,
+      "input_tokens": 1445,
+      "output_tokens": 846
+    },
+    {
+      "model_name": "google/gemini-2.5-flash",
+      "response": "```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"IgA Nephropathy (Berger's Disease)\",\n        \"confidence\": 0.85,\n        \"icd_code\": \"N02.8\",\n        \"reasoning\": \"Recurrent gross hematuria, dysmorphic RBCs, RBC casts, granular casts, proteinuria (3+), hypertension, acute kidney injury (elevated Cr, BUN, decreased GFR), and flank pain are highly suggestive of glomerulonephritis. The intermittent nature, young male, and ethnicity (more common in Asians/Middle Easterners) fit IgA nephropathy. The low C3/C4 are less typical for classic IgA, but can be seen in variants or co-existing conditions, or could be a lab error/artifact if not re-checked. The recurrent 'kidney stones' history might be misdiagnosed prior episodes of macroscopic hematuria.\"\n    },\n    \"differential_diagnoses\": [\n  ... [truncated]",
+      "response_time": 13.158420324325562,
+      "cached": true,
+      "case_id": "Case_13",
+      "timestamp": "2025-08-11T21:26:03.177643",
+      "tokens_used": 3561,
+      "input_tokens": 1554,
+      "output_tokens": 2007
+    },
+    {
+      "model_name": "meta-llama/llama-3.2-3b-instruct",
+      "response": "{\n  \"primary_diagnosis\": {\n    \"name\": \"IgA Nephropathy with Hematuria\",\n    \"confidence\": 0.8,\n    \"icd_code\": \"Nephritis, IgA with Hematuria (N0180)\",\n    \"reasoning\": \"Presence of IgA nephropathy is suggested by the clinical presentation of recurrent hematuria, particularly in a young male patient with a Middle Eastern heritage. The patient's recurrent episodes of dysuria, gross hematuria, and suprapubic discomfort, along with the presence of dysmorphic RBCs and granular casts, support this diagnosis\"\n  },\n  \"differential_diagnoses\": [\n    {\n      \"name\": \"Interstitial Nephritis\",\n      \"confidence\": 0.4,\n      \"icd_code\": \"Nephritis, Immune-Mediated (M32)\",\n      \"reasoning\": \"The patient's symptoms of hematuria, dysuria, and flank pain, along with the presence of leukocytosis and elevated ESR, suggest interstitial nephritis as a possible alternative diagnosis\"\n    },\n    {\n      \"name\": \"Pyelonephritis\",\n      \"confidence\": 0.3,\n      \"icd_code\": \"Nephritis, Acute Bacterial (A04)\",\n      \"reasoning\": \"The patient's symptoms of fever, leukocytosis, and elevated WBC count, although not present, and the presence of abnormal urinalysis findings, suggest pyelonephritis as a possible alternative diagnosis\"\n    },\n    {\n      \"name\": \"Chronic Kidney Disease\",\n      \"confidence\": 0.2,\n      \"icd_code\": \"Nephritis, Chronic (M32)\",\n      \"reasoning\": \"The patient's elevated creatinine and eGFR, along with the presence of proteinuria, suggest chronic kidney disease as a possible alternative diagnosis\"\n    }\n  ],\n  \"key_findings\": [\n    \"Proteinuria (3+ protein on urinalysis)\",\n    \"Bilateral flank pain and decreased urine output\"\n  ],\n  \"diagnostic_tests\": [\n    {\n      \"test\": \"Immunofluorescence study on urine\",\n      \"purpose\": \"To confirm the presence of IgA deposits\",\n      \"priority\": \"immediate\"\n    },\n    {\n      \"test\": \"Kidney biopsy\",\n      \"purpose\": \"To confirm the diagnosis and rule out other causes\",\n      \"priority\": \"routine\"\n    }\n  ],\n  \"management_plan\": {\n    \"immediate_actions\": [\n      \"Initiate immunosuppressive therapy (e.g., prednisone 40mg PO bid) to reduce inflammation and prevent further kidney damage\",\n      \"Monitor urine proteinuria and creatinine levels closely\"\n    ],\n    \"medications\": [\n      {\n        \"drug\": \"Prednisone\",\n        \"dose\": \"40mg PO bid\",\n        \"route\": \"PO\",\n        \"duration\": \"Indefinite\",\n        \"rationale\": \"To reduce inflammation and prevent further kidney damage\"\n      }\n    ],\n    \"monitoring\": [\n      \"Regular urinalysis and serum creatinine levels\",\n      \"Monthly kidney function tests\"\n    ],\n    \"consultations\": [\n      {\n        \"specialty\": \"Nephrology\",\n        \"urgency\": \"immediate\",\n        \"reason\": \"To closely monitor kidney function and adjust treatment as needed\"\n      }\n    ]\n  },\n  \"red_flags\": [\n    \"Severe proteinuria (>3+)\",\n    \"Elevated serum creatinine\"\n  ],\n  \"patient_education\": [\n    \"The patient should be educated about the importance of strict blood sugar control, as IgA nephropathy is associated with diabetes mellitus\",\n    \"The patient should avoid strenuous physical activity and maintain a healthy diet to reduce the risk of further kidney damage\"\n  ],\n  \"follow_up\": {\n    \"timing\": \"Every 3 months\",\n    \"conditions\": \"Kidney function tests and urinalysis\"\n  },\n  \"confidence_in_assessment\": 0.8,\n  \"uncertainties\": [\n    \"The exact cause of the patient's symptoms remains uncertain\",\n    \"The patient's family medical history may provide additional information about the underlying cause of IgA nephropathy\"\n  ]\n}",
+      "response_time": 4.7755022048950195,
+      "cached": true,
+      "case_id": "Case_13",
+      "timestamp": "2025-08-11T21:26:17.143812",
+      "tokens_used": 2369,
+      "input_tokens": 1467,
+      "output_tokens": 902
+    },
+    {
+      "model_name": "openai/gpt-4o-mini",
+      "response": "{\n    \"primary_diagnosis\": {\n        \"name\": \"IgA Nephropathy\",\n        \"confidence\": 0.85,\n        \"icd_code\": \"N04.9\",\n        \"reasoning\": \"Patient presents with hematuria, proteinuria, and renal dysfunction, consistent with IgA nephropathy, especially given the family history of kidney issues.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Lupus Nephritis\",\n            \"confidence\": 0.75,\n            \"icd_code\": \"M32.1\",\n            \"reasoning\": \"Positive ANA and low complement levels suggest possible autoimmune process affecting the kidneys.\"\n        },\n        {\n            \"name\": \"Chronic Kidney Disease (CKD)\",\n            \"confidence\": 0.70,\n            \"icd_code\": \"N18.9\",\n            \"reasoning\": \"Elevated creatinine and BUN levels indicate possible chron... [truncated]",
+      "response_time": 15.938045024871826,
+      "cached": true,
+      "case_id": "Case_13",
+      "timestamp": "2025-08-11T21:24:44.828287",
+      "tokens_used": 2176,
+      "input_tokens": 1445,
+      "output_tokens": 731
+    },
+    {
+      "model_name": "qwen/qwen-2.5-coder-32b-instruct",
+      "response": "{\n    \"primary_diagnosis\": {\n        \"name\": \"Systemic Lupus Erythematosus (SLE) with Nephritis\",\n        \"confidence\": 0.85,\n        \"icd_code\": \"M32.9\",\n        \"reasoning\": \"Positive ANA, low C3/C4, proteinuria, hematuria, and acute kidney injury are indicative of SLE nephritis. Family history of kidney problems and the recent development of systemic symptoms (bilateral flank pain, decreased urine output, weight gain) further support this diagnosis.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Chronic Pyelonephritis\",\n            \"confidence\": 0.15,\n            \"icd_code\": \"N13.9\",\n            \"reasoning\": \"Recurrent episodes of dysuria and hematuria, along with the development of new symptoms such as flank pain and decreased urine output, could suggest chronic... [truncated]",
+      "response_time": 24.305794954299927,
+      "cached": true,
+      "case_id": "Case_13",
+      "timestamp": "2025-08-11T21:27:54.929716",
+      "tokens_used": 2548,
+      "input_tokens": 1511,
+      "output_tokens": 1037
+    },
+    {
+      "model_name": "anthropic/claude-3.7-sonnet",
+      "response": "{\n    \"primary_diagnosis\": {\n        \"name\": \"IgA Nephropathy\",\n        \"confidence\": 0.8,\n        \"icd_code\": \"N02.8\",\n        \"reasoning\": \"The patient presents with classic features of IgA nephropathy including recurrent gross hematuria with concurrent upper respiratory infections, dysmorphic RBCs, RBC casts, proteinuria, and declining renal function. The presence of bilateral flank pain, edema, and hypertension suggests active glomerulonephritis. Low complement levels (C3, C4), positive ANA, and family history of kidney disease further support an immune-mediated glomerular disease. The episodic nature with complete resolution between episodes is characteristic of IgA nephropathy.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Lupus Nephritis\",\n            \"confi... [truncated]",
+      "response_time": 1.0,
+      "cached": true,
+      "case_id": "Case_13",
+      "timestamp": "2025-08-11T22:00:59.007796",
+      "tokens_used": 3410,
+      "input_tokens": 0,
+      "output_tokens": 0
+    },
+    {
+      "model_name": "anthropic/claude-3-opus-20240229",
+      "response": "{\n    \"primary_diagnosis\": {\n        \"name\": \"Lupus nephritis\",\n        \"confidence\": 0.8,\n        \"icd_code\": \"M32.14\",\n        \"reasoning\": \"Recurrent episodes of hematuria, proteinuria, and RBC casts suggesting glomerulonephritis. Positive ANA, low complements, and dysmorphic RBCs support lupus nephritis.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"IgA nephropathy\",\n            \"confidence\": 0.6,\n            \"icd_code\": \"N02.8\",\n            \"reasoning\": \"Recurrent gross hematuria and flank pain can occur with IgA nephropathy. Family history of kidney problems also raises suspicion.\"\n        },\n        {\n            \"name\": \"Membranoproliferative glomerulonephritis (MPGN)\",\n            \"confidence\": 0.5,\n            \"icd_code\": \"N05.5\",\n            \"reasoning\":... [truncated]",
+      "response_time": 38.76352405548096,
+      "cached": true,
+      "case_id": "Case_13",
+      "timestamp": "2025-08-11T21:25:27.742831",
+      "tokens_used": 2878,
+      "input_tokens": 1694,
+      "output_tokens": 1184
+    },
+    {
+      "model_name": "qwen/qwen-2.5-72b-instruct/free",
+      "response": "{\n    \"primary_diagnosis\": {\n        \"name\": \"Lupus Nephritis\",\n        \"confidence\": 0.85,\n        \"icd_code\": \"M32.1\",\n        \"reasoning\": \"The patient presents with a 6-month history of intermittent dysuria, gross hematuria, and suprapubic discomfort, which has recently progressed to bilateral flank pain, decreased urine output, and weight gain. Laboratory findings show proteinuria, hematuria with dysmorphic RBCs and RBC casts, low complement levels (C3 and C4), and a positive ANA. These findings are highly suggestive of lupus nephritis, particularly given the patient's family history of kidney problems and the presence of systemic symptoms such as fatigue and edema.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"IgA Nephropathy\",\n            \"confidence\": 0.6,\n... [truncated]",
+      "response_time": 1.0,
+      "cached": true,
+      "case_id": "Case_13",
+      "timestamp": "2025-08-11T21:59:50.333598",
+      "tokens_used": 2394,
+      "input_tokens": 0,
+      "output_tokens": 0
+    },
+    {
+      "model_name": "liquid/lfm-40b",
+      "response": "```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"Interstitial cystitis/bladder pain syndrome (IC/BPS)\",\n        \"confidence\": 0.75,\n        \"icd_code\": \"N30.90\",\n        \"reasoning\": \"IC/BPS is a chronic condition characterized by pelvic pain and urinary urgency/frequency in the absence of infection or other identifiable causes. The patient's symptoms and laboratory findings are consistent with this diagnosis, especially considering the recurrent episodes of dysuria and hematuria, flank pain, and bilateral renal enlargement.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Kidney stones\",\n            \"confidence\": 0.6,\n            \"icd_code\": \"N20.0\",\n            \"reasoning\": \"The patient reports a past medical history of recurrent kidney stones as a teenager, an... [truncated]",
+      "response_time": 6.996318101882935,
+      "cached": true,
+      "case_id": "Case_13",
+      "timestamp": "2025-08-11T22:16:06.894806",
+      "tokens_used": 2754,
+      "input_tokens": 1697,
+      "output_tokens": 1057
+    }
+  ],
+  "total_models_analyzed": 32,
+  "geographical_distribution": {
+    "USA": 20,
+    "France": 3,
+    "China": 4,
+    "Canada": 2,
+    "Japan/USA": 1,
+    "Israel": 1
+  },
+  "consensus_analysis": {
+    "primary_counts": {
+      "Lupus Nephritis": 7,
+      "Most Likely: Iga Nephropathy (berger's Disease)": 1,
+      "Systemic Lupus Erythematosus with Lupus Nephritis": 1,
+      "Systemic Lupus Erythematosus": 7,
+      "Acute Pyelonephritis with Renal Parenchymal Disease": 1,
+      "Glomerulonephritis": 1,
+      "Lupus Nephritis (sle-related Glomerulonephritis)": 1,
+      "Iga Nephropathy with Possible Lupus Nephritis": 1,
+      "Systemic Lupus Erythematosus with Class Iii/iv Lupus Nephritis": 1,
+      "Iga Nephropathy (berger's Disease)": 2,
+      "Iga Nephropathy Vs. Lupus Nephritis": 1,
+      "Hypertensive Emergency": 1,
+      "Lupus Nephritis (class Iii or Iv)": 1,
+      "Iga Nephropathy": 2,
+      "Intermittent Hematuria with Dysuria, Likely Glomerulonephritis with A Possibility of An Autoimmune Etiology, and Bilateral Renal Enlargement.": 1,
+      "Rapidly Progressive Glomerulonephritis (rpgn)": 1,
+      "Iga Nephropathy with Hematuria": 1
+    },
+    "differential_counts": {
+      "Iga Nephropathy": 15,
+      "Post-infectious Glomerulonephritis": 8,
+      "Interstitial Nephritis (drug-induced)": 1,
+      "Alternative 1: Renal Cell Carcinoma": 1,
+      "Alternative 2: Chronic Pyelonephritis": 1,
+      "Alternative 3: Medication-induced Nephropathy (sertraline)": 1,
+      "Anca-associated Vasculitis": 5,
+      "Chemical-induced Nephritis": 1,
+      "Iga Nephropathy (berger's Disease)": 2,
+      "Membranoproliferative Glomerulonephritis (mpgn)": 2,
+      "Anca-associated Vasculitis (e.g., Granulomatosis with Polyangiitis)": 1,
+      "Chemical-induced Nephrotoxicity (occupational Exposure)": 1,
+      "Hereditary Nephritis (e.g., Alport Syndrome, Given Family History)": 1,
+      "Interstitial Nephritis": 2,
+      "Renal Tubular Necrosis": 1,
+      "Acute Glomerulonephritis": 1,
+      "Lupus Nephritis": 4,
+      "Acute Interstitial Nephritis": 4,
+      "Chronic Pyelonephritis": 3,
+      "Membranoproliferative Glomerulonephritis": 3,
+      "Chronic Glomerulonephritis": 1,
+      "Systemic Lupus Erythematosus": 2,
+      "Hereditary Nephritis": 1,
+      "Post\u2011streptococcal Glomerulonephritis": 1,
+      "Urinary Tract Infection": 1,
+      "Renal Cell Carcinoma": 3,
+      "Pyelonephritis": 3,
+      "Lupus Nephritis Class Iii/iv": 1,
+      "Thin Basement Membrane Disease": 1,
+      "Chemical-induced Nephropathy": 1,
+      "Membranous Nephropathy": 1,
+      "Post-streptococcal Glomerulonephritis (psgn)": 1,
+      "Recurrent Urinary Tract Infection with Interstitial Nephritis": 1,
+      "Drug-induced Lupus": 1,
+      "Alport Syndrome": 2,
+      "Iga Nephropathy (most Common Glomerulonephritis Worldwide)": 1,
+      "Lupus Nephritis (especially with Positive Ana)": 1,
+      "Post-infectious Glomerulonephritis (pign)": 1,
+      "Anti-glomerular Basement Membrane (gbm) Disease (given the Rapid Decline in Renal Function)": 1,
+      "Membranous Nephropathy (with Autoimmune Features)": 1,
+      "Thin Basement Membrane Disease (tbmd)": 1,
+      "Chronic Interstitial Nephritis (given Chemical Exposure)": 1,
+      "Chronic Interstitial Nephritis": 1,
+      "Polycystic Kidney Disease": 1,
+      "Chronic Kidney Disease": 1,
+      "Chronic Kidney Disease (ckd)": 1
+    },
+    "total_counts": {
+      "Lupus Nephritis": 11,
+      "Iga Nephropathy": 17,
+      "Post-infectious Glomerulonephritis": 8,
+      "Interstitial Nephritis (drug-induced)": 1,
+      "Most Likely: Iga Nephropathy (berger's Disease)": 1,
+      "Alternative 1: Renal Cell Carcinoma": 1,
+      "Alternative 2: Chronic Pyelonephritis": 1,
+      "Alternative 3: Medication-induced Nephropathy (sertraline)": 1,
+      "Systemic Lupus Erythematosus with Lupus Nephritis": 1,
+      "Anca-associated Vasculitis": 5,
+      "Chemical-induced Nephritis": 1,
+      "Systemic Lupus Erythematosus": 9,
+      "Iga Nephropathy (berger's Disease)": 4,
+      "Membranoproliferative Glomerulonephritis (mpgn)": 2,
+      "Anca-associated Vasculitis (e.g., Granulomatosis with Polyangiitis)": 1,
+      "Chemical-induced Nephrotoxicity (occupational Exposure)": 1,
+      "Hereditary Nephritis (e.g., Alport Syndrome, Given Family History)": 1,
+      "Acute Pyelonephritis with Renal Parenchymal Disease": 1,
+      "Interstitial Nephritis": 2,
+      "Renal Tubular Necrosis": 1,
+      "Acute Glomerulonephritis": 1,
+      "Glomerulonephritis": 1,
+      "Acute Interstitial Nephritis": 4,
+      "Chronic Pyelonephritis": 3,
+      "Lupus Nephritis (sle-related Glomerulonephritis)": 1,
+      "Membranoproliferative Glomerulonephritis": 3,
+      "Iga Nephropathy with Possible Lupus Nephritis": 1,
+      "Chronic Glomerulonephritis": 1,
+      "Hereditary Nephritis": 1,
+      "Systemic Lupus Erythematosus with Class Iii/iv Lupus Nephritis": 1,
+      "Post\u2011streptococcal Glomerulonephritis": 1,
+      "Urinary Tract Infection": 1,
+      "Renal Cell Carcinoma": 3,
+      "Pyelonephritis": 3,
+      "Iga Nephropathy Vs. Lupus Nephritis": 1,
+      "Lupus Nephritis Class Iii/iv": 1,
+      "Thin Basement Membrane Disease": 1,
+      "Chemical-induced Nephropathy": 1,
+      "Hypertensive Emergency": 1,
+      "Membranous Nephropathy": 1,
+      "Post-streptococcal Glomerulonephritis (psgn)": 1,
+      "Lupus Nephritis (class Iii or Iv)": 1,
+      "Recurrent Urinary Tract Infection with Interstitial Nephritis": 1,
+      "Drug-induced Lupus": 1,
+      "Alport Syndrome": 2,
+      "Intermittent Hematuria with Dysuria, Likely Glomerulonephritis with A Possibility of An Autoimmune Etiology, and Bilateral Renal Enlargement.": 1,
+      "Iga Nephropathy (most Common Glomerulonephritis Worldwide)": 1,
+      "Lupus Nephritis (especially with Positive Ana)": 1,
+      "Post-infectious Glomerulonephritis (pign)": 1,
+      "Anti-glomerular Basement Membrane (gbm) Disease (given the Rapid Decline in Renal Function)": 1,
+      "Membranous Nephropathy (with Autoimmune Features)": 1,
+      "Thin Basement Membrane Disease (tbmd)": 1,
+      "Chronic Interstitial Nephritis (given Chemical Exposure)": 1,
+      "Rapidly Progressive Glomerulonephritis (rpgn)": 1,
+      "Chronic Interstitial Nephritis": 1,
+      "Polycystic Kidney Disease": 1,
+      "Iga Nephropathy with Hematuria": 1,
+      "Chronic Kidney Disease": 1,
+      "Chronic Kidney Disease (ckd)": 1
+    },
+    "sorted_diagnoses": [
+      [
+        "Iga Nephropathy",
+        17
+      ],
+      [
+        "Lupus Nephritis",
+        11
+      ],
+      [
+        "Systemic Lupus Erythematosus",
+        9
+      ],
+      [
+        "Post-infectious Glomerulonephritis",
+        8
+      ],
+      [
+        "Anca-associated Vasculitis",
+        5
+      ],
+      [
+        "Iga Nephropathy (berger's Disease)",
+        4
+      ],
+      [
+        "Acute Interstitial Nephritis",
+        4
+      ],
+      [
+        "Chronic Pyelonephritis",
+        3
+      ],
+      [
+        "Membranoproliferative Glomerulonephritis",
+        3
+      ],
+      [
+        "Renal Cell Carcinoma",
+        3
+      ],
+      [
+        "Pyelonephritis",
+        3
+      ],
+      [
+        "Membranoproliferative Glomerulonephritis (mpgn)",
+        2
+      ],
+      [
+        "Interstitial Nephritis",
+        2
+      ],
+      [
+        "Alport Syndrome",
+        2
+      ],
+      [
+        "Interstitial Nephritis (drug-induced)",
+        1
+      ],
+      [
+        "Most Likely: Iga Nephropathy (berger's Disease)",
+        1
+      ],
+      [
+        "Alternative 1: Renal Cell Carcinoma",
+        1
+      ],
+      [
+        "Alternative 2: Chronic Pyelonephritis",
+        1
+      ],
+      [
+        "Alternative 3: Medication-induced Nephropathy (sertraline)",
+        1
+      ],
+      [
+        "Systemic Lupus Erythematosus with Lupus Nephritis",
+        1
+      ],
+      [
+        "Chemical-induced Nephritis",
+        1
+      ],
+      [
+        "Anca-associated Vasculitis (e.g., Granulomatosis with Polyangiitis)",
+        1
+      ],
+      [
+        "Chemical-induced Nephrotoxicity (occupational Exposure)",
+        1
+      ],
+      [
+        "Hereditary Nephritis (e.g., Alport Syndrome, Given Family History)",
+        1
+      ],
+      [
+        "Acute Pyelonephritis with Renal Parenchymal Disease",
+        1
+      ],
+      [
+        "Renal Tubular Necrosis",
+        1
+      ],
+      [
+        "Acute Glomerulonephritis",
+        1
+      ],
+      [
+        "Glomerulonephritis",
+        1
+      ],
+      [
+        "Lupus Nephritis (sle-related Glomerulonephritis)",
+        1
+      ],
+      [
+        "Iga Nephropathy with Possible Lupus Nephritis",
+        1
+      ],
+      [
+        "Chronic Glomerulonephritis",
+        1
+      ],
+      [
+        "Hereditary Nephritis",
+        1
+      ],
+      [
+        "Systemic Lupus Erythematosus with Class Iii/iv Lupus Nephritis",
+        1
+      ],
+      [
+        "Post\u2011streptococcal Glomerulonephritis",
+        1
+      ],
+      [
+        "Urinary Tract Infection",
+        1
+      ],
+      [
+        "Iga Nephropathy Vs. Lupus Nephritis",
+        1
+      ],
+      [
+        "Lupus Nephritis Class Iii/iv",
+        1
+      ],
+      [
+        "Thin Basement Membrane Disease",
+        1
+      ],
+      [
+        "Chemical-induced Nephropathy",
+        1
+      ],
+      [
+        "Hypertensive Emergency",
+        1
+      ],
+      [
+        "Membranous Nephropathy",
+        1
+      ],
+      [
+        "Post-streptococcal Glomerulonephritis (psgn)",
+        1
+      ],
+      [
+        "Lupus Nephritis (class Iii or Iv)",
+        1
+      ],
+      [
+        "Recurrent Urinary Tract Infection with Interstitial Nephritis",
+        1
+      ],
+      [
+        "Drug-induced Lupus",
+        1
+      ],
+      [
+        "Intermittent Hematuria with Dysuria, Likely Glomerulonephritis with A Possibility of An Autoimmune Etiology, and Bilateral Renal Enlargement.",
+        1
+      ],
+      [
+        "Iga Nephropathy (most Common Glomerulonephritis Worldwide)",
+        1
+      ],
+      [
+        "Lupus Nephritis (especially with Positive Ana)",
+        1
+      ],
+      [
+        "Post-infectious Glomerulonephritis (pign)",
+        1
+      ],
+      [
+        "Anti-glomerular Basement Membrane (gbm) Disease (given the Rapid Decline in Renal Function)",
+        1
+      ],
+      [
+        "Membranous Nephropathy (with Autoimmune Features)",
+        1
+      ],
+      [
+        "Thin Basement Membrane Disease (tbmd)",
+        1
+      ],
+      [
+        "Chronic Interstitial Nephritis (given Chemical Exposure)",
+        1
+      ],
+      [
+        "Rapidly Progressive Glomerulonephritis (rpgn)",
+        1
+      ],
+      [
+        "Chronic Interstitial Nephritis",
+        1
+      ],
+      [
+        "Polycystic Kidney Disease",
+        1
+      ],
+      [
+        "Iga Nephropathy with Hematuria",
+        1
+      ],
+      [
+        "Chronic Kidney Disease",
+        1
+      ],
+      [
+        "Chronic Kidney Disease (ckd)",
+        1
+      ]
+    ],
+    "primary": [
+      "Iga Nephropathy",
+      17
+    ],
+    "total_models": 32,
+    "icd_codes": {
+      "Lupus Nephritis": [
+        "N17.0",
+        "M32.1",
+        "M32.14",
+        "N03.2"
+      ],
+      "Iga Nephropathy": [
+        "N02.0",
+        "N08.1",
+        "N00.4",
+        "N02.2",
+        "N02.9",
+        "N01.1",
+        "N04.9",
+        "N03.0",
+        "N02.8",
+        "N08.0",
+        "N03.9"
+      ],
+      "Post-infectious Glomerulonephritis": [
+        "N05.9",
+        "N03.0",
+        "N03.9",
+        "N00.9"
+      ],
+      "Interstitial Nephritis (drug-induced)": [
+        "N03.1"
+      ],
+      "Most Likely: Iga Nephropathy (berger's Disease)": [
+        "B80.1"
+      ],
+      "Alternative 1: Renal Cell Carcinoma": [
+        "C64.9"
+      ],
+      "Alternative 2: Chronic Pyelonephritis": [
+        "N10.9"
+      ],
+      "Alternative 3: Medication-induced Nephropathy (sertraline)": [
+        "T40.40"
+      ],
+      "Systemic Lupus Erythematosus with Lupus Nephritis": [
+        "M32.14"
+      ],
+      "Anca-associated Vasculitis": [
+        "M31.7",
+        "M31.31",
+        "M31.30"
+      ],
+      "Chemical-induced Nephritis": [
+        "N14.0"
+      ],
+      "Acute Pyelonephritis with Renal Parenchymal Disease": [
+        "N10.9"
+      ],
+      "Interstitial Nephritis": [
+        "Nephritis, Immune-Mediated (M32)",
+        "N04.9"
+      ],
+      "Renal Tubular Necrosis": [
+        "N17.8"
+      ],
+      "Acute Glomerulonephritis": [
+        "N03.9"
+      ],
+      "Glomerulonephritis": [
+        "N05"
+      ],
+      "Acute Interstitial Nephritis": [
+        "N10",
+        "N04.1",
+        "N17.9",
+        "N12"
+      ],
+      "Chronic Pyelonephritis": [
+        "N13.9",
+        "N11.9"
+      ],
+      "Lupus Nephritis (sle-related Glomerulonephritis)": [
+        "M32.14"
+      ],
+      "Membranoproliferative Glomerulonephritis": [
+        "N14.0",
+        "N05.8",
+        "N00.6"
+      ],
+      "Systemic Lupus Erythematosus with Class Iii/iv Lupus Nephritis": [
+        "M32.4"
+      ],
+      "Post\u2011streptococcal Glomerulonephritis": [
+        "N00.0"
+      ],
+      "Urinary Tract Infection": [
+        "N39.0"
+      ],
+      "Iga Nephropathy (berger's Disease)": [
+        "B23.0",
+        "N02.8",
+        "N02.0"
+      ],
+      "Renal Cell Carcinoma": [
+        "C64.9"
+      ],
+      "Pyelonephritis": [
+        "N10.9",
+        "Nephritis, Acute Bacterial (A04)",
+        "N39.0"
+      ],
+      "Membranous Nephropathy": [
+        "N03.2"
+      ],
+      "Post-streptococcal Glomerulonephritis (psgn)": [
+        "N05.0"
+      ],
+      "Lupus Nephritis (class Iii or Iv)": [
+        "N04.1"
+      ],
+      "Recurrent Urinary Tract Infection with Interstitial Nephritis": [
+        "N39.0"
+      ],
+      "Drug-induced Lupus": [
+        "M32.10"
+      ],
+      "Alport Syndrome": [
+        "Q87.81",
+        "Q87.89"
+      ],
+      "Rapidly Progressive Glomerulonephritis (rpgn)": [
+        "N00.0"
+      ],
+      "Systemic Lupus Erythematosus": [
+        "M32.1",
+        "M32.0",
+        "M32.9"
+      ],
+      "Chronic Interstitial Nephritis": [
+        "N11.9"
+      ],
+      "Polycystic Kidney Disease": [
+        "E31.1"
+      ],
+      "Iga Nephropathy with Hematuria": [
+        "Nephritis, IgA with Hematuria (N0180)"
+      ],
+      "Chronic Kidney Disease": [
+        "Nephritis, Chronic (M32)"
+      ],
+      "Chronic Kidney Disease (ckd)": [
+        "N18.9"
+      ],
+      "Membranoproliferative Glomerulonephritis (mpgn)": [
+        "N05.5"
+      ]
+    },
+    "model_diagnoses": {
+      "Lupus Nephritis": {
+        "primary": [
+          "google/gemma-3-27b-it",
+          "deepseek/deepseek-chat",
+          "ai21/jamba-large-1.7",
+          "x-ai/grok-2-1212",
+          "google/gemma-2-9b-it",
+          "anthropic/claude-3-opus-20240229",
+          "qwen/qwen-2.5-72b-instruct"
+        ],
+        "differential": [
+          "openai/gpt-4-turbo",
+          "mistralai/mistral-large-2411",
+          "openai/gpt-4o",
+          "openai/gpt-4o-mini"
+        ]
+      },
+      "Iga Nephropathy": {
+        "differential": [
+          "google/gemma-3-27b-it",
+          "anthropic/claude-sonnet-4",
+          "openai/gpt-4-turbo",
+          "deepseek/deepseek-chat",
+          "deepseek/deepseek-r1",
+          "openai/gpt-oss-20b",
+          "anthropic/claude-3.5-sonnet-20241022",
+          "google/gemini-2.5-flash-lite",
+          "microsoft/wizardlm-2-8x22b",
+          "x-ai/grok-2-1212",
+          "google/gemma-2-9b-it",
+          "google/gemma-3-4b-it",
+          "qwen/qwen-2.5-coder-32b-instruct",
+          "anthropic/claude-3-opus-20240229",
+          "qwen/qwen-2.5-72b-instruct"
+        ],
+        "primary": [
+          "mistralai/mistral-large-2411",
+          "openai/gpt-4o-mini"
+        ]
+      },
+      "Post-infectious Glomerulonephritis": {
+        "differential": [
+          "google/gemma-3-27b-it",
+          "anthropic/claude-sonnet-4",
+          "x-ai/grok-4",
+          "anthropic/claude-3.5-sonnet-20241022",
+          "google/gemini-2.5-flash-lite",
+          "mistralai/mistral-large-2411",
+          "microsoft/wizardlm-2-8x22b",
+          "qwen/qwen-2.5-72b-instruct"
+        ]
+      },
+      "Interstitial Nephritis (drug-induced)": {
+        "differential": [
+          "google/gemma-3-27b-it"
+        ]
+      },
+      "Most Likely: Iga Nephropathy (berger's Disease)": {
+        "primary": [
+          "mistralai/mistral-7b-instruct"
+        ]
+      },
+      "Alternative 1: Renal Cell Carcinoma": {
+        "differential": [
+          "mistralai/mistral-7b-instruct"
+        ]
+      },
+      "Alternative 2: Chronic Pyelonephritis": {
+        "differential": [
+          "mistralai/mistral-7b-instruct"
+        ]
+      },
+      "Alternative 3: Medication-induced Nephropathy (sertraline)": {
+        "differential": [
+          "mistralai/mistral-7b-instruct"
+        ]
+      },
+      "Systemic Lupus Erythematosus with Lupus Nephritis": {
+        "primary": [
+          "anthropic/claude-sonnet-4"
+        ]
+      },
+      "Anca-associated Vasculitis": {
+        "differential": [
+          "anthropic/claude-sonnet-4",
+          "deepseek/deepseek-r1",
+          "anthropic/claude-3.5-haiku-20241022",
+          "anthropic/claude-3.5-sonnet-20241022",
+          "x-ai/grok-2-1212"
+        ]
+      },
+      "Chemical-induced Nephritis": {
+        "differential": [
+          "anthropic/claude-sonnet-4"
+        ]
+      },
+      "Systemic Lupus Erythematosus": {
+        "primary": [
+          "x-ai/grok-4",
+          "openai/gpt-oss-120b",
+          "google/gemini-2.5-pro",
+          "google/gemma-3-4b-it",
+          "google/gemini-2.5-flash",
+          "qwen/qwen-2.5-coder-32b-instruct",
+          "anthropic/claude-3.7-sonnet"
+        ],
+        "differential": [
+          "anthropic/claude-3.5-haiku-20241022",
+          "microsoft/wizardlm-2-8x22b"
+        ]
+      },
+      "Iga Nephropathy (berger's Disease)": {
+        "differential": [
+          "x-ai/grok-4",
+          "ai21/jamba-large-1.7"
+        ],
+        "primary": [
+          "mistralai/mistral-7b-instruct",
+          "openai/gpt-4o"
+        ]
+      },
+      "Membranoproliferative Glomerulonephritis (mpgn)": {
+        "differential": [
+          "x-ai/grok-4",
+          "anthropic/claude-3-opus-20240229"
+        ]
+      },
+      "Anca-associated Vasculitis (e.g., Granulomatosis with Polyangiitis)": {
+        "differential": [
+          "x-ai/grok-4"
+        ]
+      },
+      "Chemical-induced Nephrotoxicity (occupational Exposure)": {
+        "differential": [
+          "x-ai/grok-4"
+        ]
+      },
+      "Hereditary Nephritis (e.g., Alport Syndrome, Given Family History)": {
+        "differential": [
+          "x-ai/grok-4"
+        ]
+      },
+      "Acute Pyelonephritis with Renal Parenchymal Disease": {
+        "primary": [
+          "cohere/command-r"
+        ]
+      },
+      "Interstitial Nephritis": {
+        "differential": [
+          "cohere/command-r",
+          "meta-llama/llama-3.2-3b-instruct"
+        ]
+      },
+      "Renal Tubular Necrosis": {
+        "differential": [
+          "cohere/command-r"
+        ]
+      },
+      "Acute Glomerulonephritis": {
+        "differential": [
+          "cohere/command-r"
+        ]
+      },
+      "Glomerulonephritis": {
+        "primary": [
+          "openai/gpt-4-turbo"
+        ]
+      },
+      "Acute Interstitial Nephritis": {
+        "differential": [
+          "deepseek/deepseek-chat",
+          "openai/gpt-oss-20b",
+          "google/gemma-2-9b-it",
+          "qwen/qwen-2.5-72b-instruct"
+        ]
+      },
+      "Chronic Pyelonephritis": {
+        "differential": [
+          "deepseek/deepseek-chat",
+          "qwen/qwen-2.5-coder-32b-instruct",
+          "anthropic/claude-3-opus-20240229"
+        ]
+      },
+      "Lupus Nephritis (sle-related Glomerulonephritis)": {
+        "primary": [
+          "deepseek/deepseek-r1"
+        ]
+      },
+      "Membranoproliferative Glomerulonephritis": {
+        "differential": [
+          "deepseek/deepseek-r1",
+          "openai/gpt-oss-20b",
+          "openai/gpt-4o"
+        ]
+      },
+      "Iga Nephropathy with Possible Lupus Nephritis": {
+        "primary": [
+          "anthropic/claude-3.5-haiku-20241022"
+        ]
+      },
+      "Chronic Glomerulonephritis": {
+        "differential": [
+          "anthropic/claude-3.5-haiku-20241022"
+        ]
+      },
+      "Hereditary Nephritis": {
+        "differential": [
+          "anthropic/claude-3.5-haiku-20241022"
+        ]
+      },
+      "Systemic Lupus Erythematosus with Class Iii/iv Lupus Nephritis": {
+        "primary": [
+          "openai/gpt-oss-20b"
+        ]
+      },
+      "Post\u2011streptococcal Glomerulonephritis": {
+        "differential": [
+          "openai/gpt-oss-20b"
+        ]
+      },
+      "Urinary Tract Infection": {
+        "differential": [
+          "openai/gpt-oss-20b"
+        ]
+      },
+      "Renal Cell Carcinoma": {
+        "differential": [
+          "mistralai/mistral-7b-instruct",
+          "openai/gpt-4o-mini",
+          "qwen/qwen-2.5-coder-32b-instruct"
+        ]
+      },
+      "Pyelonephritis": {
+        "differential": [
+          "mistralai/mistral-7b-instruct",
+          "google/gemma-3-4b-it",
+          "meta-llama/llama-3.2-3b-instruct"
+        ]
+      },
+      "Iga Nephropathy Vs. Lupus Nephritis": {
+        "primary": [
+          "anthropic/claude-3.5-sonnet-20241022"
+        ]
+      },
+      "Lupus Nephritis Class Iii/iv": {
+        "differential": [
+          "anthropic/claude-3.5-sonnet-20241022"
+        ]
+      },
+      "Thin Basement Membrane Disease": {
+        "differential": [
+          "anthropic/claude-3.5-sonnet-20241022"
+        ]
+      },
+      "Chemical-induced Nephropathy": {
+        "differential": [
+          "anthropic/claude-3.5-sonnet-20241022"
+        ]
+      },
+      "Hypertensive Emergency": {
+        "primary": [
+          "perplexity/sonar-deep-research"
+        ]
+      },
+      "Membranous Nephropathy": {
+        "differential": [
+          "ai21/jamba-large-1.7"
+        ]
+      },
+      "Post-streptococcal Glomerulonephritis (psgn)": {
+        "differential": [
+          "ai21/jamba-large-1.7"
+        ]
+      },
+      "Lupus Nephritis (class Iii or Iv)": {
+        "primary": [
+          "google/gemini-2.5-flash-lite"
+        ]
+      },
+      "Recurrent Urinary Tract Infection with Interstitial Nephritis": {
+        "differential": [
+          "google/gemini-2.5-flash-lite"
+        ]
+      },
+      "Drug-induced Lupus": {
+        "differential": [
+          "google/gemini-2.5-flash-lite"
+        ]
+      },
+      "Alport Syndrome": {
+        "differential": [
+          "mistralai/mistral-large-2411",
+          "openai/gpt-4o"
+        ]
+      },
+      "Intermittent Hematuria with Dysuria, Likely Glomerulonephritis with A Possibility of An Autoimmune Etiology, and Bilateral Renal Enlargement.": {
+        "primary": [
+          "cohere/command-r-plus"
+        ]
+      },
+      "Iga Nephropathy (most Common Glomerulonephritis Worldwide)": {
+        "differential": [
+          "cohere/command-r-plus"
+        ]
+      },
+      "Lupus Nephritis (especially with Positive Ana)": {
+        "differential": [
+          "cohere/command-r-plus"
+        ]
+      },
+      "Post-infectious Glomerulonephritis (pign)": {
+        "differential": [
+          "cohere/command-r-plus"
+        ]
+      },
+      "Anti-glomerular Basement Membrane (gbm) Disease (given the Rapid Decline in Renal Function)": {
+        "differential": [
+          "cohere/command-r-plus"
+        ]
+      },
+      "Membranous Nephropathy (with Autoimmune Features)": {
+        "differential": [
+          "cohere/command-r-plus"
+        ]
+      },
+      "Thin Basement Membrane Disease (tbmd)": {
+        "differential": [
+          "cohere/command-r-plus"
+        ]
+      },
+      "Chronic Interstitial Nephritis (given Chemical Exposure)": {
+        "differential": [
+          "cohere/command-r-plus"
+        ]
+      },
+      "Rapidly Progressive Glomerulonephritis (rpgn)": {
+        "primary": [
+          "microsoft/wizardlm-2-8x22b"
+        ]
+      },
+      "Chronic Interstitial Nephritis": {
+        "differential": [
+          "x-ai/grok-2-1212"
+        ]
+      },
+      "Polycystic Kidney Disease": {
+        "differential": [
+          "google/gemma-2-9b-it"
+        ]
+      },
+      "Iga Nephropathy with Hematuria": {
+        "primary": [
+          "meta-llama/llama-3.2-3b-instruct"
+        ]
+      },
+      "Chronic Kidney Disease": {
+        "differential": [
+          "meta-llama/llama-3.2-3b-instruct"
+        ]
+      },
+      "Chronic Kidney Disease (ckd)": {
+        "differential": [
+          "openai/gpt-4o-mini"
+        ]
+      }
+    },
+    "geographical_patterns": {
+      "Unknown": {
+        "Lupus Nephritis": 2,
+        "Systemic Lupus Erythematosus with Lupus Nephritis": 1,
+        "Glomerulonephritis": 1,
+        "Iga Nephropathy with Possible Lupus Nephritis": 1,
+        "Systemic Lupus Erythematosus with Class Iii/iv Lupus Nephritis": 1,
+        "Iga Nephropathy (berger's Disease)": 1,
+        "Iga Nephropathy Vs. Lupus Nephritis": 1,
+        "Systemic Lupus Erythematosus": 2
+      },
+      "France": {
+        "Most Likely: Iga Nephropathy (berger's Disease)": 1,
+        "Iga Nephropathy": 1
+      },
+      "USA": {
+        "Systemic Lupus Erythematosus": 4,
+        "Hypertensive Emergency": 1,
+        "Lupus Nephritis (class Iii or Iv)": 1,
+        "Rapidly Progressive Glomerulonephritis (rpgn)": 1,
+        "Lupus Nephritis": 3,
+        "Iga Nephropathy (berger's Disease)": 1,
+        "Iga Nephropathy with Hematuria": 1,
+        "Iga Nephropathy": 1
+      },
+      "Canada": {
+        "Acute Pyelonephritis with Renal Parenchymal Disease": 1,
+        "Intermittent Hematuria with Dysuria, Likely Glomerulonephritis with A Possibility of An Autoimmune Etiology, and Bilateral Renal Enlargement.": 1
+      },
+      "China": {
+        "Lupus Nephritis": 1,
+        "Lupus Nephritis (sle-related Glomerulonephritis)": 1,
+        "Systemic Lupus Erythematosus": 1
+      },
+      "Israel": {
+        "Lupus Nephritis": 1
+      }
+    }
+  },
+  "diagnostic_landscape": {
+    "primary_diagnosis": {
+      "name": "Iga Nephropathy",
+      "icd_code": "",
+      "agreement_percentage": 53.125,
+      "supporting_models": [
+        "gpt-oss-20b",
+        "claude-3-opus-20240229",
+        "deepseek-chat",
+        "gemini-2.5-flash-lite",
+        "qwen-2.5-72b-instruct",
+        "qwen-2.5-coder-32b-instruct",
+        "claude-sonnet-4",
+        "mistral-large-2411",
+        "grok-2-1212",
+        "gemma-2-9b-it",
+        "deepseek-r1",
+        "gemma-3-4b-it",
+        "gpt-4-turbo",
+        "gemma-3-27b-it",
+        "wizardlm-2-8x22b",
+        "gpt-4o-mini",
+        "claude-3.5-sonnet-20241022"
+      ],
+      "evidence": [
+        "Fever",
+        "Pain",
+        "Hypertension"
+      ],
+      "confidence": "Moderate"
+    },
+    "strong_alternatives": [
+      {
+        "name": "Lupus Nephritis",
+        "icd_code": "",
+        "agreement_percentage": 34.375,
+        "supporting_models": [
+          "free",
+          "mistral-7b-instruct",
+          "claude-sonnet-4",
+          "grok-4",
+          "gpt-oss-120b",
+          "command-r",
+          "gpt-4-turbo",
+          "deepseek-chat",
+          "gemini-2.5-pro",
+          "deepseek-r1",
+          "claude-3.5-haiku-20241022"
+        ],
+        "evidence": []
+      }
+    ],
+    "alternatives": [
+      {
+        "name": "Systemic Lupus Erythematosus",
+        "icd_code": "M32.9",
+        "agreement_percentage": 28.125,
+        "supporting_models": [
+          "free",
+          "mistral-7b-instruct",
+          "claude-sonnet-4",
+          "grok-4",
+          "gpt-oss-120b",
+          "command-r",
+          "gpt-4-turbo",
+          "deepseek-chat",
+          "gemini-2.5-pro"
+        ],
+        "evidence": [
+          "Joint pain",
+          "Fatigue",
+          "Skin rash",
+          "Multi-system involvement"
+        ]
+      },
+      {
+        "name": "Post-infectious Glomerulonephritis",
+        "icd_code": "",
+        "agreement_percentage": 25.0,
+        "supporting_models": [
+          "free",
+          "mistral-7b-instruct",
+          "claude-sonnet-4",
+          "grok-4",
+          "gpt-oss-120b",
+          "command-r",
+          "gpt-4-turbo",
+          "deepseek-chat"
+        ],
+        "evidence": []
+      },
+      {
+        "name": "Anca-associated Vasculitis",
+        "icd_code": "",
+        "agreement_percentage": 15.625,
+        "supporting_models": [
+          "free",
+          "mistral-7b-instruct",
+          "claude-sonnet-4",
+          "grok-4",
+          "gpt-oss-120b"
+        ],
+        "evidence": []
+      },
+      {
+        "name": "Iga Nephropathy (berger's Disease)",
+        "icd_code": "",
+        "agreement_percentage": 12.5,
+        "supporting_models": [
+          "free",
+          "mistral-7b-instruct",
+          "claude-sonnet-4",
+          "grok-4"
+        ],
+        "evidence": []
+      },
+      {
+        "name": "Acute Interstitial Nephritis",
+        "icd_code": "",
+        "agreement_percentage": 12.5,
+        "supporting_models": [
+          "free",
+          "mistral-7b-instruct",
+          "claude-sonnet-4",
+          "grok-4"
+        ],
+        "evidence": []
+      }
+    ],
+    "minority_opinions": [
+      {
+        "name": "Chronic Pyelonephritis",
+        "icd_code": "",
+        "agreement_percentage": 9.375,
+        "supporting_models": [
+          "free",
+          "mistral-7b-instruct",
+          "claude-sonnet-4"
+        ],
+        "evidence": []
+      },
+      {
+        "name": "Membranoproliferative Glomerulonephritis",
+        "icd_code": "",
+        "agreement_percentage": 9.375,
+        "supporting_models": [
+          "free",
+          "mistral-7b-instruct",
+          "claude-sonnet-4"
+        ],
+        "evidence": []
+      },
+      {
+        "name": "Renal Cell Carcinoma",
+        "icd_code": "",
+        "agreement_percentage": 9.375,
+        "supporting_models": [
+          "free",
+          "mistral-7b-instruct",
+          "claude-sonnet-4"
+        ],
+        "evidence": []
+      },
+      {
+        "name": "Pyelonephritis",
+        "icd_code": "N10",
+        "agreement_percentage": 9.375,
+        "supporting_models": [
+          "free",
+          "mistral-7b-instruct",
+          "claude-sonnet-4"
+        ],
+        "evidence": []
+      },
+      {
+        "name": "Membranoproliferative Glomerulonephritis (mpgn)",
+        "icd_code": "",
+        "agreement_percentage": 6.25,
+        "supporting_models": [
+          "free",
+          "mistral-7b-instruct"
+        ],
+        "evidence": []
+      },
+      {
+        "name": "Interstitial Nephritis",
+        "icd_code": "",
+        "agreement_percentage": 6.25,
+        "supporting_models": [
+          "free",
+          "mistral-7b-instruct"
+        ],
+        "evidence": []
+      },
+      {
+        "name": "Alport Syndrome",
+        "icd_code": "",
+        "agreement_percentage": 6.25,
+        "supporting_models": [
+          "free",
+          "mistral-7b-instruct"
+        ],
+        "evidence": []
+      },
+      {
+        "name": "Interstitial Nephritis (drug-induced)",
+        "icd_code": "",
+        "agreement_percentage": 3.125,
+        "supporting_models": [
+          "free"
+        ],
+        "evidence": []
+      },
+      {
+        "name": "Most Likely: Iga Nephropathy (berger's Disease)",
+        "icd_code": "",
+        "agreement_percentage": 3.125,
+        "supporting_models": [
+          "free"
+        ],
+        "evidence": []
+      },
+      {
+        "name": "Alternative 1: Renal Cell Carcinoma",
+        "icd_code": "",
+        "agreement_percentage": 3.125,
+        "supporting_models": [
+          "free"
+        ],
+        "evidence": []
+      },
+      {
+        "name": "Alternative 2: Chronic Pyelonephritis",
+        "icd_code": "",
+        "agreement_percentage": 3.125,
+        "supporting_models": [
+          "free"
+        ],
+        "evidence": []
+      },
+      {
+        "name": "Alternative 3: Medication-induced Nephropathy (sertraline)",
+        "icd_code": "",
+        "agreement_percentage": 3.125,
+        "supporting_models": [
+          "free"
+        ],
+        "evidence": []
+      },
+      {
+        "name": "Systemic Lupus Erythematosus with Lupus Nephritis",
+        "icd_code": "",
+        "agreement_percentage": 3.125,
+        "supporting_models": [
+          "free"
+        ],
+        "evidence": []
+      },
+      {
+        "name": "Chemical-induced Nephritis",
+        "icd_code": "",
+        "agreement_percentage": 3.125,
+        "supporting_models": [
+          "free"
+        ],
+        "evidence": []
+      },
+      {
+        "name": "Anca-associated Vasculitis (e.g., Granulomatosis with Polyangiitis)",
+        "icd_code": "",
+        "agreement_percentage": 3.125,
+        "supporting_models": [
+          "free"
+        ],
+        "evidence": []
+      },
+      {
+        "name": "Chemical-induced Nephrotoxicity (occupational Exposure)",
+        "icd_code": "",
+        "agreement_percentage": 3.125,
+        "supporting_models": [
+          "free"
+        ],
+        "evidence": []
+      },
+      {
+        "name": "Hereditary Nephritis (e.g., Alport Syndrome, Given Family History)",
+        "icd_code": "",
+        "agreement_percentage": 3.125,
+        "supporting_models": [
+          "free"
+        ],
+        "evidence": []
+      },
+      {
+        "name": "Acute Pyelonephritis with Renal Parenchymal Disease",
+        "icd_code": "",
+        "agreement_percentage": 3.125,
+        "supporting_models": [
+          "free"
+        ],
+        "evidence": []
+      },
+      {
+        "name": "Renal Tubular Necrosis",
+        "icd_code": "",
+        "agreement_percentage": 3.125,
+        "supporting_models": [
+          "free"
+        ],
+        "evidence": []
+      },
+      {
+        "name": "Acute Glomerulonephritis",
+        "icd_code": "",
+        "agreement_percentage": 3.125,
+        "supporting_models": [
+          "free"
+        ],
+        "evidence": []
+      },
+      {
+        "name": "Glomerulonephritis",
+        "icd_code": "",
+        "agreement_percentage": 3.125,
+        "supporting_models": [
+          "free"
+        ],
+        "evidence": []
+      },
+      {
+        "name": "Lupus Nephritis (sle-related Glomerulonephritis)",
+        "icd_code": "",
+        "agreement_percentage": 3.125,
+        "supporting_models": [
+          "free"
+        ],
+        "evidence": []
+      },
+      {
+        "name": "Iga Nephropathy with Possible Lupus Nephritis",
+        "icd_code": "",
+        "agreement_percentage": 3.125,
+        "supporting_models": [
+          "free"
+        ],
+        "evidence": []
+      },
+      {
+        "name": "Chronic Glomerulonephritis",
+        "icd_code": "",
+        "agreement_percentage": 3.125,
+        "supporting_models": [
+          "free"
+        ],
+        "evidence": []
+      },
+      {
+        "name": "Hereditary Nephritis",
+        "icd_code": "",
+        "agreement_percentage": 3.125,
+        "supporting_models": [
+          "free"
+        ],
+        "evidence": []
+      },
+      {
+        "name": "Systemic Lupus Erythematosus with Class Iii/iv Lupus Nephritis",
+        "icd_code": "",
+        "agreement_percentage": 3.125,
+        "supporting_models": [
+          "free"
+        ],
+        "evidence": []
+      },
+      {
+        "name": "Post\u2011streptococcal Glomerulonephritis",
+        "icd_code": "",
+        "agreement_percentage": 3.125,
+        "supporting_models": [
+          "free"
+        ],
+        "evidence": []
+      },
+      {
+        "name": "Urinary Tract Infection",
+        "icd_code": "N39.0",
+        "agreement_percentage": 3.125,
+        "supporting_models": [
+          "free"
+        ],
+        "evidence": []
+      },
+      {
+        "name": "Iga Nephropathy Vs. Lupus Nephritis",
+        "icd_code": "",
+        "agreement_percentage": 3.125,
+        "supporting_models": [
+          "free"
+        ],
+        "evidence": []
+      },
+      {
+        "name": "Lupus Nephritis Class Iii/iv",
+        "icd_code": "",
+        "agreement_percentage": 3.125,
+        "supporting_models": [
+          "free"
+        ],
+        "evidence": []
+      },
+      {
+        "name": "Thin Basement Membrane Disease",
+        "icd_code": "",
+        "agreement_percentage": 3.125,
+        "supporting_models": [
+          "free"
+        ],
+        "evidence": []
+      },
+      {
+        "name": "Chemical-induced Nephropathy",
+        "icd_code": "",
+        "agreement_percentage": 3.125,
+        "supporting_models": [
+          "free"
+        ],
+        "evidence": []
+      },
+      {
+        "name": "Hypertensive Emergency",
+        "icd_code": "I16.0",
+        "agreement_percentage": 3.125,
+        "supporting_models": [
+          "free"
+        ],
+        "evidence": [
+          "Severe hypertension",
+          "End-organ damage",
+          "Headaches"
+        ]
+      },
+      {
+        "name": "Membranous Nephropathy",
+        "icd_code": "",
+        "agreement_percentage": 3.125,
+        "supporting_models": [
+          "free"
+        ],
+        "evidence": []
+      },
+      {
+        "name": "Post-streptococcal Glomerulonephritis (psgn)",
+        "icd_code": "",
+        "agreement_percentage": 3.125,
+        "supporting_models": [
+          "free"
+        ],
+        "evidence": []
+      },
+      {
+        "name": "Lupus Nephritis (class Iii or Iv)",
+        "icd_code": "",
+        "agreement_percentage": 3.125,
+        "supporting_models": [
+          "free"
+        ],
+        "evidence": []
+      },
+      {
+        "name": "Recurrent Urinary Tract Infection with Interstitial Nephritis",
+        "icd_code": "",
+        "agreement_percentage": 3.125,
+        "supporting_models": [
+          "free"
+        ],
+        "evidence": []
+      },
+      {
+        "name": "Drug-induced Lupus",
+        "icd_code": "",
+        "agreement_percentage": 3.125,
+        "supporting_models": [
+          "free"
+        ],
+        "evidence": []
+      },
+      {
+        "name": "Intermittent Hematuria with Dysuria, Likely Glomerulonephritis with A Possibility of An Autoimmune Etiology, and Bilateral Renal Enlargement.",
+        "icd_code": "",
+        "agreement_percentage": 3.125,
+        "supporting_models": [
+          "free"
+        ],
+        "evidence": []
+      },
+      {
+        "name": "Iga Nephropathy (most Common Glomerulonephritis Worldwide)",
+        "icd_code": "",
+        "agreement_percentage": 3.125,
+        "supporting_models": [
+          "free"
+        ],
+        "evidence": []
+      },
+      {
+        "name": "Lupus Nephritis (especially with Positive Ana)",
+        "icd_code": "",
+        "agreement_percentage": 3.125,
+        "supporting_models": [
+          "free"
+        ],
+        "evidence": []
+      },
+      {
+        "name": "Post-infectious Glomerulonephritis (pign)",
+        "icd_code": "",
+        "agreement_percentage": 3.125,
+        "supporting_models": [
+          "free"
+        ],
+        "evidence": []
+      },
+      {
+        "name": "Anti-glomerular Basement Membrane (gbm) Disease (given the Rapid Decline in Renal Function)",
+        "icd_code": "",
+        "agreement_percentage": 3.125,
+        "supporting_models": [
+          "free"
+        ],
+        "evidence": []
+      },
+      {
+        "name": "Membranous Nephropathy (with Autoimmune Features)",
+        "icd_code": "",
+        "agreement_percentage": 3.125,
+        "supporting_models": [
+          "free"
+        ],
+        "evidence": []
+      },
+      {
+        "name": "Thin Basement Membrane Disease (tbmd)",
+        "icd_code": "",
+        "agreement_percentage": 3.125,
+        "supporting_models": [
+          "free"
+        ],
+        "evidence": []
+      },
+      {
+        "name": "Chronic Interstitial Nephritis (given Chemical Exposure)",
+        "icd_code": "",
+        "agreement_percentage": 3.125,
+        "supporting_models": [
+          "free"
+        ],
+        "evidence": []
+      },
+      {
+        "name": "Rapidly Progressive Glomerulonephritis (rpgn)",
+        "icd_code": "",
+        "agreement_percentage": 3.125,
+        "supporting_models": [
+          "free"
+        ],
+        "evidence": []
+      },
+      {
+        "name": "Chronic Interstitial Nephritis",
+        "icd_code": "",
+        "agreement_percentage": 3.125,
+        "supporting_models": [
+          "free"
+        ],
+        "evidence": []
+      },
+      {
+        "name": "Polycystic Kidney Disease",
+        "icd_code": "",
+        "agreement_percentage": 3.125,
+        "supporting_models": [
+          "free"
+        ],
+        "evidence": []
+      },
+      {
+        "name": "Iga Nephropathy with Hematuria",
+        "icd_code": "",
+        "agreement_percentage": 3.125,
+        "supporting_models": [
+          "free"
+        ],
+        "evidence": []
+      },
+      {
+        "name": "Chronic Kidney Disease",
+        "icd_code": "",
+        "agreement_percentage": 3.125,
+        "supporting_models": [
+          "free"
+        ],
+        "evidence": []
+      },
+      {
+        "name": "Chronic Kidney Disease (ckd)",
+        "icd_code": "",
+        "agreement_percentage": 3.125,
+        "supporting_models": [
+          "free"
+        ],
+        "evidence": []
+      }
+    ],
+    "geographical_consensus": {
+      "Unknown": {
+        "Lupus Nephritis": 2,
+        "Systemic Lupus Erythematosus with Lupus Nephritis": 1,
+        "Glomerulonephritis": 1,
+        "Iga Nephropathy with Possible Lupus Nephritis": 1,
+        "Systemic Lupus Erythematosus with Class Iii/iv Lupus Nephritis": 1,
+        "Iga Nephropathy (berger's Disease)": 1,
+        "Iga Nephropathy Vs. Lupus Nephritis": 1,
+        "Systemic Lupus Erythematosus": 2
+      },
+      "France": {
+        "Most Likely: Iga Nephropathy (berger's Disease)": 1,
+        "Iga Nephropathy": 1
+      },
+      "USA": {
+        "Systemic Lupus Erythematosus": 4,
+        "Hypertensive Emergency": 1,
+        "Lupus Nephritis (class Iii or Iv)": 1,
+        "Rapidly Progressive Glomerulonephritis (rpgn)": 1,
+        "Lupus Nephritis": 3,
+        "Iga Nephropathy (berger's Disease)": 1,
+        "Iga Nephropathy with Hematuria": 1,
+        "Iga Nephropathy": 1
+      },
+      "Canada": {
+        "Acute Pyelonephritis with Renal Parenchymal Disease": 1,
+        "Intermittent Hematuria with Dysuria, Likely Glomerulonephritis with A Possibility of An Autoimmune Etiology, and Bilateral Renal Enlargement.": 1
+      },
+      "China": {
+        "Lupus Nephritis": 1,
+        "Lupus Nephritis (sle-related Glomerulonephritis)": 1,
+        "Systemic Lupus Erythematosus": 1
+      },
+      "Israel": {
+        "Lupus Nephritis": 1
+      }
+    }
+  },
+  "comprehensive_bias_analysis": {
+    "geographical_representation": {
+      "total_countries": 6,
+      "western_dominance": {
+        "western_models": 25,
+        "percentage": 78.125,
+        "impact": "High Western medical paradigm influence expected"
+      },
+      "chinese_representation": {
+        "chinese_models": 4,
+        "percentage": 12.5,
+        "impact": "Traditional Chinese Medicine integration possible"
+      }
+    },
+    "case_specific_concerns": [
+      "Analysis strictly limited to Case_13 responses",
+      "No cross-case contamination in this analysis",
+      "Bias patterns specific to this case presentation"
+    ],
+    "recommended_mitigations": [
+      "Consider cultural context in diagnosis interpretation",
+      "Account for geographical bias in model training",
+      "Validate findings across diverse medical paradigms"
+    ]
+  },
+  "model_diversity_metrics": {
+    "unique_architectures": 15,
+    "unique_providers": 13,
+    "unique_countries": 5,
+    "diversity_score": 11.0,
+    "case_id": "Case_13"
+  },
+  "management_strategies": {
+    "immediate_actions": [
+      {
+        "action": "Initiate treatment for Iga Nephropathy",
+        "rationale": "Evidence-based management of primary condition",
+        "consensus": "High",
+        "priority": "Critical"
+      },
+      {
+        "action": "Symptomatic management",
+        "rationale": "Patient comfort and stabilization",
+        "consensus": "High",
+        "priority": "High"
+      }
+    ],
+    "diagnostic_tests": [
+      {
+        "test": "Comprehensive diagnostic workup",
+        "purpose": "Confirm Iga Nephropathy diagnosis",
+        "priority": "High"
+      },
+      {
+        "test": "Laboratory studies",
+        "purpose": "Assess disease activity and complications",
+        "priority": "Routine"
+      }
+    ],
+    "long_term_management": [
+      "Regular follow-up appointments",
+      "Monitor treatment response",
+      "Adjust therapy as needed"
+    ]
+  },
+  "evidence_synthesis": {
+    "key_clinical_findings": [
+      {
+        "finding": "Primary clinical presentation",
+        "diagnostic_significance": "Supports consensus diagnosis",
+        "mentioned_by_models": 32
+      }
+    ],
+    "case_id": "Case_13",
+    "analysis_scope": "Limited to Case_13 responses only"
+  },
+  "generation_metadata": {
+    "pipeline_version": "General v1.0",
+    "timestamp": "20250811_222502",
+    "case_separation": "Strict",
+    "total_time_seconds": 1.2692830562591553
+  },
+  "generated_at": "2025-08-11T22:26:04.595874"
+}

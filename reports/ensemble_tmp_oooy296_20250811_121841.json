@@ -1,0 +1,649 @@
+{
+  "case_id": "tmp_oooy296",
+  "case_title": "Medical Case from tmp_oooy296.txt",
+  "case_description": {
+    "case_id": "tmp_oooy296",
+    "title": "Medical Case from tmp_oooy296.txt",
+    "patient_info": "",
+    "presentation": "A 28-year-old male of Mediterranean descent presents with:\n- Recurrent episodes of fever lasting 1-3 days\n- Severe abdominal pain during episodes\n- Chest pain with breathing difficulties\n- Joint pain affecting knees and ankles\n- Family history: Father and paternal uncle have similar symptoms\n- Episodes occur every 2-3 weeks\n- Labs during attack: Elevated CRP, ESR, and WBC\n- Between attacks: Completely asymptomatic\n\nPatient reports episodes started in childhood around age 7. Recent genetic testing is pending.",
+    "symptoms": [
+      "Fever",
+      "Pain"
+    ],
+    "history": null,
+    "physical_exam": null,
+    "labs": null,
+    "imaging": null
+  },
+  "analysis_timestamp": "2025-08-11T12:18:41.275532",
+  "models_queried": 8,
+  "models_responded": 5,
+  "model_responses": [
+    {
+      "model_name": "mistralai/mistral-7b-instruct:free",
+      "origin": "France",
+      "size": "7B",
+      "response": " {\n    \"primary_diagnosis\": {\n        \"name\": \"Familial Mediterranean Fever (FMF)\",\n        \"confidence\": 0.8,\n        \"icd_code\": \"M30.1\",\n        \"reasoning\": \"Recurrent fever, abdominal and joint pain, family history, and elevated inflammatory markers are consistent with FMF.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Ankylosing Spondylitis\",\n            \"confidence\": 0.6,\n            \"icd_code\": \"M45.0\",\n            \"reasoning\": \"Joint pain affecting knees and ankles, family history, and possible chest pain could suggest Ankylosing Spondylitis.\"\n        },\n        {\n            \"name\": \"Reactive Arthritis\",\n            \"confidence\": 0.5,\n            \"icd_code\": \"M40.5\",\n            \"reasoning\": \"Recurrent episodes of joint pain, fever, and gastrointestinal symptoms could be indicative of Reactive Arthritis.\"\n        },\n        {\n            \"name\": \"Inflammatory Bowel Disease\",\n            \"confidence\": 0.4,\n            \"icd_code\": \"Unknown\",\n            \"reasoning\": \"Abdominal pain, fever, and elevated inflammatory markers could be associated with Inflammatory Bowel Disease, but the pattern of symptoms doesn't align perfectly.\"\n    }],\n    \"key_findings\": [\n        \"Recurrent fever\",\n        \"Abdominal and joint pain\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Genetic testing\",\n            \"purpose\": \"To confirm FMF\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"HLA-B27 testing\",\n            \"purpose\": \"To rule out Ankylosing Spondylitis\",\n            \"priority\": \"routine\"\n        },\n        {\n            \"test\": \"Antibody tests (ASCA, ANCA)\",\n            \"purpose\": \"To rule out Inflammatory Bowel Disease\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Admit patient for close monitoring due to severe symptoms\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Colchicine\",\n                \"dose\": \"1.2 mg twice daily\",\n                \"route\": \"PO\",\n                \"duration\": \"Indefinite\",\n                \"rationale\": \"For symptom control and to prevent further attacks\"\n            }\n        ],\n        \"monitoring\": [\n            \"Fever, inflammatory markers, and symptoms\",\n            \"Weekly during acute episodes, then monthly after stabilization\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Rheumatology\",\n                \"urgency\": \"Immediate\",\n                \"reason\": \"For further evaluation and management\"\n            },\n            {\n                \"specialty\": \"Gastroenterology\",\n                \"urgency\": \"Routine\",\n                \"reason\": \"To rule out concurrent Inflammatory Bowel Disease\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Persistent high fever despite treatment\",\n        \"Progressive joint damage\"\n    ],\n    \"patient_education\": [\n        \"Importance of taking prescribed medications regularly\",\n        \"Signs and symptoms to watch for and when to seek immediate medical attention\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"1 month after starting treatment\",\n        \"conditions\": \"Frequent attacks, worsening symptoms, or concerns about treatment\"\n    },\n    \"confidence_in_assessment\": 0.8,\n    \"uncertainties\": [\n        \"Genetic testing results are pending\",\n        \"Possibility of concurrent conditions\"\n    ]\n}",
+      "error": null,
+      "timestamp": "2025-08-11T12:17:42.764546",
+      "tokens_used": 2020,
+      "input_tokens": 1044,
+      "output_tokens": 976,
+      "latency": 8.293859004974365
+    },
+    {
+      "model_name": "google/gemma-2-9b-it:free",
+      "origin": "USA",
+      "size": "9B",
+      "response": "",
+      "error": null,
+      "timestamp": "2025-08-11T12:17:45.043952",
+      "tokens_used": 926,
+      "input_tokens": 925,
+      "output_tokens": 1,
+      "latency": 2.2581839561462402
+    },
+    {
+      "model_name": "meta-llama/llama-3.2-3b-instruct:free",
+      "origin": "USA",
+      "size": "3B",
+      "response": "{\n    \"primary_diagnosis\": {\n        \"name\": \"Reactive Arthritis\",\n        \"confidence\": 0.8,\n        \"icd_code\": \"M35.9\",\n        \"reasoning\": \"Recurrent fever, abdominal pain, chest pain, and joint pain consistent with reactive arthritis, a form of seronegative spondyloarthritis\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Ankylosing Spondylitis\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"M45.9\",\n            \"reasoning\": \"Similar symptoms, but typically with chronic back pain and morning stiffness\"\n        },\n        {\n            \"name\": \"Crohn's Disease\",\n            \"confidence\": 0.1,\n            \"icd_code\": \"K50.9\",\n            \"reasoning\": \"Abdominal pain and elevated WBC consistent with Crohn's, but typically with weight loss and bloody stools\"\n        },\n        {\n            \"name\": \"Ulcerative Colitis\",\n            \"confidence\": 0.1,\n            \"icd_code\": \"K50.9\",\n            \"reasoning\": \"Similar symptoms, but typically with rectal bleeding and diarrhea\"\n        }\n    ],\n    \"key_findings\": [\n        \"Recurrent fever and abdominal pain\",\n        \"Elevated CRP, ESR, and WBC\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"CRP and ESR\",\n            \"purpose\": \"To rule out infection and inflammation\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Imaging studies (e.g. X-ray, CT)\",\n            \"purpose\": \"To evaluate joint and abdominal pathology\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Start anti-inflammatory medication (e.g. NSAIDs)\",\n            \"Refer to rheumatologist for further evaluation and management\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Indomethacin\",\n                \"dose\": \"50mg PO twice daily\",\n                \"route\": \"PO\",\n                \"duration\": \"Until symptoms resolve\",\n                \"rationale\": \"To reduce inflammation and pain\"\n            }\n        ],\n        \"monitoring\": [\n            \"Monitor WBC and CRP levels\",\n            \"Schedule follow-up appointments with rheumatologist\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Rheumatology\",\n                \"urgency\": \"immediate\",\n                \"reason\": \"To evaluate and manage reactive arthritis\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Family history of reactive arthritis\",\n        \"Recent travel to areas with high incidence of reactive arthritis\"\n    ],\n    \"patient_education\": [\n        \"Key point 1: Reactive arthritis is a common complication of certain infections (e.g. Yersinia, Shigella)\",\n        \"Key point 2: Rest, hydration, and anti-inflammatory medication can help manage symptoms\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"Follow-up in 1-2 weeks to assess response to treatment\",\n        \"conditions\": \"Return if symptoms worsen or do not improve with treatment\"\n    },\n    \"confidence_in_assessment\": 0.8,\n    \"uncertainties\": [\n        \"Uncertainty regarding exact genetic testing results\",\n        \"Uncertainty regarding severity of symptoms\"\n    ]\n}",
+      "error": null,
+      "timestamp": "2025-08-11T12:17:51.095631",
+      "tokens_used": 2143,
+      "input_tokens": 1411,
+      "output_tokens": 732,
+      "latency": 6.027607679367065
+    },
+    {
+      "model_name": "qwen/qwen-2.5-coder-32b-instruct",
+      "origin": "China",
+      "size": "32B",
+      "response": "{\n    \"primary_diagnosis\": {\n        \"name\": \"Periodic Fever, Aphthous Stomatitis, Pharyngitis, Adenitis Syndrome (PFAPA Syndrome)\",\n        \"confidence\": 0.9,\n        \"icd_code\": \"D69.0\",\n        \"reasoning\": \"Recurrent episodes of fever with pharyngitis, stomatitis, and adenitis in a young male with no other significant findings during asymptomatic periods. Family history also points towards a genetic predisposition.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Recurrent Apthous Stomatitis (RAS)\",\n            \"confidence\": 0.1,\n            \"icd_code\": \"L13.1\",\n            \"reasoning\": \"Although not as comprehensive as PFAPA, RAS can cause recurrent episodes of fever and stomatitis. However, the abdominal pain and chest pain are less common in RAS.\"\n        },\n        {\n            \"name\": \"Henoch-Sch\u00f6nlein Purpura (HSP)\",\n            \"confidence\": 0.05,\n            \"icd_code\": \"I90\",\n            \"reasoning\": \"HSP can present with abdominal pain and fever but typically involves a rash and renal involvement, which are not mentioned in the patient's presentation.\"\n        },\n        {\n            \"name\": \"Juvenile Idiopathic Arthritis (JIA)\",\n            \"confidence\": 0.05,\n            \"icd_code\": \"M08.00\",\n            \"reasoning\": \"JIA can present with joint pain and fever, but it usually involves more systemic symptoms and a longer duration of symptoms than the episodes described.\"\n        }\n    ],\n    \"key_findings\": [\n        \"Recurrent episodes of fever\",\n        \"Severe abdominal pain during episodes\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Genetic Testing for PFAPA\",\n            \"purpose\": \"To confirm the diagnosis\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Joint Ultrasound\",\n            \"purpose\": \"To rule out synovitis\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Renal Function Tests\",\n            \"purpose\": \"To rule out HSP\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Hydration\",\n            \"Analgesics for pain\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Ibuprofen\",\n                \"dose\": \"400 mg\",\n                \"route\": \"PO\",\n                \"duration\": \"As needed\",\n                \"rationale\": \"For pain and fever management\"\n            },\n            {\n                \"drug\": \"Prednisone\",\n                \"dose\": \"20 mg\",\n                \"route\": \"PO\",\n                \"duration\": \"5 days\",\n                \"rationale\": \"To reduce inflammation and fever\"\n            }\n        ],\n        \"monitoring\": [\n            \"Temperature\",\n            \"Joint examination\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Pediatric Rheumatologist\",\n                \"urgency\": \"immediate\",\n                \"reason\": \"For genetic testing and management of suspected PFAPA\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Persistent fever without resolution\",\n        \"Development of a rash\"\n    ],\n    \"patient_education\": [\n        \"Recognize the onset of symptoms and seek prompt treatment\",\n        \"Avoid strenuous activities during episodes\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"In 2-4 weeks\",\n        \"conditions\": \"Persistent symptoms, new symptoms, or fever lasting more than 3 days\"\n    },\n    \"confidence_in_assessment\": 0.9,\n    \"uncertainties\": [\n        \"The pending genetic test results are crucial for confirming the diagnosis\",\n        \"The presence of chest pain with breathing difficulties requires further evaluation\"\n    ]\n}",
+      "error": null,
+      "timestamp": "2025-08-11T12:18:10.149811",
+      "tokens_used": 1695,
+      "input_tokens": 853,
+      "output_tokens": 842,
+      "latency": 19.031642198562622
+    },
+    {
+      "model_name": "google/gemini-2.0-flash-exp:free",
+      "origin": "USA",
+      "size": "Unknown",
+      "response": "```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"Familial Mediterranean Fever (FMF)\",\n        \"confidence\": 0.95,\n        \"icd_code\": \"E85.0\",\n        \"reasoning\": \"The patient's recurrent episodes of fever, abdominal pain, chest pain, joint pain, Mediterranean descent, family history of similar symptoms, onset in childhood, and elevated inflammatory markers during attacks strongly suggest FMF. The asymptomatic periods between attacks are also characteristic.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Other Hereditary Periodic Fever Syndromes (HPFS)\",\n            \"confidence\": 0.6,\n            \"icd_code\": \"D89.81\",\n            \"reasoning\": \"Other autoinflammatory syndromes like Tumor Necrosis Factor Receptor-Associated Periodic Syndrome (TRAPS), Hyperimmunoglobulinemia D Syndrome (HIDS)/Mevalonate Kinase Deficiency (MKD), and Cryopyrin-Associated Periodic Syndromes (CAPS) can present with similar symptoms, though some have distinct features (e.g., rash in CAPS).\"\n        },\n        {\n            \"name\": \"Systemic Juvenile Idiopathic Arthritis (sJIA)\",\n            \"confidence\": 0.3,\n            \"icd_code\": \"M08.2\",\n            \"reasoning\": \"While less likely given the family history, sJIA can present with recurrent fever, arthritis, and elevated inflammatory markers. However, the Mediterranean descent and family history are less typical.\"\n        },\n        {\n            \"name\": \"Inflammatory Bowel Disease (IBD)\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"K50-K51\",\n            \"reasoning\": \"Although the abdominal pain is suggestive, the cyclical nature with complete resolution between flares is not typical of IBD. The presence of chest pain and joint pain is less common in IBD without extra-intestinal manifestations.\"\n        }\n    ],\n    \"key_findings\": [\n        \"Recurrent fever lasting 1-3 days\",\n        \"Severe abdominal pain during episodes\",\n        \"Family history of similar symptoms\",\n        \"Mediterranean descent\",\n        \"Elevated CRP, ESR, and WBC during attacks\",\n        \"Chest pain with breathing difficulties\",\n        \"Joint pain affecting knees and ankles\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Genetic testing for MEFV gene mutations (FMF)\",\n            \"purpose\": \"To confirm the diagnosis of FMF by identifying specific mutations.\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Complete Blood Count (CBC) with differential\",\n            \"purpose\": \"To assess white blood cell count and differentials during and between episodes.\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Erythrocyte Sedimentation Rate (ESR) and C-Reactive Protein (CRP)\",\n            \"purpose\": \"To monitor inflammatory activity during and between episodes.\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Serum Amyloid A (SAA) levels\",\n            \"purpose\": \"To monitor for amyloidosis, a potential complication of FMF.\",\n            \"priority\": \"routine\"\n        },\n        {\n            \"test\": \"Urine analysis\",\n            \"purpose\": \"To rule out kidney involvement or infection.\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Manage acute symptoms with NSAIDs or analgesics if needed.\",\n            \"Provide supportive care during acute attacks (rest, hydration).\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Colchicine\",\n                \"dose\": \"0.6 mg orally once or twice daily\",\n                \"route\": \"PO\",\n                \"duration\": \"Lifelong\",\n                \"rationale\": \"First-line treatment for FMF to prevent acute attacks and reduce the risk of amyloidosis.\"\n            },\n            {\n                \"drug\": \"NSAIDs (e.g., Ibuprofen, Naproxen)\",\n                \"dose\": \"As needed for pain relief during acute attacks\",\n                \"route\": \"PO\",\n                \"duration\": \"Short-term, during flares\",\n                \"rationale\": \"For symptomatic relief of pain and inflammation during acute attacks.\"\n            }\n        ],\n        \"monitoring\": [\n            \"Frequency of attacks\",\n            \"Severity of attacks\",\n            \"Medication side effects\",\n            \"Renal Function (BUN, Creatinine)\",\n            \"Liver Function Tests (AST, ALT)\",\n            \"SAA levels\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Rheumatology\",\n                \"urgency\": \"routine\",\n                \"reason\": \"For long-term management of FMF and monitoring for complications.\"\n            },\n            {\n                \"specialty\": \"Genetics\",\n                \"urgency\": \"routine\",\n                \"reason\": \"To interpret genetic testing results and provide genetic counseling to the patient and family.\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Signs of amyloidosis (proteinuria, renal dysfunction)\",\n        \"Persistent fever despite colchicine treatment\",\n        \"Severe abdominal pain unresponsive to analgesics\",\n        \"New or worsening chest pain\"\n    ],\n    \"patient_education\": [\n        \"Importance of adherence to colchicine therapy.\",\n        \"Potential side effects of colchicine (e.g., diarrhea, abdominal cramping).\",\n        \"Symptoms of amyloidosis and the need for prompt evaluation.\",\n        \"Importance of regular follow-up appointments.\",\n        \"Lifestyle modifications to potentially reduce flare frequency (e.g., stress management).\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"Within 2-4 weeks after diagnosis and initiation of colchicine, then every 3-6 months or as needed.\",\n        \"conditions\": \"Worsening symptoms, signs of amyloidosis, medication side effects, or new concerns.\"\n    },\n    \"confidence_in_assessment\": 0.9,\n    \"uncertainties\": [\n        \"Specific MEFV gene mutations present (pending genetic testing results).\",\n        \"Severity and frequency of future attacks despite treatment.\",\n        \"Potential for long-term complications such as amyloidosis.\"\n    ]\n}\n```",
+      "error": null,
+      "timestamp": "2025-08-11T12:18:20.807743",
+      "tokens_used": 2338,
+      "input_tokens": 916,
+      "output_tokens": 1422,
+      "latency": 10.642941951751709
+    },
+    {
+      "model_name": "deepseek/deepseek-chat-v3-0324:free",
+      "origin": "China",
+      "size": "Unknown",
+      "response": "```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"Familial Mediterranean Fever\",\n        \"confidence\": 0.9,\n        \"icd_code\": \"E85.0\",\n        \"reasoning\": \"Recurrent episodes of fever, severe abdominal pain, chest pain, joint pain, family history of similar symptoms, and Mediterranean descent strongly suggest Familial Mediterranean Fever (FMF). Elevated CRP, ESR, and WBC during attacks are also consistent with FMF.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Periodic Fever Syndrome (other than FMF)\",\n            \"confidence\": 0.7,\n            \"icd_code\": \"E85.8\",\n            \"reasoning\": \"Other periodic fever syndromes can present similarly with recurrent fever and systemic inflammation, though FMF is more likely given the family history and Mediterranean descent.\"\n        },\n        {\n            \"name\": \"Systemic Lupus Erythematosus (SLE)\",\n            \"confidence\": 0.5,\n            \"icd_code\": \"M32.9\",\n            \"reasoning\": \"SLE can cause recurrent fever, joint pain, and elevated inflammatory markers, but the episodic nature and family history make FMF more likely.\"\n        },\n        {\n            \"name\": \"Hereditary Angioedema\",\n            \"confidence\": 0.3,\n            \"icd_code\": \"D84.1\",\n            \"reasoning\": \"Can cause recurrent abdominal pain and swelling, but lacks the fever and joint pain seen in this case.\"\n        }\n    ],\n    \"key_findings\": [\n        \"Recurrent episodes of fever lasting 1-3 days\",\n        \"Severe abdominal pain during episodes\",\n        \"Family history of similar symptoms\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"MEFV gene mutation analysis\",\n            \"purpose\": \"Confirm diagnosis of Familial Mediterranean Fever\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Serum amyloid A (SAA) protein\",\n            \"purpose\": \"Assess for amyloidosis risk\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Complete blood count (CBC)\",\n            \"purpose\": \"Monitor WBC and inflammatory markers\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Monitor vital signs during attacks\",\n            \"Provide pain relief as needed\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Colchicine\",\n                \"dose\": \"0.5 mg twice daily\",\n                \"route\": \"PO\",\n                \"duration\": \"Lifelong\",\n                \"rationale\": \"Prophylaxis to prevent attacks and amyloidosis in FMF\"\n            }\n        ],\n        \"monitoring\": [\n            \"Inflammatory markers (CRP, ESR)\",\n            \"Every 3 months\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Rheumatology\",\n                \"urgency\": \"urgent\",\n                \"reason\": \"Confirm diagnosis and manage long-term treatment\"\n            },\n            {\n                \"specialty\": \"Genetics\",\n                \"urgency\": \"routine\",\n                \"reason\": \"Genetic counseling and testing\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Signs of amyloidosis (proteinuria, renal failure)\",\n        \"Severe chest pain or shortness of breath\"\n    ],\n    \"patient_education\": [\n        \"Importance of lifelong colchicine therapy\",\n        \"Recognize signs of amyloidosis and when to seek immediate care\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"4 weeks\",\n        \"conditions\": \"New or worsening symptoms, especially renal or respiratory\"\n    },\n    \"confidence_in_assessment\": 0.9,\n    \"uncertainties\": [\n        \"Pending genetic test results\",\n        \"Exact mutation type if FMF is confirmed\"\n    ]\n}\n```",
+      "error": null,
+      "timestamp": "2025-08-11T12:18:40.981554",
+      "tokens_used": 1693,
+      "input_tokens": 851,
+      "output_tokens": 842,
+      "latency": 20.15446901321411
+    },
+    {
+      "model_name": "nousresearch/hermes-3-llama-3.1-8b:free",
+      "origin": "USA",
+      "size": "8B",
+      "response": null,
+      "error": "API Error 400: {\"error\":{\"message\":\"nousresearch/hermes-3-llama-3.1-8b:free is not a valid model ID\",\"code\":400},\"user_id\":\"user_311J1DE0saKoskawvWx8XZsOQ1N\"}",
+      "timestamp": "2025-08-11T12:18:41.136877",
+      "tokens_used": 0,
+      "input_tokens": 0,
+      "output_tokens": 0
+    },
+    {
+      "model_name": "liquid/lfm-40b:free",
+      "origin": "USA",
+      "size": "40B",
+      "response": null,
+      "error": "API Error 404: {\"error\":{\"message\":\"No endpoints found for liquid/lfm-40b:free.\",\"code\":404},\"user_id\":\"user_311J1DE0saKoskawvWx8XZsOQ1N\"}",
+      "timestamp": "2025-08-11T12:18:41.274441",
+      "tokens_used": 0,
+      "input_tokens": 0,
+      "output_tokens": 0
+    }
+  ],
+  "parsed_responses": [
+    {
+      "primary_diagnosis": {
+        "name": "Familial Mediterranean Fever (FMF)",
+        "confidence": 0.8,
+        "icd_code": "M30.1",
+        "reasoning": "Recurrent fever, abdominal and joint pain, family history, and elevated inflammatory markers are consistent with FMF."
+      },
+      "differential_diagnoses": [
+        {
+          "name": "Ankylosing Spondylitis",
+          "confidence": 0.6,
+          "icd_code": "M45.0",
+          "reasoning": "Joint pain affecting knees and ankles, family history, and possible chest pain could suggest Ankylosing Spondylitis."
+        },
+        {
+          "name": "Reactive Arthritis",
+          "confidence": 0.5,
+          "icd_code": "M40.5",
+          "reasoning": "Recurrent episodes of joint pain, fever, and gastrointestinal symptoms could be indicative of Reactive Arthritis."
+        },
+        {
+          "name": "Inflammatory Bowel Disease",
+          "confidence": 0.4,
+          "icd_code": "Unknown",
+          "reasoning": "Abdominal pain, fever, and elevated inflammatory markers could be associated with Inflammatory Bowel Disease, but the pattern of symptoms doesn't align perfectly."
+        }
+      ],
+      "key_findings": [
+        "Recurrent fever",
+        "Abdominal and joint pain"
+      ],
+      "diagnostic_tests": [
+        {
+          "test": "Genetic testing",
+          "purpose": "To confirm FMF",
+          "priority": "immediate"
+        },
+        {
+          "test": "HLA-B27 testing",
+          "purpose": "To rule out Ankylosing Spondylitis",
+          "priority": "routine"
+        },
+        {
+          "test": "Antibody tests (ASCA, ANCA)",
+          "purpose": "To rule out Inflammatory Bowel Disease",
+          "priority": "routine"
+        }
+      ],
+      "management_plan": {
+        "immediate_actions": [
+          "Admit patient for close monitoring due to severe symptoms"
+        ],
+        "medications": [
+          {
+            "drug": "Colchicine",
+            "dose": "1.2 mg twice daily",
+            "route": "PO",
+            "duration": "Indefinite",
+            "rationale": "For symptom control and to prevent further attacks"
+          }
+        ],
+        "monitoring": [
+          "Fever, inflammatory markers, and symptoms",
+          "Weekly during acute episodes, then monthly after stabilization"
+        ],
+        "consultations": [
+          {
+            "specialty": "Rheumatology",
+            "urgency": "Immediate",
+            "reason": "For further evaluation and management"
+          },
+          {
+            "specialty": "Gastroenterology",
+            "urgency": "Routine",
+            "reason": "To rule out concurrent Inflammatory Bowel Disease"
+          }
+        ]
+      },
+      "red_flags": [
+        "Persistent high fever despite treatment",
+        "Progressive joint damage"
+      ],
+      "patient_education": [
+        "Importance of taking prescribed medications regularly",
+        "Signs and symptoms to watch for and when to seek immediate medical attention"
+      ],
+      "follow_up": {
+        "timing": "1 month after starting treatment",
+        "conditions": "Frequent attacks, worsening symptoms, or concerns about treatment"
+      },
+      "confidence_in_assessment": 0.8,
+      "uncertainties": [
+        "Genetic testing results are pending",
+        "Possibility of concurrent conditions"
+      ]
+    },
+    null,
+    {
+      "primary_diagnosis": {
+        "name": "Reactive Arthritis",
+        "confidence": 0.8,
+        "icd_code": "M35.9",
+        "reasoning": "Recurrent fever, abdominal pain, chest pain, and joint pain consistent with reactive arthritis, a form of seronegative spondyloarthritis"
+      },
+      "differential_diagnoses": [
+        {
+          "name": "Ankylosing Spondylitis",
+          "confidence": 0.2,
+          "icd_code": "M45.9",
+          "reasoning": "Similar symptoms, but typically with chronic back pain and morning stiffness"
+        },
+        {
+          "name": "Crohn's Disease",
+          "confidence": 0.1,
+          "icd_code": "K50.9",
+          "reasoning": "Abdominal pain and elevated WBC consistent with Crohn's, but typically with weight loss and bloody stools"
+        },
+        {
+          "name": "Ulcerative Colitis",
+          "confidence": 0.1,
+          "icd_code": "K50.9",
+          "reasoning": "Similar symptoms, but typically with rectal bleeding and diarrhea"
+        }
+      ],
+      "key_findings": [
+        "Recurrent fever and abdominal pain",
+        "Elevated CRP, ESR, and WBC"
+      ],
+      "diagnostic_tests": [
+        {
+          "test": "CRP and ESR",
+          "purpose": "To rule out infection and inflammation",
+          "priority": "immediate"
+        },
+        {
+          "test": "Imaging studies (e.g. X-ray, CT)",
+          "purpose": "To evaluate joint and abdominal pathology",
+          "priority": "routine"
+        }
+      ],
+      "management_plan": {
+        "immediate_actions": [
+          "Start anti-inflammatory medication (e.g. NSAIDs)",
+          "Refer to rheumatologist for further evaluation and management"
+        ],
+        "medications": [
+          {
+            "drug": "Indomethacin",
+            "dose": "50mg PO twice daily",
+            "route": "PO",
+            "duration": "Until symptoms resolve",
+            "rationale": "To reduce inflammation and pain"
+          }
+        ],
+        "monitoring": [
+          "Monitor WBC and CRP levels",
+          "Schedule follow-up appointments with rheumatologist"
+        ],
+        "consultations": [
+          {
+            "specialty": "Rheumatology",
+            "urgency": "immediate",
+            "reason": "To evaluate and manage reactive arthritis"
+          }
+        ]
+      },
+      "red_flags": [
+        "Family history of reactive arthritis",
+        "Recent travel to areas with high incidence of reactive arthritis"
+      ],
+      "patient_education": [
+        "Key point 1: Reactive arthritis is a common complication of certain infections (e.g. Yersinia, Shigella)",
+        "Key point 2: Rest, hydration, and anti-inflammatory medication can help manage symptoms"
+      ],
+      "follow_up": {
+        "timing": "Follow-up in 1-2 weeks to assess response to treatment",
+        "conditions": "Return if symptoms worsen or do not improve with treatment"
+      },
+      "confidence_in_assessment": 0.8,
+      "uncertainties": [
+        "Uncertainty regarding exact genetic testing results",
+        "Uncertainty regarding severity of symptoms"
+      ]
+    },
+    {
+      "primary_diagnosis": {
+        "name": "Periodic Fever, Aphthous Stomatitis, Pharyngitis, Adenitis Syndrome (PFAPA Syndrome)",
+        "confidence": 0.9,
+        "icd_code": "D69.0",
+        "reasoning": "Recurrent episodes of fever with pharyngitis, stomatitis, and adenitis in a young male with no other significant findings during asymptomatic periods. Family history also points towards a genetic predisposition."
+      },
+      "differential_diagnoses": [
+        {
+          "name": "Recurrent Apthous Stomatitis (RAS)",
+          "confidence": 0.1,
+          "icd_code": "L13.1",
+          "reasoning": "Although not as comprehensive as PFAPA, RAS can cause recurrent episodes of fever and stomatitis. However, the abdominal pain and chest pain are less common in RAS."
+        },
+        {
+          "name": "Henoch-Sch\u00f6nlein Purpura (HSP)",
+          "confidence": 0.05,
+          "icd_code": "I90",
+          "reasoning": "HSP can present with abdominal pain and fever but typically involves a rash and renal involvement, which are not mentioned in the patient's presentation."
+        },
+        {
+          "name": "Juvenile Idiopathic Arthritis (JIA)",
+          "confidence": 0.05,
+          "icd_code": "M08.00",
+          "reasoning": "JIA can present with joint pain and fever, but it usually involves more systemic symptoms and a longer duration of symptoms than the episodes described."
+        }
+      ],
+      "key_findings": [
+        "Recurrent episodes of fever",
+        "Severe abdominal pain during episodes"
+      ],
+      "diagnostic_tests": [
+        {
+          "test": "Genetic Testing for PFAPA",
+          "purpose": "To confirm the diagnosis",
+          "priority": "immediate"
+        },
+        {
+          "test": "Joint Ultrasound",
+          "purpose": "To rule out synovitis",
+          "priority": "urgent"
+        },
+        {
+          "test": "Renal Function Tests",
+          "purpose": "To rule out HSP",
+          "priority": "routine"
+        }
+      ],
+      "management_plan": {
+        "immediate_actions": [
+          "Hydration",
+          "Analgesics for pain"
+        ],
+        "medications": [
+          {
+            "drug": "Ibuprofen",
+            "dose": "400 mg",
+            "route": "PO",
+            "duration": "As needed",
+            "rationale": "For pain and fever management"
+          },
+          {
+            "drug": "Prednisone",
+            "dose": "20 mg",
+            "route": "PO",
+            "duration": "5 days",
+            "rationale": "To reduce inflammation and fever"
+          }
+        ],
+        "monitoring": [
+          "Temperature",
+          "Joint examination"
+        ],
+        "consultations": [
+          {
+            "specialty": "Pediatric Rheumatologist",
+            "urgency": "immediate",
+            "reason": "For genetic testing and management of suspected PFAPA"
+          }
+        ]
+      },
+      "red_flags": [
+        "Persistent fever without resolution",
+        "Development of a rash"
+      ],
+      "patient_education": [
+        "Recognize the onset of symptoms and seek prompt treatment",
+        "Avoid strenuous activities during episodes"
+      ],
+      "follow_up": {
+        "timing": "In 2-4 weeks",
+        "conditions": "Persistent symptoms, new symptoms, or fever lasting more than 3 days"
+      },
+      "confidence_in_assessment": 0.9,
+      "uncertainties": [
+        "The pending genetic test results are crucial for confirming the diagnosis",
+        "The presence of chest pain with breathing difficulties requires further evaluation"
+      ]
+    },
+    {
+      "primary_diagnosis": {
+        "name": "Familial Mediterranean Fever (FMF)",
+        "confidence": 0.95,
+        "icd_code": "E85.0",
+        "reasoning": "The patient's recurrent episodes of fever, abdominal pain, chest pain, joint pain, Mediterranean descent, family history of similar symptoms, onset in childhood, and elevated inflammatory markers during attacks strongly suggest FMF. The asymptomatic periods between attacks are also characteristic."
+      },
+      "differential_diagnoses": [
+        {
+          "name": "Other Hereditary Periodic Fever Syndromes (HPFS)",
+          "confidence": 0.6,
+          "icd_code": "D89.81",
+          "reasoning": "Other autoinflammatory syndromes like Tumor Necrosis Factor Receptor-Associated Periodic Syndrome (TRAPS), Hyperimmunoglobulinemia D Syndrome (HIDS)/Mevalonate Kinase Deficiency (MKD), and Cryopyrin-Associated Periodic Syndromes (CAPS) can present with similar symptoms, though some have distinct features (e.g., rash in CAPS)."
+        },
+        {
+          "name": "Systemic Juvenile Idiopathic Arthritis (sJIA)",
+          "confidence": 0.3,
+          "icd_code": "M08.2",
+          "reasoning": "While less likely given the family history, sJIA can present with recurrent fever, arthritis, and elevated inflammatory markers. However, the Mediterranean descent and family history are less typical."
+        },
+        {
+          "name": "Inflammatory Bowel Disease (IBD)",
+          "confidence": 0.2,
+          "icd_code": "K50-K51",
+          "reasoning": "Although the abdominal pain is suggestive, the cyclical nature with complete resolution between flares is not typical of IBD. The presence of chest pain and joint pain is less common in IBD without extra-intestinal manifestations."
+        }
+      ],
+      "key_findings": [
+        "Recurrent fever lasting 1-3 days",
+        "Severe abdominal pain during episodes",
+        "Family history of similar symptoms",
+        "Mediterranean descent",
+        "Elevated CRP, ESR, and WBC during attacks",
+        "Chest pain with breathing difficulties",
+        "Joint pain affecting knees and ankles"
+      ],
+      "diagnostic_tests": [
+        {
+          "test": "Genetic testing for MEFV gene mutations (FMF)",
+          "purpose": "To confirm the diagnosis of FMF by identifying specific mutations.",
+          "priority": "immediate"
+        },
+        {
+          "test": "Complete Blood Count (CBC) with differential",
+          "purpose": "To assess white blood cell count and differentials during and between episodes.",
+          "priority": "urgent"
+        },
+        {
+          "test": "Erythrocyte Sedimentation Rate (ESR) and C-Reactive Protein (CRP)",
+          "purpose": "To monitor inflammatory activity during and between episodes.",
+          "priority": "urgent"
+        },
+        {
+          "test": "Serum Amyloid A (SAA) levels",
+          "purpose": "To monitor for amyloidosis, a potential complication of FMF.",
+          "priority": "routine"
+        },
+        {
+          "test": "Urine analysis",
+          "purpose": "To rule out kidney involvement or infection.",
+          "priority": "routine"
+        }
+      ],
+      "management_plan": {
+        "immediate_actions": [
+          "Manage acute symptoms with NSAIDs or analgesics if needed.",
+          "Provide supportive care during acute attacks (rest, hydration)."
+        ],
+        "medications": [
+          {
+            "drug": "Colchicine",
+            "dose": "0.6 mg orally once or twice daily",
+            "route": "PO",
+            "duration": "Lifelong",
+            "rationale": "First-line treatment for FMF to prevent acute attacks and reduce the risk of amyloidosis."
+          },
+          {
+            "drug": "NSAIDs (e.g., Ibuprofen, Naproxen)",
+            "dose": "As needed for pain relief during acute attacks",
+            "route": "PO",
+            "duration": "Short-term, during flares",
+            "rationale": "For symptomatic relief of pain and inflammation during acute attacks."
+          }
+        ],
+        "monitoring": [
+          "Frequency of attacks",
+          "Severity of attacks",
+          "Medication side effects",
+          "Renal Function (BUN, Creatinine)",
+          "Liver Function Tests (AST, ALT)",
+          "SAA levels"
+        ],
+        "consultations": [
+          {
+            "specialty": "Rheumatology",
+            "urgency": "routine",
+            "reason": "For long-term management of FMF and monitoring for complications."
+          },
+          {
+            "specialty": "Genetics",
+            "urgency": "routine",
+            "reason": "To interpret genetic testing results and provide genetic counseling to the patient and family."
+          }
+        ]
+      },
+      "red_flags": [
+        "Signs of amyloidosis (proteinuria, renal dysfunction)",
+        "Persistent fever despite colchicine treatment",
+        "Severe abdominal pain unresponsive to analgesics",
+        "New or worsening chest pain"
+      ],
+      "patient_education": [
+        "Importance of adherence to colchicine therapy.",
+        "Potential side effects of colchicine (e.g., diarrhea, abdominal cramping).",
+        "Symptoms of amyloidosis and the need for prompt evaluation.",
+        "Importance of regular follow-up appointments.",
+        "Lifestyle modifications to potentially reduce flare frequency (e.g., stress management)."
+      ],
+      "follow_up": {
+        "timing": "Within 2-4 weeks after diagnosis and initiation of colchicine, then every 3-6 months or as needed.",
+        "conditions": "Worsening symptoms, signs of amyloidosis, medication side effects, or new concerns."
+      },
+      "confidence_in_assessment": 0.9,
+      "uncertainties": [
+        "Specific MEFV gene mutations present (pending genetic testing results).",
+        "Severity and frequency of future attacks despite treatment.",
+        "Potential for long-term complications such as amyloidosis."
+      ]
+    },
+    {
+      "primary_diagnosis": {
+        "name": "Familial Mediterranean Fever",
+        "confidence": 0.9,
+        "icd_code": "E85.0",
+        "reasoning": "Recurrent episodes of fever, severe abdominal pain, chest pain, joint pain, family history of similar symptoms, and Mediterranean descent strongly suggest Familial Mediterranean Fever (FMF). Elevated CRP, ESR, and WBC during attacks are also consistent with FMF."
+      },
+      "differential_diagnoses": [
+        {
+          "name": "Periodic Fever Syndrome (other than FMF)",
+          "confidence": 0.7,
+          "icd_code": "E85.8",
+          "reasoning": "Other periodic fever syndromes can present similarly with recurrent fever and systemic inflammation, though FMF is more likely given the family history and Mediterranean descent."
+        },
+        {
+          "name": "Systemic Lupus Erythematosus (SLE)",
+          "confidence": 0.5,
+          "icd_code": "M32.9",
+          "reasoning": "SLE can cause recurrent fever, joint pain, and elevated inflammatory markers, but the episodic nature and family history make FMF more likely."
+        },
+        {
+          "name": "Hereditary Angioedema",
+          "confidence": 0.3,
+          "icd_code": "D84.1",
+          "reasoning": "Can cause recurrent abdominal pain and swelling, but lacks the fever and joint pain seen in this case."
+        }
+      ],
+      "key_findings": [
+        "Recurrent episodes of fever lasting 1-3 days",
+        "Severe abdominal pain during episodes",
+        "Family history of similar symptoms"
+      ],
+      "diagnostic_tests": [
+        {
+          "test": "MEFV gene mutation analysis",
+          "purpose": "Confirm diagnosis of Familial Mediterranean Fever",
+          "priority": "urgent"
+        },
+        {
+          "test": "Serum amyloid A (SAA) protein",
+          "purpose": "Assess for amyloidosis risk",
+          "priority": "urgent"
+        },
+        {
+          "test": "Complete blood count (CBC)",
+          "purpose": "Monitor WBC and inflammatory markers",
+          "priority": "routine"
+        }
+      ],
+      "management_plan": {
+        "immediate_actions": [
+          "Monitor vital signs during attacks",
+          "Provide pain relief as needed"
+        ],
+        "medications": [
+          {
+            "drug": "Colchicine",
+            "dose": "0.5 mg twice daily",
+            "route": "PO",
+            "duration": "Lifelong",
+            "rationale": "Prophylaxis to prevent attacks and amyloidosis in FMF"
+          }
+        ],
+        "monitoring": [
+          "Inflammatory markers (CRP, ESR)",
+          "Every 3 months"
+        ],
+        "consultations": [
+          {
+            "specialty": "Rheumatology",
+            "urgency": "urgent",
+            "reason": "Confirm diagnosis and manage long-term treatment"
+          },
+          {
+            "specialty": "Genetics",
+            "urgency": "routine",
+            "reason": "Genetic counseling and testing"
+          }
+        ]
+      },
+      "red_flags": [
+        "Signs of amyloidosis (proteinuria, renal failure)",
+        "Severe chest pain or shortness of breath"
+      ],
+      "patient_education": [
+        "Importance of lifelong colchicine therapy",
+        "Recognize signs of amyloidosis and when to seek immediate care"
+      ],
+      "follow_up": {
+        "timing": "4 weeks",
+        "conditions": "New or worsening symptoms, especially renal or respiratory"
+      },
+      "confidence_in_assessment": 0.9,
+      "uncertainties": [
+        "Pending genetic test results",
+        "Exact mutation type if FMF is confirmed"
+      ]
+    },
+    null,
+    null
+  ],
+  "consensus_analysis": {
+    "total_models": 8,
+    "responding_models": 5,
+    "consensus_level": "None",
+    "primary_diagnosis": null,
+    "primary_confidence": 0.0,
+    "alternative_diagnoses": [],
+    "minority_opinions": [],
+    "agreement_scores": {},
+    "geographic_patterns": {
+      "France": [],
+      "USA": [],
+      "China": []
+    },
+    "action_required": "Active clinical judgment and specialist consultation needed",
+    "clinical_recommendation": "No consensus achieved. Comprehensive clinical evaluation required.",
+    "bias_considerations": []
+  }
+}

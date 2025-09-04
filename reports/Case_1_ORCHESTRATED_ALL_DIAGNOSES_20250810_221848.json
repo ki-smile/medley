@@ -1,0 +1,203 @@
+{
+  "diagnostic_landscape": {
+    "primary_diagnosis": {
+      "name": "Familial Mediterranean Fever",
+      "agreement_percentage": 62.96,
+      "supporting_models": [
+        "gpt-4o",
+        "gpt-4o-mini",
+        "gpt-oss-120b",
+        "claude-3-opus",
+        "gemini-2.5-pro",
+        "gemini-2.5-flash",
+        "gemini-2.5-flash-lite",
+        "mistral-large",
+        "mistral-small",
+        "deepseek-chat",
+        "deepseek-r1",
+        "command-r-plus",
+        "wizardlm",
+        "grok-2",
+        "grok-4",
+        "jamba-large",
+        "lfm-40b"
+      ],
+      "evidence": [
+        "Recurrent fever episodes",
+        "Abdominal pain with peritoneal signs",
+        "Arthritis affecting knees/ankles",
+        "Family history",
+        "Mediterranean/Somali descent",
+        "Self-limiting episodes"
+      ],
+      "confidence": "Moderate"
+    },
+    "strong_alternatives": [
+      {
+        "name": "Familial Mediterranean Fever",
+        "icd10_code": "E85.0",
+        "supporting_models": [
+          "gpt-4o",
+          "gpt-4o-mini",
+          "gpt-oss-120b",
+          "claude-3-opus",
+          "gemini-2.5-pro",
+          "gemini-2.5-flash",
+          "gemini-2.5-flash-lite",
+          "mistral-large",
+          "mistral-small",
+          "deepseek-chat",
+          "deepseek-r1",
+          "command-r-plus",
+          "wizardlm",
+          "grok-2",
+          "grok-4",
+          "jamba-large",
+          "lfm-40b"
+        ],
+        "count": 17,
+        "percentage": 62.96,
+        "evidence": [
+          "Recurrent fever",
+          "Peritoneal signs",
+          "Family history",
+          "Mediterranean descent"
+        ]
+      },
+      {
+        "name": "Systemic Lupus Erythematosus",
+        "icd10_code": "M32.9",
+        "supporting_models": [
+          "sonar-deep",
+          "lfm-40b",
+          "gpt-4o-mini",
+          "deepseek-chat",
+          "deepseek-r1",
+          "grok-4",
+          "deepseek-chat-v3",
+          "jamba-large",
+          "grok-2",
+          "wizardlm",
+          "claude-3-opus",
+          "gemini-2.5-flash",
+          "gpt-4o"
+        ],
+        "count": 13,
+        "percentage": 48.15,
+        "evidence": [
+          "Fever",
+          "Arthritis",
+          "Elevated inflammatory markers"
+        ]
+      }
+    ],
+    "alternatives": [],
+    "minority_opinions": [],
+    "all_alternative_diagnoses": [
+      {
+        "name": "Familial Mediterranean Fever",
+        "icd10_code": "E85.0",
+        "supporting_models": [
+          "gpt-4o",
+          "gpt-4o-mini",
+          "gpt-oss-120b",
+          "claude-3-opus",
+          "gemini-2.5-pro",
+          "gemini-2.5-flash",
+          "gemini-2.5-flash-lite",
+          "mistral-large",
+          "mistral-small",
+          "deepseek-chat",
+          "deepseek-r1",
+          "command-r-plus",
+          "wizardlm",
+          "grok-2",
+          "grok-4",
+          "jamba-large",
+          "lfm-40b"
+        ],
+        "count": 17,
+        "percentage": 62.96,
+        "evidence": [
+          "Recurrent fever",
+          "Peritoneal signs",
+          "Family history",
+          "Mediterranean descent"
+        ]
+      },
+      {
+        "name": "Systemic Lupus Erythematosus",
+        "icd10_code": "M32.9",
+        "supporting_models": [
+          "sonar-deep",
+          "lfm-40b",
+          "gpt-4o-mini",
+          "deepseek-chat",
+          "deepseek-r1",
+          "grok-4",
+          "deepseek-chat-v3",
+          "jamba-large",
+          "grok-2",
+          "wizardlm",
+          "claude-3-opus",
+          "gemini-2.5-flash",
+          "gpt-4o"
+        ],
+        "count": 13,
+        "percentage": 48.15,
+        "evidence": [
+          "Fever",
+          "Arthritis",
+          "Elevated inflammatory markers"
+        ]
+      }
+    ]
+  },
+  "clinical_decision_tree": {
+    "initial_test": "MEFV gene mutation analysis",
+    "branches": [
+      {
+        "test": "MEFV gene testing",
+        "if_positive": "Start colchicine therapy",
+        "if_negative": "Proceed to inflammatory markers",
+        "condition": "Pathogenic mutation present",
+        "next_action": "Genetic counseling and family screening",
+        "sub_branches": [
+          {
+            "test": "CRP and ESR during attack",
+            "if_positive": "Supports FMF diagnosis",
+            "if_negative": "Consider alternative diagnoses",
+            "condition": "Elevated inflammatory markers",
+            "next_action": "Monitor response to colchicine"
+          }
+        ]
+      },
+      {
+        "test": "Serum amyloid A level",
+        "if_positive": "Monitor for amyloidosis risk",
+        "if_negative": "Continue routine monitoring",
+        "condition": "Elevated SAA",
+        "next_action": "Adjust colchicine dosing",
+        "sub_branches": []
+      }
+    ]
+  },
+  "quality_metrics": {
+    "total_models_analyzed": 27,
+    "successful_responses": 27,
+    "consensus_strength": "Moderate",
+    "diagnostic_diversity_index": 0.72,
+    "confidence_in_primary_diagnosis": 0.63
+  },
+  "management_strategies": {},
+  "critical_decision_points": {},
+  "ai_model_bias_analysis": {},
+  "evidence_synthesis": {},
+  "primary_diagnosis_summaries": {},
+  "metadata": {
+    "analysis_timestamp": "2025-08-10T22:18:48.058185",
+    "orchestrator_model": "anthropic/claude-3-5-sonnet-20241022",
+    "case_id": "Case_1",
+    "case_title": "Case_1 - Medical Analysis"
+  }
+}

@@ -1,0 +1,543 @@
+{
+  "case_id": "test_case",
+  "case_title": "Medical Case from test_case.txt",
+  "case_description": {
+    "case_id": "test_case",
+    "title": "Medical Case from test_case.txt",
+    "patient_info": "",
+    "presentation": "Test case: 45-year-old with fever",
+    "symptoms": [],
+    "history": null,
+    "physical_exam": null,
+    "labs": null,
+    "imaging": null
+  },
+  "analysis_timestamp": "2025-08-11T13:35:21.553708",
+  "models_queried": 8,
+  "models_responded": 5,
+  "model_responses": [
+    {
+      "model_name": "mistralai/mistral-7b-instruct:free",
+      "origin": "France",
+      "size": "7B",
+      "response": " {\n    \"primary_diagnosis\": {\n        \"name\": \"Influenza (Flu)\",\n        \"confidence\": 0.6,\n        \"icd_code\": \"J10\",\n        \"reasoning\": \"Fever, age group is at risk, and current flu season\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Upper Respiratory Tract Infection (URTI)\",\n            \"confidence\": 0.4,\n            \"icd_code\": \"J00-J06\",\n            \"reasoning\": \"Common cause of fever and upper respiratory symptoms\"\n        },\n        {\n            \"name\": \"Pneumonia\",\n            \"confidence\": 0.3,\n            \"icd_code\": \"J12.9\",\n            \"reasoning\": \"Comparison based on fever and possible lung involvement\"\n        },\n        {\n            \"name\": \"Rheumatoid Arthritis\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"M05\",\n            \"reasoning\": \"Rheumatoid arthritis can present with fever, but this is less common and would require additional symptoms\"\n        }\n    ],\n    \"key_findings\": [\n        \"Fever\",\n        \"Not specifically mentioned, but potential for flu-like symptoms such as headache, fatigue, and muscle pain\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Rapid Influenza Diagnostic Test (RIDT)\",\n            \"purpose\": \"To confirm the presence of flu viruses\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Complete Blood Count (CBC)\",\n            \"purpose\": \"To evaluate for signs of infection or inflammation\",\n            \"priority\": \"routine\"\n        },\n        {\n            \"test\": \"Chest X-ray\",\n            \"purpose\": \"To evaluate for potential pneumonia\",\n            \"priority\": \"urgent\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Provide supportive care such as fluids and rest\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Oseltamivir\",\n                \"dose\": \"75mg PO twice daily for 5 days\",\n                \"route\": \"PO\",\n                \"duration\": \"5 days\",\n                \"rationale\": \"To reduce severity and duration of flu symptoms\"\n            }\n        ],\n        \"monitoring\": [\n            \"Monitor for resolution of symptoms\",\n            \"Monitor for any signs of complications (e.g., worsening cough, shortness of breath)\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Pulmonology\",\n                \"urgency\": \"routine\",\n                \"reason\": \"For follow-up and evaluation of lung involvement if symptoms worsen\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Worsening respiratory symptoms\",\n        \"Persistent high fever\"\n    ],\n    \"patient_education\": [\n        \"Importance of rest and hydration\",\n        \"Importance of completing the full course of medication\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"3-5 days after symptom onset\",\n        \"conditions\": \"Return immediately if worsening symptoms or red flags are present\"\n    },\n    \"confidence_in_assessment\": 0.7,\n    \"uncertainties\": [\n        \"Possible URTI or other respiratory infections\",\n        \"Potential for complications if symptoms do not improve\"\n    ]\n}",
+      "error": null,
+      "timestamp": "2025-08-11T13:34:08.705848",
+      "tokens_used": 1796,
+      "input_tokens": 899,
+      "output_tokens": 897,
+      "latency": 9.497323036193848
+    },
+    {
+      "model_name": "google/gemma-2-9b-it:free",
+      "origin": "USA",
+      "size": "9B",
+      "response": "```json\n[\n  {\n    \"confidence\": 0.3,\n    \"diagnosis\": \"Anxiety\",\n    \"icd10\": \"F41.1\"\n  },\n  {\n    \"confidence\": 0.2,\n    \"diagnosis\": \"Depression\",\n    \"icd10\": \"F32.9\"\n  },\n  {\n    \"confidence\": 0.1,\n    \"diagnosis\": \"Generalized Anxiety Disorder\",\n    \"icd10\": \"F41.1\"\n  }\n]\n```",
+      "error": null,
+      "timestamp": "2025-08-11T13:34:14.461529",
+      "tokens_used": 937,
+      "input_tokens": 809,
+      "output_tokens": 128,
+      "latency": 5.750599145889282
+    },
+    {
+      "model_name": "meta-llama/llama-3.2-3b-instruct:free",
+      "origin": "USA",
+      "size": "3B",
+      "response": "{\n    \"primary_diagnosis\": {\n        \"name\": \"Influenza\",\n        \"confidence\": 0.8,\n        \"icd_code\": \"J09.9\",\n        \"reasoning\": \"Fever is a common symptom of influenza, and the patient's age and presentation are consistent with this diagnosis.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Pneumonia\",\n            \"confidence\": 0.4,\n            \"icd_code\": \"J13-J19\",\n            \"reasoning\": \"The patient's fever and respiratory symptoms could be indicative of pneumonia, but the lack of specific findings such as cough production or chest pain makes this less likely.\"\n        },\n        {\n            \"name\": \"Urinary Tract Infection\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"A04-A07\",\n            \"reasoning\": \"The patient's symptoms could be consistent with a urinary tract infection, but the presence of fever and respiratory symptoms makes this less likely.\"\n        },\n        {\n            \"name\": \"Bronchitis\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"J01.0\",\n            \"reasoning\": \"The patient's symptoms could be consistent with bronchitis, but the presence of fever and respiratory symptoms makes this less likely.\"\n        }\n    ],\n    \"key_findings\": [\n        \"Fever\",\n        \"Tachycardia\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Complete Blood Count\",\n            \"purpose\": \"To rule out bacterial infection\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Chest X-ray\",\n            \"purpose\": \"To evaluate respiratory symptoms\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Influenza Test\",\n            \"purpose\": \"To confirm influenza diagnosis\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Administer oseltamivir 75mg PO twice daily\",\n            \"Provide rest and hydration\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Oseltamivir\",\n                \"dose\": \"75mg\",\n                \"route\": \"PO\",\n                \"duration\": \"3 days\",\n                \"rationale\": \"To treat influenza\"\n            }\n        ],\n        \"monitoring\": [\n            \"Vital signs every 2 hours\",\n            \"Respiratory status every 4 hours\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Internal Medicine\",\n                \"urgency\": \"immediate\",\n                \"reason\": \"To evaluate respiratory symptoms and provide further management\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Shortness of breath\",\n        \"Chest pain\"\n    ],\n    \"patient_education\": [\n        \"Take antiviral medication as directed\",\n        \"Seek immediate medical attention if symptoms worsen\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"In 7-10 days\",\n        \"conditions\": []\n    },\n    \"confidence_in_assessment\": 0.8,\n    \"uncertainties\": [\n        \"The exact ICD-10 code for the patient's diagnosis is unknown\",\n        \"The patient's symptoms may be indicative of other conditions, such as pneumonia or bronchitis\"\n    ]\n}",
+      "error": null,
+      "timestamp": "2025-08-11T13:34:20.275130",
+      "tokens_used": 2011,
+      "input_tokens": 1293,
+      "output_tokens": 718,
+      "latency": 5.8056371212005615
+    },
+    {
+      "model_name": "qwen/qwen-2.5-coder-32b-instruct",
+      "origin": "China",
+      "size": "32B",
+      "response": "{\n    \"primary_diagnosis\": {\n        \"name\": \"Viral Upper Respiratory Infection\",\n        \"confidence\": 0.8,\n        \"icd_code\": \"B35.9\",\n        \"reasoning\": \"Common cause of fever in adults without other specific symptoms.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Influenza\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"J09\",\n            \"reasoning\": \"Seasonal or epidemic, with rapid onset of fever, cough, and myalgias.\"\n        },\n        {\n            \"name\": \"Urinary Tract Infection\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"N39\",\n            \"reasoning\": \"Fever may be accompanied by dysuria, urinary frequency, or suprapubic pain.\"\n        },\n        {\n            \"name\": \"Gastroenteritis\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"K52.0\",\n            \"reasoning\": \"Diarrhea, nausea, and vomiting can accompany fever.\"\n        }\n    ],\n    \"key_findings\": [\n        \"Fever\",\n        \"No specific symptoms mentioned\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Complete Blood Count (CBC)\",\n            \"purpose\": \"To look for signs of infection (elevated white blood cells)\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Throat Swab for Flu Antigens\",\n            \"purpose\": \"To rule in influenza\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Urinalysis\",\n            \"purpose\": \"To rule out urinary tract infection\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Hydration with fluids\",\n            \"Temperature monitoring\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Acetaminophen\",\n                \"dose\": \"650 mg\",\n                \"route\": \"PO\",\n                \"duration\": \"every 4-6 hours as needed\",\n                \"rationale\": \"To reduce fever and discomfort\"\n            }\n        ],\n        \"monitoring\": [\n            \"Body temperature\",\n            \"Fluid intake and output\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Infectious Disease\",\n                \"urgency\": \"routine\",\n                \"reason\": \"For further evaluation if symptoms persist\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Fever greater than 39\u00b0C\",\n        \"Severe headache, neck stiffness, or photophobia\"\n    ],\n    \"patient_education\": [\n        \"Stay well-hydrated\",\n        \"Rest and allow your body to recover\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"In 1-2 days if there is no improvement\",\n        \"conditions\": \"If fever persists or worsens\"\n    },\n    \"confidence_in_assessment\": 0.8,\n    \"uncertainties\": [\n        \"No detailed symptoms provided to narrow down differential diagnoses\",\n        \"Lack of information on travel history or recent exposures\"\n    ]\n}",
+      "error": null,
+      "timestamp": "2025-08-11T13:34:34.808438",
+      "tokens_used": 1421,
+      "input_tokens": 731,
+      "output_tokens": 690,
+      "latency": 14.528993844985962
+    },
+    {
+      "model_name": "google/gemini-2.0-flash-exp:free",
+      "origin": "USA",
+      "size": "Unknown",
+      "response": null,
+      "error": "API Error 429: {\"error\":{\"message\":\"Provider returned error\",\"code\":429,\"metadata\":{\"raw\":\"google/gemini-2.0-flash-exp:free is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations\",\"provider_name\":\"Google AI Studio\"}},\"user_id\":\"user_311J1DE0saKoskawvWx8XZsOQ1N\"}",
+      "timestamp": "2025-08-11T13:34:36.489937",
+      "tokens_used": 0,
+      "input_tokens": 0,
+      "output_tokens": 0
+    },
+    {
+      "model_name": "deepseek/deepseek-chat-v3-0324:free",
+      "origin": "China",
+      "size": "Unknown",
+      "response": "```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"Viral upper respiratory infection\",\n        \"confidence\": 0.7,\n        \"icd_code\": \"J06.9\",\n        \"reasoning\": \"Fever is a common symptom of viral infections, and in a 45-year-old without additional symptoms, this is the most likely diagnosis.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Bacterial pneumonia\",\n            \"confidence\": 0.5,\n            \"icd_code\": \"J18.9\",\n            \"reasoning\": \"Fever can be a sign of bacterial pneumonia, especially if accompanied by cough or shortness of breath.\"\n        },\n        {\n            \"name\": \"Urinary tract infection\",\n            \"confidence\": 0.4,\n            \"icd_code\": \"N39.0\",\n            \"reasoning\": \"UTIs can present with fever, particularly in older adults, though additional symptoms like dysuria may be present.\"\n        },\n        {\n            \"name\": \"COVID-19\",\n            \"confidence\": 0.6,\n            \"icd_code\": \"U07.1\",\n            \"reasoning\": \"Fever is a hallmark symptom of COVID-19, and testing should be considered given its prevalence.\"\n        }\n    ],\n    \"key_findings\": [\n        \"Fever\",\n        \"Lack of additional symptom details\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Complete blood count (CBC)\",\n            \"purpose\": \"Assess for bacterial vs. viral infection\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Urinalysis\",\n            \"purpose\": \"Rule out urinary tract infection\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"COVID-19 PCR test\",\n            \"purpose\": \"Rule out SARS-CoV-2 infection\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Chest X-ray\",\n            \"purpose\": \"Rule out pneumonia\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Hydration\",\n            \"Rest\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Acetaminophen\",\n                \"dose\": \"500-1000 mg\",\n                \"route\": \"PO\",\n                \"duration\": \"Every 6 hours as needed\",\n                \"rationale\": \"Fever and symptom relief\"\n            }\n        ],\n        \"monitoring\": [\n            \"Temperature\",\n            \"Every 4-6 hours\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Infectious Disease\",\n                \"urgency\": \"routine\",\n                \"reason\": \"If fever persists beyond 5 days or worsens\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Fever > 104\u00b0F (40\u00b0C)\",\n        \"Altered mental status\",\n        \"Shortness of breath\"\n    ],\n    \"patient_education\": [\n        \"Monitor symptoms and seek care if they worsen\",\n        \"Stay hydrated and get plenty of rest\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"3 days if symptoms persist\",\n        \"conditions\": \"Difficulty breathing, high fever, or confusion\"\n    },\n    \"confidence_in_assessment\": 0.7,\n    \"uncertainties\": [\n        \"Lack of additional symptoms or history\",\n        \"Potential exposure to infectious diseases\"\n    ]\n}\n```",
+      "error": null,
+      "timestamp": "2025-08-11T13:35:07.301846",
+      "tokens_used": 1487,
+      "input_tokens": 735,
+      "output_tokens": 752,
+      "latency": 30.807010173797607
+    },
+    {
+      "model_name": "nousresearch/hermes-3-llama-3.1-8b:free",
+      "origin": "USA",
+      "size": "8B",
+      "response": null,
+      "error": "API Error 400: {\"error\":{\"message\":\"nousresearch/hermes-3-llama-3.1-8b:free is not a valid model ID\",\"code\":400},\"user_id\":\"user_311J1DE0saKoskawvWx8XZsOQ1N\"}",
+      "timestamp": "2025-08-11T13:35:07.546572",
+      "tokens_used": 0,
+      "input_tokens": 0,
+      "output_tokens": 0
+    },
+    {
+      "model_name": "liquid/lfm-40b:free",
+      "origin": "USA",
+      "size": "40B",
+      "response": null,
+      "error": "API Error 404: {\"error\":{\"message\":\"No endpoints found for liquid/lfm-40b:free.\",\"code\":404},\"user_id\":\"user_311J1DE0saKoskawvWx8XZsOQ1N\"}",
+      "timestamp": "2025-08-11T13:35:07.788766",
+      "tokens_used": 0,
+      "input_tokens": 0,
+      "output_tokens": 0
+    }
+  ],
+  "parsed_responses": [
+    {
+      "primary_diagnosis": {
+        "name": "Influenza (Flu)",
+        "confidence": 0.6,
+        "icd_code": "J10",
+        "reasoning": "Fever, age group is at risk, and current flu season"
+      },
+      "differential_diagnoses": [
+        {
+          "name": "Upper Respiratory Tract Infection (URTI)",
+          "confidence": 0.4,
+          "icd_code": "J00-J06",
+          "reasoning": "Common cause of fever and upper respiratory symptoms"
+        },
+        {
+          "name": "Pneumonia",
+          "confidence": 0.3,
+          "icd_code": "J12.9",
+          "reasoning": "Comparison based on fever and possible lung involvement"
+        },
+        {
+          "name": "Rheumatoid Arthritis",
+          "confidence": 0.2,
+          "icd_code": "M05",
+          "reasoning": "Rheumatoid arthritis can present with fever, but this is less common and would require additional symptoms"
+        }
+      ],
+      "key_findings": [
+        "Fever",
+        "Not specifically mentioned, but potential for flu-like symptoms such as headache, fatigue, and muscle pain"
+      ],
+      "diagnostic_tests": [
+        {
+          "test": "Rapid Influenza Diagnostic Test (RIDT)",
+          "purpose": "To confirm the presence of flu viruses",
+          "priority": "immediate"
+        },
+        {
+          "test": "Complete Blood Count (CBC)",
+          "purpose": "To evaluate for signs of infection or inflammation",
+          "priority": "routine"
+        },
+        {
+          "test": "Chest X-ray",
+          "purpose": "To evaluate for potential pneumonia",
+          "priority": "urgent"
+        }
+      ],
+      "management_plan": {
+        "immediate_actions": [
+          "Provide supportive care such as fluids and rest"
+        ],
+        "medications": [
+          {
+            "drug": "Oseltamivir",
+            "dose": "75mg PO twice daily for 5 days",
+            "route": "PO",
+            "duration": "5 days",
+            "rationale": "To reduce severity and duration of flu symptoms"
+          }
+        ],
+        "monitoring": [
+          "Monitor for resolution of symptoms",
+          "Monitor for any signs of complications (e.g., worsening cough, shortness of breath)"
+        ],
+        "consultations": [
+          {
+            "specialty": "Pulmonology",
+            "urgency": "routine",
+            "reason": "For follow-up and evaluation of lung involvement if symptoms worsen"
+          }
+        ]
+      },
+      "red_flags": [
+        "Worsening respiratory symptoms",
+        "Persistent high fever"
+      ],
+      "patient_education": [
+        "Importance of rest and hydration",
+        "Importance of completing the full course of medication"
+      ],
+      "follow_up": {
+        "timing": "3-5 days after symptom onset",
+        "conditions": "Return immediately if worsening symptoms or red flags are present"
+      },
+      "confidence_in_assessment": 0.7,
+      "uncertainties": [
+        "Possible URTI or other respiratory infections",
+        "Potential for complications if symptoms do not improve"
+      ]
+    },
+    {
+      "initial_impression": "",
+      "differential_diagnoses": [
+        {
+          "diagnosis": "Disorder",
+          "reasoning": "1,\n    \"diagnosis\": \"Generalized Anxiety Disorder\",\n    \"icd10\": \"F41"
+        }
+      ],
+      "alternative_perspectives": "",
+      "next_steps": "",
+      "uncertainties": "",
+      "population_considerations": "",
+      "confidence_score": 0.3,
+      "raw_response": "```json\n[\n  {\n    \"confidence\": 0.3,\n    \"diagnosis\": \"Anxiety\",\n    \"icd10\": \"F41.1\"\n  },\n  {\n    \"confidence\": 0.2,\n    \"diagnosis\": \"Depression\",\n    \"icd10\": \"F32.9\"\n  },\n  {\n    \"confidence\": 0.1,\n    \"diagnosis\": \"Generalized Anxiety Disorder\",\n    \"icd10\": \"F41.1\"\n  }\n]\n```"
+    },
+    {
+      "primary_diagnosis": {
+        "name": "Influenza",
+        "confidence": 0.8,
+        "icd_code": "J09.9",
+        "reasoning": "Fever is a common symptom of influenza, and the patient's age and presentation are consistent with this diagnosis."
+      },
+      "differential_diagnoses": [
+        {
+          "name": "Pneumonia",
+          "confidence": 0.4,
+          "icd_code": "J13-J19",
+          "reasoning": "The patient's fever and respiratory symptoms could be indicative of pneumonia, but the lack of specific findings such as cough production or chest pain makes this less likely."
+        },
+        {
+          "name": "Urinary Tract Infection",
+          "confidence": 0.2,
+          "icd_code": "A04-A07",
+          "reasoning": "The patient's symptoms could be consistent with a urinary tract infection, but the presence of fever and respiratory symptoms makes this less likely."
+        },
+        {
+          "name": "Bronchitis",
+          "confidence": 0.2,
+          "icd_code": "J01.0",
+          "reasoning": "The patient's symptoms could be consistent with bronchitis, but the presence of fever and respiratory symptoms makes this less likely."
+        }
+      ],
+      "key_findings": [
+        "Fever",
+        "Tachycardia"
+      ],
+      "diagnostic_tests": [
+        {
+          "test": "Complete Blood Count",
+          "purpose": "To rule out bacterial infection",
+          "priority": "immediate"
+        },
+        {
+          "test": "Chest X-ray",
+          "purpose": "To evaluate respiratory symptoms",
+          "priority": "urgent"
+        },
+        {
+          "test": "Influenza Test",
+          "purpose": "To confirm influenza diagnosis",
+          "priority": "routine"
+        }
+      ],
+      "management_plan": {
+        "immediate_actions": [
+          "Administer oseltamivir 75mg PO twice daily",
+          "Provide rest and hydration"
+        ],
+        "medications": [
+          {
+            "drug": "Oseltamivir",
+            "dose": "75mg",
+            "route": "PO",
+            "duration": "3 days",
+            "rationale": "To treat influenza"
+          }
+        ],
+        "monitoring": [
+          "Vital signs every 2 hours",
+          "Respiratory status every 4 hours"
+        ],
+        "consultations": [
+          {
+            "specialty": "Internal Medicine",
+            "urgency": "immediate",
+            "reason": "To evaluate respiratory symptoms and provide further management"
+          }
+        ]
+      },
+      "red_flags": [
+        "Shortness of breath",
+        "Chest pain"
+      ],
+      "patient_education": [
+        "Take antiviral medication as directed",
+        "Seek immediate medical attention if symptoms worsen"
+      ],
+      "follow_up": {
+        "timing": "In 7-10 days",
+        "conditions": []
+      },
+      "confidence_in_assessment": 0.8,
+      "uncertainties": [
+        "The exact ICD-10 code for the patient's diagnosis is unknown",
+        "The patient's symptoms may be indicative of other conditions, such as pneumonia or bronchitis"
+      ]
+    },
+    {
+      "primary_diagnosis": {
+        "name": "Viral Upper Respiratory Infection",
+        "confidence": 0.8,
+        "icd_code": "B35.9",
+        "reasoning": "Common cause of fever in adults without other specific symptoms."
+      },
+      "differential_diagnoses": [
+        {
+          "name": "Influenza",
+          "confidence": 0.2,
+          "icd_code": "J09",
+          "reasoning": "Seasonal or epidemic, with rapid onset of fever, cough, and myalgias."
+        },
+        {
+          "name": "Urinary Tract Infection",
+          "confidence": 0.2,
+          "icd_code": "N39",
+          "reasoning": "Fever may be accompanied by dysuria, urinary frequency, or suprapubic pain."
+        },
+        {
+          "name": "Gastroenteritis",
+          "confidence": 0.2,
+          "icd_code": "K52.0",
+          "reasoning": "Diarrhea, nausea, and vomiting can accompany fever."
+        }
+      ],
+      "key_findings": [
+        "Fever",
+        "No specific symptoms mentioned"
+      ],
+      "diagnostic_tests": [
+        {
+          "test": "Complete Blood Count (CBC)",
+          "purpose": "To look for signs of infection (elevated white blood cells)",
+          "priority": "immediate"
+        },
+        {
+          "test": "Throat Swab for Flu Antigens",
+          "purpose": "To rule in influenza",
+          "priority": "immediate"
+        },
+        {
+          "test": "Urinalysis",
+          "purpose": "To rule out urinary tract infection",
+          "priority": "routine"
+        }
+      ],
+      "management_plan": {
+        "immediate_actions": [
+          "Hydration with fluids",
+          "Temperature monitoring"
+        ],
+        "medications": [
+          {
+            "drug": "Acetaminophen",
+            "dose": "650 mg",
+            "route": "PO",
+            "duration": "every 4-6 hours as needed",
+            "rationale": "To reduce fever and discomfort"
+          }
+        ],
+        "monitoring": [
+          "Body temperature",
+          "Fluid intake and output"
+        ],
+        "consultations": [
+          {
+            "specialty": "Infectious Disease",
+            "urgency": "routine",
+            "reason": "For further evaluation if symptoms persist"
+          }
+        ]
+      },
+      "red_flags": [
+        "Fever greater than 39\u00b0C",
+        "Severe headache, neck stiffness, or photophobia"
+      ],
+      "patient_education": [
+        "Stay well-hydrated",
+        "Rest and allow your body to recover"
+      ],
+      "follow_up": {
+        "timing": "In 1-2 days if there is no improvement",
+        "conditions": "If fever persists or worsens"
+      },
+      "confidence_in_assessment": 0.8,
+      "uncertainties": [
+        "No detailed symptoms provided to narrow down differential diagnoses",
+        "Lack of information on travel history or recent exposures"
+      ]
+    },
+    null,
+    {
+      "primary_diagnosis": {
+        "name": "Viral upper respiratory infection",
+        "confidence": 0.7,
+        "icd_code": "J06.9",
+        "reasoning": "Fever is a common symptom of viral infections, and in a 45-year-old without additional symptoms, this is the most likely diagnosis."
+      },
+      "differential_diagnoses": [
+        {
+          "name": "Bacterial pneumonia",
+          "confidence": 0.5,
+          "icd_code": "J18.9",
+          "reasoning": "Fever can be a sign of bacterial pneumonia, especially if accompanied by cough or shortness of breath."
+        },
+        {
+          "name": "Urinary tract infection",
+          "confidence": 0.4,
+          "icd_code": "N39.0",
+          "reasoning": "UTIs can present with fever, particularly in older adults, though additional symptoms like dysuria may be present."
+        },
+        {
+          "name": "COVID-19",
+          "confidence": 0.6,
+          "icd_code": "U07.1",
+          "reasoning": "Fever is a hallmark symptom of COVID-19, and testing should be considered given its prevalence."
+        }
+      ],
+      "key_findings": [
+        "Fever",
+        "Lack of additional symptom details"
+      ],
+      "diagnostic_tests": [
+        {
+          "test": "Complete blood count (CBC)",
+          "purpose": "Assess for bacterial vs. viral infection",
+          "priority": "urgent"
+        },
+        {
+          "test": "Urinalysis",
+          "purpose": "Rule out urinary tract infection",
+          "priority": "urgent"
+        },
+        {
+          "test": "COVID-19 PCR test",
+          "purpose": "Rule out SARS-CoV-2 infection",
+          "priority": "urgent"
+        },
+        {
+          "test": "Chest X-ray",
+          "purpose": "Rule out pneumonia",
+          "priority": "routine"
+        }
+      ],
+      "management_plan": {
+        "immediate_actions": [
+          "Hydration",
+          "Rest"
+        ],
+        "medications": [
+          {
+            "drug": "Acetaminophen",
+            "dose": "500-1000 mg",
+            "route": "PO",
+            "duration": "Every 6 hours as needed",
+            "rationale": "Fever and symptom relief"
+          }
+        ],
+        "monitoring": [
+          "Temperature",
+          "Every 4-6 hours"
+        ],
+        "consultations": [
+          {
+            "specialty": "Infectious Disease",
+            "urgency": "routine",
+            "reason": "If fever persists beyond 5 days or worsens"
+          }
+        ]
+      },
+      "red_flags": [
+        "Fever > 104\u00b0F (40\u00b0C)",
+        "Altered mental status",
+        "Shortness of breath"
+      ],
+      "patient_education": [
+        "Monitor symptoms and seek care if they worsen",
+        "Stay hydrated and get plenty of rest"
+      ],
+      "follow_up": {
+        "timing": "3 days if symptoms persist",
+        "conditions": "Difficulty breathing, high fever, or confusion"
+      },
+      "confidence_in_assessment": 0.7,
+      "uncertainties": [
+        "Lack of additional symptoms or history",
+        "Potential exposure to infectious diseases"
+      ]
+    },
+    null,
+    null
+  ],
+  "consensus_analysis": {
+    "total_models": 8,
+    "responding_models": 5,
+    "consensus_level": "None",
+    "primary_diagnosis": "Disorder",
+    "primary_confidence": 0.2,
+    "alternative_diagnoses": [],
+    "minority_opinions": [
+      {
+        "diagnosis": "Disorder",
+        "confidence": 0.2,
+        "model_count": 1,
+        "supporting_models": [
+          "google/gemma-2-9b-it:free"
+        ],
+        "origins": [
+          "USA"
+        ],
+        "sample_reasoning": "1,\n    \"diagnosis\": \"Generalized Anxiety Disorder\",\n    \"icd10\": \"F41"
+      }
+    ],
+    "agreement_scores": {
+      "Disorder": 0.2
+    },
+    "geographic_patterns": {
+      "France": [],
+      "USA": [
+        "Disorder"
+      ],
+      "China": []
+    },
+    "action_required": "Active clinical judgment and specialist consultation needed",
+    "clinical_recommendation": "No clear consensus. Divergent opinions include: Disorder. Active clinical judgment and comprehensive testing required.",
+    "bias_considerations": [
+      "Low inter-model agreement suggests need for specialist input"
+    ]
+  }
+}

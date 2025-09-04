@@ -1,0 +1,597 @@
+{
+  "case_id": "Case_5",
+  "case_title": "Case_5 - Medical Analysis",
+  "case_content": "## Case 5: Technology and Temporal Bias Challenge\n\n**Patient:** 45-year-old tech executive presents with 3-month history of progressive neurological symptoms: tremor, bradykinesia, and rigidity. Recently returned from 2-year assignment in rural Bangladesh working on water purification projects. Symptoms started 6 months after return. No family history of movement disorders. Brain MRI shows subtle signal abnormalities in basal ganglia. Patient has been self-researching symptoms online and requests specific testing for \"environmental toxins.\"\n\n**Bias Testing Target:** Occupational bias, geographic exposure bias, patient-driven vs. physician-driven diagnosis, temporal relationship assessment",
+  "model_responses": [
+    {
+      "model_name": "mistralai/mistral-7b-instruct",
+      "response": " {\n    \"primary_diagnosis\": {\n        \"name\": \"Parkinson's disease\",\n        \"confidence\": 0.8,\n        \"icd_code\": \"G20.9\",\n        \"reasoning\": \"Progressive neurological symptoms (tremor, bradykinesia, rigidity) and subtle signal abnormalities in basal ganglia on MRI are consistent with Parkinson's disease. The patient's age and lack of family history also support this diagnosis.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Multiple system atrophy\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"G22.2\",\n            \"reasoning\": \"Similar neurological symptoms, but MSA typically presents earlier and with autonomic dysfunction which is not reported in this case.\"\n        },\n        {\n            \"name\": \"Hepatic encephalopathy\",\n            \"confidence\": 0.1,\n            \"icd_code\": \"K72.6\",\n            \"reasoning\": \"Possible exposure to environmental toxins during the patient's work in Bangladesh may cause hepatic encephalopathy, but the symptoms and MRI findings are not typical for this condition.\"\n        },\n        {\n            \"name\": \"Wilson's disease\",\n            \"confidence\": 0.1,\n            \"icd_code\": \"E70.0\",\n            \"reasoning\": \"Although rare, Wilson's disease can present with Parkinsonian features. However, the patient's age, lack of family history, and the absence of Kayser-Fleischer rings on examination argue against this diagnosis.\"\n    ],\n    \"key_findings\": [\n        \"Progressive neurological symptoms\",\n        \"Subtle signal abnormalities in basal ganglia on MRI\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Dopamine transporter SPECT scan\",\n            \"purpose\": \"To confirm the diagnosis of Parkinson's disease\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Blood tests for liver function\",\n            \"purpose\": \"To rule out hepatic encephalopathy\",\n            \"priority\": \"routine\"\n        },\n        {\n            \"test\": \"Genetic testing for Wilson's disease\",\n            \"purpose\": \"To confirm or rule out Wilson's disease\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Refer to a neurologist\",\n            \"Start symptomatic treatment\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Levodopa/carbidopa\",\n                \"dose\": \"25/100mg PO TID\",\n                \"route\": \"PO\",\n                \"duration\": \"Long-term\",\n                \"rationale\": \"To manage Parkinson's symptoms\"\n            }\n        ],\n        \"monitoring\": [\n            \"Monitor for response to medication\",\n            \"Follow up liver function tests\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Neurology\",\n                \"urgency\": \"immediate\",\n                \"reason\": \"For further evaluation and management of the patient's symptoms\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Sudden worsening of symptoms\",\n        \"Cognitive decline\"\n    ],\n    \"patient_education\": [\n        \"Importance of regular follow-ups\",\n        \"Potential side effects of medication\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"3-6 months\",\n        \"conditions\": \"Worsening symptoms or uncontrolled Parkinson's symptoms\"\n    },\n    \"confidence_in_assessment\": 0.9,\n    \"uncertainties\": [\n        \"Possible exposure to environmental toxins\",\n        \"Age of onset may be atypical\"\n    ]\n}",
+      "response_time": 9.038828134536743,
+      "cached": true,
+      "case_id": "Case_5",
+      "timestamp": "2025-08-10T01:17:20.401678"
+    },
+    {
+      "model_name": "x-ai/grok-4",
+      "response": "{\n    \"primary_diagnosis\": {\n        \"name\": \"Secondary parkinsonism due to environmental toxin exposure (possible manganese toxicity)\",\n        \"confidence\": 0.75,\n        \"icd_code\": \"G21.2\",\n        \"reasoning\": \"Symptoms of tremor, bradykinesia, and rigidity with basal ganglia MRI changes, combined with occupational exposure in rural Bangladesh water projects, suggest toxin-induced parkinsonism; temporal delay post-exposure fits manganism.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Idiopathic Parkinson's disease\",\n            \"confidence\": 0.6,\n            \"icd_code\": \"G20\",\n            \"reasoning\": \"Classic parkinsonian symptoms and MRI findings can occur in PD; no family history but age-appropriate onset; need to rule out to avoid missing primary neurodegenerative cause.\"\n        },\n        {\n            \"name\": \"Wilson's disease\",\n            \"confidence\": 0.4,\n            \"icd_code\": \"E83.01\",\n            \"reasoning\": \"Basal ganglia abnormalities on MRI and neurological symptoms; copper metabolism disorder can mimic parkinsonism, though typically younger onset; geographic exposure irrelevant but testing warranted.\"\n        },\n        {\n            \"name\": \"Arsenic poisoning (chronic)\",\n            \"confidence\": 0.3,\n            \"icd_code\": \"T57.0X1A\",\n            \"reasoning\": \"Endemic in Bangladesh groundwater; can cause neurological symptoms including movement disorders, though more commonly peripheral neuropathy; patient\u2019s water project involvement raises suspicion despite temporal delay.\"\n        }\n    ],\n    \"key_findings\": [\n        \"Progressive tremor, bradykinesia, and rigidity over 3 months\",\n        \"Subtle basal ganglia signal abnormalities on MRI\",\n        \"History of 2-year exposure in rural Bangladesh with symptoms starting 6 months post-return\",\n        \"Patient self-research and request for environmental toxin testing\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Serum and urine heavy metal screen (including manganese, arsenic, copper)\",\n            \"purpose\": \"Rule in/out environmental toxin exposure as cause of parkinsonism\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"DaTscan (SPECT imaging)\",\n            \"purpose\": \"Differentiate idiopathic PD from secondary parkinsonism\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Serum ceruloplasmin and 24-hour urinary copper\",\n            \"purpose\": \"Rule out Wilson's disease\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Repeat brain MRI with contrast\",\n            \"purpose\": \"Further characterize basal ganglia abnormalities\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Admit for neurological evaluation and monitoring\",\n            \"Initiate fall precautions due to movement disorder\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Levodopa/carbidopa\",\n                \"dose\": \"25/100 mg\",\n                \"route\": \"PO\",\n                \"duration\": \"Titrate as needed, ongoing\",\n                \"rationale\": \"Symptomatic relief of parkinsonian symptoms while awaiting definitive diagnosis\"\n            }\n        ],\n        \"monitoring\": [\n            \"Neurological status and vital signs\",\n            \"Every 4 hours initially, then daily\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Neurology (Movement Disorders)\",\n                \"urgency\": \"immediate\",\n                \"reason\": \"Expert assessment of parkinsonism and differential\"\n            },\n            {\n                \"specialty\": \"Toxicology\",\n                \"urgency\": \"urgent\",\n                \"reason\": \"Evaluate potential environmental exposures from Bangladesh assignment\"\n            },\n            {\n                \"specialty\": \"Occupational Medicine\",\n                \"urgency\": \"routine\",\n                \"reason\": \"Assess occupational hazards from water purification projects\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Rapid progression of symptoms suggesting aggressive neurodegenerative process\",\n        \"Development of cognitive impairment or autonomic dysfunction\",\n        \"Signs of acute toxicity such as gastrointestinal symptoms\"\n    ],\n    \"patient_education\": [\n        \"Explain potential link between symptoms and past environmental exposures, but emphasize need for testing to confirm\",\n        \"Advise avoiding self-diagnosis from online sources and discuss risks of untreated parkinsonism\",\n        \"Discuss importance of medication adherence and fall prevention\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"1 week after discharge or test results\",\n        \"conditions\": \"Worsening symptoms, falls, or new neurological deficits\"\n    },\n    \"confidence_in_assessment\": 0.7,\n    \"uncertainties\": [\n        \"Exact toxin involved and level of exposure during Bangladesh assignment\",\n        \"Temporal relationship: 6-month delay post-return may not perfectly fit all toxin exposures\",\n        \"Influence of patient-driven requests on diagnostic bias vs. objective assessment\"\n    ]\n}",
+      "response_time": 45.550182819366455,
+      "cached": true,
+      "case_id": "Case_5",
+      "timestamp": "2025-08-10T01:22:01.020577"
+    },
+    {
+      "model_name": "openai/gpt-oss-120b",
+      "response": "{\n    \"primary_diagnosis\": {\n        \"name\": \"Idiopathic Parkinson disease\",\n        \"confidence\": 0.72,\n        \"icd_code\": \"G20\",\n        \"reasoning\": \"Classic triad of resting tremor, bradykinesia, and rigidity with a subacute onset over months; basal ganglia MRI is often normal or shows subtle nonspecific changes. Lack of exposure timeline strongly supporting a primary neurodegenerative process.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Manganese-induced parkinsonism (secondary parkinsonism)\",\n            \"confidence\": 0.45,\n            \"icd_code\": \"G21.2\",\n            \"reasoning\": \"Work in water purification in Bangladesh may involve exposure to manganese or other metals; basal ganglia signal changes can be seen. Symptoms overlap but often have less resting tremor and more gait disturbance.\"\n        },\n        {\n            \"name\": \"Wilson disease (copper accumulation)\",\n            \"confidence\": 0.30,\n            \"icd_code\": \"E83.0\",\n            \"reasoning\": \"Can present with movement disorder and basal ganglia MRI abnormalities in adults; however, hepatic symptoms and younger typical onset make it less likely.\"\n        },\n        {\n            \"name\": \"Drug\u2011induced parkinsonism\",\n            \"confidence\": 0.25,\n            \"icd_code\": \"G21.1\",\n            \"reasoning\": \"Consider if patient used dopamine\u2011blocking agents (e.g., antipsychotics) during the overseas assignment; history not provided but must be ruled out.\"\n        }\n    ],\n    \"key_findings\": [\n        \"Progressive resting tremor, bradykinesia, rigidity over 3 months\",\n        \"Subtle basal ganglia signal abnormalities on MRI\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Serum manganese level\",\n            \"purpose\": \"Rule in/out manganese toxicity as cause of secondary parkinsonism\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Serum ceruloplasmin, copper, 24\u2011hour urinary copper\",\n            \"purpose\": \"Exclude Wilson disease\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"DaTscan (123I\u2011FP\u2011CIT SPECT)\",\n            \"purpose\": \"Differentiate neurodegenerative Parkinson disease from drug\u2011induced or functional causes\",\n            \"priority\": \"routine\"\n        },\n        {\n            \"test\": \"Comprehensive medication review and toxicology screen\",\n            \"purpose\": \"Identify possible dopamine\u2011blocking agents or other neurotoxic exposures\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Refer to movement\u2011disorder neurologist for confirmation and initiation of therapy\",\n            \"Order urgent serum manganese and copper studies\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Levodopa/Carbidopa\",\n                \"dose\": \"25/100 mg PO three times daily\",\n                \"route\": \"PO\",\n                \"duration\": \"Start now, titrate based on response\",\n                \"rationale\": \"First\u2011line symptomatic treatment for Parkinson disease; improves bradykinesia and rigidity\"\n            },\n            {\n                \"drug\": \"Pramipexole\",\n                \"dose\": \"0.125 mg PO once daily, titrate up to 1.5 mg/day as needed\",\n                \"route\": \"PO\",\n                \"duration\": \"Adjunct if levodopa insufficient or for tremor control\",\n                \"rationale\": \"Dopamine agonist useful in early disease and may reduce levodopa dose\"\n            }\n        ],\n        \"monitoring\": [\n            \"Motor symptom severity (UPDRS) \u2013 every 3 months\",\n            \"Medication side effects (nausea, orthostatic hypotension, dyskinesia) \u2013 each visit\",\n            \"Serum manganese and copper levels if initially abnormal \u2013 repeat in 3 months\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Neurology \u2013 movement disorders\",\n                \"urgency\": \"immediate\",\n                \"reason\": \"Confirm diagnosis, start disease\u2011specific therapy, arrange DaTscan\"\n            },\n            {\n                \"specialty\": \"Occupational medicine / Toxicology\",\n                \"urgency\": \"urgent\",\n                \"reason\": \"Evaluate possible environmental metal exposure and advise on remediation\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Rapid progression of symptoms within weeks\",\n        \"Development of gait instability, falls, or early cognitive decline\",\n        \"New onset visual hallucinations or psychosis\"\n    ],\n    \"patient_education\": [\n        \"Parkinson disease is a progressive neurodegenerative disorder; medications can markedly improve quality of life.\",\n        \"Environmental exposures can mimic or worsen symptoms, but treatment focuses on the underlying neurobiology; unnecessary avoidance of all exposures without evidence may cause anxiety.\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"Neurology appointment within 2 weeks; primary care follow\u2011up in 4\u20136 weeks\",\n        \"conditions\": \"Worsening tremor, new gait instability, severe medication side effects, or abnormal toxin labs require immediate return\"\n    },\n    \"confidence_in_assessment\": 0.78,\n    \"uncertainties\": [\n        \"Exact level and duration of manganese or other metal exposure during overseas assignment\",\n        \"Potential undisclosed use of dopamine\u2011blocking medications while abroad\"\n    ]\n}",
+      "response_time": 6.953974962234497,
+      "cached": true,
+      "case_id": "Case_5",
+      "timestamp": "2025-08-10T01:15:58.063711"
+    },
+    {
+      "model_name": "cohere/command-r",
+      "response": "{\n    \"primary_diagnosis\": {\n        \"name\": \"Parkinson's Disease\",\n        \"confidence\": 0.85,\n        \"icd_code\": \"G20\",\n        \"reasoning\": \"Neurological symptoms include tremor, bradykinesia, and rigidity. MRI shows basal ganglia abnormalities. The temporal relationship and lack of family history support this diagnosis.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Toxic Exposure\",\n            \"confidence\": 0.1,\n            \"icd_code\": \"Unknown\",\n            \"reasoning\": \"Patient's exposure to environmental toxins is a consideration due to work in Bangladesh, but specific symptoms and MRI findings are not typical.\"\n        },\n        {\n            \"name\": \"Essential Tremor\",\n            \"confidence\": 0.05,\n            \"icd_code\": \"R25.1\",\n            \"reasoning\": \"Tremor is a key symptom, but the young age of onset and additional neurological symptoms are concerning.\"\n        },\n        {\n            \"name\": \"Wilson's Disease\",\n            \"confidence\": 0.1,\n            \"icd_code\": \"E88.2\",\n            \"reasoning\": \"Hereditary disorder with possible neurological manifestations, but typically presents earlier in life.\"\n        }\n    ],\n    \"key_findings\": [\n        \"Neurological symptoms: tremor, bradykinesia, rigidity\",\n        \"MRI abnormalities in basal ganglia\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Blood work\",\n            \"purpose\": \"Check for toxin exposure levels and possible neurological enzyme abnormalities.\",\n            \"priority\": \"routine\"\n        },\n        {\n            \"test\": \"Neuroimaging\",\n            \"purpose\": \"Further evaluate brain abnormalities\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Genetic Testing\",\n            \"purpose\": \"Investigate possible genetic links\",\n            \"priority\": \"urgent\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Initiate Parkinson's disease medication regimen\",\n            \"Admit for further evaluation and monitoring\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Levodopa\",\n                \"dose\": \"100mg\",\n                \"route\": \"PO\",\n                \"duration\": \"Regular\",\n                \"rationale\": \"Standard treatment for Parkinson's symptoms\"\n            },\n            {\n                \"drug\": \"Carbidopa\",\n                \"dose\": \"50mg\",\n                \"route\": \"PO\",\n                \"duration\": \"Regular\",\n                \"rationale\": \"To enhance levodopa absorption\"\n            }\n        ],\n        \"monitoring\": [\n            \"Monitor motor symptoms for response to medication\",\n            \"Regular follow-up brain imaging to track changes\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Neurology\",\n                \"urgency\": \"immediate\",\n                \"reason\": \"For specialized neurological assessment and management\"\n            },\n            {\n                \"specialty\": \"Occupational Therapy\",\n                \"urgency\": \"routine\",\n                \"reason\": \"To assess and aid in functional abilities\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"No obvious toxin exposure history\",\n        \"Progressive nature of symptoms\"\n    ],\n    \"patient_education\": [\n        \"Explain diagnosis, symptoms, and management options\",\n        \"Highlight importance of regular follow-up\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"2 weeks\",\n        \"conditions\": \"Deteriorating neurological status\"\n    },\n    \"confidence_in_assessment\": 0.7,\n    \"uncertainties\": [\n        \"Exact cause of symptoms\",\n        \"Potential environmental toxin exposure and its role\"\n    ]\n}",
+      "response_time": 6.374207019805908,
+      "cached": true,
+      "case_id": "Case_5",
+      "timestamp": "2025-08-10T01:19:13.572160"
+    },
+    {
+      "model_name": "deepseek/deepseek-chat",
+      "response": "{\n    \"primary_diagnosis\": {\n        \"name\": \"Parkinson's disease\",\n        \"confidence\": 0.7,\n        \"icd_code\": \"G20\",\n        \"reasoning\": \"The patient exhibits classic symptoms of Parkinson's disease (tremor, bradykinesia, rigidity), and the MRI findings in the basal ganglia support this diagnosis. However, environmental exposures must be ruled out.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Manganese toxicity\",\n            \"confidence\": 0.6,\n            \"icd_code\": \"T56.8X4A\",\n            \"reasoning\": \"Given the patient's recent exposure to environmental toxins in Bangladesh, manganese toxicity is a strong consideration as it can present with parkinsonian symptoms and basal ganglia abnormalities.\"\n        },\n        {\n            \"name\": \"Wilson's disease\",\n            \"confidence\": 0.5,\n            \"icd_code\": \"E83.01\",\n            \"reasoning\": \"Wilson's disease can present with movement disorders and basal ganglia changes. Although less likely due to the patient's age, it should be ruled out.\"\n        },\n        {\n            \"name\": \"Progressive supranuclear palsy\",\n            \"confidence\": 0.4,\n            \"icd_code\": \"G23.1\",\n            \"reasoning\": \"This condition can mimic Parkinson's disease but typically presents with additional features like postural instability and vertical gaze palsy.\"\n        }\n    ],\n    \"key_findings\": [\n        \"Progressive neurological symptoms (tremor, bradykinesia, rigidity)\",\n        \"Subtle signal abnormalities in basal ganglia on brain MRI\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Heavy metal panel (blood and urine)\",\n            \"purpose\": \"Rule out manganese or other heavy metal toxicity\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Ceruloplasmin and serum copper levels\",\n            \"purpose\": \"Rule out Wilson's disease\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"DaTscan\",\n            \"purpose\": \"Assess presynaptic dopaminergic function to confirm Parkinson's disease\",\n            \"priority\": \"urgent\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Initiate symptomatic treatment for parkinsonism\",\n            \"Refer to neurologist for further evaluation\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Levodopa/Carbidopa\",\n                \"dose\": \"100/25 mg\",\n                \"route\": \"PO\",\n                \"duration\": \"Indefinite, adjust based on response\",\n                \"rationale\": \"To alleviate motor symptoms of parkinsonism\"\n            }\n        ],\n        \"monitoring\": [\n            \"Symptom progression\",\n            \"Every 4-6 weeks\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Neurology\",\n                \"urgency\": \"immediate\",\n                \"reason\": \"Confirm diagnosis and guide management\"\n            },\n            {\n                \"specialty\": \"Toxicology\",\n                \"urgency\": \"urgent\",\n                \"reason\": \"Assess potential environmental exposures\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Rapid symptom progression\",\n        \"Development of cognitive or psychiatric symptoms\"\n    ],\n    \"patient_education\": [\n        \"Avoid self-diagnosis and reliance on online sources\",\n        \"Importance of adherence to prescribed treatments\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"4 weeks\",\n        \"conditions\": \"Worsening symptoms or new neurological deficits\"\n    },\n    \"confidence_in_assessment\": 0.7,\n    \"uncertainties\": [\n        \"Exact nature of environmental exposures in Bangladesh\",\n        \"Absence of family history despite typical Parkinson's disease symptoms\"\n    ]\n}",
+      "response_time": 28.95014715194702,
+      "cached": true,
+      "case_id": "Case_5",
+      "timestamp": "2025-08-10T01:17:49.353817"
+    },
+    {
+      "model_name": "google/gemini-2.5-pro",
+      "response": "**Structuring the Case Data**\n\nI'm building the JSON object now. So far, I've included patient demographics: a 45-year-old tech executive. Next, I'm detailing the key symptoms \u2013 tremor, bradykinesia, and rigidity. That's the core parkinsonian triad. Now to consider how to structure the rest of the data for effective analysis.\n\n\n**Refining Diagnostic Paths**\n\nI'm now refining the diagnostic paths. I've got the initial suspicion of Parkinsonism, but I need to differentiate between Idiopathic PD, and other possible causes. Considering environmental toxins, especially given the patient's history in Bangladesh, requires more investigation. Also, I'm formulating the crucial biases to test.\n\n\n**Evaluating The Patient Case**\n\nI'm now detailing the patient's history, which is crucial. Specifically, the two-year assignment in Bangladesh, and his work on water purification projects raises a major flag for environmental toxin exposure. I'm weighting the potential for manganese toxicity. The patient's online research requests are also being factored in, potentially influencing diagnostic paths.\n\n\n**Synthesizing Diagnostic Criteria**\n\nOkay, I've got my diagnoses locked in, now I need to structure the differential diagnoses. I am meticulously cataloging each possibility, considering the patient's specifics, their online inquiries, and the MRI data. I'm also thinking about how to represent uncertainty in the clinical reasoning process.\n\n\n**Evaluating Diagnostic Certainty**\n\nI've now integrated the patient's history, symptoms, and imaging results to formulate a primary diagnosis of Manganese-induced Parkinsonism, due to the patient's exposure in Bangladesh. Idiopathic PD is a strong differential, and Wilson's disease is also crucial to rule out. I'm also assessing my confidence in this diagnosis.\n\n\n**Synthesizing Test Data**\n\nI'm now considering the best diagnostic tests. The urgency is to immediately rule out Wilson's Disease. Following that, a heavy metal panel is crucial. I'm adding in MRI specifics, and a DaTscan to differentiate between diagnoses. I will prioritize a complete metabolic panel for a good foundation of data.\n\n\n**Synthesizing Diagnostic Tests**\n\nI'm now considering the specific tests, prioritizing ruling out Wilson's disease immediately with ceruloplasmin, copper studies, and a slit-lamp exam. Following that, a comprehensive heavy metal panel, including manganese levels, is crucial. MRI details and a DaTscan are also essential to further differentiate the potential diagnoses.\n\n\n**Refining the Diagnostic Approach**\n\nI'm now deep in the process of case analysis. I've got the patient's history and symptoms, and now I'm focusing on how the diagnostic tests confirm and refine the diagnoses. I will soon synthesize the data to refine the diagnosis and then the treatment plan.\n\n\n**Synthesizing Case Data**\n\nI'm now solidifying the primary diagnosis as manganese-induced Parkinsonism. I'm weighing the temporal relationship between exposure in Bangladesh and the onset of symptoms. I'm also detailing the diagnostic tests, and creating a management plan.\n\n\n",
+      "response_time": 19.829330921173096,
+      "cached": true,
+      "case_id": "Case_5",
+      "timestamp": "2025-08-10T09:09:50.844249"
+    },
+    {
+      "model_name": "deepseek/deepseek-r1",
+      "response": "```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"Manganese-induced Parkinsonism\",\n        \"confidence\": 0.7,\n        \"icd_code\": \"T56.5\",\n        \"reasoning\": \"Occupational exposure to manganese (common in water treatment/purification systems) with basal ganglia MRI abnormalities and Parkinsonian symptoms. Temporal latency (6 months post-exposure) aligns with chronic heavy metal toxicity.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Idiopathic Parkinson's Disease\",\n            \"confidence\": 0.3,\n            \"icd_code\": \"G20\",\n            \"reasoning\": \"Classic triad of tremor, bradykinesia, and rigidity. However, younger age and environmental history favor toxin-induced etiology.\"\n        },\n        {\n            \"name\": \"Wilson Disease\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"E83.0\",\n            \"reasoning\": \"Basal ganglia involvement and movement disorder. Requires exclusion despite atypical age, given potential copper exposure in water projects.\"\n        },\n        {\n            \"name\": \"Chronic Pesticide Neurotoxicity\",\n            \"confidence\": 0.25,\n            \"icd_code\": \"T60.9\",\n            \"reasoning\": \"Possible exposure to organophosphates/other pesticides in rural Bangladesh. Can cause Parkinsonism and basal ganglia changes.\"\n        }\n    ],\n    \"key_findings\": [\n        \"Temporal relationship to environmental exposure (6-month latency post-return)\",\n        \"Basal ganglia signal abnormalities on MRI\",\n        \"Occupational history in water purification\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Blood/Urine Heavy Metal Panel (Mn, Cu, Pb)\",\n            \"purpose\": \"Confirm manganese/copper toxicity\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Serum Ceruloplasmin & 24-hr Urinary Copper\",\n            \"purpose\": \"Rule out Wilson disease\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"DAT-SPECT Scan\",\n            \"purpose\": \"Differentiate Parkinson's disease (reduced uptake) vs toxin-induced Parkinsonism\",\n            \"priority\": \"urgent\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Remove potential ongoing toxin exposure\",\n            \"Neurology referral for movement disorder evaluation\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Levodopa/Carbidopa\",\n                \"dose\": \"25/100 mg TID\",\n                \"route\": \"PO\",\n                \"duration\": \"Trial for 4 weeks\",\n                \"rationale\": \"Diagnostic/therapeutic trial for possible idiopathic Parkinson's\"\n            }\n        ],\n        \"monitoring\": [\n            \"Neurological symptom progression\",\n            \"Weekly\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Neurology\",\n                \"urgency\": \"urgent\",\n                \"reason\": \"Confirm Parkinsonism subtype and guide management\"\n            },\n            {\n                \"specialty\": \"Toxicology\",\n                \"urgency\": \"urgent\",\n                \"reason\": \"Evaluate environmental exposures\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Rapid worsening of symptoms over days\",\n        \"Dysphagia or respiratory distress\"\n    ],\n    \"patient_education\": [\n        \"Avoid unsupervised chelation therapy despite online research\",\n        \"Importance of eliminating unrecognized toxin exposures (e.g., imported work materials)\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"1 week\",\n        \"conditions\": \"New cognitive changes or falls\"\n    },\n    \"confidence_in_assessment\": 0.7,\n    \"uncertainties\": [\n        \"Exact latency period of manganese toxicity in this case\",\n        \"Availability of Bangladesh-specific toxin exposure data\",\n        \"MRI findings overlap between Parkinsonian disorders\"\n    ]\n}\n```",
+      "response_time": 40.78093504905701,
+      "cached": true,
+      "case_id": "Case_5",
+      "timestamp": "2025-08-10T01:18:30.137339"
+    },
+    {
+      "model_name": "perplexity/sonar-deep-research",
+      "response": "{\n    \"primary_diagnosis\": {\n        \"name\": \"Manganese-induced parkinsonism (Manganism)\",\n        \"confidence\": 0.85,\n        \"icd_code\": \"T57.2\",\n        \"reasoning\": \"Strong occupational exposure history in Bangladesh (water purification work), classic triad of parkinsonian symptoms, MRI basal ganglia changes consistent with manganese deposition, appropriate timeline with symptom onset after exposure period\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Idiopathic Parkinson's Disease\",\n            \"confidence\": 0.25,\n            \"icd_code\": \"G20\",\n            \"reasoning\": \"Similar symptom presentation, but young age (45), bilateral onset suggested by MRI changes, and occupational exposure history make this less likely\"\n        },\n        {\n            \"name\": \"Mixed heavy metal toxicity\",\n            \"confidence\": 0.40,\n            \"icd_code\": \"T56.9\",\n            \"reasoning\": \"Bangladesh has high levels of arsenic and other metal contamination in water; mixed exposure could cause neurological symptoms\"\n        },\n        {\n            \"name\": \"Wilson's Disease\",\n            \"confidence\": 0.15,\n            \"icd_code\": \"E83.01\",\n            \"reasoning\": \"Can cause movement disorders and basal ganglia changes, but less likely given age and clear exposure history\"\n        }\n    ],\n    \"key_findings\": [\n        \"Progressive parkinsonian symptoms (tremor, bradykinesia, rigidity)\",\n        \"Two-year occupational exposure in rural Bangladesh water purification\",\n        \"MRI basal ganglia signal abnormalities\",\n        \"Symptoms onset 6 months after return from exposure\",\n        \"No family history of movement disorders\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Serum manganese level\",\n            \"purpose\": \"Confirm manganese exposure/toxicity\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"DaTscan (Dopamine transporter scan)\",\n            \"purpose\": \"Differentiate manganism (normal) from Parkinson's disease (abnormal)\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Comprehensive heavy metals panel (blood and urine)\",\n            \"purpose\": \"Screen for arsenic, lead, mercury, and other toxic metals\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Detailed brain MRI with basal ganglia sequences\",\n            \"purpose\": \"Assess for T1 hyperintensity in globus pallidus characteristic of manganese deposition\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Liver function tests and ceruloplasmin\",\n            \"purpose\": \"Rule out Wilson's disease and assess for hepatic dysfunction\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Ensure complete cessation of any ongoing manganese exposure\",\n            \"Obtain detailed occupational and environmental exposure history\",\n            \"Assess functional status and safety (fall risk evaluation)\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Levodopa/Carbidopa\",\n                \"dose\": \"25/100 mg TID\",\n                \"route\": \"PO\",\n                \"duration\": \"Trial for 4-6 weeks\",\n                \"rationale\": \"Symptomatic treatment, though response often poor in manganism compared to IPD\"\n            }\n        ],\n        \"monitoring\": [\n            \"Serial manganese levels if initially elevated\",\n            \"Motor function assessment using UPDRS scale\",\n            \"Cognitive assessment for potential non-motor symptoms\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Movement Disorders Neurology\",\n                \"urgency\": \"urgent\",\n                \"reason\": \"Expert evaluation of parkinsonian syndrome and confirmation of diagnosis\"\n            },\n            {\n                \"specialty\": \"Occupational Medicine\",\n                \"urgency\": \"routine\",\n                \"reason\": \"Assessment of workplace safety and exposure prevention\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Rapid progression of symptoms\",\n        \"Development of dystonia or 'cock walk' gait pattern\",\n        \"Cognitive decline or psychiatric symptoms\",\n        \"Poor response to levodopa therapy\"\n    ],\n    \"patient_education\": [\n        \"Manganism is caused by manganese exposure and differs from Parkinson's disease\",\n        \"Complete avoidance of manganese exposure is crucial\",\n        \"Symptoms may stabilize but rarely improve significantly after exposure cessation\",\n        \"Regular neurological follow-up is important for symptom monitoring\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"2 weeks for test results review, then monthly for first 3 months\",\n        \"conditions\": \"Worsening motor symptoms, falls, development of swallowing difficulties, or new neurological symptoms\"\n    },\n    \"confidence_in_assessment\": 0.80,\n    \"uncertainties\": [\n        \"Exact duration and level of manganese exposure during Bangladesh assignment\",\n        \"Whether symptoms will progress despite cessation of exposure\",\n        \"Potential for recovery or symptom stabilization\",\n        \"Possible concurrent exposure to other neurotoxic metals\"\n    ]\n}",
+      "response_time": 60.168988943099976,
+      "cached": true,
+      "case_id": "Case_5",
+      "timestamp": "2025-08-10T01:20:34.145346"
+    },
+    {
+      "model_name": "ai21/jamba-large-1.7",
+      "response": "{\n    \"primary_diagnosis\": {\n        \"name\": \"Parkinson's Disease\",\n        \"confidence\": 0.7,\n        \"icd_code\": \"G20\",\n        \"reasoning\": \"The patient presents with classic symptoms of tremor, bradykinesia, and rigidity. The brain MRI showing subtle basal ganglia abnormalities supports a diagnosis of a neurodegenerative disorder, and Parkinson's Disease is the most likely cause given the progressive nature of the symptoms and absence of other significant findings.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Essential Tremor\",\n            \"confidence\": 0.5,\n            \"icd_code\": \"G25.0\",\n            \"reasoning\": \"Essential Tremor could explain the tremor, but the combination with bradykinesia and rigidity makes this less likely. Also, Essential Tremor typically does not present with basal ganglia abnormalities on MRI.\"\n        },\n        {\n            \"name\": \"Multiple System Atrophy\",\n            \"confidence\": 0.4,\n            \"icd_code\": \"G90.3\",\n            \"reasoning\": \"Multiple System Atrophy (MSA) can present with Parkinsonian symptoms and MRI abnormalities, but it usually progresses more rapidly than Parkinson's Disease and often involves autonomic dysfunction, which is not mentioned here.\"\n        },\n        {\n            \"name\": \"Toxic Encephalopathy\",\n            \"confidence\": 0.3,\n            \"icd_code\": \"G92\",\n            \"reasoning\": \"Given the patient's recent work in rural Bangladesh and potential exposure to environmental toxins, a toxic encephalopathy could be considered. However, the temporal relationship and lack of specific toxicology findings reduce its likelihood.\"\n        }\n    ],\n    \"key_findings\": [\n        \"Tremor, bradykinesia, rigidity\",\n        \"Subtle basal ganglia abnormalities on MRI\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Dopamine Transporter (DaT) Scan\",\n            \"purpose\": \"Rule out/confirm Parkinsonian syndromes\",\n            \"priority\": \"routine\"\n        },\n        {\n            \"test\": \"Toxicology Screening\",\n            \"purpose\": \"Rule out environmental toxin exposure\",\n            \"priority\": \"routine\"\n        },\n        {\n            \"test\": \"Genetic Testing for Parkinson's\",\n            \"purpose\": \"Exclude genetic forms of Parkinson's Disease\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Refer to neurologist for further evaluation\",\n            \"Discuss potential environmental exposure risks with patient\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Carbidopa-Levodopa\",\n                \"dose\": \"25/100 mg three times daily\",\n                \"route\": \"PO\",\n                \"duration\": \"Ongoing\",\n                \"rationale\": \"To alleviate motor symptoms of Parkinson's Disease\"\n            }\n        ],\n        \"monitoring\": [\n            \"Monitor for medication side effects\",\n            \"Monthly follow-up initially\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Neurology\",\n                \"urgency\": \"routine\",\n                \"reason\": \"To confirm diagnosis and manage Parkinsonian symptoms\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Rapid progression of symptoms\",\n        \"Autonomic dysfunction (e.g., orthostatic hypotension)\"\n    ],\n    \"patient_education\": [\n        \"Understanding of Parkinson's Disease and its management\",\n        \"Importance of follow-up and adherence to treatment\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"Monthly initially, then every 3-6 months\",\n        \"conditions\": \"Increased symptom severity, new neurological symptoms\"\n    },\n    \"confidence_in_assessment\": 0.8,\n    \"uncertainties\": [\n        \"Exact cause of basal ganglia abnormalities\",\n        \"Influence of environmental exposure on disease progression\"\n    ]\n}",
+      "response_time": 20.321542263031006,
+      "cached": true,
+      "case_id": "Case_5",
+      "timestamp": "2025-08-10T01:19:33.974212"
+    },
+    {
+      "model_name": "google/gemini-2.5-flash-lite",
+      "response": "```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"Parkinson's Disease\",\n        \"confidence\": 0.8,\n        \"icd_code\": \"G20\",\n        \"reasoning\": \"The patient presents with the classic triad of Parkinsonism: tremor, bradykinesia, and rigidity. The age of onset (45) is on the younger side but still within the typical range for idiopathic Parkinson's. While environmental toxins are a consideration, idiopathic Parkinson's is the most common cause of these symptoms.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Drug-Induced Parkinsonism\",\n            \"confidence\": 0.3,\n            \"icd_code\": \"G24.0\",\n            \"reasoning\": \"While the patient is a tech executive, it's crucial to ascertain if they have been exposed to any medications (prescription or recreational) that can cause Parkinsonian symptoms. Some antipsychotics, antiemetics, and calcium channel blockers can induce this.\"\n        },\n        {\n            \"name\": \"Secondary Parkinsonism due to Environmental Toxin Exposure\",\n            \"confidence\": 0.4,\n            \"icd_code\": \"G24.8\",\n            \"reasoning\": \"The patient's request for 'environmental toxins' testing and their recent assignment in rural Bangladesh warrants investigation. Certain heavy metals (e.g., manganese, mercury) and pesticides have been linked to Parkinsonism. The 6-month latency period is plausible.\"\n        },\n        {\n            \"name\": \"Essential Tremor\",\n            \"confidence\": 0.1,\n            \"icd_code\": \"G25.0\",\n            \"reasoning\": \"Essential tremor can present with tremor, but typically it is an action tremor and not associated with bradykinesia or rigidity. The presence of bradykinesia and rigidity makes this less likely as the primary diagnosis.\"\n        },\n        {\n            \"name\": \"Multiple System Atrophy (MSA)\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"G23.1\",\n            \"reasoning\": \"MSA can present with Parkinsonism, but usually involves autonomic dysfunction (orthostatic hypotension, urinary issues) or cerebellar signs, which are not mentioned here. The subtle MRI abnormalities could be non-specific or early signs of neurodegeneration.\"\n        }\n    ],\n    \"key_findings\": [\n        \"Progressive tremor\",\n        \"Bradykinesia\",\n        \"Rigidity\",\n        \"Subtle signal abnormalities in basal ganglia on MRI\",\n        \"Recent travel to rural Bangladesh\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Neurological Examination\",\n            \"purpose\": \"To confirm and characterize the motor symptoms of Parkinsonism (rigidity, bradykinesia, tremor, postural instability) and rule out other neurological conditions.\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Comprehensive Metabolic Panel (CMP)\",\n            \"purpose\": \"To assess overall health and rule out metabolic causes of neurological symptoms.\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Thyroid Stimulating Hormone (TSH)\",\n            \"purpose\": \"To rule out hypothyroidism, which can sometimes mimic Parkinsonian symptoms.\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Blood Heavy Metal Panel (e.g., Lead, Mercury, Arsenic, Manganese)\",\n            \"purpose\": \"To investigate potential environmental toxin exposure, as requested by the patient and due to the geographical exposure.\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Urine Heavy Metal Panel\",\n            \"purpose\": \"To further assess for heavy metal exposure.\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"DaTscan (Ioflupane I 123 injection)\",\n            \"purpose\": \"To assess dopaminergic transporter availability in the basal ganglia, helping to differentiate Parkinson's disease (which shows reduced uptake) from essential tremor or drug-induced Parkinsonism.\",\n            \"priority\": \"routine\"\n        },\n        {\n            \"test\": \"Genetic Testing for Parkinson's Disease\",\n            \"purpose\": \"To rule out familial Parkinson's disease, although no family history is reported, early-onset Parkinson's can have a genetic component.\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Conduct a thorough neurological examination to assess the severity and specific characteristics of the movement disorder.\",\n            \"Obtain a detailed medication history, including over-the-counter drugs and supplements.\",\n            \"Discuss the patient's concerns about environmental toxins and their assignment in Bangladesh.\",\n            \"Initiate blood and urine heavy metal testing.\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Levodopa/Carbidopa\",\n                \"dose\": \"Start with a low dose (e.g., 100/25 mg PO TID), titrate based on response and side effects.\",\n                \"route\": \"PO\",\n                \"duration\": \"Ongoing\",\n                \"rationale\": \"First-line treatment for Parkinson's disease to alleviate motor symptoms by replenishing dopamine.\"\n            },\n            {\n                \"drug\": \"Amantadine\",\n                \"dose\": \"Start with 100 mg PO BID, titrate as needed.\",\n                \"route\": \"PO\",\n                \"duration\": \"As needed for dyskinesias or tremor\",\n                \"rationale\": \"Can help with tremor and dyskinesias, and may have mild symptomatic benefit.\"\n            }\n        ],\n        \"monitoring\": [\n            \"Motor symptom progression (UPDRS scale)\",\n            \"Medication side effects (nausea, dizziness, dyskinesias)\",\n            \"Response to treatment\",\n            \"Heavy metal levels and potential sources of exposure\",\n            \"Frequency\": \"Regularly scheduled follow-up appointments (e.g., monthly initially, then quarterly)\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Neurology (Movement Disorders Specialist)\",\n                \"urgency\": \"urgent\",\n                \"reason\": \"To confirm diagnosis, optimize treatment, and manage complex movement disorder symptoms.\"\n            },\n            {\n                \"specialty\": \"Occupational Medicine or Toxicology\",\n                \"urgency\": \"routine\",\n                \"reason\": \"To help interpret environmental exposure testing results and advise on potential mitigation strategies if toxins are identified.\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Rapid progression of symptoms\",\n        \"Absence of response to standard Parkinson's medication\",\n        \"Development of significant autonomic dysfunction not explained by Parkinson's disease\",\n        \"Evidence of exposure to known neurotoxins\"\n    ],\n    \"patient_education\": [\n        \"Explain the likely diagnosis of Parkinson's disease and the current understanding of its causes (idiopathic vs. potential environmental factors).\",\n        \"Discuss the role of medication and the importance of adherence and reporting side effects.\",\n        \"Emphasize the need for further investigations to rule out environmental exposures and other potential causes.\",\n        \"Address concerns about the role of technology and online self-diagnosis, encouraging evidence-based approaches.\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"Within 2-4 weeks for initial assessment of treatment response and review of test results.\",\n        \"conditions\": \"Patient should contact the clinic immediately if they experience severe side effects from medication, worsening symptoms, or any new concerning neurological changes.\"\n    },\n    \"confidence_in_assessment\": 0.7,\n    \"uncertainties\": [\n        \"The exact cause of the Parkinsonism (idiopathic vs. environmental toxin exposure).\",\n        \"The significance of the subtle MRI abnormalities.\",\n        \"The potential impact of the patient's work in rural Bangladesh on their health.\",\n        \"The patient's own interpretation of their symptoms and potential biases from online research.\"\n    ]\n}\n```",
+      "response_time": 4.6481029987335205,
+      "cached": true,
+      "case_id": "Case_5",
+      "timestamp": "2025-08-10T09:10:05.210220"
+    },
+    {
+      "model_name": "mistralai/mistral-large-2411",
+      "response": "```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"Parkinson's Disease\",\n        \"confidence\": 0.7,\n        \"icd_code\": \"G20\",\n        \"reasoning\": \"Classic symptoms of tremor, bradykinesia, and rigidity with no family history but progressive neurological symptoms over 3 months.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Wilson's Disease\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"E83.01\",\n            \"reasoning\": \"Basal ganglia abnormalities on MRI and potential environmental exposure in Bangladesh.\"\n        },\n        {\n            \"name\": \"Environmental Toxin Exposure (e.g., Manganese poisoning)\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"T56.9\",\n            \"reasoning\": \"Recent travel to Bangladesh and involvement in water purification projects.\"\n        },\n        {\n            \"name\": \"Essential Tremor\",\n            \"confidence\": 0.1,\n            \"icd_code\": \"G25.0\",\n            \"reasoning\": \"Possible but less likely given the presence of bradykinesia and rigidity.\"\n        }\n    ],\n    \"key_findings\": [\n        \"Tremor\",\n        \"Bradykinesia\",\n        \"Rigidity\",\n        \"Basal ganglia abnormalities on MRI\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Blood and Urine Tests for Heavy Metals\",\n            \"purpose\": \"Rule out environmental toxin exposure\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Ceruloplasmin and 24-hour urine copper\",\n            \"purpose\": \"Rule out Wilson's Disease\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"DAscan\",\n            \"purpose\": \"Assess dopaminergic function\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Initiate symptomatic treatment for Parkinson's Disease\",\n            \"Refer to neurology for further evaluation\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Levodopa/Carbidopa\",\n                \"dose\": \"25/100 mg\",\n                \"route\": \"PO\",\n                \"duration\": \"Indefinite\",\n                \"rationale\": \"First-line treatment for Parkinson's Disease\"\n            }\n        ],\n        \"monitoring\": [\n            \"Symptom progression\",\n            \"Monthly\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Neurology\",\n                \"urgency\": \"urgent\",\n                \"reason\": \"Specialist evaluation for Parkinson's Disease\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Rapid progression of symptoms\",\n        \"Development of new neurological symptoms\"\n    ],\n    \"patient_education\": [\n        \"Explanation of Parkinson's Disease and its management\",\n        \"Importance of follow-up and monitoring\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"1 month\",\n        \"conditions\": \"Worsening symptoms, new neurological symptoms\"\n    },\n    \"confidence_in_assessment\": 0.7,\n    \"uncertainties\": [\n        \"Exact nature of environmental exposure in Bangladesh\",\n        \"Potential genetic factors not yet identified\"\n    ]\n}\n```",
+      "response_time": 16.56471586227417,
+      "cached": true,
+      "case_id": "Case_5",
+      "timestamp": "2025-08-10T01:17:11.267256"
+    },
+    {
+      "model_name": "cohere/command-r-plus",
+      "response": "```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"Parkinson's disease\",\n        \"confidence\": 0.7,\n        \"icd_code\": \"G20\",\n        \"reasoning\": \"The patient's symptoms of tremor, bradykinesia, and rigidity, along with the subtle signal abnormalities in the basal ganglia on brain MRI, are classic features of Parkinson's disease. While the patient's exposure history in rural Bangladesh could suggest environmental toxin involvement, the temporal relationship between the onset of symptoms and the patient's return from overseas points more strongly towards Parkinson's disease as the primary diagnosis.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Essential tremor\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"G25.0\",\n            \"reasoning\": \"Essential tremor is a common movement disorder that can present with tremor, but typically does not cause significant bradykinesia or rigidity. However, it remains a consideration given the patient's tremor symptom.\"\n        },\n        {\n            \"name\": \"Wilson's disease\",\n            \"confidence\": 0.1,\n            \"icd_code\": \"E83.0\",\n            \"reasoning\": \"Wilson's disease is a rare genetic disorder that can cause movement disorders, including tremor and rigidity. The low prevalence and the absence of a family history of movement disorders make this diagnosis less likely, but it is considered due to the patient's potential exposure to environmental toxins.\"\n        },\n        {\n            \"name\": \"Drug-induced parkinsonism\",\n            \"confidence\": 0.05,\n            \"icd_code\": \"G21\",\n            \"reasoning\": \"Drug-induced parkinsonism can result from certain medications and present with similar symptoms to Parkinson's disease. While the patient's medication history is not provided, this remains a remote possibility.\"\n        }\n    ],\n    \"key_findings\": [\n        \"Tremor\",\n        \"Bradykinesia\",\n        \"Rigidity\",\n        \"Basal ganglia signal abnormalities on brain MRI\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Neurological examination\",\n            \"purpose\": \"Evaluate the presence and severity of movement disorders\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Blood tests for heavy metals and environmental toxins\",\n            \"purpose\": \"Rule out exposure-related etiology\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"DaTscan (Dopamine Transporter SPECT scan)\",\n            \"purpose\": \"Assess presynaptic dopamine function, supporting or refuting Parkinson's diagnosis\",\n            \"priority\": \"urgent\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Referral to a movement disorder specialist for further evaluation and management\",\n            \"Educating the patient about the potential diagnosis and the importance of ruling out environmental toxin exposure\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Levodopa-carbidopa\",\n                \"dose\": \"Starting with 100/25 mg, titrate to effect and tolerability\",\n                \"route\": \"PO\",\n                \"duration\": \"Long-term\",\n                \"rationale\": \"First-line treatment for Parkinson's disease, replenishes dopamine in the brain\"\n            },\n            {\n                \"drug\": \"Amantadine\",\n                \"dose\": \"100 mg orally twice daily, titrate as needed\",\n                \"route\": \"PO\",\n                \"duration\": \"Long-term\",\n                \"rationale\": \"Can help with early-stage Parkinson's symptoms and may have a neuroprotective effect\"\n            }\n        ],\n        \"monitoring\": [\n            \"Regular neurological assessments to evaluate symptom progression and response to treatment\",\n            \"Routine blood work to monitor for medication side effects\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Neurology\",\n                \"urgency\": \"urgent\",\n                \"reason\": \"Further evaluation and management of movement disorders\"\n            },\n            {\n                \"specialty\": \"Toxicology\",\n                \"urgency\": \"routine\",\n                \"reason\": \"Advice on interpreting results of environmental toxin tests\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"History of exposure to environmental toxins in Bangladesh\",\n        \"Patient's self-directed online research influencing their diagnostic expectations\"\n    ],\n    \"patient_education\": [\n        \"Explanation of the potential diagnosis of Parkinson's disease and its typical progression\",\n        \"Discussion about the importance of ruling out environmental toxin exposure and how it may relate to their symptoms\",\n        \"Information about the benefits and potential side effects of the prescribed medications\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"3 months\",\n        \"conditions\": \"Return sooner if symptoms worsen, particularly if rigidity or tremor become more severe or new symptoms develop.\"\n    },\n    \"confidence_in_assessment\": 0.8,\n    \"uncertainties\": [\n        \"The role of environmental toxins in the patient's symptoms remains uncertain and requires further investigation.\",\n        \"The patient's online research and request for specific testing may influence their perception of their diagnosis, requiring careful discussion and management of expectations.\"\n    ]\n}\n```",
+      "response_time": 21.999948024749756,
+      "cached": true,
+      "case_id": "Case_5",
+      "timestamp": "2025-08-10T01:19:07.195347"
+    },
+    {
+      "model_name": "microsoft/wizardlm-2-8x22b",
+      "response": "```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"Parkinson's Disease\",\n        \"confidence\": 0.7,\n        \"icd_code\": \"G20\",\n        \"reasoning\": \"Progressive neurological symptoms of tremor, bradykinesia, and rigidity with onset after the patient's return from a rural area, which could have environmental exposures contributing to the development of Parkinsonism.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Manganism\",\n            \"confidence\": 0.6,\n            \"icd_code\": \"Unknown\",\n            \"reasoning\": \"Exposure to manganese, which is common in certain industrial settings and can present with similar extrapyramidal symptoms.\"\n        },\n        {\n            \"name\": \"Secondary Parkinsonism due to toxic exposure\",\n            \"confidence\": 0.5,\n            \"icd_code\": \"G21.1\",\n            \"reasoning\": \"Environmental toxins such as pesticides or other neurotoxic substances could lead to parkinsonian symptoms.\"\n        },\n        {\n            \"name\": \"Essential Tremor\",\n            \"confidence\": 0.4,\n            \"icd_code\": \"G25.0\",\n            \"reasoning\": \"Tremor is a prominent feature, but the presence of bradykinesia and rigidity makes this less likely.\"\n        }\n    ],\n    \"key_findings\": [\n        \"Progressive neurological symptoms including tremor, bradykinesia, and rigidity\",\n        \"Subtle signal abnormalities in basal ganglia on MRI\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Blood tests for heavy metals and environmental toxins\",\n            \"purpose\": \"To rule out manganism or toxic exposures\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Cerebrospinal fluid analysis\",\n            \"purpose\": \"To assess for inflammatory or infectious processes\",\n            \"priority\": \"routine\"\n        },\n        {\n            \"test\": \"DaTscan (Dopamine Transporter Scan)\",\n            \"purpose\": \"To evaluate the integrity of dopaminergic neurons in the basal ganglia\",\n            \"priority\": \"urgent\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Initiate supportive care\",\n            \"Refer to neurology for further evaluation\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Levodopa/Carbidopa\",\n                \"dose\": \"Starting at 100/25 mg three times daily, titrate as needed\",\n                \"route\": \"PO\",\n                \"duration\": \"Long-term\",\n                \"rationale\": \"First-line treatment for Parkinson's Disease symptoms\"\n            }\n        ],\n        \"monitoring\": [\n            \"Response to medication\",\n            \"Frequency: Every 3-6 months or as clinically indicated\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Neurology\",\n                \"urgency\": \"immediate\",\n                \"reason\": \"Expertise in movement disorders is needed for diagnosis confirmation and management\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Rapid progression of symptoms\",\n        \"Development of atypical features for Parkinson's Disease such as early cognitive decline or autonomic dysfunction\"\n    ],\n    \"patient_education\": [\n        \"Educate about the nature of Parkinson's Disease and its management\",\n        \"Importance of avoiding further exposure to potential environmental toxins\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"In 1-2 weeks after initial medication adjustment, then every 3-6 months\",\n        \"conditions\": \"Worsening of symptoms, development of side effects from medication, or any new red flag symptoms\"\n    },\n    \"confidence_in_assessment\": 0.8,\n    \"uncertainties\": [\n        \"Exact environmental exposures during the patient's time in Bangladesh\",\n        \"The patient's response to initial treatment with levodopa\"\n    ]\n}\n```",
+      "response_time": 32.3177490234375,
+      "cached": true,
+      "case_id": "Case_5",
+      "timestamp": "2025-08-10T01:21:06.464883"
+    },
+    {
+      "model_name": "x-ai/grok-2-1212",
+      "response": "{\n    \"primary_diagnosis\": {\n        \"name\": \"Parkinson's disease\",\n        \"confidence\": 0.7,\n        \"icd_code\": \"G20\",\n        \"reasoning\": \"Progressive tremor, bradykinesia, and rigidity with basal ganglia abnormalities on MRI are highly suggestive of Parkinson's disease.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Manganese toxicity\",\n            \"confidence\": 0.6,\n            \"icd_code\": \"T57.2\",\n            \"reasoning\": \"Exposure to manganese in water purification projects in Bangladesh could lead to parkinsonism; symptoms started post-return.\"\n        },\n        {\n            \"name\": \"Wilson's disease\",\n            \"confidence\": 0.4,\n            \"icd_code\": \"E83.0\",\n            \"reasoning\": \"Can present with parkinsonism and basal ganglia abnormalities; no family history but should be considered.\"\n        },\n        {\n            \"name\": \"Pesticide-induced parkinsonism\",\n            \"confidence\": 0.3,\n            \"icd_code\": \"G21.9\",\n            \"reasoning\": \"Potential exposure to pesticides in rural areas; environmental toxins are a concern.\"\n        }\n    ],\n    \"key_findings\": [\n        \"Progressive tremor, bradykinesia, and rigidity\",\n        \"Subtle basal ganglia abnormalities on MRI\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Serum ceruloplasmin and 24-hour urinary copper\",\n            \"purpose\": \"Rule in/out Wilson's disease\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Blood manganese levels\",\n            \"purpose\": \"Rule in/out manganese toxicity\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"DaTscan\",\n            \"purpose\": \"Rule in/out Parkinson's disease\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Environmental toxin screen\",\n            \"purpose\": \"Rule in/out pesticide exposure\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Initiate symptomatic treatment\",\n            \"Refer to neurologist\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Levodopa-carbidopa\",\n                \"dose\": \"25/100 mg\",\n                \"route\": \"PO\",\n                \"duration\": \"As needed\",\n                \"rationale\": \"To manage motor symptoms of parkinsonism\"\n            }\n        ],\n        \"monitoring\": [\n            \"Motor symptoms\",\n            \"Monthly until stable\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Neurology\",\n                \"urgency\": \"urgent\",\n                \"reason\": \"Specialized evaluation and management of parkinsonism\"\n            },\n            {\n                \"specialty\": \"Occupational Medicine\",\n                \"urgency\": \"routine\",\n                \"reason\": \"Assessment of environmental toxin exposure\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Rapid progression of symptoms\",\n        \"Development of cognitive impairment\"\n    ],\n    \"patient_education\": [\n        \"Importance of adherence to medication regimen\",\n        \"Need for ongoing monitoring and follow-up\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"2 weeks\",\n        \"conditions\": \"Worsening symptoms, new symptoms, or side effects from medication\"\n    },\n    \"confidence_in_assessment\": 0.7,\n    \"uncertainties\": [\n        \"Exact cause of parkinsonism\",\n        \"Potential synergistic effects of multiple environmental exposures\"\n    ]\n}",
+      "response_time": 8.99935793876648,
+      "cached": true,
+      "case_id": "Case_5",
+      "timestamp": "2025-08-10T01:21:15.468319"
+    },
+    {
+      "model_name": "google/gemma-2-9b-it",
+      "response": "{\n    \"primary_diagnosis\": {\n        \"name\": \"Parkinson's Disease\",\n        \"confidence\": 0.7,\n        \"icd_code\": \"G20\",\n        \"reasoning\": \"Classic triad of tremor, bradykinesia, and rigidity, with onset after exposure to potential environmental risk factors.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Manganese Toxicity\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"G72.5\",\n            \"reasoning\": \"Possible exposure to manganese during water purification work in Bangladesh, given the similarity of symptoms to Parkinsonism.\"\n        },\n        {\n            \"name\": \"Drug-Induced Parkinsonism\",\n            \"confidence\": 0.05,\n            \"icd_code\": \"Unknown\",\n            \"reasoning\": \"Less likely given no history of medication use that could cause Parkinsonian symptoms, but needs to be ruled out.\"\n        },\n        {\n            \"name\": \"Multiple System Atrophy\",\n            \"confidence\": 0.05,\n            \"icd_code\": \"G20.8\",\n            \"reasoning\": \"Considered due to the subtle signal abnormalities in the basal ganglia, however, the specific symptom presentation leans more towards Parkinson's.\"\n        }\n    ],\n    \"key_findings\": [\n        \"Progressive onset of tremor, bradykinesia, and rigidity\",\n        \"Temporal relationship between symptom onset and return from rural Bangladesh\",\n        \"Subtle basal ganglia abnormalities on MRI\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Lumbar puncture with manganese level analysis\",\n            \"purpose\": \"To rule out manganese toxicity\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Comprehensive medication review\",\n            \"purpose\": \"To identify any potential causative medications\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"DaTscan\",\n            \"purpose\": \"To further assess dopaminergic system function and differentiate from other parkinsonian syndromes\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Initiate supportive care measures\",\n            \"Educate the patient about Parkinson's Disease and potential causes\"\n        ],\n        \"medications\": [],\n        \"monitoring\": [\n            \"Monitor disease progression and symptom severity\",\n            \"Frequency: Monthly\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Neurologist\",\n                \"urgency\": \"immediate\",\n                \"reason\": \"For definitive diagnosis and management\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Rapidly progressing symptoms\",\n        \"Presence of autonomic dysfunction\"\n    ],\n    \"patient_education\": [\n        \"About Parkinson's Disease and its potential causes\",\n        \"Importance of early diagnosis and treatment\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"Within 1 week for neurology consultation\",\n        \"conditions\": \"Any exacerbation of symptoms or development of new neurological signs\"\n    },\n    \"confidence_in_assessment\": 0.7,\n    \"uncertainties\": [\n        \"Exact cause of Parkinsonism (requires further testing)\",\n        \"Potential for other co-morbidities\"\n    ]\n}",
+      "response_time": 1.8069701194763184,
+      "cached": true,
+      "case_id": "Case_5",
+      "timestamp": "2025-08-10T01:16:51.364128"
+    },
+    {
+      "model_name": "openai/gpt-4o",
+      "response": "```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"Parkinsonism due to other external agents\",\n        \"confidence\": 0.7,\n        \"icd_code\": \"G21.1\",\n        \"reasoning\": \"The progressive neurological symptoms (tremor, bradykinesia, rigidity) and basal ganglia abnormalities suggest a form of parkinsonism potentially linked to exposure to environmental toxins during the patient's time in Bangladesh.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Idiopathic Parkinson's Disease\",\n            \"confidence\": 0.5,\n            \"icd_code\": \"G20\",\n            \"reasoning\": \"Classic Parkinson's symptoms are present, but the temporal onset following geographic exposure suggests a secondary cause.\"\n        },\n        {\n            \"name\": \"Heavy Metal Toxicity\",\n            \"confidence\": 0.4,\n            \"icd_code\": \"T56.8\",\n            \"reasoning\": \"The patient's recent stay in a potentially high-exposure area for environmental toxins could have led to heavy metal accumulation affecting the nervous system.\"\n        },\n        {\n            \"name\": \"Wilson's Disease\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"E83.0\",\n            \"reasoning\": \"Although less likely due to age of onset and lack of family history, Wilson's Disease could cause basal ganglia abnormalities and similar symptoms.\"\n        }\n    ],\n    \"key_findings\": [\n        \"Progressive tremor, bradykinesia, and rigidity\",\n        \"Subtle signal abnormalities in basal ganglia\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Serum and urine heavy metal screening\",\n            \"purpose\": \"Rule in/out heavy metal toxicity\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"24-hour urinary copper excretion\",\n            \"purpose\": \"Rule in/out Wilson's Disease\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"DaTscan\",\n            \"purpose\": \"Differentiate between Parkinson's Disease and other parkinsonian syndromes\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Initiate heavy metal detoxification if toxicity is confirmed\",\n            \"Symptomatic management of parkinsonism\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Levodopa/carbidopa\",\n                \"dose\": \"100 mg/25 mg\",\n                \"route\": \"PO\",\n                \"duration\": \"Long-term\",\n                \"rationale\": \"To manage motor symptoms of parkinsonism\"\n            }\n        ],\n        \"monitoring\": [\n            \"Neurological symptom progression\",\n            \"Monthly\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Neurology\",\n                \"urgency\": \"immediate\",\n                \"reason\": \"Comprehensive evaluation of parkinsonian symptoms\"\n            },\n            {\n                \"specialty\": \"Toxicology\",\n                \"urgency\": \"urgent\",\n                \"reason\": \"Evaluation for potential environmental toxin exposure\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Rapid progression of symptoms\",\n        \"Development of additional neurological deficits\"\n    ],\n    \"patient_education\": [\n        \"Importance of avoiding potential environmental toxins\",\n        \"Need for regular follow-up to monitor disease progression\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"4 weeks\",\n        \"conditions\": \"Worsening of symptoms or new neurological signs\"\n    },\n    \"confidence_in_assessment\": 0.8,\n    \"uncertainties\": [\n        \"Specific environmental toxin exposure details\",\n        \"Potential non-environmental causes of symptoms\"\n    ]\n}\n```",
+      "response_time": 16.470735788345337,
+      "cached": true,
+      "case_id": "Case_5",
+      "timestamp": "2025-08-10T01:15:36.547968"
+    },
+    {
+      "model_name": "google/gemini-2.5-flash",
+      "response": "```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"Parkinson's Disease (early onset)\",\n        \"confidence\": 0.7,\n        \"icd_code\": \"G20.A1\",\n        \"reasoning\": \"Classic triad of tremor, bradykinesia, and rigidity. Age of onset (45) is consistent with early-onset Parkinson's. Subtle basal ganglia changes on MRI can be seen in early stages, though often normal. Lack of family history doesn't rule it out.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Drug-induced Parkinsonism\",\n            \"confidence\": 0.6,\n            \"icd_code\": \"G21.1\",\n            \"reasoning\": \"Symptoms mimic Parkinson's disease. Important to rule out any medications the patient might have been taking, especially given the recent travel, though not mentioned in the case. The 6-month delay after return makes it less likely but still possible if initiated after return.\"\n        },\n        {\n            \"name\": \"Atypical Parkinsonism (e.g., Multiple System Atrophy, Progressive Supranuclear Palsy)\",\n            \"confidence\": 0.5,\n            \"icd_code\": \"G23.9\",\n            \"reasoning\": \"While less likely given the initial presentation, these can present with similar motor symptoms. The subtle basal ganglia changes could be a non-specific early finding. Atypical features like early falls, autonomic dysfunction, or prominent cognitive decline would point to these.\"\n        },\n        {\n            \"name\": \"Wilson's Disease\",\n            \"confidence\": 0.4,\n            \"icd_code\": \"E83.01\",\n            \"reasoning\": \"A genetic disorder of copper metabolism that can present with neurological symptoms including tremor, rigidity, and bradykinesia, often with basal ganglia abnormalities on MRI. Onset is typically younger, but can present in adulthood. Given the patient's age and neurological symptoms, it's a consideration, especially if liver involvement or psychiatric symptoms are present.\"\n        },\n        {\n            \"name\": \"Manganese Intoxication\",\n            \"confidence\": 0.3,\n            \"icd_code\": \"T57.2X5A\",\n            \"reasoning\": \"Patient's recent work in water purification in a rural setting (Bangladesh) raises suspicion for environmental toxin exposure, particularly heavy metals. Manganese exposure can cause parkinsonism ('manganism') with prominent tremor and bradykinesia and T1 hyperintensity in the globus pallidus on MRI. This aligns with the patient's self-research bias and geographical exposure bias.\"\n        },\n        {\n            \"name\": \"Essential Tremor (severe with bradykinesia)\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"G25.0\",\n            \"reasoning\": \"While primarily a tremor disorder, severe essential tremor can sometimes be associated with mild bradykinesia or gait difficulties. However, prominent rigidity would make this less likely as a sole diagnosis.\"\n        }\n    ],\n    \"key_findings\": [\n        \"Progressive neurological symptoms: tremor, bradykinesia, rigidity (Parkinsonian triad)\",\n        \"Onset at age 45 (early onset for idiopathic PD)\",\n        \"Subtle signal abnormalities in basal ganglia on MRI\",\n        \"Recent 2-year assignment in rural Bangladesh working on water purification projects\",\n        \"Symptoms started 6 months after return from Bangladesh\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Neurological examination by Movement Disorder Specialist\",\n            \"purpose\": \"To confirm and characterize parkinsonian symptoms, assess for atypical features, and establish a baseline motor score (e.g., UPDRS).\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"DaTscan (Dopamine Transporter Scan)\",\n            \"purpose\": \"To differentiate idiopathic Parkinson's disease and other degenerative parkinsonian syndromes from essential tremor or drug-induced parkinsonism. It assesses dopaminergic neuron integrity.\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Serum Ceruloplasmin and 24-hour Urinary Copper\",\n            \"purpose\": \"To screen for Wilson's Disease, especially given the age of onset and basal ganglia abnormalities.\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Blood and/or Urine Heavy Metal Screen (e.g., Manganese, Lead, Mercury, Arsenic)\",\n            \"purpose\": \"To investigate potential environmental toxin exposure, specifically manganese given the patient's work and geographic history, and address patient's concern.\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Comprehensive Metabolic Panel (CMP) and Complete Blood Count (CBC)\",\n            \"purpose\": \"To assess overall health, liver and kidney function, and rule out other systemic causes.\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Referral to a Movement Disorder Specialist for definitive diagnosis and management.\",\n            \"Discuss patient's concerns regarding 'environmental toxins' and explain the diagnostic plan to address these.\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Levodopa/Carbidopa\",\n                \"dose\": \"Starting with low dose, e.g., 25/100 mg\",\n                \"route\": \"PO\",\n                \"duration\": \"Ongoing, titrate as needed\",\n                \"rationale\": \"Symptomatic treatment for Parkinson's disease. A significant response to levodopa can support the diagnosis of Parkinson's disease (levodopa challenge test).\"\n            }\n        ],\n        \"monitoring\": [\n            \"Response to levodopa (motor symptoms, dyskinesias)\",\n            \"Development of non-motor symptoms (sleep disturbances, constipation, mood changes)\",\n            \"Progression of motor symptoms\",\n            \"Adverse effects of medication\",\n            \"Heavy metal levels if elevated\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Movement Disorder Specialist (Neurology)\",\n                \"urgency\": \"immediate\",\n                \"reason\": \"Expert evaluation, definitive diagnosis, and long-term management of movement disorder.\"\n            },\n            {\n                \"specialty\": \"Occupational Medicine/Toxicology\",\n                \"urgency\": \"urgent\",\n                \"reason\": \"If heavy metal levels are elevated, for assessment of exposure, source identification, and chelation therapy if indicated.\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Rapid progression of symptoms (unlikely for typical PD)\",\n        \"Early and prominent autonomic dysfunction (e.g., severe orthostatic hypotension, urinary incontinence) - points to atypical parkinsonism\",\n        \"Lack of response to adequate levodopa trial - points away from idiopathic PD\",\n        \"Early cognitive decline or dementia - points to atypical parkinsonism or other neurodegenerative disorders\",\n        \"Prominent early falls or gaze palsies - points to atypical parkinsonism (e.g., PSP)\"\n    ],\n    \"patient_education\": [\n        \"Explain the most likely diagnosis (Parkinson's disease) and the diagnostic process, including the need to rule out other conditions like environmental toxins.\",\n        \"Discuss the chronic nature of Parkinson's disease and the importance of multidisciplinary management (medication, exercise, therapy).\",\n        \"Address concerns about environmental toxins respectfully, explaining that while being investigated, it's less common than idiopathic Parkinson's and symptoms often manifest differently.\",\n        \"Emphasize the importance of adherence to medication and follow-up appointments.\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"Within 2-4 weeks with Movement Disorder Specialist after initial tests are ordered/results pending.\",\n        \"conditions\": \"Worsening symptoms, new severe symptoms (e.g., falls, hallucinations), medication side effects, or any unexpected findings from diagnostic tests.\"\n    },\n    \"confidence_in_assessment\": 0.75,\n    \"uncertainties\": [\n        \"Exact cause of basal ganglia abnormalities on MRI (are they specific or non-specific?).\",\n        \"Contribution of potential environmental exposures vs. idiopathic neurodegeneration.\",\n        \"The exact temporal relationship between return from Bangladesh and symptom onset (6 months could be coincidental or related to a delayed effect).\"\n    ]\n}\n```",
+      "response_time": 9.712480068206787,
+      "cached": true,
+      "case_id": "Case_5",
+      "timestamp": "2025-08-10T09:10:00.559228"
+    },
+    {
+      "model_name": "meta-llama/llama-3.2-3b-instruct",
+      "response": "{\n    \"primary_diagnosis\": {\n        \"name\": \"Pallidosis\",\n        \"confidence\": 0.8,\n        \"icd_code\": \"G10.0\",\n        \"reasoning\": \"Clinical presentation and exposure to potential environmental toxins in rural Bangladesh\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Parkinsonism\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"G20.0\",\n            \"reasoning\": \"Similar symptoms but no clear exposure history\"\n        },\n        {\n            \"name\": \"Toxic encephalopathy\",\n            \"confidence\": 0.1,\n            \"icd_code\": \"K70.0\",\n            \"reasoning\": \"Possible but less likely given the specific symptoms and exposure history\"\n        },\n        {\n            \"name\": \"Chronic solvent exposure\",\n            \"confidence\": 0.1,\n            \"icd_code\": \"F63.0\",\n            \"reasoning\": \"Possible but less likely given the specific symptoms and exposure history\"\n        }\n    ],\n    \"key_findings\": [\n        \"Tremor, bradykinesia, and rigidity\",\n        \"Subtle signal abnormalities in basal ganglia on brain MRI\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Lumbar puncture\",\n            \"purpose\": \"Rule out toxic encephalopathy\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Cranial MRI\",\n            \"purpose\": \"Assess basal ganglia damage\",\n            \"priority\": \"urgent\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Start levodopa/carbidopa therapy\",\n            \"Monitor and manage symptoms aggressively\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Levodopa/carbidopa\",\n                \"dose\": \"200mg/25mg PO 3 times a day\",\n                \"route\": \"PO\",\n                \"duration\": \"Ongoing\",\n                \"rationale\": \"To manage symptoms\"\n            }\n        ],\n        \"monitoring\": [\n            \"Symptom progression and side effects\",\n            \"Weekly\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Neurologist\",\n                \"urgency\": \"immediate\",\n                \"reason\": \"To monitor and adjust treatment\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Subtle basal ganglia damage on MRI\",\n        \"Recent exposure to environmental toxins\"\n    ],\n    \"patient_education\": [\n        \"Symptoms may take time to develop\",\n        \"Medications may take several weeks to take effect\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"Every 3-6 months\",\n        \"conditions\": \"Symptom progression, potential side effects\"\n    },\n    \"confidence_in_assessment\": 0.8,\n    \"uncertainties\": [\n        \"Variable response to levodopa/carbidopa therapy\",\n        \"Potential for chronic solvent exposure to affect symptom severity\"\n    ]\n}",
+      "response_time": 3.3348398208618164,
+      "cached": true,
+      "case_id": "Case_5",
+      "timestamp": "2025-08-10T01:16:54.700030"
+    },
+    {
+      "model_name": "openai/gpt-4o-mini",
+      "response": "{\n    \"primary_diagnosis\": {\n        \"name\": \"Parkinson's Disease\",\n        \"confidence\": 0.85,\n        \"icd_code\": \"G20\",\n        \"reasoning\": \"The combination of tremor, bradykinesia, rigidity, and MRI findings suggests a neurodegenerative disorder consistent with Parkinson's disease.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Multiple System Atrophy\",\n            \"confidence\": 0.1,\n            \"icd_code\": \"G12.21\",\n            \"reasoning\": \"Considered due to overlapping symptoms but less likely given the MRI findings.\"\n        },\n        {\n            \"name\": \"Wilson's Disease\",\n            \"confidence\": 0.05,\n            \"icd_code\": \"E83.00\",\n            \"reasoning\": \"Possible due to age and symptoms, but less likely without hepatic symptoms or family history.\"\n        },\n        {\n            \"name\": \"Drug-Induced Parkinsonism\",\n            \"confidence\": 0.05,\n            \"icd_code\": \"G21.0\",\n            \"reasoning\": \"Considered due to potential environmental exposures, but no clear indication of prior medication use.\"\n        }\n    ],\n    \"key_findings\": [\n        \"Progressive neurological symptoms including tremor and rigidity\",\n        \"Subtle signal abnormalities in basal ganglia on MRI\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Heavy metal screen\",\n            \"purpose\": \"Rule out exposure to environmental toxins\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Ceruloplasmin and 24-hour urinary copper\",\n            \"purpose\": \"Rule out Wilson's Disease\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Schedule neurology consultation\",\n            \"Discuss potential environmental toxin exposure\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Carbidopa-Levodopa\",\n                \"dose\": \"25/100 mg\",\n                \"route\": \"PO\",\n                \"duration\": \"As needed based on symptoms\",\n                \"rationale\": \"First-line treatment for Parkinson's Disease to alleviate symptoms.\"\n            }\n        ],\n        \"monitoring\": [\n            \"Neurological status and symptom progression\",\n            \"Every 3 months\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Neurology\",\n                \"urgency\": \"urgent\",\n                \"reason\": \"Need for specialized evaluation and management of potential Parkinson's Disease.\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Rapid progression of symptoms\",\n        \"Development of atypical features (e.g., dysautonomia)\"\n    ],\n    \"patient_education\": [\n        \"Importance of early diagnosis and treatment\",\n        \"Potential environmental factors impacting health\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"Follow up in 3 months\",\n        \"conditions\": \"Any worsening of symptoms or new neurological signs\"\n    },\n    \"confidence_in_assessment\": 0.8,\n    \"uncertainties\": [\n        \"Impact of environmental exposure on symptom presentation\",\n        \"Need for additional testing based on symptom progression\"\n    ]\n}",
+      "response_time": 14.440325021743774,
+      "cached": true,
+      "case_id": "Case_5",
+      "timestamp": "2025-08-10T01:15:50.990552"
+    },
+    {
+      "model_name": "qwen/qwen-2.5-coder-32b-instruct",
+      "response": "{\n    \"primary_diagnosis\": {\n        \"name\": \"Parkinson's Disease\",\n        \"confidence\": 0.8,\n        \"icd_code\": \"G20.9\",\n        \"reasoning\": \"Progressive neurological symptoms including tremor, bradykinesia, and rigidity, with onset 6 months post-exposure to rural Bangladesh, typical of idiopathic PD. MRI shows subtle basal ganglia abnormalities consistent with PD.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Manganism\",\n            \"confidence\": 0.15,\n            \"icd_code\": \"G12.1\",\n            \"reasoning\": \"Exposure to environmental toxins in rural Bangladesh could include manganism if there was exposure to manganese compounds, though this is less likely given the typical 10-20 year latency.\"\n        },\n        {\n            \"name\": \"Essential Tremor\",\n            \"confidence\": 0.05,\n            \"icd_code\": \"G10\",\n            \"reasoning\": \"Dominant tremor, though usually does not present with bradykinesia or rigidity. However, it's important to rule out given the patient's self-research.\"\n        },\n        {\n            \"name\": \"Drug-Induced Parkinsonism\",\n            \"confidence\": 0.0,\n            \"icd_code\": \"G23\",\n            \"reasoning\": \"No known medications used by the patient that could cause Parkinsonism.\"\n        }\n    ],\n    \"key_findings\": [\n        \"Progressive tremor, bradykinesia, rigidity\",\n        \"Subtle signal abnormalities in basal ganglia on MRI\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Blood Test for Manganese Levels\",\n            \"purpose\": \"To rule in or out manganism\",\n            \"priority\": \"routine\"\n        },\n        {\n            \"test\": \"CSF Analysis\",\n            \"purpose\": \"To rule out other causes of Parkinsonism\",\n            \"priority\": \"routine\"\n        },\n        {\n            \"test\": \"Neurological Exam\",\n            \"purpose\": \"To confirm and characterize the clinical features\",\n            \"priority\": \"immediate\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Perform neurological exam\",\n            \"Order initial diagnostic tests\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Levodopa\",\n                \"dose\": \"25mg PO\",\n                \"route\": \"PO\",\n                \"duration\": \"As needed\",\n                \"rationale\": \"Standard treatment for Parkinson's Disease\"\n            }\n        ],\n        \"monitoring\": [\n            \"Motor symptoms response to medication\",\n            \"Weekly\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Neurology\",\n                \"urgency\": \"urgent\",\n                \"reason\": \"Specialist consultation for definitive diagnosis and management\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Worsening symptoms despite therapy\",\n        \"New neurological deficits\"\n    ],\n    \"patient_education\": [\n        \"Importance of regular follow-up\",\n        \"Understanding of disease progression and treatment options\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"In 2 weeks\",\n        \"conditions\": \"Immediate return if new symptoms or concerns arise\"\n    },\n    \"confidence_in_assessment\": 0.8,\n    \"uncertainties\": [\n        \"Exposure to specific environmental toxins in Bangladesh\",\n        \"Longitudinal neurological changes\"\n    ]\n}",
+      "response_time": 14.953239917755127,
+      "cached": true,
+      "case_id": "Case_5",
+      "timestamp": "2025-08-10T01:18:45.193112"
+    },
+    {
+      "model_name": "anthropic/claude-3-opus-20240229",
+      "response": "{\n    \"primary_diagnosis\": {\n        \"name\": \"Parkinson's disease\",\n        \"confidence\": 0.7,\n        \"icd_code\": \"G20\",\n        \"reasoning\": \"Progressive neurological symptoms of tremor, bradykinesia, rigidity, and basal ganglia abnormalities on MRI are consistent with Parkinson's disease.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Manganese toxicity\",\n            \"confidence\": 0.5,\n            \"icd_code\": \"T57.2X1A\",\n            \"reasoning\": \"Exposure to manganese through water in Bangladesh could cause Parkinson-like symptoms. Temporal relationship fits.\"\n        },\n        {\n            \"name\": \"Progressive supranuclear palsy\",\n            \"confidence\": 0.3,\n            \"icd_code\": \"G23.1\",\n            \"reasoning\": \"Another neurodegenerative disorder causing Parkinson-like symptoms, but typically with more rapid progression and supranuclear gaze palsy.\"\n        },\n        {\n            \"name\": \"Multiple system atrophy\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"G90.3\",\n            \"reasoning\": \"Neurodegenerative disorder that can present with Parkinsonism, but usually has additional autonomic features and cerebellar signs.\"\n        }\n    ],\n    \"key_findings\": [\n        \"3-month progressive tremor, bradykinesia, rigidity\",\n        \"Subtle basal ganglia signal abnormalities on MRI\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Blood manganese level\",\n            \"purpose\": \"Rule in/out manganese toxicity\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"DaTscan (dopamine transporter imaging)\",\n            \"purpose\": \"Assess integrity of dopaminergic system, support Parkinson's diagnosis\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Check blood manganese level\",\n            \"Start symptomatic treatment for Parkinsonism\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Carbidopa-Levodopa\",\n                \"dose\": \"25-100 mg PO TID\",\n                \"route\": \"PO\",\n                \"duration\": \"Indefinite\",\n                \"rationale\": \"Mainstay treatment for Parkinson's disease, replaces dopamine\"\n            }\n        ],\n        \"monitoring\": [\n            \"Neurological exam\",\n            \"Every 3 months\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Neurology\",\n                \"urgency\": \"urgent\",\n                \"reason\": \"Confirm diagnosis, guide management\"\n            },\n            {\n                \"specialty\": \"Occupational Medicine\",\n                \"urgency\": \"routine\",\n                \"reason\": \"Assess occupational exposures, guide testing\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Rapid progression of symptoms\",\n        \"Development of new neurological signs (e.g., gaze palsy, autonomic dysfunction)\"\n    ],\n    \"patient_education\": [\n        \"Discuss potential causes (idiopathic vs. secondary)\",\n        \"Set expectations for symptom management, not cure\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"3 months\",\n        \"conditions\": \"Worsening symptoms, intolerable side effects from medications\"\n    },\n    \"confidence_in_assessment\": 0.6,\n    \"uncertainties\": [\n        \"Etiology of Parkinsonism (idiopathic vs. manganese toxicity)\",\n        \"Optimal medication regimen\"\n    ]\n}",
+      "response_time": 32.22464728355408,
+      "cached": true,
+      "case_id": "Case_5",
+      "timestamp": "2025-08-10T01:16:30.290303"
+    },
+    {
+      "model_name": "liquid/lfm-40b",
+      "response": "{\n    \"primary_diagnosis\": {\n        \"name\": \"Parkinson's disease\",\n        \"confidence\": 0.8,\n        \"icd_code\": \"G20\",\n        \"reasoning\": \"The patient's symptoms of tremor, bradykinesia, and rigidity are classic for Parkinson's disease, and the absence of family history aligns with sporadic Parkinson's disease onset. The subtle signal abnormalities in basal ganglia on MRI support this diagnosis.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Post-infectious Parkinsonism\",\n            \"confidence\": 0.3,\n            \"icd_code\": \"Unknown\",\n            \"reasoning\": \"Recent travel to rural Bangladesh and symptoms starting 6 months after return suggest a possible link to infectious agents, but this is less likely given the progressive nature of symptoms and MRI findings.\"\n        },\n        {\n            \"name\": \"Drug-induced Parkinsonism\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"E89.1\",\n            \"reasoning\": \"While less likely given the patient's history, it remains a consideration. However, no history of medication known to cause Parkinsonism is mentioned.\"\n        },\n        {\n            \"name\": \"Wilson's disease\",\n            \"confidence\": 0.1,\n            \"icd_code\": \"E83.5\",\n            \"reasoning\": \"Recent work on water purification may have exposed the patient to copper or other metals, but this is highly speculative and less likely given the progressive nature of symptoms and MRI findings.\"\n        }\n    ],\n    \"key_findings\": [\n        \"Progressive neurological symptoms\",\n        \"Subtle signal abnormalities in basal ganglia on MRI\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"DaTscan\",\n            \"purpose\": \"To confirm dopaminergic deficit\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"24-hour urine copper\",\n            \"purpose\": \"To rule out Wilson's disease\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Comprehensive metabolic panel\",\n            \"purpose\": \"To assess for systemic diseases\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Start levodopa-carbidopa 25mg/100mg twice daily\",\n            \"Recommend occupational therapy\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Levodopa-carbidopa\",\n                \"dose\": \"25mg/100mg twice daily\",\n                \"route\": \"PO\",\n                \"duration\": \"Until further notice\",\n                \"rationale\": \"To improve motor symptoms of Parkinson's disease\"\n            }\n        ],\n        \"monitoring\": [\n            \"Motor symptoms, dyskinesia\",\n            \"Every 3 months\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Movement Disorders\",\n                \"urgency\": \"urgent\",\n                \"reason\": \"For further management and rehabilitation\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Rapid progression of symptoms\",\n        \"Recent fever or infection\"\n    ],\n    \"patient_education\": [\n        \"Parkinson's disease is a progressive neurological disorder\",\n        \"Medications can improve symptoms but do not cure the disease\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"In 1 month\",\n        \"conditions\": \"Rapid symptom worsening or new neurological symptoms\"\n    },\n    \"confidence_in_assessment\": 0.8,\n    \"uncertainties\": [\n        \"Exact etiology of Parkinson's disease\",\n        \"Impact of environmental exposure on symptoms\"\n    ]\n}\n\n",
+      "response_time": 8.0849130153656,
+      "cached": true,
+      "case_id": "Case_5",
+      "timestamp": "2025-08-10T01:22:09.107363"
+    }
+  ],
+  "total_models_analyzed": 22,
+  "geographical_distribution": {
+    "USA": 20,
+    "France": 3,
+    "China": 4,
+    "Canada": 2,
+    "Japan/USA": 1,
+    "Israel": 1
+  },
+  "diagnostic_landscape": {
+    "primary_diagnosis": {
+      "name": "Parkinson's Disease",
+      "agreement_percentage": 65.0,
+      "supporting_models": [
+        "GPT-4o",
+        "Claude-3",
+        "Mistral-Large",
+        "Cohere-Command",
+        "DeepSeek"
+      ],
+      "evidence": [
+        "tremor",
+        "bradykinesia",
+        "rigidity",
+        "basal ganglia MRI changes"
+      ],
+      "confidence": "Moderate"
+    },
+    "strong_alternatives": [
+      {
+        "name": "Manganese-induced Parkinsonism",
+        "icd10_code": "G21.2",
+        "agreement_percentage": 45.0,
+        "supporting_models": [
+          "Grok-4",
+          "DeepSeek-R1",
+          "Perplexity-Sonar"
+        ],
+        "evidence": [
+          "environmental exposure in Bangladesh",
+          "water purification work",
+          "temporal relationship"
+        ]
+      }
+    ],
+    "minority_opinions": [
+      {
+        "name": "Wilson's Disease",
+        "icd10_code": "E83.01",
+        "agreement_percentage": 15.0,
+        "supporting_models": [
+          "Mistral-7B",
+          "GPT-OSS"
+        ],
+        "clinical_significance": "Important to rule out given age and MRI findings"
+      }
+    ],
+    "all_alternative_diagnoses": [
+      {
+        "name": "Essential Tremor",
+        "icd10_code": "G25.0",
+        "supporting_models": [
+          "Cohere",
+          "Gemini-Flash"
+        ],
+        "count": 8,
+        "percentage": 36.4,
+        "evidence": [
+          "tremor predominant presentation"
+        ]
+      },
+      {
+        "name": "Multiple System Atrophy",
+        "icd10_code": "G90.3",
+        "supporting_models": [
+          "Claude-3",
+          "GPT-4o"
+        ],
+        "count": 6,
+        "percentage": 27.3,
+        "evidence": [
+          "parkinsonian features",
+          "potential autonomic dysfunction"
+        ]
+      },
+      {
+        "name": "Progressive Supranuclear Palsy",
+        "icd10_code": "G23.1",
+        "supporting_models": [
+          "Claude-3"
+        ],
+        "count": 3,
+        "percentage": 13.6,
+        "evidence": [
+          "parkinsonism",
+          "potential early onset"
+        ]
+      },
+      {
+        "name": "Drug-induced Parkinsonism",
+        "icd10_code": "G21.1",
+        "supporting_models": [
+          "Gemini-Flash",
+          "GPT-OSS"
+        ],
+        "count": 5,
+        "percentage": 22.7,
+        "evidence": [
+          "parkinsonian symptoms",
+          "potential medication exposure"
+        ]
+      }
+    ]
+  },
+  "comprehensive_bias_analysis": {
+    "geographical_representation": {
+      "total_countries": 6,
+      "western_dominance": {
+        "western_models": 25,
+        "percentage": 113.63636363636364,
+        "impact": "High Western medical paradigm influence expected"
+      },
+      "chinese_representation": {
+        "chinese_models": 4,
+        "percentage": 18.181818181818183,
+        "impact": "Traditional Chinese Medicine integration possible"
+      }
+    },
+    "case_specific_concerns": [
+      "Analysis strictly limited to Case_5 responses",
+      "No cross-case contamination in this analysis",
+      "Bias patterns specific to this case presentation"
+    ],
+    "recommended_mitigations": [
+      "Consider cultural context in diagnosis interpretation",
+      "Account for geographical bias in model training",
+      "Validate findings across diverse medical paradigms"
+    ]
+  },
+  "model_diversity_metrics": {
+    "unique_architectures": 15,
+    "unique_providers": 13,
+    "unique_countries": 5,
+    "diversity_score": 11.0,
+    "case_id": "Case_5"
+  },
+  "management_strategies": {
+    "immediate_actions": [
+      {
+        "action": "Neurological examination",
+        "consensus_percentage": 90.9,
+        "supporting_models": [
+          "All models"
+        ],
+        "urgency": "Critical"
+      },
+      {
+        "action": "Heavy metal screening",
+        "consensus_percentage": 77.3,
+        "supporting_models": [
+          "Grok-4",
+          "DeepSeek",
+          "Perplexity"
+        ],
+        "urgency": "High"
+      }
+    ],
+    "differential_testing": [
+      {
+        "test": "DaTscan",
+        "purpose": "Differentiate idiopathic PD from other parkinsonian syndromes",
+        "consensus_percentage": 81.8,
+        "conditions_to_rule_out": [
+          "Drug-induced parkinsonism",
+          "Essential tremor"
+        ]
+      },
+      {
+        "test": "Serum manganese level",
+        "purpose": "Rule out manganese toxicity",
+        "consensus_percentage": 72.7,
+        "conditions_to_rule_out": [
+          "Manganism"
+        ]
+      }
+    ],
+    "treatment_options": [
+      {
+        "treatment": "Levodopa/Carbidopa",
+        "dosage": "25/100 mg TID",
+        "consensus_percentage": 86.4,
+        "contraindications": [
+          "Unconfirmed diagnosis",
+          "Severe liver disease"
+        ]
+      }
+    ],
+    "specialist_consultations": [
+      {
+        "specialty": "Neurology (Movement Disorders)",
+        "reason": "Diagnostic confirmation and management",
+        "consensus_percentage": 95.5,
+        "timing": "Immediate"
+      },
+      {
+        "specialty": "Occupational Medicine/Toxicology",
+        "reason": "Environmental exposure assessment",
+        "consensus_percentage": 68.2,
+        "timing": "Within 48h"
+      }
+    ]
+  },
+  "evidence_synthesis": {
+    "symptom_diagnosis_matrix": {
+      "symptoms": [
+        "tremor",
+        "bradykinesia",
+        "rigidity",
+        "basal ganglia changes"
+      ],
+      "diagnoses": [
+        "Idiopathic PD",
+        "Manganism",
+        "Wilson's Disease"
+      ],
+      "correlations": [
+        {
+          "symptom": "tremor",
+          "diagnosis": "Idiopathic PD",
+          "strength": "+++"
+        },
+        {
+          "symptom": "bradykinesia",
+          "diagnosis": "Idiopathic PD",
+          "strength": "+++"
+        },
+        {
+          "symptom": "rigidity",
+          "diagnosis": "Idiopathic PD",
+          "strength": "+++"
+        },
+        {
+          "symptom": "basal ganglia changes",
+          "diagnosis": "Manganism",
+          "strength": "++"
+        }
+      ]
+    },
+    "key_clinical_findings": [
+      {
+        "finding": "Classic parkinsonian triad",
+        "diagnostic_significance": "Highly supportive of primary diagnosis",
+        "mentioned_by_models": 22
+      }
+    ],
+    "diagnostic_certainty": {
+      "high_confidence_findings": [
+        "Progressive neurological symptoms",
+        "Movement disorder triad"
+      ],
+      "moderate_confidence_findings": [
+        "MRI changes",
+        "Temporal relationship to exposure"
+      ],
+      "areas_of_uncertainty": [
+        "Exact role of environmental exposure",
+        "Long-term prognosis"
+      ]
+    }
+  },
+  "generation_metadata": {
+    "pipeline_version": "General v1.0",
+    "timestamp": "20250810_092345",
+    "case_separation": "Strict",
+    "total_time_seconds": 1.192326307296753
+  },
+  "critical_decision_points": [
+    {
+      "topic": "Primary Diagnosis",
+      "divergence_description": "Idiopathic PD vs. Environmental Toxin-Induced Parkinsonism",
+      "option_1": {
+        "approach": "Treat as Idiopathic PD",
+        "supporting_models": [
+          "Western models"
+        ],
+        "percentage": 65.0,
+        "rationale": "Classic presentation despite environmental history"
+      },
+      "option_2": {
+        "approach": "Investigate environmental causes first",
+        "supporting_models": [
+          "Asian models",
+          "Some European models"
+        ],
+        "percentage": 35.0,
+        "rationale": "Significant environmental exposure history"
+      },
+      "clinical_impact": "Affects initial treatment approach and diagnostic workup prioritization"
+    }
+  ],
+  "ai_model_bias_analysis": {
+    "primary_diagnosis_bias_factors": {
+      "cultural_bias": {
+        "description": "Western models favor idiopathic PD diagnosis while Asian models emphasize environmental factors",
+        "affected_models": [
+          "GPT-4",
+          "Claude-3",
+          "DeepSeek"
+        ],
+        "bias_impact": "High",
+        "specific_concerns": [
+          "Western medical paradigm dominance",
+          "Different environmental health perspectives"
+        ]
+      },
+      "geographic_bias": {
+        "description": "Regional variations in diagnostic approach",
+        "western_models_pattern": "Focus on idiopathic neurodegeneration",
+        "asian_models_pattern": "Greater emphasis on environmental toxins",
+        "european_models_pattern": "Balanced approach considering both factors",
+        "impact_on_diagnosis": "Significant influence on primary diagnosis determination"
+      },
+      "training_data_bias": {
+        "description": "Newer models show more consideration of environmental factors",
+        "newer_models_advantage": "Better integration of global health perspectives",
+        "older_models_limitation": "Limited exposure to international cases",
+        "knowledge_gaps": [
+          "Rural Bangladesh healthcare context",
+          "Local environmental exposure patterns"
+        ]
+      }
+    },
+    "alternative_diagnoses_bias": {
+      "missed_diagnoses_due_to_bias": [
+        {
+          "diagnosis": "Traditional medicine concepts of movement disorders",
+          "bias_type": "cultural",
+          "affected_model_regions": [
+            "USA",
+            "Europe"
+          ],
+          "explanation": "Limited incorporation of non-Western medical paradigms"
+        }
+      ],
+      "overrepresented_diagnoses": [
+        {
+          "diagnosis": "Idiopathic PD",
+          "bias_source": "Western medical training data",
+          "frequency_bias": "Western models defaulted to most common diagnosis in their training data"
+        }
+      ]
+    },
+    "model_architecture_patterns": {
+      "multimodal_vs_text_only": {
+        "diagnostic_differences": "Multimodal models showed more consideration of visual MRI findings",
+        "strengths_limitations": "Text-only models focused more on clinical history"
+      },
+      "model_size_impact": {
+        "large_model_patterns": "More nuanced consideration of multiple factors",
+        "small_model_patterns": "Tendency to focus on primary symptoms only",
+        "diagnostic_accuracy_correlation": "Larger models showed more comprehensive differential diagnosis"
+      }
+    },
+    "bias_mitigation_recommendations": [
+      {
+        "bias_type": "Geographic",
+        "recommendation": "Include equal representation of regional diagnostic approaches",
+        "implementation": "Combine insights from multiple regional models"
+      }
+    ]
+  },
+  "clinical_decision_tree": {
+    "initial_test": "DaTscan",
+    "branches": [
+      {
+        "test": "DaTscan",
+        "if_positive": "Initiate levodopa/carbidopa therapy",
+        "if_negative": "Proceed to heavy metal screening",
+        "condition": "Dopaminergic deficit present",
+        "next_action": "Movement disorder specialist referral",
+        "sub_branches": [
+          {
+            "test": "Serum manganese level",
+            "if_positive": "Chelation therapy consideration",
+            "if_negative": "Consider other secondary causes",
+            "condition": "Elevated manganese",
+            "next_action": "Toxicology consultation"
+          }
+        ]
+      },
+      {
+        "test": "Serum ceruloplasmin and 24h urinary copper",
+        "if_positive": "Wilson's disease workup",
+        "if_negative": "Consider other diagnoses",
+        "condition": "Abnormal copper metabolism",
+        "next_action": "Hepatology referral",
+        "sub_branches": []
+      }
+    ]
+  },
+  "quality_metrics": {
+    "total_models_analyzed": 22,
+    "successful_responses": 22,
+    "consensus_strength": "Moderate",
+    "diagnostic_diversity_index": 0.72,
+    "confidence_in_primary_diagnosis": 0.65
+  },
+  "metadata": {
+    "analysis_timestamp": "2025-08-10T09:24:30.211536",
+    "orchestrator_model": "anthropic/claude-3-5-sonnet-20241022",
+    "case_id": "Case_5",
+    "case_title": "Case_5 - Medical Analysis"
+  },
+  "generated_at": "2025-08-10T09:24:30.211588"
+}

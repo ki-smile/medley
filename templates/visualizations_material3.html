@@ -1,0 +1,397 @@
+{% extends "base.html" %}
+
+{% block title %}Visualizations - MEDLEY{% endblock %}
+
+{% block styles %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<style>
+    .viz-card {
+        background: var(--md-sys-color-surface-container-low);
+        border-radius: var(--md-sys-shape-corner-large);
+        padding: 24px;
+        margin-bottom: 24px;
+        border: 1px solid var(--md-sys-color-outline-variant);
+    }
+    
+    .chart-container {
+        position: relative;
+        height: 400px;
+        margin: 20px 0;
+    }
+    
+    .heatmap-cell {
+        stroke: var(--md-sys-color-outline);
+        stroke-width: 1px;
+    }
+    
+    .tooltip {
+        position: absolute;
+        background: var(--md-sys-color-surface-container-highest);
+        padding: 8px 12px;
+        border-radius: var(--md-sys-shape-corner-small);
+        font-size: var(--md-sys-typescale-body-small);
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.2s;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Consensus Visualization -->
+<div class="viz-card">
+    <h2 class="md-headline-medium mb-3">🎯 Consensus Analysis</h2>
+    <p class="md-body-medium mb-3" style="color: var(--md-sys-color-on-surface-variant);">
+        Visualization of diagnostic consensus across all models
+    </p>
+    
+    <div class="chart-container">
+        <canvas id="consensusChart"></canvas>
+    </div>
+    
+    <div class="flex gap-2 mt-3">
+        <button class="md-button md-button-tonal" onclick="updateConsensusView('pie')">Pie Chart</button>
+        <button class="md-button md-button-outlined" onclick="updateConsensusView('bar')">Bar Chart</button>
+        <button class="md-button md-button-outlined" onclick="updateConsensusView('radar')">Radar Chart</button>
+    </div>
+</div>
+
+<!-- Model Performance Heatmap -->
+<div class="viz-card">
+    <h2 class="md-headline-medium mb-3">🗺️ Model Performance Heatmap</h2>
+    <p class="md-body-medium mb-3" style="color: var(--md-sys-color-on-surface-variant);">
+        Performance metrics across models and medical specialties
+    </p>
+    
+    <div id="heatmapContainer"></div>
+    <div class="tooltip" id="heatmapTooltip"></div>
+</div>
+
+<!-- Response Time Analysis -->
+<div class="viz-card">
+    <h2 class="md-headline-medium mb-3">⏱️ Response Time Analysis</h2>
+    <p class="md-body-medium mb-3" style="color: var(--md-sys-color-on-surface-variant);">
+        Model response times across different case complexities
+    </p>
+    
+    <div class="chart-container">
+        <canvas id="responseTimeChart"></canvas>
+    </div>
+</div>
+
+<!-- Bias Detection -->
+<div class="viz-card">
+    <h2 class="md-headline-medium mb-3">⚖️ Bias Detection Patterns</h2>
+    <p class="md-body-medium mb-3" style="color: var(--md-sys-color-on-surface-variant);">
+        Potential biases identified across different model origins
+    </p>
+    
+    <div id="biasVisualization"></div>
+</div>
+
+<!-- Cost Analysis -->
+<div class="viz-card">
+    <h2 class="md-headline-medium mb-3">💰 Cost Analysis</h2>
+    <p class="md-body-medium mb-3" style="color: var(--md-sys-color-on-surface-variant);">
+        Cost breakdown by model and usage patterns
+    </p>
+    
+    <div class="chart-container">
+        <canvas id="costChart"></canvas>
+    </div>
+</div>
+
+<!-- Export Options -->
+<div class="md-surface">
+    <h3 class="md-title-large mb-3">📊 Export Visualizations</h3>
+    <div class="flex gap-2">
+        <button class="md-button md-button-filled" onclick="exportVisualization('pdf')">
+            📄 Export as PDF
+        </button>
+        <button class="md-button md-button-tonal" onclick="exportVisualization('png')">
+            🖼️ Export as PNG
+        </button>
+        <button class="md-button md-button-outlined" onclick="exportVisualization('svg')">
+            📐 Export as SVG
+        </button>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Initialize charts
+let consensusChart, responseTimeChart, costChart;
+
+// Consensus Chart
+const consensusCtx = document.getElementById('consensusChart').getContext('2d');
+consensusChart = new Chart(consensusCtx, {
+    type: 'doughnut',
+    data: {
+        labels: ['Primary Diagnosis', 'Alternative', 'Minority Opinion', 'No Consensus'],
+        datasets: [{
+            data: [45, 30, 15, 10],
+            backgroundColor: [
+                'rgba(46, 125, 50, 0.8)',
+                'rgba(255, 193, 7, 0.8)',
+                'rgba(33, 150, 243, 0.8)',
+                'rgba(158, 158, 158, 0.8)'
+            ]
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                position: 'bottom'
+            }
+        }
+    }
+});
+
+// Response Time Chart
+const responseTimeCtx = document.getElementById('responseTimeChart').getContext('2d');
+responseTimeChart = new Chart(responseTimeCtx, {
+    type: 'line',
+    data: {
+        labels: ['Low', 'Medium', 'High', 'Very High', 'Critical'],
+        datasets: [
+            {
+                label: 'Free Models',
+                data: [1.2, 1.8, 2.4, 3.1, 3.8],
+                borderColor: 'rgba(46, 125, 50, 1)',
+                backgroundColor: 'rgba(46, 125, 50, 0.1)',
+                tension: 0.4
+            },
+            {
+                label: 'Premium Models',
+                data: [0.8, 1.2, 1.6, 2.0, 2.5],
+                borderColor: 'rgba(255, 152, 0, 1)',
+                backgroundColor: 'rgba(255, 152, 0, 0.1)',
+                tension: 0.4
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+            y: {
+                beginAtZero: true,
+                title: {
+                    display: true,
+                    text: 'Response Time (seconds)'
+                }
+            },
+            x: {
+                title: {
+                    display: true,
+                    text: 'Case Complexity'
+                }
+            }
+        }
+    }
+});
+
+// Cost Chart
+const costCtx = document.getElementById('costChart').getContext('2d');
+costChart = new Chart(costCtx, {
+    type: 'bar',
+    data: {
+        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        datasets: [{
+            label: 'Daily Cost ($)',
+            data: [0, 0.12, 0.08, 0, 0.15, 0, 0.05],
+            backgroundColor: 'rgba(46, 125, 50, 0.6)',
+            borderColor: 'rgba(46, 125, 50, 1)',
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+            y: {
+                beginAtZero: true,
+                title: {
+                    display: true,
+                    text: 'Cost ($)'
+                }
+            }
+        }
+    }
+});
+
+// Heatmap using D3
+function createHeatmap() {
+    const data = [
+        { model: 'Gemini Flash', specialty: 'Cardiology', score: 0.92 },
+        { model: 'Gemini Flash', specialty: 'Neurology', score: 0.88 },
+        { model: 'Gemini Flash', specialty: 'Oncology', score: 0.90 },
+        { model: 'Llama 3.2', specialty: 'Cardiology', score: 0.89 },
+        { model: 'Llama 3.2', specialty: 'Neurology', score: 0.91 },
+        { model: 'Llama 3.2', specialty: 'Oncology', score: 0.87 },
+        { model: 'Phi-3', specialty: 'Cardiology', score: 0.86 },
+        { model: 'Phi-3', specialty: 'Neurology', score: 0.85 },
+        { model: 'Phi-3', specialty: 'Oncology', score: 0.88 }
+    ];
+    
+    const models = [...new Set(data.map(d => d.model))];
+    const specialties = [...new Set(data.map(d => d.specialty))];
+    
+    const margin = { top: 50, right: 50, bottom: 100, left: 100 };
+    const width = 600 - margin.left - margin.right;
+    const height = 400 - margin.top - margin.bottom;
+    
+    const svg = d3.select('#heatmapContainer')
+        .append('svg')
+        .attr('width', width + margin.left + margin.right)
+        .attr('height', height + margin.top + margin.bottom)
+        .append('g')
+        .attr('transform', `translate(${margin.left},${margin.top})`);
+    
+    const x = d3.scaleBand()
+        .range([0, width])
+        .domain(specialties)
+        .padding(0.05);
+    
+    const y = d3.scaleBand()
+        .range([height, 0])
+        .domain(models)
+        .padding(0.05);
+    
+    const colorScale = d3.scaleSequential()
+        .interpolator(d3.interpolateGreens)
+        .domain([0.7, 1]);
+    
+    // Add rectangles
+    svg.selectAll()
+        .data(data)
+        .enter()
+        .append('rect')
+        .attr('x', d => x(d.specialty))
+        .attr('y', d => y(d.model))
+        .attr('width', x.bandwidth())
+        .attr('height', y.bandwidth())
+        .attr('fill', d => colorScale(d.score))
+        .attr('class', 'heatmap-cell')
+        .on('mouseover', function(event, d) {
+            const tooltip = document.getElementById('heatmapTooltip');
+            tooltip.innerHTML = `${d.model}<br>${d.specialty}<br>Score: ${(d.score * 100).toFixed(1)}%`;
+            tooltip.style.opacity = 1;
+            tooltip.style.left = (event.pageX + 10) + 'px';
+            tooltip.style.top = (event.pageY - 28) + 'px';
+        })
+        .on('mouseout', function() {
+            document.getElementById('heatmapTooltip').style.opacity = 0;
+        });
+    
+    // Add X axis
+    svg.append('g')
+        .attr('transform', `translate(0,${height})`)
+        .call(d3.axisBottom(x));
+    
+    // Add Y axis
+    svg.append('g')
+        .call(d3.axisLeft(y));
+}
+
+// Bias Visualization using D3
+function createBiasVisualization() {
+    const data = [
+        { origin: 'USA', bias: 'Western Medicine', strength: 0.7 },
+        { origin: 'China', bias: 'Traditional Medicine', strength: 0.5 },
+        { origin: 'Europe', bias: 'Evidence-Based', strength: 0.8 },
+        { origin: 'Open Source', bias: 'Diverse', strength: 0.3 }
+    ];
+    
+    const width = 600;
+    const height = 300;
+    const margin = { top: 20, right: 30, bottom: 40, left: 100 };
+    
+    const svg = d3.select('#biasVisualization')
+        .append('svg')
+        .attr('width', width)
+        .attr('height', height);
+    
+    const x = d3.scaleLinear()
+        .domain([0, 1])
+        .range([margin.left, width - margin.right]);
+    
+    const y = d3.scaleBand()
+        .domain(data.map(d => d.origin))
+        .range([margin.top, height - margin.bottom])
+        .padding(0.2);
+    
+    // Add bars
+    svg.selectAll('.bar')
+        .data(data)
+        .enter()
+        .append('rect')
+        .attr('class', 'bar')
+        .attr('x', margin.left)
+        .attr('y', d => y(d.origin))
+        .attr('width', d => x(d.strength) - margin.left)
+        .attr('height', y.bandwidth())
+        .attr('fill', d => d.strength > 0.6 ? '#FF9800' : '#4CAF50');
+    
+    // Add labels
+    svg.selectAll('.label')
+        .data(data)
+        .enter()
+        .append('text')
+        .attr('x', d => x(d.strength) + 5)
+        .attr('y', d => y(d.origin) + y.bandwidth() / 2)
+        .attr('dy', '0.35em')
+        .text(d => d.bias)
+        .style('font-size', '12px');
+    
+    // Add axes
+    svg.append('g')
+        .attr('transform', `translate(0,${height - margin.bottom})`)
+        .call(d3.axisBottom(x).ticks(5).tickFormat(d3.format('.0%')));
+    
+    svg.append('g')
+        .attr('transform', `translate(${margin.left},0)`)
+        .call(d3.axisLeft(y));
+}
+
+// Update consensus view
+function updateConsensusView(type) {
+    consensusChart.destroy();
+    
+    const config = {
+        type: type === 'radar' ? 'radar' : type,
+        data: consensusChart.data,
+        options: consensusChart.options
+    };
+    
+    if (type === 'bar') {
+        config.type = 'bar';
+    } else if (type === 'radar') {
+        config.options.scales = {
+            r: {
+                beginAtZero: true
+            }
+        };
+    }
+    
+    consensusChart = new Chart(consensusCtx, config);
+}
+
+// Export visualization
+function exportVisualization(format) {
+    // Implementation would depend on chosen export library
+    alert(`Exporting as ${format.toUpperCase()}...`);
+}
+
+// Initialize visualizations on load
+document.addEventListener('DOMContentLoaded', function() {
+    createHeatmap();
+    createBiasVisualization();
+});
+</script>
+{% endblock %}

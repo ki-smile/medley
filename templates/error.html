@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container" style="max-width: 800px; margin: 0 auto; padding: 64px 24px; text-align: center;">
+    <div class="card" style="padding: 48px 32px;">
+        <!-- Error Icon -->
+        <div style="margin-bottom: 32px;">
+            <span class="material-symbols-rounded" style="font-size: 72px; color: var(--md-sys-color-error);">error</span>
+        </div>
+
+        <!-- Error Title -->
+        <h1 style="font-size: var(--md-sys-typescale-display-small); margin-bottom: 16px; color: var(--md-sys-color-on-surface);">
+            {{ title or 'Oops! Something went wrong' }}
+        </h1>
+
+        <!-- Error Message -->
+        <p style="font-size: var(--md-sys-typescale-body-large); color: var(--md-sys-color-on-surface-variant); margin-bottom: 8px;">
+            {{ message or 'We encountered an unexpected error while processing your request.' }}
+        </p>
+
+        {% if subtitle %}
+        <p style="font-size: var(--md-sys-typescale-body-medium); color: var(--md-sys-color-on-surface-variant); margin-bottom: 32px;">
+            {{ subtitle }}
+        </p>
+        {% endif %}
+
+        <!-- Action Buttons -->
+        <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-top: 40px;">
+            <a href="/" class="btn btn-filled">
+                <span class="material-symbols-rounded">home</span>
+                Go Home
+            </a>
+            <button onclick="history.back()" class="btn btn-outlined">
+                <span class="material-symbols-rounded">arrow_back</span>
+                Go Back
+            </button>
+            <button onclick="window.location.reload()" class="btn btn-text">
+                <span class="material-symbols-rounded">refresh</span>
+                Try Again
+            </button>
+        </div>
+    </div>
+
+    <!-- Help Section -->
+    <div style="margin-top: 48px; padding: 24px; background: var(--md-sys-color-surface-variant); border-radius: 16px;">
+        <h3 style="margin-bottom: 16px; color: var(--md-sys-color-on-surface-variant);">Need Help?</h3>
+        <div style="display: flex; gap: 24px; justify-content: center; flex-wrap: wrap;">
+            <a href="/analyze" style="color: var(--md-sys-color-primary); text-decoration: none; display: flex; align-items: center; gap: 8px;">
+                <span class="material-symbols-rounded">analytics</span>
+                Analyze Case
+            </a>
+            <a href="/gallery" style="color: var(--md-sys-color-primary); text-decoration: none; display: flex; align-items: center; gap: 8px;">
+                <span class="material-symbols-rounded">folder</span>
+                Browse Cases
+            </a>
+            <a href="/docs" style="color: var(--md-sys-color-primary); text-decoration: none; display: flex; align-items: center; gap: 8px;">
+                <span class="material-symbols-rounded">help</span>
+                Documentation
+            </a>
+        </div>
+    </div>
+</div>
+
+<style>
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border-radius: 100px;
+    text-decoration: none;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+    font-size: 14px;
+}
+
+.btn-filled {
+    background: var(--md-sys-color-primary);
+    color: var(--md-sys-color-on-primary);
+}
+
+.btn-filled:hover {
+    background: color-mix(in srgb, var(--md-sys-color-primary) 90%, black);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    transform: translateY(-2px);
+}
+
+.btn-outlined {
+    background: transparent;
+    color: var(--md-sys-color-primary);
+    border: 1px solid var(--md-sys-color-outline);
+}
+
+.btn-outlined:hover {
+    background: var(--md-sys-color-primary-container);
+    border-color: var(--md-sys-color-primary);
+}
+
+.btn-text {
+    background: transparent;
+    color: var(--md-sys-color-primary);
+}
+
+.btn-text:hover {
+    background: var(--md-sys-color-primary-container);
+}
+
+.card {
+    background: var(--md-sys-color-surface);
+    border-radius: 16px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+</style>
+{% endblock %}

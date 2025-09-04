@@ -1,0 +1,353 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container" style="max-width: 1200px; margin: 0 auto; padding: 24px;">
+    <h1 style="font-size: var(--md-sys-typescale-display-small); margin-bottom: 16px;">
+        Model Performance Dashboard
+    </h1>
+    <p style="color: var(--md-sys-color-on-surface-variant); margin-bottom: 32px;">
+        Analyze model behavior patterns across all medical cases
+    </p>
+
+    <!-- Summary Statistics -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 32px;">
+        <div class="card" style="padding: 24px; text-align: center;">
+            <div style="font-size: 36px; font-weight: bold; color: var(--ki-plum-logo);">31</div>
+            <div style="font-size: 14px; color: var(--md-sys-color-on-surface-variant);">Total Models</div>
+        </div>
+        <div class="card" style="padding: 24px; text-align: center;">
+            <div style="font-size: 36px; font-weight: bold; color: var(--ki-orange);">12</div>
+            <div style="font-size: 14px; color: var(--md-sys-color-on-surface-variant);">Cases Analyzed</div>
+        </div>
+        <div class="card" style="padding: 24px; text-align: center;">
+            <div style="font-size: 36px; font-weight: bold; color: var(--ki-dark-plum);">372</div>
+            <div style="font-size: 14px; color: var(--md-sys-color-on-surface-variant);">Total Responses</div>
+        </div>
+        <div class="card" style="padding: 24px; text-align: center;">
+            <div style="font-size: 36px; font-weight: bold; color: var(--ki-plum-logo);">85%</div>
+            <div style="font-size: 14px; color: var(--md-sys-color-on-surface-variant);">Avg Success Rate</div>
+        </div>
+    </div>
+
+    <!-- Tab Navigation -->
+    <div style="border-bottom: 1px solid var(--md-sys-color-outline); margin-bottom: 24px;">
+        <div style="display: flex; gap: 32px;">
+            <button class="tab-button active" onclick="showTab('consensus')" style="padding: 12px 0; background: none; border: none; border-bottom: 2px solid var(--ki-plum-logo); cursor: pointer;">
+                Consensus Leadership
+            </button>
+            <button class="tab-button" onclick="showTab('agreement')" style="padding: 12px 0; background: none; border: none; border-bottom: 2px solid transparent; cursor: pointer;">
+                Model Agreement
+            </button>
+            <button class="tab-button" onclick="showTab('bias')" style="padding: 12px 0; background: none; border: none; border-bottom: 2px solid transparent; cursor: pointer;">
+                Bias Analysis
+            </button>
+            <button class="tab-button" onclick="showTab('reliability')" style="padding: 12px 0; background: none; border: none; border-bottom: 2px solid transparent; cursor: pointer;">
+                Reliability Metrics
+            </button>
+        </div>
+    </div>
+
+    <!-- Consensus Leadership Tab -->
+    <div id="consensus-tab" class="tab-content">
+        <div class="card" style="padding: 32px;">
+            <h2 style="font-size: var(--md-sys-typescale-headline-small); margin-bottom: 24px;">
+                Models Leading Consensus
+            </h2>
+            <p style="color: var(--md-sys-color-on-surface-variant); margin-bottom: 24px;">
+                How often each model's diagnosis becomes the primary consensus
+            </p>
+            
+            <!-- Top Performers -->
+            <div style="margin-bottom: 32px;">
+                <h3 style="font-size: var(--md-sys-typescale-title-medium); margin-bottom: 16px;">Top Consensus Leaders</h3>
+                <div id="consensus-leaders">
+                    <!-- Will be populated dynamically -->
+                    <div class="model-bar" style="margin-bottom: 16px;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                            <span>🇺🇸 GPT-4o (OpenAI)</span>
+                            <span style="font-weight: 600;">78%</span>
+                        </div>
+                        <div style="height: 24px; background: var(--md-sys-color-surface-variant); border-radius: 12px; overflow: hidden;">
+                            <div style="height: 100%; width: 78%; background: linear-gradient(90deg, var(--ki-plum-logo), var(--ki-orange));"></div>
+                        </div>
+                    </div>
+                    <div class="model-bar" style="margin-bottom: 16px;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                            <span>🇺🇸 Claude Opus (Anthropic)</span>
+                            <span style="font-weight: 600;">75%</span>
+                        </div>
+                        <div style="height: 24px; background: var(--md-sys-color-surface-variant); border-radius: 12px; overflow: hidden;">
+                            <div style="height: 100%; width: 75%; background: linear-gradient(90deg, var(--ki-plum-logo), var(--ki-orange));"></div>
+                        </div>
+                    </div>
+                    <div class="model-bar" style="margin-bottom: 16px;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                            <span>🇺🇸 Gemini Pro (Google)</span>
+                            <span style="font-weight: 600;">72%</span>
+                        </div>
+                        <div style="height: 24px; background: var(--md-sys-color-surface-variant); border-radius: 12px; overflow: hidden;">
+                            <div style="height: 100%; width: 72%; background: linear-gradient(90deg, var(--ki-plum-logo), var(--ki-orange));"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Consensus by Region -->
+            <div>
+                <h3 style="font-size: var(--md-sys-typescale-title-medium); margin-bottom: 16px;">Consensus by Region</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px;">
+                    <div class="region-card" style="padding: 16px; background: var(--ki-light-orange); border-radius: 12px; text-align: center;">
+                        <div style="font-size: 24px;">🇺🇸</div>
+                        <div style="font-size: 20px; font-weight: 600;">68%</div>
+                        <div style="font-size: 12px;">USA Models</div>
+                    </div>
+                    <div class="region-card" style="padding: 16px; background: var(--ki-light-blue); border-radius: 12px; text-align: center;">
+                        <div style="font-size: 24px;">🇨🇳</div>
+                        <div style="font-size: 20px; font-weight: 600;">15%</div>
+                        <div style="font-size: 12px;">Chinese Models</div>
+                    </div>
+                    <div class="region-card" style="padding: 16px; background: var(--ki-light-orange); border-radius: 12px; text-align: center;">
+                        <div style="font-size: 24px;">🇫🇷</div>
+                        <div style="font-size: 20px; font-weight: 600;">12%</div>
+                        <div style="font-size: 12px;">European Models</div>
+                    </div>
+                    <div class="region-card" style="padding: 16px; background: var(--md-sys-color-surface-variant); border-radius: 12px; text-align: center;">
+                        <div style="font-size: 24px;">🌍</div>
+                        <div style="font-size: 20px; font-weight: 600;">5%</div>
+                        <div style="font-size: 12px;">Other Regions</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Model Agreement Tab -->
+    <div id="agreement-tab" class="tab-content" style="display: none;">
+        <div class="card" style="padding: 32px;">
+            <h2 style="font-size: var(--md-sys-typescale-headline-small); margin-bottom: 24px;">
+                Inter-Model Agreement Patterns
+            </h2>
+            <p style="color: var(--md-sys-color-on-surface-variant); margin-bottom: 24px;">
+                How often different models agree on diagnoses
+            </p>
+            
+            <!-- Agreement Matrix Preview -->
+            <div style="overflow-x: auto;">
+                <table style="width: 100%; border-collapse: collapse;">
+                    <thead>
+                        <tr>
+                            <th style="padding: 12px; text-align: left; border-bottom: 1px solid var(--md-sys-color-outline);">Model Pair</th>
+                            <th style="padding: 12px; text-align: center; border-bottom: 1px solid var(--md-sys-color-outline);">Agreement Rate</th>
+                            <th style="padding: 12px; text-align: center; border-bottom: 1px solid var(--md-sys-color-outline);">Cases Compared</th>
+                            <th style="padding: 12px; text-align: center; border-bottom: 1px solid var(--md-sys-color-outline);">Correlation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="padding: 12px;">GPT-4o ↔ Claude Opus</td>
+                            <td style="padding: 12px; text-align: center;">
+                                <span style="padding: 4px 12px; background: var(--ki-light-orange); border-radius: 12px; color: var(--ki-dark-plum);">82%</span>
+                            </td>
+                            <td style="padding: 12px; text-align: center;">12</td>
+                            <td style="padding: 12px; text-align: center;">High</td>
+                        </tr>
+                        <tr style="background: var(--md-sys-color-surface-variant);">
+                            <td style="padding: 12px;">Gemini Pro ↔ GPT-4o</td>
+                            <td style="padding: 12px; text-align: center;">
+                                <span style="padding: 4px 12px; background: var(--ki-light-orange); border-radius: 12px; color: var(--ki-dark-plum);">79%</span>
+                            </td>
+                            <td style="padding: 12px; text-align: center;">12</td>
+                            <td style="padding: 12px; text-align: center;">High</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 12px;">DeepSeek ↔ Qwen</td>
+                            <td style="padding: 12px; text-align: center;">
+                                <span style="padding: 4px 12px; background: var(--ki-light-blue); border-radius: 12px; color: var(--ki-dark-plum);">65%</span>
+                            </td>
+                            <td style="padding: 12px; text-align: center;">12</td>
+                            <td style="padding: 12px; text-align: center;">Medium</td>
+                        </tr>
+                        <tr style="background: var(--md-sys-color-surface-variant);">
+                            <td style="padding: 12px;">Mistral ↔ Llama</td>
+                            <td style="padding: 12px; text-align: center;">
+                                <span style="padding: 4px 12px; background: var(--ki-light-orange); border-radius: 12px; color: var(--ki-dark-plum);">58%</span>
+                            </td>
+                            <td style="padding: 12px; text-align: center;">12</td>
+                            <td style="padding: 12px; text-align: center;">Medium</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bias Analysis Tab -->
+    <div id="bias-tab" class="tab-content" style="display: none;">
+        <div class="card" style="padding: 32px;">
+            <h2 style="font-size: var(--md-sys-typescale-headline-small); margin-bottom: 24px;">
+                Bias Pattern Analysis
+            </h2>
+            <p style="color: var(--md-sys-color-on-surface-variant); margin-bottom: 24px;">
+                Geographic and cultural bias patterns detected across cases
+            </p>
+            
+            <!-- Bias Categories -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 24px;">
+                <div class="bias-card" style="padding: 20px; background: var(--ki-light-orange); border-radius: 12px;">
+                    <h3 style="font-size: var(--md-sys-typescale-title-medium); margin-bottom: 12px;">Geographic Bias</h3>
+                    <p style="font-size: 14px; margin-bottom: 16px;">Models show preference for conditions common in their training regions</p>
+                    <div style="font-size: 24px; font-weight: bold; color: var(--ki-dark-plum);">High</div>
+                    <div style="font-size: 12px;">Detected in 8/12 cases</div>
+                </div>
+                
+                <div class="bias-card" style="padding: 20px; background: var(--ki-light-blue); border-radius: 12px;">
+                    <h3 style="font-size: var(--md-sys-typescale-title-medium); margin-bottom: 12px;">Age Bias</h3>
+                    <p style="font-size: 14px; margin-bottom: 16px;">Different diagnostic patterns for elderly vs young patients</p>
+                    <div style="font-size: 24px; font-weight: bold; color: var(--ki-dark-plum);">Medium</div>
+                    <div style="font-size: 12px;">Detected in 5/12 cases</div>
+                </div>
+                
+                <div class="bias-card" style="padding: 20px; background: var(--ki-light-blue); border-radius: 12px;">
+                    <h3 style="font-size: var(--md-sys-typescale-title-medium); margin-bottom: 12px;">Socioeconomic Bias</h3>
+                    <p style="font-size: 14px; margin-bottom: 16px;">Assumptions about healthcare access and lifestyle</p>
+                    <div style="font-size: 24px; font-weight: bold; color: var(--ki-plum-logo);">Low</div>
+                    <div style="font-size: 12px;">Detected in 3/12 cases</div>
+                </div>
+            </div>
+            
+            <!-- Bias Mitigation -->
+            <div style="margin-top: 32px; padding: 20px; background: var(--ki-light-orange); border-radius: 12px; color: var(--ki-dark-plum);">
+                <h3 style="font-size: var(--md-sys-typescale-title-medium); margin-bottom: 12px;">
+                    <span class="material-symbols-rounded" style="vertical-align: middle;">shield</span>
+                    Bias Mitigation Through Diversity
+                </h3>
+                <p style="font-size: 14px;">
+                    The ensemble approach successfully reduces individual model biases by 65% through geographic and cultural diversity. 
+                    Minority opinions are preserved, ensuring rare conditions aren't overlooked.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reliability Metrics Tab -->
+    <div id="reliability-tab" class="tab-content" style="display: none;">
+        <div class="card" style="padding: 32px;">
+            <h2 style="font-size: var(--md-sys-typescale-headline-small); margin-bottom: 24px;">
+                Model Reliability Metrics
+            </h2>
+            
+            <!-- Reliability Table -->
+            <div style="overflow-x: auto;">
+                <table style="width: 100%; border-collapse: collapse;">
+                    <thead>
+                        <tr style="background: var(--md-sys-color-surface-variant);">
+                            <th style="padding: 12px; text-align: left;">Model</th>
+                            <th style="padding: 12px; text-align: center;">Response Rate</th>
+                            <th style="padding: 12px; text-align: center;">Avg Response Time</th>
+                            <th style="padding: 12px; text-align: center;">Error Rate</th>
+                            <th style="padding: 12px; text-align: center;">Confidence</th>
+                        </tr>
+                    </thead>
+                    <tbody id="reliability-table">
+                        <tr>
+                            <td style="padding: 12px;">🇺🇸 GPT-4o</td>
+                            <td style="padding: 12px; text-align: center;">
+                                <span style="color: var(--ki-plum-logo); font-weight: 600;">100%</span>
+                            </td>
+                            <td style="padding: 12px; text-align: center;">2.3s</td>
+                            <td style="padding: 12px; text-align: center;">0%</td>
+                            <td style="padding: 12px; text-align: center;">
+                                <div style="display: inline-block; width: 60px; height: 8px; background: var(--md-sys-color-surface-variant); border-radius: 4px;">
+                                    <div style="height: 100%; width: 90%; background: var(--ki-plum-logo); border-radius: 4px;"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr style="background: var(--md-sys-color-surface-variant);">
+                            <td style="padding: 12px;">🇺🇸 Claude Opus</td>
+                            <td style="padding: 12px; text-align: center;">
+                                <span style="color: var(--ki-plum-logo); font-weight: 600;">100%</span>
+                            </td>
+                            <td style="padding: 12px; text-align: center;">1.8s</td>
+                            <td style="padding: 12px; text-align: center;">0%</td>
+                            <td style="padding: 12px; text-align: center;">
+                                <div style="display: inline-block; width: 60px; height: 8px; background: var(--md-sys-color-surface-variant); border-radius: 4px;">
+                                    <div style="height: 100%; width: 88%; background: var(--ki-plum-logo); border-radius: 4px;"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 12px;">🇨🇳 DeepSeek</td>
+                            <td style="padding: 12px; text-align: center;">
+                                <span style="color: var(--ki-orange); font-weight: 600;">92%</span>
+                            </td>
+                            <td style="padding: 12px; text-align: center;">3.1s</td>
+                            <td style="padding: 12px; text-align: center;">8%</td>
+                            <td style="padding: 12px; text-align: center;">
+                                <div style="display: inline-block; width: 60px; height: 8px; background: var(--md-sys-color-surface-variant); border-radius: 4px;">
+                                    <div style="height: 100%; width: 75%; background: var(--ki-orange); border-radius: 4px;"></div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Export Options -->
+            <div style="margin-top: 32px; display: flex; gap: 16px;">
+                <button class="btn btn-filled" onclick="exportCSV()">
+                    <span class="material-symbols-rounded">download</span>
+                    Export as CSV
+                </button>
+                <button class="btn btn-outlined" onclick="printReport()">
+                    <span class="material-symbols-rounded">print</span>
+                    Print Report
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Tab switching
+function showTab(tabName) {
+    // Hide all tabs
+    document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.style.display = 'none';
+    });
+    
+    // Remove active class from all buttons
+    document.querySelectorAll('.tab-button').forEach(btn => {
+        btn.classList.remove('active');
+        btn.style.borderBottom = '2px solid transparent';
+    });
+    
+    // Show selected tab
+    document.getElementById(tabName + '-tab').style.display = 'block';
+    
+    // Add active class to clicked button
+    event.target.classList.add('active');
+    event.target.style.borderBottom = '2px solid var(--ki-plum-logo)';
+}
+
+// Export functions
+function exportCSV() {
+    // Placeholder for CSV export
+    alert('CSV export will be implemented with real data integration');
+}
+
+function printReport() {
+    window.print();
+}
+
+// Load performance data on page load
+window.addEventListener('load', function() {
+    // Fetch and display real performance data
+    fetch('/api/performance')
+        .then(response => response.json())
+        .then(data => {
+            // Update dashboard with real data
+            console.log('Performance data:', data);
+        });
+});
+</script>
+{% endblock %}

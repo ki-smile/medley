@@ -1,0 +1,643 @@
+{
+  "case_id": "test_cli",
+  "case_title": "Medical Case from test_cli.txt",
+  "case_description": {
+    "case_id": "test_cli",
+    "title": "Medical Case from test_cli.txt",
+    "patient_info": "",
+    "presentation": "A 30-year-old patient presents with persistent cough and fatigue lasting 3 weeks.",
+    "symptoms": [
+      "Fatigue",
+      "Cough"
+    ],
+    "history": null,
+    "physical_exam": null,
+    "labs": null,
+    "imaging": null
+  },
+  "analysis_timestamp": "2025-08-11T10:20:22.339627",
+  "models_queried": 8,
+  "models_responded": 5,
+  "model_responses": [
+    {
+      "model_name": "mistralai/mistral-7b-instruct:free",
+      "origin": "France",
+      "size": "7B",
+      "response": " {\n    \"primary_diagnosis\": {\n        \"name\": \"Upper respiratory tract infection\",\n        \"confidence\": 0.7,\n        \"icd_code\": \"J00-J06\",\n        \"reasoning\": \"Persistent cough and fatigue lasting 3 weeks are common symptoms of upper respiratory tract infection.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Bronchitis\",\n            \"confidence\": 0.3,\n            \"icd_code\": \"J40\",\n            \"reasoning\": \"Cough persisting beyond 3 weeks could suggest bronchitis.\"\n        },\n        {\n            \"name\": \"Pneumonia\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"J18\",\n            \"reasoning\": \"Persistent cough with fatigue might indicate pneumonia, but it's less likely given the duration.\"\n        },\n        {\n            \"name\": \"Chronic obstructive pulmonary disease (COPD)\",\n            \"confidence\": 0.1,\n            \"icd_code\": \"J44\",\n            \"reasoning\": \"At 30 years old, it's less likely, but COPD can present with persistent cough and fatigue.\"\n        }\n    ],\n    \"key_findings\": [\n        \"Persistent cough\",\n        \"Fatigue\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Chest X-ray\",\n            \"purpose\": \"To rule out pneumonia or other lung abnormalities\",\n            \"priority\": \"routine\"\n        },\n        {\n            \"test\": \"Complete blood count (CBC)\",\n            \"purpose\": \"To assess for infection or anemia\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Encourage hydration\",\n            \"Rest\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Guaifenesin\",\n                \"dose\": \"200 mg, 3 times daily\",\n                \"route\": \"PO\",\n                \"duration\": \"5-7 days\",\n                \"rationale\": \"To help relieve symptoms of cough\"\n            },\n            {\n                \"drug\": \"Acetaminophen\",\n                \"dose\": \"325 mg, 4 times daily\",\n                \"route\": \"PO\",\n                \"duration\": \"As needed\",\n                \"rationale\": \"To help manage fever and associated pain\"\n            }\n        ],\n        \"monitoring\": [\n            \"Respiratory rate\",\n            \"Oxygen saturation\",\n            \"Frequency of cough\",\n            \"Presence of sputum\",\n            \"Body temperature\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Pulmonologist\",\n                \"urgency\": \"routine\",\n                \"reason\": \"If symptoms do not improve with initial treatment\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Increasing shortness of breath\",\n        \"Increasing chest pain\",\n        \"Significant fever\",\n        \"Weight loss\"\n    ],\n    \"patient_education\": [\n        \"Importance of completing prescribed medication\",\n        \"Importance of rest and hydration\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"7-10 days\",\n        \"conditions\": \"If symptoms worsen or persist\"\n    },\n    \"confidence_in_assessment\": 0.8,\n    \"uncertainties\": [\n        \"Possible allergic rhinitis if symptoms are seasonal\",\n        \"Possible gastroesophageal reflux disease (GERD) if cough worsens at night or with bending over\"\n    ]\n}",
+      "error": null,
+      "timestamp": "2025-08-11T10:19:32.961887",
+      "tokens_used": 1865,
+      "input_tokens": 924,
+      "output_tokens": 941,
+      "latency": 8.38435983657837
+    },
+    {
+      "model_name": "google/gemma-2-9b-it:free",
+      "origin": "USA",
+      "size": "9B",
+      "response": "",
+      "error": null,
+      "timestamp": "2025-08-11T10:19:34.065363",
+      "tokens_used": 829,
+      "input_tokens": 828,
+      "output_tokens": 1,
+      "latency": 1.0914361476898193
+    },
+    {
+      "model_name": "meta-llama/llama-3.2-3b-instruct:free",
+      "origin": "USA",
+      "size": "3B",
+      "response": "{\n    \"primary_diagnosis\": {\n        \"name\": \"Bronchitis\",\n        \"confidence\": 0.8,\n        \"icd_code\": \"J20.0\",\n        \"reasoning\": \"Persistent cough and fatigue are common symptoms of bronchitis, a viral or bacterial infection affecting the bronchial tubes.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Pneumonia\",\n            \"confidence\": 0.4,\n            \"icd_code\": \"J18.0\",\n            \"reasoning\": \"While pneumonia shares similar symptoms, the absence of fever and severe respiratory distress makes bronchitis a more likely diagnosis.\"\n        },\n        {\n            \"name\": \"Asthma\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"J35.0\",\n            \"reasoning\": \"Although asthma can cause cough and fatigue, the prolonged duration of symptoms and lack of wheezing or shortness of breath make bronchitis a more probable diagnosis.\"\n        },\n        {\n            \"name\": \"Chronic obstructive pulmonary disease (COPD)\",\n            \"confidence\": 0.1,\n            \"icd_code\": \"J40-J47\",\n            \"reasoning\": \"Although COPD can cause chronic cough and fatigue, the acute onset and lack of a history of smoking or environmental exposure make bronchitis a more likely diagnosis.\"\n        }\n    ],\n    \"key_findings\": [\n        \"Fine crackles on lung exam\",\n        \"Tachypnea\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Complete blood count (CBC)\",\n            \"purpose\": \"To rule out anemia or infection\",\n            \"priority\": \"routine\"\n        },\n        {\n            \"test\": \"Pulmonary function test (PFT)\",\n            \"purpose\": \"To assess lung function and rule out COPD\",\n            \"priority\": \"routine\"\n        },\n        {\n            \"test\": \"X-ray of the chest\",\n            \"purpose\": \"To rule out pneumonia or other conditions\",\n            \"priority\": \"immediate\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Prescribe antitussives as needed\",\n            \"Administer oxygen therapy if necessary\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Acetaminophen\",\n                \"dose\": \"1000 mg PO q 4h\",\n                \"route\": \"PO\",\n                \"duration\": \"Until symptoms improve\",\n                \"rationale\": \"For pain relief and fever control\"\n            },\n            {\n                \"drug\": \"Corticosteroids\",\n                \"dose\": \"Prednisone 20 mg PO q 12h\",\n                \"route\": \"PO\",\n                \"duration\": \"Until symptoms improve\",\n                \"rationale\": \"To reduce inflammation\"\n            }\n        ],\n        \"monitoring\": [\n            \"Oxygen saturation via pulse oximetry\",\n            \"Frequency: q 4h\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Pulmonology\",\n                \"urgency\": \"routine\",\n                \"reason\": \"For further evaluation and management\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Severe shortness of breath\",\n        \"Chest pain or pressure\"\n    ],\n    \"patient_education\": [\n        \"Use of antitussives and medications as directed\",\n        \"Importance of follow-up appointments\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"In 7-10 days\",\n        \"conditions\": \"Return if symptoms worsen or if oxygen saturation remains below 90%\"\n    },\n    \"confidence_in_assessment\": 0.9,\n    \"uncertainties\": [\n        \"Risk of complications such as pneumonia or bronchitis exacerbation\",\n        \"Need for further evaluation to rule out underlying conditions\"\n    ]\n}",
+      "error": null,
+      "timestamp": "2025-08-11T10:19:40.436082",
+      "tokens_used": 2131,
+      "input_tokens": 1313,
+      "output_tokens": 818,
+      "latency": 6.364288091659546
+    },
+    {
+      "model_name": "qwen/qwen-2.5-coder-32b-instruct",
+      "origin": "China",
+      "size": "32B",
+      "response": "{\n    \"primary_diagnosis\": {\n        \"name\": \"Viral Upper Respiratory Infection\",\n        \"confidence\": 0.7,\n        \"icd_code\": \"J00-J06\",\n        \"reasoning\": \"Persistent cough and fatigue are common symptoms of viral infections such as colds or flu.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Chronic Bronchitis\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"J40\",\n            \"reasoning\": \"While less likely given the short duration, chronic bronchitis can present with persistent cough.\"\n        },\n        {\n            \"name\": \"Pneumonia\",\n            \"confidence\": 0.1,\n            \"icd_code\": \"J12-J18\",\n            \"reasoning\": \"Although less probable without additional symptoms like fever or chest pain, pneumonia must be considered.\"\n        },\n        {\n            \"name\": \"Mononucleosis\",\n            \"confidence\": 0.1,\n            \"icd_code\": \"B25\",\n            \"reasoning\": \"Epstein-Barr virus infection can cause prolonged fatigue and cough.\"\n        }\n    ],\n    \"key_findings\": [\n        \"Fatigue lasting 3 weeks\",\n        \"Persistent cough\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Complete Blood Count (CBC)\",\n            \"purpose\": \"To rule out signs of infection or anemia\",\n            \"priority\": \"routine\"\n        },\n        {\n            \"test\": \"Chest X-ray\",\n            \"purpose\": \"To visualize the lungs and rule out pneumonia\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Monospot test\",\n            \"purpose\": \"To consider mononucleosis as a cause of prolonged fatigue and cough\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Assess hydration status\",\n            \"Encourage rest\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Acetaminophen\",\n                \"dose\": \"500 mg\",\n                \"route\": \"PO\",\n                \"duration\": \"as needed\",\n                \"rationale\": \"To alleviate symptoms of fever and discomfort\"\n            }\n        ],\n        \"monitoring\": [\n            \"Respiratory symptoms\",\n            \"daily\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Pulmonologist\",\n                \"urgency\": \"routine\",\n                \"reason\": \"If chest x-ray is abnormal or if symptoms persist\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Fever > 38\u00b0C\",\n        \"Chest pain\"\n    ],\n    \"patient_education\": [\n        \"Stay hydrated and rest to help the body fight off the infection\",\n        \"Avoid close contact with others to prevent spreading the virus\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"In 1 week or sooner if symptoms worsen\",\n        \"conditions\": \"Fever, severe chest pain, difficulty breathing\"\n    },\n    \"confidence_in_assessment\": 0.7,\n    \"uncertainties\": [\n        \"The exact causative agent of the presentation is unknown\",\n        \"No other symptoms were provided to fully evaluate the condition\"\n    ]\n}",
+      "error": null,
+      "timestamp": "2025-08-11T10:19:53.527592",
+      "tokens_used": 1457,
+      "input_tokens": 751,
+      "output_tokens": 706,
+      "latency": 13.084198951721191
+    },
+    {
+      "model_name": "google/gemini-2.0-flash-exp:free",
+      "origin": "USA",
+      "size": "Unknown",
+      "response": "```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"Upper Respiratory Infection (URI)\",\n        \"confidence\": 0.7,\n        \"icd_code\": \"J06.9\",\n        \"reasoning\": \"Persistent cough and fatigue are common symptoms of a URI. Given the duration of 3 weeks, it could be a prolonged viral infection or a secondary bacterial infection.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Acute Bronchitis\",\n            \"confidence\": 0.6,\n            \"icd_code\": \"J20.9\",\n            \"reasoning\": \"Similar symptoms to URI, but involves inflammation of the bronchial tubes. The persistent cough points towards this possibility.\"\n        },\n        {\n            \"name\": \"Pneumonia\",\n            \"confidence\": 0.4,\n            \"icd_code\": \"J18.9\",\n            \"reasoning\": \"Pneumonia can present with cough and fatigue. Less likely without fever or shortness of breath, but needs to be ruled out.\"\n        },\n        {\n            \"name\": \"Influenza\",\n            \"confidence\": 0.3,\n            \"icd_code\": \"J11.1\",\n            \"reasoning\": \"Influenza can cause cough and fatigue. The prolonged duration makes it less likely, but a complicated or secondary infection following influenza is possible.\"\n        },\n        {\n            \"name\": \"Chronic Fatigue Syndrome\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"G93.3\",\n            \"reasoning\": \"Fatigue is a prominent symptom, but usually accompanied by other symptoms beyond just cough. Less likely given the acute onset.\"\n        }\n    ],\n    \"key_findings\": [\n        \"Persistent cough\",\n        \"Fatigue\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Chest X-ray\",\n            \"purpose\": \"Rule out pneumonia or other lung pathology.\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Sputum Culture (if productive cough)\",\n            \"purpose\": \"Identify any bacterial infection if cough is productive.\",\n            \"priority\": \"routine\"\n        },\n        {\n            \"test\": \"Complete Blood Count (CBC)\",\n            \"purpose\": \"Assess for signs of infection (elevated white blood cell count).\",\n            \"priority\": \"routine\"\n        },\n        {\n            \"test\": \"Influenza and/or COVID-19 PCR test\",\n            \"purpose\": \"Rule out active influenza or COVID-19 infection\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Advise rest and hydration\",\n            \"Monitor for worsening symptoms (e.g., shortness of breath, high fever)\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Guaifenesin\",\n                \"dose\": \"200-400mg\",\n                \"route\": \"PO\",\n                \"duration\": \"PRN\",\n                \"rationale\": \"Expectorant to help loosen mucus and ease cough.\"\n            },\n             {\n                \"drug\": \"Dextromethorphan\",\n                \"dose\": \"15-30mg\",\n                \"route\": \"PO\",\n                \"duration\": \"PRN\",\n                \"rationale\": \"Cough suppressant to help reduce cough frequency, especially at night.\"\n            }\n        ],\n        \"monitoring\": [\n            \"Temperature\",\n            \"Daily\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Pulmonology\",\n                \"urgency\": \"routine\",\n                \"reason\": \"If symptoms persist or worsen despite initial management or if chest x-ray is abnormal.\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Shortness of breath\",\n        \"High fever (>101\u00b0F)\",\n        \"Chest pain\",\n        \"Hemoptysis (coughing up blood)\"\n    ],\n    \"patient_education\": [\n        \"Importance of rest and hydration\",\n        \"Proper cough etiquette to prevent spread of infection\",\n        \"When to seek immediate medical attention (red flags)\",\n        \"Avoid smoking or exposure to irritants.\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"In 1 week or sooner if symptoms worsen\",\n        \"conditions\": \"Worsening cough, fever, shortness of breath, chest pain.\"\n    },\n    \"confidence_in_assessment\": 0.6,\n    \"uncertainties\": [\n        \"Etiology of the cough (viral vs. bacterial)\",\n        \"Possibility of underlying lung condition\"\n    ]\n}\n```",
+      "error": null,
+      "timestamp": "2025-08-11T10:20:03.057154",
+      "tokens_used": 1896,
+      "input_tokens": 819,
+      "output_tokens": 1077,
+      "latency": 9.522382020950317
+    },
+    {
+      "model_name": "deepseek/deepseek-chat-v3-0324:free",
+      "origin": "China",
+      "size": "Unknown",
+      "response": "```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"Acute bronchitis\",\n        \"confidence\": 0.7,\n        \"icd_code\": \"J20.9\",\n        \"reasoning\": \"Persistent cough and fatigue are common symptoms of acute bronchitis, especially following a viral infection.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Post-viral cough syndrome\",\n            \"confidence\": 0.6,\n            \"icd_code\": \"J98.8\",\n            \"reasoning\": \"Prolonged cough after a viral infection can persist for weeks.\"\n        },\n        {\n            \"name\": \"Asthma\",\n            \"confidence\": 0.5,\n            \"icd_code\": \"J45.909\",\n            \"reasoning\": \"Chronic cough and fatigue could indicate undiagnosed asthma, especially if there is a history of allergies or wheezing.\"\n        },\n        {\n            \"name\": \"Pneumonia\",\n            \"confidence\": 0.4,\n            \"icd_code\": \"J18.9\",\n            \"reasoning\": \"Persistent cough and fatigue could suggest pneumonia, though fever and chest pain are usually more prominent.\"\n        }\n    ],\n    \"key_findings\": [\n        \"Persistent cough lasting 3 weeks\",\n        \"Fatigue\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Chest X-ray\",\n            \"purpose\": \"Rule out pneumonia or other lung pathology\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Spirometry\",\n            \"purpose\": \"Assess for asthma or other obstructive lung disease\",\n            \"priority\": \"routine\"\n        },\n        {\n            \"test\": \"Complete blood count (CBC)\",\n            \"purpose\": \"Check for signs of infection or inflammation\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Ensure adequate hydration\",\n            \"Advise rest and symptom monitoring\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Albuterol\",\n                \"dose\": \"2 puffs every 4-6 hours as needed\",\n                \"route\": \"Inhalation\",\n                \"duration\": \"As needed\",\n                \"rationale\": \"For possible bronchospasm or asthma symptoms\"\n            },\n            {\n                \"drug\": \"Dextromethorphan\",\n                \"dose\": \"15-30 mg every 6-8 hours\",\n                \"route\": \"PO\",\n                \"duration\": \"As needed for cough\",\n                \"rationale\": \"Symptomatic relief of cough\"\n            }\n        ],\n        \"monitoring\": [\n            \"Symptom progression\",\n            \"Daily\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Pulmonology\",\n                \"urgency\": \"routine\",\n                \"reason\": \"If symptoms persist or worsen despite treatment\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Hemoptysis (coughing up blood)\",\n        \"Shortness of breath at rest\"\n    ],\n    \"patient_education\": [\n        \"Avoid smoking and exposure to irritants\",\n        \"Seek immediate care if symptoms worsen or new symptoms develop\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"2 weeks\",\n        \"conditions\": \"Worsening cough, fever, or difficulty breathing\"\n    },\n    \"confidence_in_assessment\": 0.7,\n    \"uncertainties\": [\n        \"Lack of detailed medical history (e.g., smoking status, previous respiratory issues)\",\n        \"Absence of vital signs (e.g., fever, oxygen saturation)\"\n    ]\n}\n```",
+      "error": null,
+      "timestamp": "2025-08-11T10:20:22.125462",
+      "tokens_used": 1542,
+      "input_tokens": 755,
+      "output_tokens": 787,
+      "latency": 19.060286045074463
+    },
+    {
+      "model_name": "nousresearch/hermes-3-llama-3.1-8b:free",
+      "origin": "USA",
+      "size": "8B",
+      "response": null,
+      "error": "API Error 400: {\"error\":{\"message\":\"nousresearch/hermes-3-llama-3.1-8b:free is not a valid model ID\",\"code\":400},\"user_id\":\"user_311J1DE0saKoskawvWx8XZsOQ1N\"}",
+      "timestamp": "2025-08-11T10:20:22.222188",
+      "tokens_used": 0,
+      "input_tokens": 0,
+      "output_tokens": 0
+    },
+    {
+      "model_name": "liquid/lfm-40b:free",
+      "origin": "USA",
+      "size": "40B",
+      "response": null,
+      "error": "API Error 404: {\"error\":{\"message\":\"No endpoints found for liquid/lfm-40b:free.\",\"code\":404},\"user_id\":\"user_311J1DE0saKoskawvWx8XZsOQ1N\"}",
+      "timestamp": "2025-08-11T10:20:22.338692",
+      "tokens_used": 0,
+      "input_tokens": 0,
+      "output_tokens": 0
+    }
+  ],
+  "parsed_responses": [
+    {
+      "primary_diagnosis": {
+        "name": "Upper respiratory tract infection",
+        "confidence": 0.7,
+        "icd_code": "J00-J06",
+        "reasoning": "Persistent cough and fatigue lasting 3 weeks are common symptoms of upper respiratory tract infection."
+      },
+      "differential_diagnoses": [
+        {
+          "name": "Bronchitis",
+          "confidence": 0.3,
+          "icd_code": "J40",
+          "reasoning": "Cough persisting beyond 3 weeks could suggest bronchitis."
+        },
+        {
+          "name": "Pneumonia",
+          "confidence": 0.2,
+          "icd_code": "J18",
+          "reasoning": "Persistent cough with fatigue might indicate pneumonia, but it's less likely given the duration."
+        },
+        {
+          "name": "Chronic obstructive pulmonary disease (COPD)",
+          "confidence": 0.1,
+          "icd_code": "J44",
+          "reasoning": "At 30 years old, it's less likely, but COPD can present with persistent cough and fatigue."
+        }
+      ],
+      "key_findings": [
+        "Persistent cough",
+        "Fatigue"
+      ],
+      "diagnostic_tests": [
+        {
+          "test": "Chest X-ray",
+          "purpose": "To rule out pneumonia or other lung abnormalities",
+          "priority": "routine"
+        },
+        {
+          "test": "Complete blood count (CBC)",
+          "purpose": "To assess for infection or anemia",
+          "priority": "routine"
+        }
+      ],
+      "management_plan": {
+        "immediate_actions": [
+          "Encourage hydration",
+          "Rest"
+        ],
+        "medications": [
+          {
+            "drug": "Guaifenesin",
+            "dose": "200 mg, 3 times daily",
+            "route": "PO",
+            "duration": "5-7 days",
+            "rationale": "To help relieve symptoms of cough"
+          },
+          {
+            "drug": "Acetaminophen",
+            "dose": "325 mg, 4 times daily",
+            "route": "PO",
+            "duration": "As needed",
+            "rationale": "To help manage fever and associated pain"
+          }
+        ],
+        "monitoring": [
+          "Respiratory rate",
+          "Oxygen saturation",
+          "Frequency of cough",
+          "Presence of sputum",
+          "Body temperature"
+        ],
+        "consultations": [
+          {
+            "specialty": "Pulmonologist",
+            "urgency": "routine",
+            "reason": "If symptoms do not improve with initial treatment"
+          }
+        ]
+      },
+      "red_flags": [
+        "Increasing shortness of breath",
+        "Increasing chest pain",
+        "Significant fever",
+        "Weight loss"
+      ],
+      "patient_education": [
+        "Importance of completing prescribed medication",
+        "Importance of rest and hydration"
+      ],
+      "follow_up": {
+        "timing": "7-10 days",
+        "conditions": "If symptoms worsen or persist"
+      },
+      "confidence_in_assessment": 0.8,
+      "uncertainties": [
+        "Possible allergic rhinitis if symptoms are seasonal",
+        "Possible gastroesophageal reflux disease (GERD) if cough worsens at night or with bending over"
+      ]
+    },
+    null,
+    {
+      "primary_diagnosis": {
+        "name": "Bronchitis",
+        "confidence": 0.8,
+        "icd_code": "J20.0",
+        "reasoning": "Persistent cough and fatigue are common symptoms of bronchitis, a viral or bacterial infection affecting the bronchial tubes."
+      },
+      "differential_diagnoses": [
+        {
+          "name": "Pneumonia",
+          "confidence": 0.4,
+          "icd_code": "J18.0",
+          "reasoning": "While pneumonia shares similar symptoms, the absence of fever and severe respiratory distress makes bronchitis a more likely diagnosis."
+        },
+        {
+          "name": "Asthma",
+          "confidence": 0.2,
+          "icd_code": "J35.0",
+          "reasoning": "Although asthma can cause cough and fatigue, the prolonged duration of symptoms and lack of wheezing or shortness of breath make bronchitis a more probable diagnosis."
+        },
+        {
+          "name": "Chronic obstructive pulmonary disease (COPD)",
+          "confidence": 0.1,
+          "icd_code": "J40-J47",
+          "reasoning": "Although COPD can cause chronic cough and fatigue, the acute onset and lack of a history of smoking or environmental exposure make bronchitis a more likely diagnosis."
+        }
+      ],
+      "key_findings": [
+        "Fine crackles on lung exam",
+        "Tachypnea"
+      ],
+      "diagnostic_tests": [
+        {
+          "test": "Complete blood count (CBC)",
+          "purpose": "To rule out anemia or infection",
+          "priority": "routine"
+        },
+        {
+          "test": "Pulmonary function test (PFT)",
+          "purpose": "To assess lung function and rule out COPD",
+          "priority": "routine"
+        },
+        {
+          "test": "X-ray of the chest",
+          "purpose": "To rule out pneumonia or other conditions",
+          "priority": "immediate"
+        }
+      ],
+      "management_plan": {
+        "immediate_actions": [
+          "Prescribe antitussives as needed",
+          "Administer oxygen therapy if necessary"
+        ],
+        "medications": [
+          {
+            "drug": "Acetaminophen",
+            "dose": "1000 mg PO q 4h",
+            "route": "PO",
+            "duration": "Until symptoms improve",
+            "rationale": "For pain relief and fever control"
+          },
+          {
+            "drug": "Corticosteroids",
+            "dose": "Prednisone 20 mg PO q 12h",
+            "route": "PO",
+            "duration": "Until symptoms improve",
+            "rationale": "To reduce inflammation"
+          }
+        ],
+        "monitoring": [
+          "Oxygen saturation via pulse oximetry",
+          "Frequency: q 4h"
+        ],
+        "consultations": [
+          {
+            "specialty": "Pulmonology",
+            "urgency": "routine",
+            "reason": "For further evaluation and management"
+          }
+        ]
+      },
+      "red_flags": [
+        "Severe shortness of breath",
+        "Chest pain or pressure"
+      ],
+      "patient_education": [
+        "Use of antitussives and medications as directed",
+        "Importance of follow-up appointments"
+      ],
+      "follow_up": {
+        "timing": "In 7-10 days",
+        "conditions": "Return if symptoms worsen or if oxygen saturation remains below 90%"
+      },
+      "confidence_in_assessment": 0.9,
+      "uncertainties": [
+        "Risk of complications such as pneumonia or bronchitis exacerbation",
+        "Need for further evaluation to rule out underlying conditions"
+      ]
+    },
+    {
+      "primary_diagnosis": {
+        "name": "Viral Upper Respiratory Infection",
+        "confidence": 0.7,
+        "icd_code": "J00-J06",
+        "reasoning": "Persistent cough and fatigue are common symptoms of viral infections such as colds or flu."
+      },
+      "differential_diagnoses": [
+        {
+          "name": "Chronic Bronchitis",
+          "confidence": 0.2,
+          "icd_code": "J40",
+          "reasoning": "While less likely given the short duration, chronic bronchitis can present with persistent cough."
+        },
+        {
+          "name": "Pneumonia",
+          "confidence": 0.1,
+          "icd_code": "J12-J18",
+          "reasoning": "Although less probable without additional symptoms like fever or chest pain, pneumonia must be considered."
+        },
+        {
+          "name": "Mononucleosis",
+          "confidence": 0.1,
+          "icd_code": "B25",
+          "reasoning": "Epstein-Barr virus infection can cause prolonged fatigue and cough."
+        }
+      ],
+      "key_findings": [
+        "Fatigue lasting 3 weeks",
+        "Persistent cough"
+      ],
+      "diagnostic_tests": [
+        {
+          "test": "Complete Blood Count (CBC)",
+          "purpose": "To rule out signs of infection or anemia",
+          "priority": "routine"
+        },
+        {
+          "test": "Chest X-ray",
+          "purpose": "To visualize the lungs and rule out pneumonia",
+          "priority": "urgent"
+        },
+        {
+          "test": "Monospot test",
+          "purpose": "To consider mononucleosis as a cause of prolonged fatigue and cough",
+          "priority": "routine"
+        }
+      ],
+      "management_plan": {
+        "immediate_actions": [
+          "Assess hydration status",
+          "Encourage rest"
+        ],
+        "medications": [
+          {
+            "drug": "Acetaminophen",
+            "dose": "500 mg",
+            "route": "PO",
+            "duration": "as needed",
+            "rationale": "To alleviate symptoms of fever and discomfort"
+          }
+        ],
+        "monitoring": [
+          "Respiratory symptoms",
+          "daily"
+        ],
+        "consultations": [
+          {
+            "specialty": "Pulmonologist",
+            "urgency": "routine",
+            "reason": "If chest x-ray is abnormal or if symptoms persist"
+          }
+        ]
+      },
+      "red_flags": [
+        "Fever > 38\u00b0C",
+        "Chest pain"
+      ],
+      "patient_education": [
+        "Stay hydrated and rest to help the body fight off the infection",
+        "Avoid close contact with others to prevent spreading the virus"
+      ],
+      "follow_up": {
+        "timing": "In 1 week or sooner if symptoms worsen",
+        "conditions": "Fever, severe chest pain, difficulty breathing"
+      },
+      "confidence_in_assessment": 0.7,
+      "uncertainties": [
+        "The exact causative agent of the presentation is unknown",
+        "No other symptoms were provided to fully evaluate the condition"
+      ]
+    },
+    {
+      "primary_diagnosis": {
+        "name": "Upper Respiratory Infection (URI)",
+        "confidence": 0.7,
+        "icd_code": "J06.9",
+        "reasoning": "Persistent cough and fatigue are common symptoms of a URI. Given the duration of 3 weeks, it could be a prolonged viral infection or a secondary bacterial infection."
+      },
+      "differential_diagnoses": [
+        {
+          "name": "Acute Bronchitis",
+          "confidence": 0.6,
+          "icd_code": "J20.9",
+          "reasoning": "Similar symptoms to URI, but involves inflammation of the bronchial tubes. The persistent cough points towards this possibility."
+        },
+        {
+          "name": "Pneumonia",
+          "confidence": 0.4,
+          "icd_code": "J18.9",
+          "reasoning": "Pneumonia can present with cough and fatigue. Less likely without fever or shortness of breath, but needs to be ruled out."
+        },
+        {
+          "name": "Influenza",
+          "confidence": 0.3,
+          "icd_code": "J11.1",
+          "reasoning": "Influenza can cause cough and fatigue. The prolonged duration makes it less likely, but a complicated or secondary infection following influenza is possible."
+        },
+        {
+          "name": "Chronic Fatigue Syndrome",
+          "confidence": 0.2,
+          "icd_code": "G93.3",
+          "reasoning": "Fatigue is a prominent symptom, but usually accompanied by other symptoms beyond just cough. Less likely given the acute onset."
+        }
+      ],
+      "key_findings": [
+        "Persistent cough",
+        "Fatigue"
+      ],
+      "diagnostic_tests": [
+        {
+          "test": "Chest X-ray",
+          "purpose": "Rule out pneumonia or other lung pathology.",
+          "priority": "urgent"
+        },
+        {
+          "test": "Sputum Culture (if productive cough)",
+          "purpose": "Identify any bacterial infection if cough is productive.",
+          "priority": "routine"
+        },
+        {
+          "test": "Complete Blood Count (CBC)",
+          "purpose": "Assess for signs of infection (elevated white blood cell count).",
+          "priority": "routine"
+        },
+        {
+          "test": "Influenza and/or COVID-19 PCR test",
+          "purpose": "Rule out active influenza or COVID-19 infection",
+          "priority": "routine"
+        }
+      ],
+      "management_plan": {
+        "immediate_actions": [
+          "Advise rest and hydration",
+          "Monitor for worsening symptoms (e.g., shortness of breath, high fever)"
+        ],
+        "medications": [
+          {
+            "drug": "Guaifenesin",
+            "dose": "200-400mg",
+            "route": "PO",
+            "duration": "PRN",
+            "rationale": "Expectorant to help loosen mucus and ease cough."
+          },
+          {
+            "drug": "Dextromethorphan",
+            "dose": "15-30mg",
+            "route": "PO",
+            "duration": "PRN",
+            "rationale": "Cough suppressant to help reduce cough frequency, especially at night."
+          }
+        ],
+        "monitoring": [
+          "Temperature",
+          "Daily"
+        ],
+        "consultations": [
+          {
+            "specialty": "Pulmonology",
+            "urgency": "routine",
+            "reason": "If symptoms persist or worsen despite initial management or if chest x-ray is abnormal."
+          }
+        ]
+      },
+      "red_flags": [
+        "Shortness of breath",
+        "High fever (>101\u00b0F)",
+        "Chest pain",
+        "Hemoptysis (coughing up blood)"
+      ],
+      "patient_education": [
+        "Importance of rest and hydration",
+        "Proper cough etiquette to prevent spread of infection",
+        "When to seek immediate medical attention (red flags)",
+        "Avoid smoking or exposure to irritants."
+      ],
+      "follow_up": {
+        "timing": "In 1 week or sooner if symptoms worsen",
+        "conditions": "Worsening cough, fever, shortness of breath, chest pain."
+      },
+      "confidence_in_assessment": 0.6,
+      "uncertainties": [
+        "Etiology of the cough (viral vs. bacterial)",
+        "Possibility of underlying lung condition"
+      ]
+    },
+    {
+      "primary_diagnosis": {
+        "name": "Acute bronchitis",
+        "confidence": 0.7,
+        "icd_code": "J20.9",
+        "reasoning": "Persistent cough and fatigue are common symptoms of acute bronchitis, especially following a viral infection."
+      },
+      "differential_diagnoses": [
+        {
+          "name": "Post-viral cough syndrome",
+          "confidence": 0.6,
+          "icd_code": "J98.8",
+          "reasoning": "Prolonged cough after a viral infection can persist for weeks."
+        },
+        {
+          "name": "Asthma",
+          "confidence": 0.5,
+          "icd_code": "J45.909",
+          "reasoning": "Chronic cough and fatigue could indicate undiagnosed asthma, especially if there is a history of allergies or wheezing."
+        },
+        {
+          "name": "Pneumonia",
+          "confidence": 0.4,
+          "icd_code": "J18.9",
+          "reasoning": "Persistent cough and fatigue could suggest pneumonia, though fever and chest pain are usually more prominent."
+        }
+      ],
+      "key_findings": [
+        "Persistent cough lasting 3 weeks",
+        "Fatigue"
+      ],
+      "diagnostic_tests": [
+        {
+          "test": "Chest X-ray",
+          "purpose": "Rule out pneumonia or other lung pathology",
+          "priority": "urgent"
+        },
+        {
+          "test": "Spirometry",
+          "purpose": "Assess for asthma or other obstructive lung disease",
+          "priority": "routine"
+        },
+        {
+          "test": "Complete blood count (CBC)",
+          "purpose": "Check for signs of infection or inflammation",
+          "priority": "routine"
+        }
+      ],
+      "management_plan": {
+        "immediate_actions": [
+          "Ensure adequate hydration",
+          "Advise rest and symptom monitoring"
+        ],
+        "medications": [
+          {
+            "drug": "Albuterol",
+            "dose": "2 puffs every 4-6 hours as needed",
+            "route": "Inhalation",
+            "duration": "As needed",
+            "rationale": "For possible bronchospasm or asthma symptoms"
+          },
+          {
+            "drug": "Dextromethorphan",
+            "dose": "15-30 mg every 6-8 hours",
+            "route": "PO",
+            "duration": "As needed for cough",
+            "rationale": "Symptomatic relief of cough"
+          }
+        ],
+        "monitoring": [
+          "Symptom progression",
+          "Daily"
+        ],
+        "consultations": [
+          {
+            "specialty": "Pulmonology",
+            "urgency": "routine",
+            "reason": "If symptoms persist or worsen despite treatment"
+          }
+        ]
+      },
+      "red_flags": [
+        "Hemoptysis (coughing up blood)",
+        "Shortness of breath at rest"
+      ],
+      "patient_education": [
+        "Avoid smoking and exposure to irritants",
+        "Seek immediate care if symptoms worsen or new symptoms develop"
+      ],
+      "follow_up": {
+        "timing": "2 weeks",
+        "conditions": "Worsening cough, fever, or difficulty breathing"
+      },
+      "confidence_in_assessment": 0.7,
+      "uncertainties": [
+        "Lack of detailed medical history (e.g., smoking status, previous respiratory issues)",
+        "Absence of vital signs (e.g., fever, oxygen saturation)"
+      ]
+    },
+    null,
+    null
+  ],
+  "consensus_analysis": {
+    "total_models": 8,
+    "responding_models": 5,
+    "consensus_level": "None",
+    "primary_diagnosis": null,
+    "primary_confidence": 0.0,
+    "alternative_diagnoses": [],
+    "minority_opinions": [],
+    "agreement_scores": {},
+    "geographic_patterns": {
+      "France": [],
+      "USA": [],
+      "China": []
+    },
+    "action_required": "Active clinical judgment and specialist consultation needed",
+    "clinical_recommendation": "No consensus achieved. Comprehensive clinical evaluation required.",
+    "bias_considerations": []
+  }
+}

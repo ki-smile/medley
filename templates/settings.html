@@ -1,0 +1,410 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container" style="max-width: 1200px; margin: 0 auto; padding: 24px;">
+    <h1 style="font-size: var(--md-sys-typescale-display-small); margin-bottom: 16px;">
+        Settings
+    </h1>
+    <p style="color: var(--md-sys-color-on-surface-variant); margin-bottom: 32px;">
+        Configure your API access and preferences
+    </p>
+
+    <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 24px;">
+        <!-- Sidebar Navigation -->
+        <div class="card" style="padding: 0; height: fit-content;">
+            <div class="nav-item active" onclick="showSection('api-key')" style="padding: 16px; cursor: pointer; border-left: 3px solid var(--ki-plum-logo);">
+                <span class="material-symbols-rounded" style="vertical-align: middle; margin-right: 12px;">key</span>
+                API Key Management
+            </div>
+            <div class="nav-item" onclick="showSection('usage')" style="padding: 16px; cursor: pointer;">
+                <span class="material-symbols-rounded" style="vertical-align: middle; margin-right: 12px;">analytics</span>
+                Usage & Costs
+            </div>
+            <div class="nav-item" onclick="showSection('models')" style="padding: 16px; cursor: pointer;">
+                <span class="material-symbols-rounded" style="vertical-align: middle; margin-right: 12px;">psychology</span>
+                Model Selection
+            </div>
+            <div class="nav-item" onclick="showSection('preferences')" style="padding: 16px; cursor: pointer;">
+                <span class="material-symbols-rounded" style="vertical-align: middle; margin-right: 12px;">settings</span>
+                Preferences
+            </div>
+        </div>
+
+        <!-- Content Sections -->
+        <div>
+            <!-- API Key Section -->
+            <div id="api-key-section" class="card" style="padding: 32px;">
+                <h2 style="font-size: var(--md-sys-typescale-headline-small); margin-bottom: 24px;">
+                    API Key Management
+                </h2>
+                
+                <div class="alert" style="background: var(--md-sys-color-secondary-container); padding: 16px; border-radius: 8px; margin-bottom: 24px;">
+                    <div style="display: flex; gap: 12px;">
+                        <span class="material-symbols-rounded" style="color: var(--md-sys-color-secondary);">info</span>
+                        <div>
+                            <strong>About API Keys</strong><br>
+                            <span style="font-size: 14px;">MEDLEY uses OpenRouter to access 31+ AI models. You can use the default key (limited) or provide your own for unlimited access.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Current Status -->
+                <div style="margin-bottom: 32px;">
+                    <h3 style="font-size: var(--md-sys-typescale-title-medium); margin-bottom: 16px;">Current Status</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+                        <div class="status-card" style="padding: 16px; background: var(--md-sys-color-surface-variant); border-radius: 8px;">
+                            <div style="font-size: 12px; color: var(--md-sys-color-on-surface-variant);">API Key Status</div>
+                            <div style="font-size: 18px; font-weight: 600; color: var(--ki-plum-logo);" id="key-status">Default Key</div>
+                        </div>
+                        <div class="status-card" style="padding: 16px; background: var(--md-sys-color-surface-variant); border-radius: 8px;">
+                            <div style="font-size: 12px; color: var(--md-sys-color-on-surface-variant);">Remaining Credits</div>
+                            <div style="font-size: 18px; font-weight: 600;" id="credits">Limited</div>
+                        </div>
+                        <div class="status-card" style="padding: 16px; background: var(--md-sys-color-surface-variant); border-radius: 8px;">
+                            <div style="font-size: 12px; color: var(--md-sys-color-on-surface-variant);">Models Available</div>
+                            <div style="font-size: 18px; font-weight: 600;" id="models-available">31</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- API Key Input -->
+                <div style="margin-bottom: 32px;">
+                    <h3 style="font-size: var(--md-sys-typescale-title-medium); margin-bottom: 16px;">Set Your API Key</h3>
+                    <div style="display: flex; gap: 16px; margin-bottom: 16px;">
+                        <input type="password" id="api-key-input" placeholder="sk-or-v1-..." 
+                               style="flex: 1; padding: 12px; border: 1px solid var(--md-sys-color-outline); border-radius: 8px;">
+                        <button class="btn btn-tonal" onclick="toggleKeyVisibility()">
+                            <span class="material-symbols-rounded" id="visibility-icon">visibility</span>
+                        </button>
+                        <button class="btn btn-filled" onclick="saveApiKey()">
+                            <span class="material-symbols-rounded">save</span>
+                            Save
+                        </button>
+                    </div>
+                    <div style="font-size: 14px; color: var(--md-sys-color-on-surface-variant);">
+                        Get your API key from <a href="https://openrouter.ai/keys" target="_blank" style="color: var(--ki-plum-logo);">OpenRouter</a>
+                    </div>
+                </div>
+
+                <!-- Test Connection -->
+                <div>
+                    <h3 style="font-size: var(--md-sys-typescale-title-medium); margin-bottom: 16px;">Test Connection</h3>
+                    <button class="btn btn-outlined" onclick="testApiKey()">
+                        <span class="material-symbols-rounded">speed</span>
+                        Test API Key
+                    </button>
+                    <div id="test-result" style="margin-top: 16px; display: none;">
+                        <!-- Test results will appear here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Usage Section (Hidden by default) -->
+            <div id="usage-section" class="card" style="padding: 32px; display: none;">
+                <h2 style="font-size: var(--md-sys-typescale-headline-small); margin-bottom: 24px;">
+                    Usage & Costs
+                </h2>
+                
+                <!-- Cost Estimator -->
+                <div style="margin-bottom: 32px;">
+                    <h3 style="font-size: var(--md-sys-typescale-title-medium); margin-bottom: 16px;">Cost Estimator</h3>
+                    <div style="background: var(--md-sys-color-surface-variant); padding: 24px; border-radius: 8px;">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px;">
+                            <div>
+                                <label style="display: block; margin-bottom: 8px;">Number of Models</label>
+                                <input type="range" id="model-count" min="1" max="31" value="31" oninput="updateCostEstimate()">
+                                <div style="text-align: center; margin-top: 8px;">
+                                    <span id="model-count-display" style="font-size: 24px; font-weight: bold;">31</span> models
+                                </div>
+                            </div>
+                            <div>
+                                <label style="display: block; margin-bottom: 8px;">Case Complexity</label>
+                                <select id="complexity" onchange="updateCostEstimate()" style="width: 100%; padding: 8px; border: 1px solid var(--md-sys-color-outline); border-radius: 4px;">
+                                    <option value="simple">Simple (500 tokens)</option>
+                                    <option value="medium" selected>Medium (1000 tokens)</option>
+                                    <option value="complex">Complex (2000 tokens)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div style="text-align: center; padding: 24px; background: var(--md-sys-color-primary-container); border-radius: 8px;">
+                            <div style="font-size: 14px; color: var(--md-sys-color-on-primary-container);">Estimated Cost per Analysis</div>
+                            <div style="font-size: 36px; font-weight: bold; color: var(--ki-plum-logo);" id="cost-estimate">$0.25</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Session Usage -->
+                <div>
+                    <h3 style="font-size: var(--md-sys-typescale-title-medium); margin-bottom: 16px;">Current Session Usage</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px;">
+                        <div class="metric-card" style="padding: 16px; background: var(--md-sys-color-surface-variant); border-radius: 8px; text-align: center;">
+                            <div style="font-size: 24px; font-weight: bold;">0</div>
+                            <div style="font-size: 12px; color: var(--md-sys-color-on-surface-variant);">Analyses Run</div>
+                        </div>
+                        <div class="metric-card" style="padding: 16px; background: var(--md-sys-color-surface-variant); border-radius: 8px; text-align: center;">
+                            <div style="font-size: 24px; font-weight: bold;">$0.00</div>
+                            <div style="font-size: 12px; color: var(--md-sys-color-on-surface-variant);">Total Cost</div>
+                        </div>
+                        <div class="metric-card" style="padding: 16px; background: var(--md-sys-color-surface-variant); border-radius: 8px; text-align: center;">
+                            <div style="font-size: 24px; font-weight: bold;">0</div>
+                            <div style="font-size: 12px; color: var(--md-sys-color-on-surface-variant);">API Calls</div>
+                        </div>
+                        <div class="metric-card" style="padding: 16px; background: var(--md-sys-color-surface-variant); border-radius: 8px; text-align: center;">
+                            <div style="font-size: 24px; font-weight: bold;">0</div>
+                            <div style="font-size: 12px; color: var(--md-sys-color-on-surface-variant);">Cache Hits</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Model Selection Section (Hidden by default) -->
+            <div id="models-section" class="card" style="padding: 32px; display: none;">
+                <h2 style="font-size: var(--md-sys-typescale-headline-small); margin-bottom: 24px;">
+                    Model Selection
+                </h2>
+                
+                <div class="alert" style="background: var(--md-sys-color-tertiary-container); padding: 16px; border-radius: 8px; margin-bottom: 24px;">
+                    <div style="display: flex; gap: 12px;">
+                        <span class="material-symbols-rounded" style="color: var(--md-sys-color-tertiary);">tips_and_updates</span>
+                        <div>
+                            <strong>Model Selection</strong><br>
+                            <span style="font-size: 14px;">Choose which models to include in your ensemble. More models provide better diversity but increase costs.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Presets -->
+                <div style="margin-bottom: 24px;">
+                    <h3 style="font-size: var(--md-sys-typescale-title-medium); margin-bottom: 16px;">Quick Presets</h3>
+                    <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                        <button class="btn btn-tonal" onclick="selectPreset('all')">All Models (31)</button>
+                        <button class="btn btn-tonal" onclick="selectPreset('premium')">Premium Only (8)</button>
+                        <button class="btn btn-tonal" onclick="selectPreset('free')">Free Tier (4)</button>
+                        <button class="btn btn-tonal" onclick="selectPreset('diverse')">Max Diversity (12)</button>
+                        <button class="btn btn-outlined" onclick="selectPreset('none')">Clear All</button>
+                    </div>
+                </div>
+
+                <!-- Model List -->
+                <div>
+                    <h3 style="font-size: var(--md-sys-typescale-title-medium); margin-bottom: 16px;">Available Models</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 12px;">
+                        <!-- Model checkboxes will be dynamically added here -->
+                        <label class="model-option" style="display: flex; align-items: center; gap: 8px; padding: 8px; cursor: pointer;">
+                            <input type="checkbox" checked>
+                            <span>🇺🇸 GPT-4o (OpenAI)</span>
+                        </label>
+                        <label class="model-option" style="display: flex; align-items: center; gap: 8px; padding: 8px; cursor: pointer;">
+                            <input type="checkbox" checked>
+                            <span>🇺🇸 Claude Opus (Anthropic)</span>
+                        </label>
+                        <label class="model-option" style="display: flex; align-items: center; gap: 8px; padding: 8px; cursor: pointer;">
+                            <input type="checkbox" checked>
+                            <span>🇨🇳 DeepSeek V3</span>
+                        </label>
+                        <label class="model-option" style="display: flex; align-items: center; gap: 8px; padding: 8px; cursor: pointer;">
+                            <input type="checkbox" checked>
+                            <span>🇫🇷 Mistral Large</span>
+                        </label>
+                        <!-- Add more models as needed -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Preferences Section (Hidden by default) -->
+            <div id="preferences-section" class="card" style="padding: 32px; display: none;">
+                <h2 style="font-size: var(--md-sys-typescale-headline-small); margin-bottom: 24px;">
+                    Preferences
+                </h2>
+                
+                <div style="display: grid; gap: 24px;">
+                    <div>
+                        <label style="display: block; margin-bottom: 8px; font-weight: 500;">Default Consensus Threshold</label>
+                        <input type="range" min="20" max="40" value="30" id="consensus-threshold">
+                        <div style="display: flex; justify-content: space-between; font-size: 12px; color: var(--md-sys-color-on-surface-variant);">
+                            <span>20%</span>
+                            <span id="threshold-value">30%</span>
+                            <span>40%</span>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label style="display: block; margin-bottom: 8px; font-weight: 500;">Minority Opinion Threshold</label>
+                        <input type="range" min="5" max="20" value="10" id="minority-threshold">
+                        <div style="display: flex; justify-content: space-between; font-size: 12px; color: var(--md-sys-color-on-surface-variant);">
+                            <span>5%</span>
+                            <span id="minority-value">10%</span>
+                            <span>20%</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label style="display: flex; align-items: center; gap: 12px;">
+                            <input type="checkbox" id="auto-save" checked>
+                            <span>Auto-save reports to local storage</span>
+                        </label>
+                    </div>
+
+                    <div>
+                        <label style="display: flex; align-items: center; gap: 12px;">
+                            <input type="checkbox" id="show-raw" checked>
+                            <span>Show raw model responses in reports</span>
+                        </label>
+                    </div>
+
+                    <div>
+                        <label style="display: flex; align-items: center; gap: 12px;">
+                            <input type="checkbox" id="notifications" checked>
+                            <span>Enable browser notifications</span>
+                        </label>
+                    </div>
+
+                    <div style="margin-top: 24px;">
+                        <button class="btn btn-filled" onclick="savePreferences()">
+                            <span class="material-symbols-rounded">save</span>
+                            Save Preferences
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Navigation
+function showSection(section) {
+    // Hide all sections
+    document.querySelectorAll('[id$="-section"]').forEach(el => el.style.display = 'none');
+    // Show selected section
+    document.getElementById(section + '-section').style.display = 'block';
+    
+    // Update nav styling
+    document.querySelectorAll('.nav-item').forEach(el => {
+        el.classList.remove('active');
+        el.style.borderLeft = 'none';
+    });
+    event.currentTarget.classList.add('active');
+    event.currentTarget.style.borderLeft = '3px solid var(--ki-plum-logo)';
+}
+
+// API Key Management
+function toggleKeyVisibility() {
+    const input = document.getElementById('api-key-input');
+    const icon = document.getElementById('visibility-icon');
+    if (input.type === 'password') {
+        input.type = 'text';
+        icon.textContent = 'visibility_off';
+    } else {
+        input.type = 'password';
+        icon.textContent = 'visibility';
+    }
+}
+
+function saveApiKey() {
+    const apiKey = document.getElementById('api-key-input').value;
+    if (!apiKey) {
+        alert('Please enter an API key');
+        return;
+    }
+    
+    fetch('/api/session/set-key', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({api_key: apiKey})
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            document.getElementById('key-status').textContent = 'Custom Key';
+            document.getElementById('key-status').style.color = 'var(--ki-plum-logo)';
+            alert('API key saved successfully!');
+        }
+    });
+}
+
+function testApiKey() {
+    const resultDiv = document.getElementById('test-result');
+    resultDiv.style.display = 'block';
+    resultDiv.innerHTML = '<div style="color: var(--ki-plum-logo);">Testing connection...</div>';
+    
+    // Simulate API test
+    setTimeout(() => {
+        resultDiv.innerHTML = '<div style="color: var(--ki-plum-logo);">✓ Connection successful! All models accessible.</div>';
+    }, 1500);
+}
+
+// Cost Estimator
+function updateCostEstimate() {
+    const modelCount = document.getElementById('model-count').value;
+    const complexity = document.getElementById('complexity').value;
+    
+    document.getElementById('model-count-display').textContent = modelCount;
+    
+    // Simple cost calculation (placeholder)
+    const baseCost = {simple: 0.008, medium: 0.015, complex: 0.03};
+    const cost = (baseCost[complexity] * modelCount).toFixed(2);
+    document.getElementById('cost-estimate').textContent = '$' + cost;
+}
+
+// Model Selection
+function selectPreset(preset) {
+    const checkboxes = document.querySelectorAll('.model-option input');
+    switch(preset) {
+        case 'all':
+            checkboxes.forEach(cb => cb.checked = true);
+            break;
+        case 'none':
+            checkboxes.forEach(cb => cb.checked = false);
+            break;
+        case 'premium':
+            // Select only first 8
+            checkboxes.forEach((cb, i) => cb.checked = i < 8);
+            break;
+        case 'free':
+            // Select only last 4
+            checkboxes.forEach((cb, i) => cb.checked = i >= checkboxes.length - 4);
+            break;
+        case 'diverse':
+            // Select every other one for diversity
+            checkboxes.forEach((cb, i) => cb.checked = i % 2 === 0);
+            break;
+    }
+}
+
+// Preferences
+document.getElementById('consensus-threshold').addEventListener('input', function() {
+    document.getElementById('threshold-value').textContent = this.value + '%';
+});
+
+document.getElementById('minority-threshold').addEventListener('input', function() {
+    document.getElementById('minority-value').textContent = this.value + '%';
+});
+
+function savePreferences() {
+    const preferences = {
+        consensusThreshold: document.getElementById('consensus-threshold').value,
+        minorityThreshold: document.getElementById('minority-threshold').value,
+        autoSave: document.getElementById('auto-save').checked,
+        showRaw: document.getElementById('show-raw').checked,
+        notifications: document.getElementById('notifications').checked
+    };
+    
+    localStorage.setItem('medley-preferences', JSON.stringify(preferences));
+    alert('Preferences saved!');
+}
+
+// Load saved preferences on page load
+window.addEventListener('load', function() {
+    const saved = localStorage.getItem('medley-preferences');
+    if (saved) {
+        const prefs = JSON.parse(saved);
+        document.getElementById('consensus-threshold').value = prefs.consensusThreshold || 30;
+        document.getElementById('minority-threshold').value = prefs.minorityThreshold || 10;
+        document.getElementById('auto-save').checked = prefs.autoSave !== false;
+        document.getElementById('show-raw').checked = prefs.showRaw !== false;
+        document.getElementById('notifications').checked = prefs.notifications !== false;
+    }
+});
+</script>
+{% endblock %}

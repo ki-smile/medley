@@ -1,0 +1,421 @@
+/* Karolinska Institutet Theme for MEDLEY */
+/* Based on KI's official color palette and brand guidelines */
+
+:root {
+    /* Karolinska Institutet Primary Colors */
+    --ki-dark-plum: #4F0433;
+    --ki-plum-logo: #870052;
+    --ki-orange: #FF876F;
+    --ki-light-orange: #FEEEEB;
+    --ki-light-blue: #EDF4F4;
+    
+    /* Extended Karolinska Color Clusters */
+    /* Plum Cluster */
+    --ki-plum-dark: #4F0433;
+    --ki-plum-medium: #870052;
+    --ki-plum-light: #B8527A;
+    
+    /* Orange Cluster */
+    --ki-orange-dark: #E5654D;
+    --ki-orange-medium: #FF876F;
+    --ki-orange-light: #FEEEEB;
+    
+    /* Blue Cluster */
+    --ki-blue-dark: #2C5F5F;
+    --ki-blue-medium: #4A8080;
+    --ki-blue-light: #EDF4F4;
+    
+    /* Grey Cluster */
+    --ki-grey-dark: #2D2D2D;
+    --ki-grey-medium: #6B6B6B;
+    --ki-grey-light: #F5F5F5;
+    
+    /* Green Cluster */
+    --ki-green-dark: #2E5B2E;
+    --ki-green-medium: #4A8F4A;
+    --ki-green-light: #E8F4E8;
+    
+    /* Yellow Cluster */
+    --ki-yellow-dark: #B8860B;
+    --ki-yellow-medium: #DAA520;
+    --ki-yellow-light: #FFF8DC;
+    
+    /* Semantic Color Mapping */
+    --primary-color: var(--ki-dark-plum);
+    --primary-hover: var(--ki-plum-medium);
+    --secondary-color: var(--ki-orange);
+    --accent-color: var(--ki-blue-medium);
+    --success-color: var(--ki-green-medium);
+    --warning-color: var(--ki-yellow-medium);
+    --danger-color: var(--ki-orange-dark);
+    
+    /* Background Colors */
+    --background-primary: #FFFFFF;
+    --background-secondary: var(--ki-light-blue);
+    --background-accent: var(--ki-light-orange);
+    --background-dark: var(--ki-dark-plum);
+    
+    /* Text Colors */
+    --text-primary: var(--ki-grey-dark);
+    --text-secondary: var(--ki-grey-medium);
+    --text-light: #FFFFFF;
+    --text-on-primary: #FFFFFF;
+    --text-on-secondary: var(--ki-grey-dark);
+    
+    /* Border Colors */
+    --border-light: var(--ki-grey-light);
+    --border-medium: var(--ki-grey-medium);
+    --border-accent: var(--ki-orange-light);
+}
+
+/* Global Styles with KI Theme */
+body {
+    font-family: 'Inter', 'Arial', sans-serif;
+    background-color: var(--background-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+}
+
+/* Header and Navigation */
+.navbar, header {
+    background: linear-gradient(135deg, var(--ki-dark-plum) 0%, var(--ki-plum-medium) 100%);
+    color: var(--text-light);
+    border-bottom: 3px solid var(--ki-orange);
+}
+
+.navbar-brand, .navbar .nav-link {
+    color: var(--text-light) !important;
+}
+
+.navbar .nav-link:hover {
+    color: var(--ki-orange-light) !important;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+}
+
+/* Buttons - KI Style */
+.btn-primary {
+    background: linear-gradient(135deg, var(--ki-dark-plum), var(--ki-plum-medium));
+    border: none;
+    color: var(--text-light);
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, var(--ki-plum-medium), var(--ki-plum-light));
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(79, 4, 51, 0.3);
+}
+
+.btn-secondary {
+    background: var(--ki-orange);
+    border: none;
+    color: var(--text-primary);
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+.btn-secondary:hover {
+    background: var(--ki-orange-dark);
+    color: var(--text-light);
+}
+
+.btn-outline-primary {
+    border: 2px solid var(--ki-dark-plum);
+    color: var(--ki-dark-plum);
+    background: transparent;
+}
+
+.btn-outline-primary:hover {
+    background: var(--ki-dark-plum);
+    color: var(--text-light);
+}
+
+/* Cards and Surfaces */
+.card {
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(79, 4, 51, 0.1);
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 4px 16px rgba(79, 4, 51, 0.15);
+    transform: translateY(-2px);
+}
+
+.card-header {
+    background: linear-gradient(135deg, var(--ki-light-blue), var(--ki-light-orange));
+    border-bottom: 1px solid var(--ki-orange-light);
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+/* Medical Case Cards */
+.case-card {
+    border-left: 4px solid var(--ki-orange);
+    background: var(--background-secondary);
+}
+
+.case-card:hover {
+    border-left-color: var(--ki-dark-plum);
+}
+
+.case-title {
+    color: var(--ki-dark-plum);
+    font-weight: 700;
+}
+
+.case-specialty {
+    color: var(--ki-orange-dark);
+    font-weight: 600;
+    font-size: 0.9em;
+}
+
+/* Model Selection */
+.model-group {
+    background: var(--ki-light-blue);
+    border: 1px solid var(--ki-blue-light);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 16px;
+}
+
+.model-group h5 {
+    color: var(--ki-dark-plum);
+    border-bottom: 2px solid var(--ki-orange-light);
+    padding-bottom: 8px;
+}
+
+/* Progress Bars */
+.progress {
+    background-color: var(--ki-grey-light);
+    border-radius: 8px;
+    height: 12px;
+}
+
+.progress-bar {
+    background: linear-gradient(90deg, var(--ki-orange), var(--ki-orange-dark));
+    border-radius: 8px;
+}
+
+.progress-bar.bg-success {
+    background: linear-gradient(90deg, var(--ki-green-medium), var(--ki-green-dark)) !important;
+}
+
+/* Analysis Status */
+.analysis-stage {
+    background: var(--ki-light-orange);
+    border-left: 4px solid var(--ki-orange);
+    padding: 12px 16px;
+    border-radius: 0 8px 8px 0;
+    margin-bottom: 12px;
+}
+
+.analysis-complete {
+    background: var(--ki-green-light);
+    border-left-color: var(--ki-green-medium);
+}
+
+/* Alerts */
+.alert-info {
+    background: var(--ki-light-blue);
+    border-color: var(--ki-blue-medium);
+    color: var(--ki-blue-dark);
+}
+
+.alert-success {
+    background: var(--ki-green-light);
+    border-color: var(--ki-green-medium);
+    color: var(--ki-green-dark);
+}
+
+.alert-warning {
+    background: var(--ki-yellow-light);
+    border-color: var(--ki-yellow-medium);
+    color: var(--ki-yellow-dark);
+}
+
+.alert-danger {
+    background: var(--ki-orange-light);
+    border-color: var(--ki-orange);
+    color: var(--ki-orange-dark);
+}
+
+/* Tables */
+.table {
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.table thead th {
+    background: var(--ki-dark-plum);
+    color: var(--text-light);
+    border: none;
+    font-weight: 600;
+}
+
+.table tbody tr:nth-child(even) {
+    background-color: var(--ki-light-blue);
+}
+
+.table tbody tr:hover {
+    background-color: var(--ki-light-orange);
+}
+
+/* Badges */
+.badge-primary {
+    background: var(--ki-dark-plum);
+}
+
+.badge-secondary {
+    background: var(--ki-orange);
+    color: var(--text-primary);
+}
+
+.badge-success {
+    background: var(--ki-green-medium);
+}
+
+.badge-info {
+    background: var(--ki-blue-medium);
+}
+
+/* Form Elements */
+.form-control, .form-select {
+    border: 2px solid var(--border-light);
+    border-radius: 8px;
+    padding: 12px;
+    transition: border-color 0.3s ease;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--ki-orange);
+    box-shadow: 0 0 0 0.2rem rgba(255, 135, 111, 0.25);
+}
+
+.form-label {
+    color: var(--ki-dark-plum);
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+/* Checkboxes */
+.form-check-input:checked {
+    background-color: var(--ki-dark-plum);
+    border-color: var(--ki-dark-plum);
+}
+
+.form-check-input:focus {
+    box-shadow: 0 0 0 0.25rem rgba(79, 4, 51, 0.25);
+}
+
+/* Footer */
+.footer {
+    background: var(--ki-grey-dark);
+    color: var(--text-light);
+    padding: 32px 0;
+    margin-top: 48px;
+}
+
+.footer a {
+    color: var(--ki-orange-light);
+}
+
+.footer a:hover {
+    color: var(--ki-orange);
+}
+
+/* Specific MEDLEY Components */
+.medley-logo {
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--ki-orange), var(--ki-orange-dark));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.bias-indicator {
+    background: var(--ki-yellow-light);
+    border-left: 4px solid var(--ki-yellow-medium);
+    padding: 12px;
+    border-radius: 0 8px 8px 0;
+}
+
+.consensus-high {
+    background: var(--ki-green-light);
+    color: var(--ki-green-dark);
+}
+
+.consensus-medium {
+    background: var(--ki-yellow-light);
+    color: var(--ki-yellow-dark);
+}
+
+.consensus-low {
+    background: var(--ki-orange-light);
+    color: var(--ki-orange-dark);
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --background-primary: var(--ki-grey-dark);
+        --text-primary: var(--ki-grey-light);
+        --border-light: var(--ki-grey-medium);
+    }
+    
+    .card {
+        background: rgba(255, 255, 255, 0.05);
+        border-color: var(--ki-grey-medium);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .navbar-brand {
+        font-size: 1.1rem;
+    }
+    
+    .btn {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+    }
+    
+    .card {
+        margin-bottom: 16px;
+    }
+}
+
+/* Animation and Transitions */
+@keyframes ki-pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.7; }
+    100% { opacity: 1; }
+}
+
+.ki-loading {
+    animation: ki-pulse 1.5s ease-in-out infinite;
+}
+
+/* Accessibility Enhancements */
+.btn:focus, .form-control:focus, .form-select:focus {
+    outline: 2px solid var(--ki-orange);
+    outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .btn-primary {
+        background: var(--ki-dark-plum);
+        border: 2px solid var(--ki-grey-dark);
+    }
+    
+    .card {
+        border: 2px solid var(--ki-grey-medium);
+    }
+}
