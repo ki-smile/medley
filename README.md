@@ -41,12 +41,14 @@ pip install -e .
 
 1. **Get OpenRouter API key** from [OpenRouter](https://openrouter.ai/)
 
-2. **Set environment variable**:
+2. **For Command Line Usage - Set environment variable**:
 ```bash
 export OPENROUTER_API_KEY='your-api-key-here'
 # Or create .env file
 echo "OPENROUTER_API_KEY=your-api-key-here" > .env
 ```
+
+**Note:** For the web interface, setting an API key is optional. You can provide it directly in the web UI, or use the system with pre-cached cases without any API key.
 
 ### Usage Options
 
