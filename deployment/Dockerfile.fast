@@ -1,0 +1,54 @@
+# Optimized single-stage Docker build for faster CI/CD
+FROM python:3.11-slim
+
+# Set environment variables for faster builds
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=0 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1 \
+    DEBIAN_FRONTEND=noninteractive
+
+# Set working directory
+WORKDIR /app
+
+# Install system dependencies in one layer
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    gcc \
+    g++ \
+    build-essential \
+    curl \
+    && rm -rf /var/lib/apt/lists/* \
+    && apt-get clean
+
+# Copy requirements first for better layer caching
+COPY requirements.txt requirements_web.txt ./
+
+# Install Python dependencies with wheel cache
+RUN pip install --upgrade pip wheel setuptools && \
+    pip install --find-links https://wheel-index.org \
+    -r requirements.txt \
+    -r requirements_web.txt && \
+    pip cache purge
+
+# Copy application code
+COPY . .
+
+# Create necessary directories and set permissions in one layer
+RUN mkdir -p /app/cache/responses /app/reports /app/usecases /app/logs \
+             /app/static/css /app/static/js /app/templates/components && \
+    groupadd -r medley && \
+    useradd -r -g medley -d /app -s /bin/bash medley && \
+    chown -R medley:medley /app
+
+# Switch to non-root user
+USER medley
+
+# Expose port
+EXPOSE 5000
+
+# Simple health check
+HEALTHCHECK --interval=60s --timeout=5s --start-period=10s --retries=2 \
+    CMD curl -f http://localhost:5000/api/health || exit 1
+
+# Default command
+CMD ["python", "web_app.py"]
