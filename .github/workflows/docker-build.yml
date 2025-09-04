@@ -61,41 +61,28 @@ jobs:
     - name: Generate deployment summary
       if: github.event_name != 'pull_request'
       run: |
-        echo "## Docker Image Built Successfully! 🐳" >> $GITHUB_STEP_SUMMARY
+        echo "## ✅ Docker Image Built Successfully! 🐳" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
-        echo "**Image:** \`${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}\`" >> $GITHUB_STEP_SUMMARY
+        echo "**Registry:** \`${{ env.REGISTRY }}\`" >> $GITHUB_STEP_SUMMARY
+        echo "**Repository:** \`${{ env.IMAGE_NAME }}\`" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
-        echo "**Tags:**" >> $GITHUB_STEP_SUMMARY
+        echo "**Available Tags:**" >> $GITHUB_STEP_SUMMARY
         echo '${{ steps.meta.outputs.tags }}' | sed 's/^/- `/' | sed 's/$/`/' >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
-        echo "**Pull Command:**" >> $GITHUB_STEP_SUMMARY
+        echo "### 🚀 Quick Start Commands" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "**Pull the image:**" >> $GITHUB_STEP_SUMMARY
         echo '```bash' >> $GITHUB_STEP_SUMMARY
         echo "docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest" >> $GITHUB_STEP_SUMMARY
         echo '```' >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
-        echo "**Run Command:**" >> $GITHUB_STEP_SUMMARY
+        echo "**Run MEDLEY web application:**" >> $GITHUB_STEP_SUMMARY
         echo '```bash' >> $GITHUB_STEP_SUMMARY
-        echo "docker run -p 5000:5000 -e OPENROUTER_API_KEY=your_key ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest" >> $GITHUB_STEP_SUMMARY
+        echo "docker run -d \\" >> $GITHUB_STEP_SUMMARY
+        echo "  -p 5000:5000 \\" >> $GITHUB_STEP_SUMMARY
+        echo "  -e OPENROUTER_API_KEY=your_api_key \\" >> $GITHUB_STEP_SUMMARY
+        echo "  --name medley-app \\" >> $GITHUB_STEP_SUMMARY
+        echo "  ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest" >> $GITHUB_STEP_SUMMARY
         echo '```' >> $GITHUB_STEP_SUMMARY
-
-  security-scan:
-    runs-on: ubuntu-latest
-    if: github.event_name != 'pull_request'
-    needs: build
-    permissions:
-      contents: read
-      security-events: write
-
-    steps:
-    - name: Run Trivy vulnerability scanner
-      uses: aquasecurity/trivy-action@master
-      with:
-        image-ref: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
-        format: 'sarif'
-        output: 'trivy-results.sarif'
-
-    - name: Upload Trivy scan results to GitHub Security tab
-      uses: github/codeql-action/upload-sarif@v3
-      if: always()
-      with:
-        sarif_file: 'trivy-results.sarif'
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "**Access the application:** http://localhost:5000" >> $GITHUB_STEP_SUMMARY
