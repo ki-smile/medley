@@ -5,11 +5,13 @@ Processes any medical case with proper case separation and caching
 """
 
 import json
+import os
 import time
 import argparse
 from pathlib import Path
 from datetime import datetime
 from model_metadata_2025 import get_comprehensive_model_metadata, get_geographical_distribution
+from src.medley.utils.validators import ResponseValidator
 
 def print_progress_bar(completed, total, prefix='Progress', suffix='Complete', length=50):
     """Print a progress bar"""
@@ -23,14 +25,22 @@ class GeneralMedicalPipeline:
     General pipeline for medical case analysis with proper case separation
     """
     
-    def __init__(self, case_id: str):
+    def __init__(self, case_id: str, api_key: str = None, selected_models: list = None, socketio=None, display_case_id: str = None):
         """
         Initialize pipeline for a specific case
         
         Args:
             case_id: Unique case identifier (e.g., "Case_1", "Case_2", "Case_3")
+            api_key: Optional OpenRouter API key for this analysis
+            selected_models: Optional list of specific model IDs to use
+            socketio: Optional SocketIO instance for real-time progress updates
+            display_case_id: Optional case ID to display in SocketIO events (defaults to case_id)
         """
         self.case_id = case_id
+        self.api_key = api_key
+        self.selected_models = selected_models
+        self.socketio = socketio
+        self.display_case_id = display_case_id or case_id
         self.cache_dir = Path.cwd() / "cache"
         self.case_cache_dir = self.cache_dir / "responses" / case_id
         self.orchestrator_cache_dir = self.cache_dir / "orchestrator" / case_id
@@ -46,10 +56,56 @@ class GeneralMedicalPipeline:
         print(f"   🧠 Orchestrator cache: {self.orchestrator_cache_dir}")
         print(f"   📄 Reports: {self.reports_dir}")
     
+    def _emit_progress(self, stage, progress, message, models_status=None):
+        """Emit real-time progress via SocketIO"""
+        if self.socketio:
+            # Extract current model from message if it contains "Analyzing with"
+            current_model = None
+            model_status = 'pending'
+            
+            if 'Analyzing with' in message:
+                # Extract model name: "Analyzing with deepseek-chat-v3.1:free..."
+                import re
+                match = re.search(r'Analyzing with ([^\.]+)', message)
+                if match:
+                    current_model = match.group(1).strip()
+                    model_status = 'processing'
+            
+            try:
+                self.socketio.emit('model_progress', {
+                    'analysis_id': self.display_case_id,
+                    'stage': stage,
+                    'progress': progress,
+                    'status': message,
+                    'message': message,
+                    'current_model': current_model,
+                    'model_status': model_status,
+                    'models_status': models_status or {}
+                })
+                print(f"🔄 Progress: {stage} - {progress}% - {message} [SocketIO: {self.display_case_id}]")
+            except (BrokenPipeError, ConnectionResetError, OSError) as socket_error:
+                print(f"🔄 Progress: {stage} - {progress}% - {message} [WebSocket disconnected: {socket_error}]")
+            except Exception as emit_error:
+                print(f"🔄 Progress: {stage} - {progress}% - {message} [Emit error: {emit_error}]")
+    
+    def safe_socketio_emit(self, event, data):
+        """Safe SocketIO emit with error handling"""
+        if self.socketio:
+            try:
+                self.socketio.emit(event, data)
+            except (BrokenPipeError, ConnectionResetError, OSError) as socket_error:
+                print(f"🔄 SocketIO: {event} - [WebSocket disconnected: {socket_error}]")
+            except Exception as emit_error:
+                print(f"🔄 SocketIO: {event} - [Emit error: {emit_error}]")
+    
     def get_all_available_models(self):
-        """Get all available models from metadata"""
-        metadata = get_comprehensive_model_metadata()
-        return list(metadata.keys())
+        """Get all available models from metadata or use selected models"""
+        if self.selected_models:
+            print(f"🎯 Using {len(self.selected_models)} selected models from web interface")
+            return self.selected_models
+        else:
+            metadata = get_comprehensive_model_metadata()
+            return list(metadata.keys())
     
     def load_case_cached_responses(self):
         """Load cached responses for this specific case only"""
@@ -117,6 +173,7 @@ class GeneralMedicalPipeline:
         """Query models not in cache for this case"""
         cached_model_names = {r['model_name'] for r in cached_models}
         missing_models = [m for m in all_models if m not in cached_model_names]
+        total_models = len(all_models)  # Total models for progress calculation
         
         print(f"🔍 Found {len(missing_models)} models not cached for {self.case_id}")
         
@@ -130,8 +187,17 @@ class GeneralMedicalPipeline:
         
         print(f"🤖 Querying {len(missing_models)} missing models for {self.case_id}...")
         
+        # Initialize models status for progress tracking
+        models_status = {model_id: 'pending' for model_id in missing_models}
+        self._emit_progress(1, 10, f"Querying {len(missing_models)} AI models...", models_status)
+        
         for i, model_id in enumerate(missing_models):
             print_progress_bar(i, len(missing_models), prefix=f'Querying {self.case_id}', suffix='models processed')
+            
+            # Update current model status
+            models_status[model_id] = 'processing'
+            current_progress = 10 + (i / len(missing_models)) * 60  # 10% to 70% for model queries
+            self._emit_progress(1, int(current_progress), f"Analyzing with {model_id.split('/')[-1]}...", models_status)
             
             try:
                 from src.medley.utils.config import ModelConfig
@@ -149,7 +215,7 @@ class GeneralMedicalPipeline:
                 response = llm_manager.query_model(model_config, prompt)
                 elapsed = time.time() - start_time
                 
-                if not response.error:
+                if not response.error and ResponseValidator.validate_medical_response(response.content):
                     new_responses.append({
                         "model_name": model_id,
                         "response": response.content,
@@ -162,7 +228,18 @@ class GeneralMedicalPipeline:
                         "output_tokens": response.output_tokens
                     })
                     successful += 1
+                    models_status[model_id] = 'completed'
                     print(f"    ✅ Success: {len(response.content):,} chars in {elapsed:.2f}s")
+                    
+                    # Emit individual model completion event
+                    if hasattr(self, 'socketio') and self.socketio:
+                        self.safe_socketio_emit('model_progress', {
+                            'analysis_id': self.display_case_id,
+                            'model': model_id,
+                            'status': f'✅ Success: {len(response.content):,} chars in {elapsed:.2f}s',
+                            'stage': 1,
+                            'progress': ((i + 1) / total_models) * 60  # Stage 1 is 0-60%
+                        })
                     
                     # Save to case-specific cache
                     cache_file = self.case_cache_dir / f"{model_id.replace('/', '_').replace(':', '_')}.json"
@@ -182,13 +259,51 @@ class GeneralMedicalPipeline:
                         json.dump(cache_data, f, indent=2)
                     print(f"    💾 Cached to {cache_file.name}")
                     
+                elif not response.error:
+                    # No API error but invalid medical response (e.g., minimal response like ".")
+                    failed += 1
+                    models_status[model_id] = 'failed'
+                    print(f"    ❌ Invalid response: '{response.content[:50]}...'")
+                    
+                    # Emit individual model invalid response event
+                    if hasattr(self, 'socketio') and self.socketio:
+                        self.safe_socketio_emit('model_progress', {
+                            'analysis_id': self.display_case_id,
+                            'model': model_id,
+                            'status': f'❌ Invalid: "{response.content[:20]}..."',
+                            'stage': 1,
+                            'progress': ((i + 1) / total_models) * 60  # Stage 1 is 0-60%
+                        })
+                    
                 else:
                     failed += 1
+                    models_status[model_id] = 'failed'
                     print(f"    ❌ Error: {response.error}")
+                    
+                    # Emit individual model failure event
+                    if hasattr(self, 'socketio') and self.socketio:
+                        self.safe_socketio_emit('model_progress', {
+                            'analysis_id': self.display_case_id,
+                            'model': model_id,
+                            'status': f'❌ Error: {response.error}',
+                            'stage': 1,
+                            'progress': ((i + 1) / total_models) * 60  # Stage 1 is 0-60%
+                        })
                     
             except Exception as e:
                 failed += 1
+                models_status[model_id] = 'failed'
                 print(f"\\n    💥 Exception with {model_id}: {str(e)[:100]}")
+                
+                # Emit individual model exception event
+                if hasattr(self, 'socketio') and self.socketio:
+                    self.safe_socketio_emit('model_progress', {
+                        'analysis_id': self.display_case_id,
+                        'model': model_id,
+                        'status': f'❌ Exception: {str(e)[:50]}...',
+                        'stage': 1,
+                        'progress': ((i + 1) / total_models) * 60  # Stage 1 is 0-60%
+                    })
         
         print_progress_bar(len(missing_models), len(missing_models), prefix=f'Querying {self.case_id}', suffix='models processed')
         print(f"\\n\\n📊 Query Results for {self.case_id}:")
@@ -268,8 +383,14 @@ class GeneralMedicalPipeline:
         total_models = len(all_responses)
         sorted_diag = sorted(total_counts.items(), key=lambda x: x[1], reverse=True) if total_counts else []
         
-        # Determine primary based on highest total count
-        primary = sorted_diag[0] if sorted_diag else ('Unknown Condition', 0)
+        # Determine primary based on PRIMARY DIAGNOSES first, then fall back to total counts
+        if primary_counts:
+            # Sort by primary count first (most important), then by total count
+            sorted_primary = sorted(primary_counts.items(), key=lambda x: (x[1], total_counts.get(x[0], 0)), reverse=True)
+            primary = (sorted_primary[0][0], total_counts.get(sorted_primary[0][0], 0))
+        else:
+            # Fallback to highest total count if no primary diagnoses found
+            primary = sorted_diag[0] if sorted_diag else ('Unknown Condition', 0)
         
         print(f"\\n📊 COMPREHENSIVE DIAGNOSTIC CONSENSUS for {self.case_id}:")
         print(f"   📈 Total Models Analyzed: {total_models}")
@@ -622,6 +743,7 @@ class GeneralMedicalPipeline:
         print("=" * 80)
         
         # Step 1: Environment Setup
+        self._emit_progress(0, 5, "Initializing analysis environment...")
         print(f"\\n📋 STEP 1: Environment Setup")
         print(f"⏰ Started at: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
         print(f"📊 Case ID: {self.case_id}")
@@ -641,7 +763,7 @@ class GeneralMedicalPipeline:
         from src.medley.utils.config import Config
         from src.medley.processors.prompt_generator import DiagnosticPromptGenerator
         
-        config = Config()
+        config = Config(api_key=self.api_key)
         llm_manager = LLMManager(config)
         prompt_gen = DiagnosticPromptGenerator()
         
@@ -668,14 +790,19 @@ class GeneralMedicalPipeline:
         print(f"   🆕 Fresh queries: {len(new_responses)}")
         
         # Step 5: Analyze consensus
+        self._emit_progress(2, 75, "Analyzing diagnostic consensus...")
         print(f"\\n🧠 STEP 5: Diagnostic Analysis for {self.case_id}")
         consensus_results = self.analyze_consensus(all_responses)
         
         # Step 6: Build comprehensive ensemble data
+        self._emit_progress(3, 85, "Building comprehensive report...")
         print(f"\\n🏗️  STEP 6: Building {self.case_id} Report Data")
         
         primary = consensus_results['primary']
         total = consensus_results['total_models']
+        
+        # Ensure os is available in local scope
+        import os as os_module
         
         ensemble_data = {
             "case_id": self.case_id,
@@ -685,6 +812,7 @@ class GeneralMedicalPipeline:
             "total_models_analyzed": len(all_responses),
             "geographical_distribution": {country: len(models) for country, models in geo_dist.items()},
             "consensus_analysis": consensus_results,  # Add the consensus analysis data
+            "free_models_used": os_module.environ.get('USE_FREE_MODELS', 'false').lower() == 'true',
             "diagnostic_landscape": {
                 "primary_diagnosis": {
                     "name": primary[0],
@@ -759,6 +887,7 @@ class GeneralMedicalPipeline:
             ensemble_data["diagnostic_landscape"]["minority_opinions"].append(enhanced_diag)
         
         # Step 7: Orchestrator Analysis with Retry
+        self._emit_progress(3, 90, "Running orchestration analysis...")
         print(f"\\n🧠 STEP 7: Orchestrator Analysis for {self.case_id}")
         
         # TEMPORARY: Skip orchestrator if it would hang
@@ -774,7 +903,9 @@ class GeneralMedicalPipeline:
             skip_orchestrator = True
             # Create fallback extraction directly
             from src.medley.reporters.report_orchestrator import ReportOrchestrator
-            orchestrator = ReportOrchestrator(self.cache_dir)
+            # Use FREE_MODELS environment variable to determine orchestrator model
+            use_free_only = os.environ.get('USE_FREE_MODELS', '').lower() == 'true'
+            orchestrator = ReportOrchestrator(llm_manager, use_free_only=use_free_only)
             orchestrated_analysis = orchestrator._fallback_extraction(ensemble_data)
             ensemble_data.update(orchestrated_analysis)
             orchestrator_success = False
@@ -784,7 +915,9 @@ class GeneralMedicalPipeline:
             orchestrated_analysis = None
         else:
             from src.medley.reporters.report_orchestrator import ReportOrchestrator
-            orchestrator = ReportOrchestrator(llm_manager)
+            # Use USE_FREE_MODELS environment variable to determine orchestrator model
+            use_free_only = os.environ.get('USE_FREE_MODELS', '').lower() == 'true'
+            orchestrator = ReportOrchestrator(llm_manager, use_free_only=use_free_only)
             
             orchestrator_success = False
             orchestrated_analysis = None
@@ -825,6 +958,7 @@ class GeneralMedicalPipeline:
         print(f"💾 Saved ensemble data: {ensemble_file.name}")
         
         # Step 9: Always generate comprehensive report (even with fallback extraction)
+        self._emit_progress(3, 95, "Generating final PDF report...")
         print(f"\\n📄 STEP 9: Generating {self.case_id} PDF Report")
         if not orchestrator_success:
             print(f"   ⚠️  Using fallback extraction data (orchestrator failed)")
@@ -850,6 +984,9 @@ class GeneralMedicalPipeline:
         print(f"   • Primary diagnosis achieved {primary[1]/total*100:.1f}% consensus")
         print(f"   • {len(geo_dist)} countries represented in analysis")
         print(f"   • Comprehensive bias analysis completed")
+        
+        # Final completion signal
+        self._emit_progress(3, 100, "Analysis complete!")
         
         return {
             'report_file': report_file,

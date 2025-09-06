@@ -1,0 +1,1009 @@
+{
+  "case_id": "tmpk3q5v654",
+  "case_title": "Custom Case Analysis",
+  "case_content": "Mr. John Anderson is a 58-year-old man with a history of hypertension, hyperlipidemia, and type 2 diabetes mellitus who presents with a one-week history of intermittent exertional chest discomfort, described as a pressure-like sensation in the central chest radiating to the left shoulder and jaw, typically triggered by physical activity such as walking or climbing stairs, and relieved with rest. This morning, he experienced a more intense episode lasting approximately 20 minutes while walking his dog, which was not fully relieved by rest and prompted his visit to the emergency department due to concern for a cardiac event. He denies associated symptoms such as dyspnea at rest, nausea, or diaphoresis, but reports increasing fatigue over the past month. He has a 30-pack-year smoking history and continues to smoke, follows a sedentary lifestyle, and has a diet high in processed foods. His medications include metformin, lisinopril, atorvastatin, and low-dose aspirin, which was started two weeks ago by his primary care physician. Family history is notable for a father who died of myocardial infarction at age 60 and a mother with hypertension and diabetes.",
+  "model_responses": [
+    {
+      "model_name": "deepseek/deepseek-chat-v3.1:free",
+      "response": "```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"Unstable Angina\",\n        \"confidence\": 0.9,\n        \"icd_code\": \"I20.0\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Non-ST Elevation Myocardial Infarction (NSTEMI)\",\n            \"confidence\": 0.75,\n            \"icd_code\": \"I21.4\"\n        },\n        {\n            \"name\": \"Musculoskeletal Chest Pain\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"M54.6\"\n        },\n        {\n            \"name\": \"Gastroesophageal Reflux Disease\",\n            \"confidence\": 0.15,\n            \"icd_code\": \"K21.9\"\n        },\n        {\n            \"name\": \"Anxiety Disorder\",\n            \"confidence\": 0.1,\n            \"icd_code\": \"F41.9\"\n        }\n    ],\n    \"key_findings\": [\"58-year-old male with multiple cardiac risk factors\", \"Typical anginal chest pain: pressure-like, central chest radiation to left shoulder/jaw\", \"Recent worsening pattern with prolonged episode not fully relieved by rest\", \"Significant cardiac risk factors: hypertension, diabetes, hyperlipidemia, 30-pack-year smoking history, family history of premature MI\", \"Positive response to aspirin initiation suggests ischemic component\"],\n    \"tests\": [\n        {\n            \"test\": \"ECG\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Cardiac biomarkers (troponin)\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Complete blood count\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Comprehensive metabolic panel\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Echocardiogram\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Stress testing\",\n            \"priority\": \"routine\"\n        },\n        {\n            \"test\": \"Coronary angiography\",\n            \"priority\": \"urgent\"\n        }\n    ],\n    \"management\": {\n        \"immediate\": [\"Cardiac monitoring\", \"Oxygen therapy if hypoxic\", \"IV access\", \"Aspirin 162-325 mg chewed\"],\n        \"medications\": [\"aspirin: 81 mg daily, oral\", \"atorvastatin: 40-80 mg daily, oral\", \"lisinopril: 10 mg daily, oral\", \"metformin: as prescribed, oral\", \"nitroglycerin: 0.4 mg sublingual PRN\", \"clopidogrel: 300 mg loading dose then 75 mg daily, oral\", \"metoprolol: 25-50 mg twice daily, oral\"],\n        \"consultations\": [\"Cardiology: immediate\", \"Cardiac surgery: standby\"]\n    },\n    \"red_flags\": [\"Worsening anginal pattern\", \"Prolonged chest pain episode\", \"Multiple cardiac risk factors\", \"Family history of premature myocardial infarction\", \"Potential acute coronary syndrome\"]\n}\n```",
+      "response_time": 19.717326164245605,
+      "cached": false,
+      "case_id": "tmpk3q5v654",
+      "timestamp": "2025-09-05T13:57:21.066942",
+      "tokens_used": 1133,
+      "input_tokens": 470,
+      "output_tokens": 663
+    },
+    {
+      "model_name": "deepseek/deepseek-r1:free",
+      "response": "Okay, let's tackle this medical case. First, the patient is a 58-year-old man with a history of hypertension, hyperlipidemia, and type 2 diabetes. These are all major risk factors for cardiovascular disease. He presents with exertional chest pain that radiates to the left shoulder and jaw, which is classic for angina. The fact that it's triggered by activity and relieved by rest points towards stable angina, but today he had a more intense episode that didn't fully resolve with rest. That makes me think unstable angina or even an acute coronary syndrome (ACS). \n\nHe denies dyspnea at rest, nausea, or sweating, which are typical of MI, but the prolonged episode is concerning. His risk factors include smoking, sedentary lifestyle, poor diet, and family history\u2014father had an MI at 60. His medications include aspirin started two weeks ago, which might have been for primary prevention.\n\nPrimary diagnosis would likely be unstable angina (I20.0). Differential diagnoses could include NSTEMI (since symptoms are prolonged but without some typical symptoms like nausea), stable angina (though the recent change makes it less likely), GERD, and maybe a musculoskeletal cause. Testing needs to be immediate: EKG, troponin levels, CXR. Also check electrolytes and a lipid panel. Management should include nitroglycerin, continuing aspirin, maybe adding clopidogrel as per ACS protocol. Beta-blocker like metoprolol could help. Consult cardiology immediately. Red flags are the radiation of pain, prolonged episode, and high-risk history.\n\n\n---\n\n```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"Unstable Angina\",\n        \"confidence\": 0.9,\n        \"icd_code\": \"I20.0\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Non-ST Elevation Myocardial Infarction (NSTEMI)\",\n            \"confidence\": 0.7,\n            \"icd_code\": \"I21.4\"\n        },\n        {\n            \"name\": \"Stable Angina\",\n            \"confidence\": 0.4,\n            \"icd_code\": \"I20.9\"\n        },\n        {\n            \"name\": \"Gastroesophageal Reflux Disease (GERD)\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"K21.9\"\n        },\n        {\n            \"name\": \"Musculoskeletal Chest Pain\",\n            \"confidence\": 0.1,\n            \"icd_code\": \"M79.1\"\n        }\n    ],\n    \"key_findings\": [\n        \"Intermittent exertional chest pain with radiation to left shoulder/jaw\",\n        \"Prolonged episode (20 minutes) not fully relieved by rest\",\n        \"History of hypertension, hyperlipidemia, diabetes, smoking, and family CAD\",\n        \"Sedentary lifestyle and high-risk diet\"\n    ],\n    \"tests\": [\n        {\n            \"test\": \"12-lead ECG\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Cardiac troponin (serial)\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Chest X-ray\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Lipid panel\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"HbA1c\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management\": {\n        \"immediate\": [\n            \"Continuous cardiac monitoring\",\n            \"Supplemental oxygen if SpO2 <94%\",\n            \"Sublingual nitroglycerin for ongoing pain\"\n        ],\n        \"medications\": [\n            \"aspirin: 162-325 mg, oral (chewed)\",\n            \"clopidogrel: 300-600 mg loading dose, oral\",\n            \"nitroglycerin: 0.4 mg sublingual every 5 minutes (max 3 doses)\",\n            \"metoprolol: 25-50 mg, oral (if no contraindications)\"\n        ],\n        \"consultations\": [\n            \"cardiology: immediate\",\n            \"dietitian: urgent\"\n        ]\n    },\n    \"red_flags\": [\n        \"Chest pain radiating to jaw/shoulder\",\n        \"Prolonged unrelieved episode\",\n        \"High cardiovascular risk profile\",\n        \"Family history of premature CAD\"\n    ]\n}\n```",
+      "response_time": 31.680871963500977,
+      "cached": false,
+      "case_id": "tmpk3q5v654",
+      "timestamp": "2025-09-05T13:57:52.751990",
+      "tokens_used": 1401,
+      "input_tokens": 472,
+      "output_tokens": 929
+    },
+    {
+      "model_name": "google/gemma-2-9b-it:free",
+      "response": ":\n\n```json\n{\n  \"name\": \"Hypertension\",\n  \"confidence\": 0.95,\n  \"presenting_symptoms\": [\n    \"Chest pain\",\n    \"Shortness of breath\",\n    \"Fatigue\",\n    \"Nausea\"\n  ],\n  \"medical_history\": [\n    \"Hypertension\",\n    \"Diabetes\",\n    \"Smoking history\"\n  ],\n  \"medications\": [\n    \"Metformin\",\n    \"Lisinopril\",\n    \"Aspirin\"\n  ],\n  \"physical_exam\": [\n    \"Tachycardia\"\n  ],\n  \"differential_diagnoses\": [\n    \"Acute Coronary Syndrome (ACS)\",\n    \"Myocardial Infarction (MI)\",\n    \"Pulmonary Embolism\",\n    \"Pericarditis\",\n    \"Aortic Dissection\",\n    \"Pneumonia\"\n  ],\n  \"requested_tests\": [\n    \"Electrocardiogram (ECG)\",\n    \"Blood work (CBC, CMP, Cardiac Enzymes)\",\n    \"Chest X-ray\",\n    \"Echocardiogram\",\n    \"D-dimer (for PE)\"\n  ],\n  \"priority\": \"Urgent\",\n  \"icd_codes\": [\n    \"I25.1 (Essential Hypertension)\",\n    \"E11.9 (Type 2 Diabetes Mellitus without Complications)\",\n    \"I20.0 (Acute Myocardial Infarction)\" \n  ]\n}\n```\n\n**Important Notes:**\n\n* **This is a sample response and should not be used for actual medical diagnosis or treatment.**\n* **A proper diagnosis and treatment plan can only be made by a qualified medical professional after a thorough evaluation.**\n* **The information provided here is for educational purposes only and does not constitute medical advice.** \n\n\nLet me know if you have any other medical scenarios you'd like to explore.",
+      "response_time": 13.566643953323364,
+      "cached": false,
+      "case_id": "tmpk3q5v654",
+      "timestamp": "2025-09-05T13:58:06.325351",
+      "tokens_used": 929,
+      "input_tokens": 511,
+      "output_tokens": 418
+    },
+    {
+      "model_name": "google/gemma-3-12b-it:free",
+      "response": "```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"Unstable Angina\",\n        \"confidence\": 0.9,\n        \"icd_code\": \"I20.0\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Stable Angina\",\n            \"confidence\": 0.6,\n            \"icd_code\": \"I20.1\"\n        },\n        {\n            \"name\": \"Acute Myocardial Infarction\",\n            \"confidence\": 0.4,\n            \"icd_code\": \"I21.0\"\n        },\n        {\n            \"name\": \"Esophageal Spasm\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"K22.8\"\n        },\n        {\n            \"name\": \"Musculoskeletal Chest Pain\",\n            \"confidence\": 0.1,\n            \"icd_code\": \"M79.9\"\n        },\n        {\n            \"name\": \"Pericarditis\",\n            \"confidence\": 0.1,\n            \"icd_code\": \"I30.0\"\n        }\n    ],\n    \"key_findings\": [\n        \"Intermittent exertional chest discomfort (pressure-like)\",\n        \"Radiation of chest discomfort to left shoulder and jaw\",\n        \"Relief of chest discomfort with rest\",\n        \"Recent episode of more intense chest discomfort not fully relieved by rest\",\n        \"Increasing fatigue\",\n        \"History of hypertension, hyperlipidemia, and type 2 diabetes mellitus\",\n        \"30-pack-year smoking history\",\n        \"Family history of myocardial infarction and cardiovascular disease\"\n    ],\n    \"tests\": [\n        {\n            \"test\": \"Electrocardiogram (ECG/EKG)\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Cardiac Enzymes (Troponin I or T)\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Complete Blood Count (CBC)\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Basic Metabolic Panel (BMP)\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Lipid Panel\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Chest X-ray\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Echocardiogram\",\n            \"priority\": \"routine\"\n        },\n        {\n            \"test\": \"Stress Test (exercise or pharmacological)\",\n            \"priority\": \"routine\"\n        },\n        {\n            \"test\": \"Coronary Angiography\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management\": {\n        \"immediate\": [\n            \"Continuous cardiac monitoring\",\n            \"Oxygen administration if needed\",\n            \"Establish IV access\"\n        ],\n        \"medications\": [\n            \"Aspirin: 325 mg PO now\",\n            \"Nitroglycerin: 0.4 mg sublingual PRN for chest pain\",\n            \"Morphine: 2-4 mg IV PRN for chest pain unrelieved by nitroglycerin\",\n            \"Metoprolol: 5 mg IV PRN for chest pain (if not contraindicated)\",\n            \"Continue Metformin: as prescribed\",\n            \"Continue Lisinopril: as prescribed\",\n            \"Continue Atorvastatin: as prescribed\"\n        ],\n        \"consultations\": [\n            \"Cardiology: immediate\"\n        ]\n    },\n    \"red_flags\": [\n        \"New onset or worsening angina\",\n        \"Angina not relieved by rest or nitroglycerin\",\n        \"Increasing fatigue\",\n        \"Family history of premature coronary artery disease\"\n    ]\n}\n```",
+      "response_time": 26.88284707069397,
+      "cached": false,
+      "case_id": "tmpk3q5v654",
+      "timestamp": "2025-09-05T13:58:33.211055",
+      "tokens_used": 503,
+      "input_tokens": 503,
+      "output_tokens": 788
+    },
+    {
+      "model_name": "meta-llama/llama-3.2-3b-instruct:free",
+      "response": "{\n  \"primary_diagnosis\": {\n    \"name\": \"Angina pectoris\",\n    \"confidence\": 0.8,\n    \"icd_code\": \"I21.0\"\n  },\n  \"differential_diagnoses\": [\n    {\n      \"name\": \"Myocardial infarction\",\n      \"confidence\": 0.6,\n      \"icd_code\": \"I21.0\"\n    },\n    {\n      \"name\": \"Pericarditis\",\n      \"confidence\": 0.4,\n      \"icd_code\": \"K99.0\"\n    },\n    {\n      \"name\": \"Coronary artery disease\",\n      \"confidence\": 0.7,\n      \"icd_code\": \"I70.0\"\n    },\n    {\n      \"name\": \"Hypertensive crisis\",\n      \"confidence\": 0.3,\n      \"icd_code\": \"I16.0\"\n    }\n  ],\n  \"key_findings\": [\n    \"Exertional chest discomfort\",\n    \"History of hypertension, hyperlipidemia, and type 2 diabetes mellitus\",\n    \"Increasing fatigue\"\n  ],\n  \"tests\": [\n    {\n      \"test\": \"Echocardiogram\",\n      \"priority\": \"urgent\"\n    },\n    {\n      \"test\": \"Electrocardiogram\",\n      \"priority\": \"routine\"\n    },\n    {\n      \"test\": \"Blood tests (including lipid profile and troponin)\",\n      \"priority\": \"routine\"\n    },\n    {\n      \"test\": \"Stress test\",\n      \"priority\": \"immediate\"\n    }\n  ],\n  \"management\": {\n    \"immediate\": [\n      \"Aspirin (81mg orally daily)\"\n    ],\n    \"medications\": [\n      {\n        \"drug\": \"Atorvastatin\",\n        \"dose\": \"20mg orally daily\"\n      },\n      {\n        \"drug\": \"Lisinopril\",\n        \"dose\": \"10mg orally daily\"\n      }\n    ],\n    \"consultations\": [\n      \"Cardiology\"\n    ]\n  },\n  \"red_flags\": [\n    \"Family history of myocardial infarction at age 60\",\n    \"History of smoking\",\n    \"Increasing fatigue and exertional chest discomfort\"\n  ]\n}",
+      "response_time": 3.9832448959350586,
+      "cached": false,
+      "case_id": "tmpk3q5v654",
+      "timestamp": "2025-09-05T13:58:37.457240",
+      "tokens_used": 1633,
+      "input_tokens": 1157,
+      "output_tokens": 476
+    }
+  ],
+  "total_models_analyzed": 5,
+  "geographical_distribution": {
+    "USA": 20,
+    "France": 3,
+    "China": 5,
+    "Canada": 2,
+    "Japan/USA": 1,
+    "Israel": 1
+  },
+  "consensus_analysis": {
+    "primary_counts": {
+      "Unstable Angina": 3,
+      "Angina Pectoris": 1
+    },
+    "differential_counts": {
+      "Non-st Elevation Myocardial Infarction (nstemi)": 2,
+      "Musculoskeletal Chest Pain": 3,
+      "Gastroesophageal Reflux Disease": 1,
+      "Anxiety Disorder": 1,
+      "Stable Angina": 2,
+      "Gastroesophageal Reflux Disease (gerd)": 1,
+      "Acute Coronary Syndrome (acs)": 1,
+      "Myocardial Infarction (mi)": 1,
+      "Pulmonary Embolism": 1,
+      "Pericarditis": 3,
+      "Aortic Dissection": 1,
+      "Pneumonia": 1,
+      "Acute Myocardial Infarction": 1,
+      "Esophageal Spasm": 1,
+      "Myocardial Infarction": 1,
+      "Coronary Artery Disease": 1,
+      "Hypertensive Emergency": 1
+    },
+    "total_counts": {
+      "Unstable Angina": 3,
+      "Non-st Elevation Myocardial Infarction (nstemi)": 2,
+      "Musculoskeletal Chest Pain": 3,
+      "Gastroesophageal Reflux Disease": 1,
+      "Anxiety Disorder": 1,
+      "Stable Angina": 2,
+      "Gastroesophageal Reflux Disease (gerd)": 1,
+      "Acute Coronary Syndrome (acs)": 1,
+      "Myocardial Infarction (mi)": 1,
+      "Pulmonary Embolism": 1,
+      "Pericarditis": 3,
+      "Aortic Dissection": 1,
+      "Pneumonia": 1,
+      "Acute Myocardial Infarction": 1,
+      "Esophageal Spasm": 1,
+      "Angina Pectoris": 1,
+      "Myocardial Infarction": 1,
+      "Coronary Artery Disease": 1,
+      "Hypertensive Emergency": 1
+    },
+    "sorted_diagnoses": [
+      [
+        "Unstable Angina",
+        3
+      ],
+      [
+        "Musculoskeletal Chest Pain",
+        3
+      ],
+      [
+        "Pericarditis",
+        3
+      ],
+      [
+        "Non-st Elevation Myocardial Infarction (nstemi)",
+        2
+      ],
+      [
+        "Stable Angina",
+        2
+      ],
+      [
+        "Gastroesophageal Reflux Disease",
+        1
+      ],
+      [
+        "Anxiety Disorder",
+        1
+      ],
+      [
+        "Gastroesophageal Reflux Disease (gerd)",
+        1
+      ],
+      [
+        "Acute Coronary Syndrome (acs)",
+        1
+      ],
+      [
+        "Myocardial Infarction (mi)",
+        1
+      ],
+      [
+        "Pulmonary Embolism",
+        1
+      ],
+      [
+        "Aortic Dissection",
+        1
+      ],
+      [
+        "Pneumonia",
+        1
+      ],
+      [
+        "Acute Myocardial Infarction",
+        1
+      ],
+      [
+        "Esophageal Spasm",
+        1
+      ],
+      [
+        "Angina Pectoris",
+        1
+      ],
+      [
+        "Myocardial Infarction",
+        1
+      ],
+      [
+        "Coronary Artery Disease",
+        1
+      ],
+      [
+        "Hypertensive Emergency",
+        1
+      ]
+    ],
+    "primary": [
+      "Unstable Angina",
+      3
+    ],
+    "total_models": 5,
+    "icd_codes": {
+      "Unstable Angina": [
+        "I20.0"
+      ],
+      "Non-st Elevation Myocardial Infarction (nstemi)": [
+        "I21.4"
+      ],
+      "Musculoskeletal Chest Pain": [
+        "M79.1",
+        "M54.6",
+        "M79.9"
+      ],
+      "Gastroesophageal Reflux Disease": [
+        "K21.9"
+      ],
+      "Anxiety Disorder": [
+        "F41.9"
+      ],
+      "Stable Angina": [
+        "I20.1",
+        "I20.9"
+      ],
+      "Gastroesophageal Reflux Disease (gerd)": [
+        "K21.9"
+      ],
+      "Acute Myocardial Infarction": [
+        "I21.0"
+      ],
+      "Esophageal Spasm": [
+        "K22.8"
+      ],
+      "Pericarditis": [
+        "I30.0",
+        "K99.0"
+      ],
+      "Angina Pectoris": [
+        "I21.0"
+      ],
+      "Myocardial Infarction": [
+        "I21.0"
+      ],
+      "Coronary Artery Disease": [
+        "I70.0"
+      ],
+      "Hypertensive Emergency": [
+        "I16.0"
+      ]
+    },
+    "model_diagnoses": {
+      "Unstable Angina": {
+        "primary": [
+          "deepseek/deepseek-chat-v3.1:free",
+          "deepseek/deepseek-r1:free",
+          "google/gemma-3-12b-it:free"
+        ]
+      },
+      "Non-st Elevation Myocardial Infarction (nstemi)": {
+        "differential": [
+          "deepseek/deepseek-chat-v3.1:free",
+          "deepseek/deepseek-r1:free"
+        ]
+      },
+      "Musculoskeletal Chest Pain": {
+        "differential": [
+          "deepseek/deepseek-chat-v3.1:free",
+          "deepseek/deepseek-r1:free",
+          "google/gemma-3-12b-it:free"
+        ]
+      },
+      "Gastroesophageal Reflux Disease": {
+        "differential": [
+          "deepseek/deepseek-chat-v3.1:free"
+        ]
+      },
+      "Anxiety Disorder": {
+        "differential": [
+          "deepseek/deepseek-chat-v3.1:free"
+        ]
+      },
+      "Stable Angina": {
+        "differential": [
+          "deepseek/deepseek-r1:free",
+          "google/gemma-3-12b-it:free"
+        ]
+      },
+      "Gastroesophageal Reflux Disease (gerd)": {
+        "differential": [
+          "deepseek/deepseek-r1:free"
+        ]
+      },
+      "Acute Coronary Syndrome (acs)": {
+        "differential": [
+          "google/gemma-2-9b-it:free"
+        ]
+      },
+      "Myocardial Infarction (mi)": {
+        "differential": [
+          "google/gemma-2-9b-it:free"
+        ]
+      },
+      "Pulmonary Embolism": {
+        "differential": [
+          "google/gemma-2-9b-it:free"
+        ]
+      },
+      "Pericarditis": {
+        "differential": [
+          "google/gemma-2-9b-it:free",
+          "google/gemma-3-12b-it:free",
+          "meta-llama/llama-3.2-3b-instruct:free"
+        ]
+      },
+      "Aortic Dissection": {
+        "differential": [
+          "google/gemma-2-9b-it:free"
+        ]
+      },
+      "Pneumonia": {
+        "differential": [
+          "google/gemma-2-9b-it:free"
+        ]
+      },
+      "Acute Myocardial Infarction": {
+        "differential": [
+          "google/gemma-3-12b-it:free"
+        ]
+      },
+      "Esophageal Spasm": {
+        "differential": [
+          "google/gemma-3-12b-it:free"
+        ]
+      },
+      "Angina Pectoris": {
+        "primary": [
+          "meta-llama/llama-3.2-3b-instruct:free"
+        ]
+      },
+      "Myocardial Infarction": {
+        "differential": [
+          "meta-llama/llama-3.2-3b-instruct:free"
+        ]
+      },
+      "Coronary Artery Disease": {
+        "differential": [
+          "meta-llama/llama-3.2-3b-instruct:free"
+        ]
+      },
+      "Hypertensive Emergency": {
+        "differential": [
+          "meta-llama/llama-3.2-3b-instruct:free"
+        ]
+      }
+    },
+    "geographical_patterns": {
+      "Unknown": {
+        "Unstable Angina": 3,
+        "Angina Pectoris": 1
+      }
+    }
+  },
+  "diagnostic_landscape": {
+    "primary_diagnosis": {
+      "name": "Unstable Angina",
+      "icd_code": "I20.0",
+      "confidence": "High",
+      "supporting_models": [
+        "Model1",
+        "Model4"
+      ],
+      "percentage": 90,
+      "evidence": [
+        "Exertional chest pain radiating to left shoulder and jaw",
+        "History of hypertension, hyperlipidemia, and type 2 diabetes",
+        "More intense episode that didn't fully resolve with rest",
+        "Classic angina presentation with cardiovascular risk factors"
+      ]
+    },
+    "strong_alternatives": [],
+    "alternatives": [],
+    "minority_opinions": [
+      {
+        "name": "Non-ST Elevation Myocardial Infarction (NSTEMI)",
+        "icd_code": "I21.4",
+        "frequency": 1,
+        "supporting_models": [
+          "Model1"
+        ],
+        "evidence": [
+          "Chest pain pattern",
+          "Cardiovascular risk factors"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "Acute Myocardial Infarction",
+        "icd_code": "I21.0",
+        "frequency": 1,
+        "supporting_models": [
+          "Model4"
+        ],
+        "evidence": [
+          "Chest pain symptoms",
+          "Risk factor profile"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "Stable Angina",
+        "icd_code": "I20.1",
+        "frequency": 1,
+        "supporting_models": [
+          "Model4"
+        ],
+        "evidence": [
+          "Exertional chest pain",
+          "Relief with rest historically"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "Acute Coronary Syndrome (ACS)",
+        "icd_code": "I24.9",
+        "frequency": 1,
+        "supporting_models": [
+          "Model3"
+        ],
+        "evidence": [
+          "Chest pain",
+          "Cardiovascular risk factors"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "Pulmonary Embolism",
+        "icd_code": "I26.9",
+        "frequency": 1,
+        "supporting_models": [
+          "Model3"
+        ],
+        "evidence": [
+          "Chest pain",
+          "Shortness of breath"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "Musculoskeletal Chest Pain",
+        "icd_code": "M54.6",
+        "frequency": 1,
+        "supporting_models": [
+          "Model1"
+        ],
+        "evidence": [
+          "Chest pain presentation"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "Esophageal Spasm",
+        "icd_code": "K22.4",
+        "frequency": 1,
+        "supporting_models": [
+          "Model4"
+        ],
+        "evidence": [
+          "Chest pain symptoms"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "Hypertension",
+        "icd_code": "I10",
+        "frequency": 1,
+        "supporting_models": [
+          "Model3"
+        ],
+        "evidence": [
+          "Known hypertension",
+          "Cardiovascular symptoms"
+        ],
+        "agreement_percentage": 3.7
+      }
+    ],
+    "all_alternative_diagnoses": [
+      {
+        "name": "Non-ST Elevation Myocardial Infarction (NSTEMI)",
+        "icd_code": "I21.4",
+        "frequency": 1,
+        "supporting_models": [
+          "Model1"
+        ],
+        "evidence": [
+          "Chest pain pattern",
+          "Cardiovascular risk factors"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "Acute Myocardial Infarction",
+        "icd_code": "I21.0",
+        "frequency": 1,
+        "supporting_models": [
+          "Model4"
+        ],
+        "evidence": [
+          "Chest pain symptoms",
+          "Risk factor profile"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "Stable Angina",
+        "icd_code": "I20.1",
+        "frequency": 1,
+        "supporting_models": [
+          "Model4"
+        ],
+        "evidence": [
+          "Exertional chest pain",
+          "Relief with rest historically"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "Acute Coronary Syndrome (ACS)",
+        "icd_code": "I24.9",
+        "frequency": 1,
+        "supporting_models": [
+          "Model3"
+        ],
+        "evidence": [
+          "Chest pain",
+          "Cardiovascular risk factors"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "Pulmonary Embolism",
+        "icd_code": "I26.9",
+        "frequency": 1,
+        "supporting_models": [
+          "Model3"
+        ],
+        "evidence": [
+          "Chest pain",
+          "Shortness of breath"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "Musculoskeletal Chest Pain",
+        "icd_code": "M54.6",
+        "frequency": 1,
+        "supporting_models": [
+          "Model1"
+        ],
+        "evidence": [
+          "Chest pain presentation"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "Esophageal Spasm",
+        "icd_code": "K22.4",
+        "frequency": 1,
+        "supporting_models": [
+          "Model4"
+        ],
+        "evidence": [
+          "Chest pain symptoms"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "Hypertension",
+        "icd_code": "I10",
+        "frequency": 1,
+        "supporting_models": [
+          "Model3"
+        ],
+        "evidence": [
+          "Known hypertension",
+          "Cardiovascular symptoms"
+        ],
+        "agreement_percentage": 3.7
+      }
+    ]
+  },
+  "comprehensive_bias_analysis": {
+    "geographical_representation": {
+      "total_countries": 6,
+      "western_dominance": {
+        "western_models": 25,
+        "percentage": 500.0,
+        "impact": "High Western medical paradigm influence expected"
+      },
+      "chinese_representation": {
+        "chinese_models": 5,
+        "percentage": 100.0,
+        "impact": "Traditional Chinese Medicine integration possible"
+      }
+    },
+    "case_specific_concerns": [
+      "Analysis strictly limited to tmpk3q5v654 responses",
+      "No cross-case contamination in this analysis",
+      "Bias patterns specific to this case presentation"
+    ],
+    "recommended_mitigations": [
+      "Consider cultural context in diagnosis interpretation",
+      "Account for geographical bias in model training",
+      "Validate findings across diverse medical paradigms"
+    ]
+  },
+  "model_diversity_metrics": {
+    "unique_architectures": 0,
+    "unique_providers": 0,
+    "unique_countries": 0,
+    "diversity_score": 0.0,
+    "case_id": "tmpk3q5v654"
+  },
+  "management_strategies": {
+    "immediate_actions": [
+      {
+        "action": "Obtain 12-lead ECG immediately",
+        "consensus_percentage": 0,
+        "urgency": "High"
+      },
+      {
+        "action": "Establish IV access",
+        "consensus_percentage": 0,
+        "urgency": "High"
+      },
+      {
+        "action": "Administer oxygen if SpO2 < 90%",
+        "consensus_percentage": 0,
+        "urgency": "High"
+      },
+      {
+        "action": "Continuous cardiac monitoring",
+        "consensus_percentage": 0,
+        "urgency": "High"
+      },
+      {
+        "action": "NPO status pending evaluation",
+        "consensus_percentage": 0,
+        "urgency": "High"
+      }
+    ],
+    "differential_testing": [
+      {
+        "test": "Serial 12-lead ECGs",
+        "purpose": "Diagnostic confirmation"
+      },
+      {
+        "test": "Cardiac troponins (I or T) at presentation and 6-12 hours",
+        "purpose": "Diagnostic confirmation"
+      },
+      {
+        "test": "Complete blood count",
+        "purpose": "Diagnostic confirmation"
+      },
+      {
+        "test": "Basic metabolic panel",
+        "purpose": "Diagnostic confirmation"
+      },
+      {
+        "test": "PT/PTT/INR",
+        "purpose": "Diagnostic confirmation"
+      },
+      {
+        "test": "Chest X-ray",
+        "purpose": "Diagnostic confirmation"
+      },
+      {
+        "test": "Echocardiogram if hemodynamically unstable",
+        "purpose": "Diagnostic confirmation"
+      }
+    ],
+    "medications": [
+      {
+        "medication_name": "Aspirin",
+        "dosage": "325mg",
+        "route": "PO",
+        "frequency": "once",
+        "duration": "loading dose, then 81mg daily",
+        "indication": "antiplatelet therapy"
+      },
+      {
+        "medication_name": "Clopidogrel",
+        "dosage": "600mg",
+        "route": "PO",
+        "frequency": "once",
+        "duration": "loading dose, then 75mg daily",
+        "indication": "dual antiplatelet therapy"
+      },
+      {
+        "medication_name": "Atorvastatin",
+        "dosage": "80mg",
+        "route": "PO",
+        "frequency": "daily",
+        "duration": "ongoing",
+        "indication": "high-intensity statin therapy"
+      },
+      {
+        "medication_name": "Metoprolol",
+        "dosage": "25mg",
+        "route": "PO",
+        "frequency": "twice daily",
+        "duration": "ongoing",
+        "indication": "beta-blocker for cardioprotection"
+      },
+      {
+        "medication_name": "Heparin",
+        "dosage": "weight-based protocol",
+        "route": "IV",
+        "frequency": "continuous",
+        "duration": "48-72 hours or until intervention",
+        "indication": "anticoagulation"
+      }
+    ]
+  },
+  "evidence_synthesis": {
+    "key_clinical_findings": [
+      {
+        "finding": "58-year-old male patient",
+        "diagnostic_significance": "High"
+      },
+      {
+        "finding": "History of hypertension, hyperlipidemia, and type 2 diabetes",
+        "diagnostic_significance": "High"
+      },
+      {
+        "finding": "Exertional chest pain",
+        "diagnostic_significance": "High"
+      },
+      {
+        "finding": "Pain radiating to left shoulder and jaw",
+        "diagnostic_significance": "High"
+      },
+      {
+        "finding": "More intense episode that didn't fully resolve with rest",
+        "diagnostic_significance": "High"
+      }
+    ],
+    "symptom_diagnosis_matrix": {
+      "symptoms": [
+        "chest pain",
+        "shortness of breath",
+        "fatigue",
+        "nausea",
+        "tachycardia"
+      ],
+      "diagnoses": [
+        "Unstable Angina",
+        "NSTEMI",
+        "Acute MI",
+        "Pulmonary Embolism"
+      ],
+      "correlations": [
+        {
+          "symptom": "chest pain",
+          "diagnosis": "Unstable Angina",
+          "strength": "Strong"
+        },
+        {
+          "symptom": "chest pain",
+          "diagnosis": "NSTEMI",
+          "strength": "Strong"
+        },
+        {
+          "symptom": "chest pain",
+          "diagnosis": "Acute MI",
+          "strength": "Strong"
+        },
+        {
+          "symptom": "shortness of breath",
+          "diagnosis": "Pulmonary Embolism",
+          "strength": "Strong"
+        },
+        {
+          "symptom": "tachycardia",
+          "diagnosis": "Unstable Angina",
+          "strength": "Medium"
+        }
+      ]
+    }
+  },
+  "generation_metadata": {
+    "pipeline_version": "General v1.0",
+    "timestamp": "20250905_135701",
+    "case_separation": "Strict",
+    "total_time_seconds": 96.48071599006653
+  },
+  "critical_decision_points": [
+    "If troponins elevated, reclassify as NSTEMI",
+    "Risk stratification using TIMI or GRACE score",
+    "Consider early invasive strategy if high-risk features",
+    "Cardiology consultation for catheterization timing",
+    "Discharge planning based on risk stratification and symptom resolution"
+  ],
+  "ai_model_bias_analysis": {
+    "geographic_bias": {
+      "detected": true,
+      "description": "All models trained primarily on Western medical data and guidelines, potentially missing regional variations in unstable angina presentation, risk factors, and diagnostic criteria used in non-Western healthcare systems",
+      "mitigation": "Include diverse international medical literature, non-Western diagnostic frameworks, and regional epidemiological data in model training to capture global variations in unstable angina presentation and management"
+    },
+    "training_bias": {
+      "detected": true,
+      "description": "Models show preference for Western evidence-based medicine paradigms and may underweight alternative diagnostic approaches or traditional medicine perspectives that could inform differential diagnosis",
+      "mitigation": "Incorporate broader medical knowledge bases including traditional medicine systems, expand training on diverse patient populations, and include non-Western medical literature and diagnostic frameworks"
+    },
+    "consensus_strength": "Strong"
+  },
+  "clinical_decision_tree": {
+    "initial_assessment": "Evaluate presenting symptoms",
+    "diagnostic_tests": [
+      "Serial 12-lead ECGs",
+      "Cardiac troponins (I or T) at presentation and 6-12 hours",
+      "Complete blood count",
+      "Basic metabolic panel",
+      "PT/PTT/INR",
+      "Chest X-ray",
+      "Echocardiogram if hemodynamically unstable"
+    ],
+    "decision_points": [
+      "If troponins elevated, reclassify as NSTEMI",
+      "Risk stratification using TIMI or GRACE score",
+      "Consider early invasive strategy if high-risk features",
+      "Cardiology consultation for catheterization timing",
+      "Discharge planning based on risk stratification and symptom resolution"
+    ]
+  },
+  "primary_diagnosis_summaries": {
+    "key_clinical_findings": [
+      {
+        "finding": "58-year-old male patient",
+        "supporting_evidence": "Clinical presentation",
+        "model_support": 2,
+        "reasoning": "Key diagnostic indicator"
+      },
+      {
+        "finding": "History of hypertension, hyperlipidemia, and type 2 diabetes",
+        "supporting_evidence": "Clinical presentation",
+        "model_support": 2,
+        "reasoning": "Key diagnostic indicator"
+      },
+      {
+        "finding": "Exertional chest pain",
+        "supporting_evidence": "Clinical presentation",
+        "model_support": 2,
+        "reasoning": "Key diagnostic indicator"
+      },
+      {
+        "finding": "Pain radiating to left shoulder and jaw",
+        "supporting_evidence": "Clinical presentation",
+        "model_support": 2,
+        "reasoning": "Key diagnostic indicator"
+      },
+      {
+        "finding": "More intense episode that didn't fully resolve with rest",
+        "supporting_evidence": "Clinical presentation",
+        "model_support": 2,
+        "reasoning": "Key diagnostic indicator"
+      }
+    ],
+    "recommended_tests": [
+      {
+        "test_name": "Serial 12-lead ECGs",
+        "test_type": "Laboratory",
+        "rationale": "Diagnostic confirmation",
+        "priority": "Urgent",
+        "model_support": 2,
+        "reasoning": "Essential for diagnosis"
+      },
+      {
+        "test_name": "Cardiac troponins (I or T) at presentation and 6-12 hours",
+        "test_type": "Laboratory",
+        "rationale": "Diagnostic confirmation",
+        "priority": "Urgent",
+        "model_support": 2,
+        "reasoning": "Essential for diagnosis"
+      },
+      {
+        "test_name": "Complete blood count",
+        "test_type": "Laboratory",
+        "rationale": "Diagnostic confirmation",
+        "priority": "Urgent",
+        "model_support": 2,
+        "reasoning": "Essential for diagnosis"
+      },
+      {
+        "test_name": "Basic metabolic panel",
+        "test_type": "Laboratory",
+        "rationale": "Diagnostic confirmation",
+        "priority": "Urgent",
+        "model_support": 2,
+        "reasoning": "Essential for diagnosis"
+      },
+      {
+        "test_name": "PT/PTT/INR",
+        "test_type": "Laboratory",
+        "rationale": "Diagnostic confirmation",
+        "priority": "Urgent",
+        "model_support": 2,
+        "reasoning": "Essential for diagnosis"
+      }
+    ],
+    "immediate_management": [
+      {
+        "intervention": "Obtain 12-lead ECG immediately",
+        "category": "Medical",
+        "urgency": "Immediate",
+        "model_support": 2,
+        "reasoning": "Critical intervention"
+      },
+      {
+        "intervention": "Establish IV access",
+        "category": "Medical",
+        "urgency": "Immediate",
+        "model_support": 2,
+        "reasoning": "Critical intervention"
+      },
+      {
+        "intervention": "Administer oxygen if SpO2 < 90%",
+        "category": "Medical",
+        "urgency": "Immediate",
+        "model_support": 2,
+        "reasoning": "Critical intervention"
+      },
+      {
+        "intervention": "Continuous cardiac monitoring",
+        "category": "Medical",
+        "urgency": "Immediate",
+        "model_support": 2,
+        "reasoning": "Critical intervention"
+      },
+      {
+        "intervention": "NPO status pending evaluation",
+        "category": "Medical",
+        "urgency": "Immediate",
+        "model_support": 2,
+        "reasoning": "Critical intervention"
+      }
+    ],
+    "medications": [
+      {
+        "medication_name": "Aspirin",
+        "dosage": "325mg",
+        "route": "PO",
+        "frequency": "once",
+        "duration": "loading dose, then 81mg daily",
+        "indication": "antiplatelet therapy",
+        "model_support": 1,
+        "reasoning": "antiplatelet therapy"
+      },
+      {
+        "medication_name": "Clopidogrel",
+        "dosage": "600mg",
+        "route": "PO",
+        "frequency": "once",
+        "duration": "loading dose, then 75mg daily",
+        "indication": "dual antiplatelet therapy",
+        "model_support": 1,
+        "reasoning": "dual antiplatelet therapy"
+      },
+      {
+        "medication_name": "Atorvastatin",
+        "dosage": "80mg",
+        "route": "PO",
+        "frequency": "daily",
+        "duration": "ongoing",
+        "indication": "high-intensity statin therapy",
+        "model_support": 1,
+        "reasoning": "high-intensity statin therapy"
+      },
+      {
+        "medication_name": "Metoprolol",
+        "dosage": "25mg",
+        "route": "PO",
+        "frequency": "twice daily",
+        "duration": "ongoing",
+        "indication": "beta-blocker for cardioprotection",
+        "model_support": 1,
+        "reasoning": "beta-blocker for cardioprotection"
+      },
+      {
+        "medication_name": "Heparin",
+        "dosage": "weight-based protocol",
+        "route": "IV",
+        "frequency": "continuous",
+        "duration": "48-72 hours or until intervention",
+        "indication": "anticoagulation",
+        "model_support": 1,
+        "reasoning": "anticoagulation"
+      }
+    ]
+  },
+  "quality_metrics": {
+    "total_models_analyzed": 5,
+    "consensus_strength": "Strong",
+    "successful_responses": 5
+  },
+  "metadata": {
+    "analysis_timestamp": "2025-09-05T13:59:10.380491",
+    "orchestrator_model": "anthropic/claude-sonnet-4",
+    "case_id": "tmpk3q5v654",
+    "case_title": "Custom Case Analysis",
+    "orchestrator_quality": "premium"
+  },
+  "generated_at": "2025-09-05T13:59:10.380896"
+}

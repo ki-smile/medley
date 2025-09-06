@@ -25,24 +25,42 @@ class ReportOrchestrator:
     medical ensemble results and produce structured report data
     """
     
-    def __init__(self, llm_manager):
+    def __init__(self, llm_manager, use_free_only=False):
         """
         Initialize the orchestrator
         
         Args:
             llm_manager: LLM manager for querying models
+            use_free_only: If True, only use free orchestrator models
         """
         self.llm_manager = llm_manager
-        self.orchestrator_model = "anthropic/claude-sonnet-4"  # Claude Sonnet 4.0 primary orchestrator
-        # NEVER use anthropic/claude-3-5-sonnet-20241022 - it doesn't follow instructions properly
-        self.fallback_models = [
-            "openai/gpt-4o",  # First backup orchestrator
-            "google/gemini-2.5-pro",  # Second backup orchestrator
-        ]
+        self.use_free_only = use_free_only
+        
+        if use_free_only:
+            # Free orchestrator models - use reliable free models from our metadata  
+            self.orchestrator_model = "deepseek/deepseek-chat-v3.1:free"  # DeepSeek is reliable for orchestration
+            self.fallback_models = [
+                "google/gemma-2-9b-it:free",           # Backup option
+                "meta-llama/llama-3.2-3b-instruct:free", # Third choice
+            ]
+            print("🆓 Report Orchestrator using free models")
+        else:
+            # Premium orchestrator models
+            self.orchestrator_model = "anthropic/claude-sonnet-4"  # Claude Sonnet 4.0 primary orchestrator
+            # NEVER use anthropic/claude-3-5-sonnet-20241022 - it doesn't follow instructions properly
+            self.fallback_models = [
+                "openai/gpt-4o",  # First backup orchestrator
+                "google/gemini-2.5-pro",  # Second backup orchestrator
+            ]
+            print("💎 Report Orchestrator using premium models")
+        
         self.fallback_model = self.fallback_models[0]  # Default fallback for compatibility
         self.max_retries = 1
         self.retry_delay = 30  # seconds
         self.cache_dir = Path.cwd() / "cache"
+        
+        # Cost tracking for orchestrator queries
+        self.total_orchestrator_cost = 0.0
         
     def create_orchestrator_prompt(self, ensemble_results: Dict, analysis_type: str) -> str:
         """
@@ -792,6 +810,23 @@ Return a JSON object with detailed bias analysis:
                 elapsed = time.time() - start_time
                 print(f"  📥 Response received after {elapsed:.2f}s")
                 
+                # Track orchestrator cost for total calculation
+                if hasattr(response, 'actual_cost') and response.actual_cost:
+                    orchestrator_cost = response.actual_cost
+                elif hasattr(response, 'estimated_cost') and response.estimated_cost:
+                    orchestrator_cost = response.estimated_cost
+                else:
+                    orchestrator_cost = 0.0
+                    
+                print(f"  💰 Orchestrator query cost: ${orchestrator_cost:.4f}")
+                
+                # Accumulate total orchestrator cost
+                self.total_orchestrator_cost += orchestrator_cost
+                
+                # Store cost data for reporting (we'll use this in the comprehensive report)
+                if not hasattr(response, 'orchestrator_cost'):
+                    response.orchestrator_cost = orchestrator_cost
+                
             except Exception as e:
                 elapsed = time.time() - start_time
                 error_msg = f"Query failed after {elapsed:.2f}s: {str(e)}"
@@ -875,6 +910,12 @@ Return a JSON object with detailed bias analysis:
                         # Validate and enhance the result
                         analysis_result = self._validate_and_enhance(analysis_result, ensemble_results)
                         
+                        # Add orchestrator cost and free model information to the result
+                        analysis_result['orchestrator_cost'] = self.total_orchestrator_cost
+                        analysis_result['orchestrator_used_free_models'] = self.use_free_only
+                        print(f"💰 Total orchestrator cost: ${self.total_orchestrator_cost:.4f}")
+                        print(f"🆓 Used free orchestrator: {'Yes' if self.use_free_only else 'No'}")
+                        
                         print(f"✅ Orchestrator analysis completed successfully on attempt {attempt}")
                         return analysis_result
                         
@@ -919,6 +960,12 @@ Return a JSON object with detailed bias analysis:
                         
                         # Validate and enhance the result
                         analysis_result = self._validate_and_enhance(analysis_result, ensemble_results)
+                        
+                        # Add orchestrator cost and free model information to the result
+                        analysis_result['orchestrator_cost'] = self.total_orchestrator_cost
+                        analysis_result['orchestrator_used_free_models'] = self.use_free_only
+                        print(f"💰 Total orchestrator cost: ${self.total_orchestrator_cost:.4f}")
+                        print(f"🆓 Used free orchestrator: {'Yes' if self.use_free_only else 'No'}")
                         
                         print(f"✅ Orchestrator analysis completed successfully using {fallback_model}")
                         return analysis_result
@@ -1246,10 +1293,7 @@ Return ONLY valid JSON, no explanations."""
                 "all_alternative_diagnoses": diagnostic_data.get("differential_diagnoses", [])
             },
             "management_strategies": {
-                "immediate_actions": [
-                    {"action": action, "consensus_percentage": 0, "urgency": "High"}
-                    for action in management_data.get("immediate_actions", [])
-                ],
+                "immediate_actions": management_data.get("immediate_actions", []),
                 "differential_testing": [
                     {"test": test, "purpose": "Diagnostic confirmation"}
                     for test in management_data.get("critical_tests", [])
@@ -1368,10 +1412,7 @@ Return ONLY valid JSON, no explanations."""
                 "all_alternative_diagnoses": []
             },
             "management_strategies": {
-                "immediate_actions": [
-                    {"action": action, "consensus_percentage": 0, "urgency": "High"}
-                    for action in simplified.get("immediate_actions", [])
-                ],
+                "immediate_actions": simplified.get("immediate_actions", []),
                 "differential_testing": [
                     {"test": test, "purpose": "Diagnostic confirmation"}
                     for test in simplified.get("critical_tests", [])
@@ -1463,12 +1504,21 @@ Return ONLY valid JSON, no explanations."""
                 analysis[section] = {}
                 
         # Add metadata
-        analysis["metadata"] = {
+        metadata = {
             "analysis_timestamp": datetime.now().isoformat(),
             "orchestrator_model": self.orchestrator_model,
             "case_id": ensemble_results.get("case_id", "unknown"),
             "case_title": ensemble_results.get("case_title", "unknown")
         }
+        
+        # Add quality disclaimer for free orchestrator models
+        if self.use_free_only:
+            metadata["orchestrator_quality"] = "free_models"
+            metadata["quality_disclaimer"] = "⚠️ This analysis uses free orchestrator models which may provide suboptimal quality compared to premium models. For clinical applications, consider using premium orchestrator models for enhanced accuracy and comprehensive analysis."
+        else:
+            metadata["orchestrator_quality"] = "premium"
+        
+        analysis["metadata"] = metadata
         
         # Validate quality metrics
         if "quality_metrics" in analysis:
@@ -2038,19 +2088,33 @@ Return ONLY valid JSON, no explanations."""
         primary = diag_landscape.get("primary_diagnosis", {})
         
         if primary:
-            lines.append(f"### Primary Diagnosis: {primary.get('name', 'Unknown')}")
-            lines.append(f"- **Agreement**: {primary.get('agreement_percentage', 0):.1f}%")
-            lines.append(f"- **Confidence**: {primary.get('confidence', 'Unknown')}")
-            lines.append(f"- **Evidence**: {', '.join(primary.get('evidence', []))}")
-            lines.append(f"- **Supporting Models**: {', '.join(primary.get('supporting_models', []))}\n")
+            primary_name = primary.get('name', 'Unknown') if isinstance(primary, dict) else str(primary)
+            lines.append(f"### Primary Diagnosis: {primary_name}")
+            agreement_pct = primary.get('agreement_percentage', 0) if isinstance(primary, dict) else 0
+            agreement_display = f"{agreement_pct:.1f}%" if agreement_pct > 0 else "-"
+            lines.append(f"- **Agreement**: {agreement_display}")
+            primary_confidence = primary.get('confidence', 'Unknown') if isinstance(primary, dict) else 'Unknown'
+            primary_evidence = primary.get('evidence', []) if isinstance(primary, dict) else []
+            primary_models = primary.get('supporting_models', []) if isinstance(primary, dict) else []
+            lines.append(f"- **Confidence**: {primary_confidence}")
+            lines.append(f"- **Evidence**: {', '.join(primary_evidence)}")
+            lines.append(f"- **Supporting Models**: {', '.join(primary_models)}\n")
             
         # Strong Alternatives
         alts = diag_landscape.get("strong_alternatives", [])
         if alts:
             lines.append("### Strong Alternative Diagnoses")
             for alt in alts:
-                lines.append(f"- **{alt.get('name', 'Unknown')}** ({alt.get('agreement_percentage', 0):.1f}%)")
-                lines.append(f"  - Evidence: {', '.join(alt.get('evidence', []))}")
+                if isinstance(alt, dict):
+                    alt_agreement_pct = alt.get('agreement_percentage', 0)
+                    alt_agreement_display = f"{alt_agreement_pct:.1f}%" if alt_agreement_pct > 0 else "-"
+                    alt_name = alt.get('name', 'Unknown')
+                    alt_evidence = alt.get('evidence', [])
+                    lines.append(f"- **{alt_name}** ({alt_agreement_display})")
+                    lines.append(f"  - Evidence: {', '.join(alt_evidence)}")
+                else:
+                    lines.append(f"- **{str(alt)}** (-)")
+                    lines.append(f"  - Evidence: N/A")
             lines.append("")
             
         # Management Strategies
@@ -2063,9 +2127,18 @@ Return ONLY valid JSON, no explanations."""
         if immediate:
             lines.append("### Immediate Actions")
             for action in immediate:
-                lines.append(f"- [ ] {action.get('action', 'Unknown')}")
-                lines.append(f"  - Consensus: {action.get('consensus_percentage', 0):.1f}%")
-                lines.append(f"  - Urgency: {action.get('urgency', 'Unknown')}")
+                if isinstance(action, dict):
+                    action_text = action.get('action', 'Unknown')
+                    consensus_pct = action.get('consensus_percentage', 0)
+                    consensus_display = f"{consensus_pct:.1f}%" if consensus_pct > 0 else "-"
+                    urgency = action.get('urgency', 'Unknown')
+                    lines.append(f"- [ ] {action_text}")
+                    lines.append(f"  - Consensus: {consensus_display}")
+                    lines.append(f"  - Urgency: {urgency}")
+                else:
+                    lines.append(f"- [ ] {str(action)}")
+                    lines.append(f"  - Consensus: -")
+                    lines.append(f"  - Urgency: Unknown")
             lines.append("")
             
         # Differential Testing

@@ -861,7 +861,7 @@ class ComprehensiveReportGenerator:
         total_models = len(ensemble_results.get('model_responses', []))
         
         for diag_name, count in diagnosis_counts.most_common(10):
-            percentage = (count / total_models * 100) if total_models > 0 else 0
+            percentage = round((count / total_models * 100), 1) if total_models > 0 else 0
             
             # Extract evidence (simplified)
             evidence = []

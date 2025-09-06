@@ -1,0 +1,951 @@
+{
+  "case_id": "tmpf_7we8mt",
+  "case_title": "Custom Case Analysis",
+  "case_content": "A 68-year-old man with a history of long-standing hypertension, poorly controlled type 2 diabetes mellitus, and prior anterior myocardial infarction presents with progressive exertional dyspnea, orthopnea, and paroxysmal nocturnal dyspnea over the past two weeks. On examination, he is tachycardic and hypertensive, with jugular venous distension, bibasilar crackles, and an S3 gallop. ECG shows sinus tachycardia with Q waves in leads V1\u2013V4, and transthoracic echocardiography reveals a left ventricular ejection fraction of 25% with akinesis of the anterior wall and moderate functional mitral regurgitation. Laboratory studies demonstrate elevated BNP and mild renal impairment. He is admitted for acute decompensated heart failure on a background of ischemic cardiomyopathy, with consideration for optimization of guideline-directed medical therapy, management of volume overload, and evaluation for device therapy.",
+  "model_responses": [
+    {
+      "model_name": "deepseek/deepseek-chat-v3.1:free",
+      "response": "```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"Acute decompensated heart failure due to ischemic cardiomyopathy\",\n        \"confidence\": 0.95,\n        \"icd_code\": \"I50.23\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Acute coronary syndrome\",\n            \"confidence\": 0.4,\n            \"icd_code\": \"I24.9\"\n        },\n        {\n            \"name\": \"Hypertensive emergency with heart failure\",\n            \"confidence\": 0.35,\n            \"icd_code\": \"I11.0\"\n        },\n        {\n            \"name\": \"Diabetic cardiomyopathy with acute decompensation\",\n            \"confidence\": 0.3,\n            \"icd_code\": \"E11.9\"\n        },\n        {\n            \"name\": \"Worsening renal function contributing to volume overload\",\n            \"confidence\": 0.25,\n            \"icd_code\": \"N19\"\n        },\n        {\n            \"name\": \"Pulmonary embolism\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"I26.99\"\n        }\n    ],\n    \"key_findings\": [\"Progressive exertional dyspnea, orthopnea, PND\", \"Tachycardia, hypertension, JVD, bibasilar crackles, S3 gallop\", \"ECG showing sinus tachycardia with anterior Q waves\", \"Echo showing LVEF 25% with anterior wall akinesis and moderate MR\", \"Elevated BNP and mild renal impairment\", \"History of hypertension, diabetes, prior anterior MI\"],\n    \"tests\": [\n        {\n            \"test\": \"Troponin series\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Basic metabolic panel (repeat)\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Chest X-ray\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Coronary angiography\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Right heart catheterization\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Thyroid function tests\",\n            \"priority\": \"routine\"\n        },\n        {\n            \"test\": \"HbA1c\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management\": {\n        \"immediate\": [\"Oxygen therapy to maintain SpO2 >90%\", \"Continuous cardiac monitoring\", \"Strict intake/output monitoring\", \"Daily weights\", \"Sodium and fluid restriction\"],\n        \"medications\": [\"furosemide: 40-80 mg IV bolus, then IV infusion 10-40 mg/hr\", \"nitroglycerin: 10-20 mcg/min IV, titrate to BP\", \"enalapril: 2.5 mg PO BID (if BP adequate)\", \"carvedilol: 3.125 mg PO BID (if stable)\", \"spironolactone: 25 mg PO daily\", \"aspirin: 81 mg PO daily\", \"atorvastatin: 40 mg PO daily\"],\n        \"consultations\": [\"Cardiology: immediate\", \"Heart failure team: urgent\", \"Nephrology: routine (for renal impairment)\"]\n    },\n    \"red_flags\": [\"Hypotension or signs of cardiogenic shock\", \"Worsening renal function\", \"Symptomatic hypotension with GDMT initiation\", \"Signs of respiratory failure requiring mechanical ventilation\", \"Sustained ventricular arrhythmias\"]\n}\n```",
+      "response_time": 16.80826497077942,
+      "cached": false,
+      "case_id": "tmpf_7we8mt",
+      "timestamp": "2025-09-06T00:01:41.956273",
+      "tokens_used": 1173,
+      "input_tokens": 420,
+      "output_tokens": 753
+    },
+    {
+      "model_name": "deepseek/deepseek-r1:free",
+      "response": "Okay, let's tackle this medical case. The patient is a 68-year-old man with a history of hypertension, poorly controlled diabetes, and a prior anterior MI. His presenting symptoms are progressive exertional dyspnea, orthopnea, and PND, all over two weeks. On exam, he's tachycardic, hypertensive, JVD, bibasilar crackles, and S3 gallop. ECG shows sinus tachycardia with Q waves in V1-V4, echo shows LVEF 25% with anterior wall akinesis and moderate functional MR. Labs show elevated BNP and mild renal impairment. Admitted for acute decompensated HF on ischemic cardiomyopathy.\n\nPrimary diagnosis is likely acute decompensated heart failure due to ischemic cardiomyopathy. The prior MI, anterior wall akinesis with reduced EF, and symptoms all point to that. Confidence high, maybe 0.95. ICD-10 I50.21 for acute on chronic systolic heart failure.\n\nDifferential diagnoses need 3-5. First, acute coronary syndrome since he has a history of MI and ECG changes. But the Q waves are old, so maybe not an acute event. Maybe confidence 0.3. ICD I21.9. Second, pulmonary embolism could cause dyspnea and tachycardia. But he has clear signs of HF, so lower confidence, 0.2. ICD I26.99. Third, exacerbation of COPD, but no history mentioned. Crackles might be HF, so lower confidence, 0.1. J44.1. Fourth, pneumonia, but no fever or sputum noted. Maybe 0.1. J18.9. Fifth, maybe hypertensive emergency since he's hypertensive, but symptoms fit more with HF. Maybe 0.15. I10.\n\nKey findings: symptoms (dyspnea, orthopnea, PND), exam findings (tachycardia, hypertension, JVD, crackles, S3), ECG with Q waves, echo findings, elevated BNP, renal impairment.\n\nTests: Check troponin immediately to rule out ACS. BNP already done. CXR urgent to confirm pulmonary edema. Renal function tests urgent. Thyroid function routine? Maybe ABG if hypoxia. Echocardiogram already done. Maybe cardiac catheterization if ACS is considered.\n\nManagement: Immediate - oxygen, diuresis with IV loop diuretic (furosemide 40-80mg IV), nitrates, monitor urine output. Medications: GDMT would include ACEI/ARB/ARNI, beta-blocker (carvedilol starting dose 3.125mg BID), aldosterone antagonist (spironolactone 25mg daily), SGLT2 inhibitor (empagliflozin 10mg). Consult cardiology immediately, maybe nephrology for renal impairment.\n\nRed flags: Hypoxia, worsening renal function, hypotension after diuretics, arrhythmias.\n\nWait, check medication doses. Furosemide IV dose for acute HF is usually 20-40mg, but higher if chronic use. Since he's hypertensive, maybe higher dose. But maybe start with 40mg IV. ACEI like lisinopril 2.5-5mg. Carvedilol 3.125mg BID. Spironolactone 25mg. SGLT2 inhibitor 10mg.\n\nDid I miss any ICD codes? Ischemic cardiomyopathy is I25.5. So primary diagnosis might be acute decompensated HF (I50.21) due to ischemic cardiomyopathy (I25.5). Wait, but the primary diagnosis is the acute HF, so I50.21.\n\nDifferential: ACS (I21.9), PE (I26.99), COPD (J44.1), pneumonia (J18.9), hypertensive urgency (I10 or I16.0). Maybe adjust the ICD codes. For example, acute systolic heart failure is I50.21. Ischemic cardiomyopathy is I25.5. So the primary diagnosis's ICD code is I50.21, with the underlying cause I25.5. But maybe the primary is the decompensated HF, so code I50.21.\n\nDifferential for PE is I26.99, correct. Hypertensive urgency is I10? Or I16.0. Maybe better to code I16.0 for hypertensive urgency.\n\nIn tests, maybe add cardiac enzymes (troponin) as immediate. CXR urgent. BUN/Cr as urgent. ABG if needed. Also, maybe check electrolytes.\n\nIn medications, maybe specify the GDMT drugs with starting doses. Also, maybe hold ACEI if renal impairment is severe, but with mild impairment, start cautiously.\n\nRed flags: respiratory distress, hypotension, acute kidney injury, altered mental status.\n\nAlright, time to put it all into JSON. Make sure the JSON is valid, no trailing commas. Use double quotes. Check ICD codes again.\n\n\n---\n\n```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"Acute decompensated heart failure due to ischemic cardiomyopathy\",\n        \"confidence\": 0.95,\n        \"icd_code\": \"I50.21\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Acute coronary syndrome\",\n            \"confidence\": 0.3,\n            \"icd_code\": \"I24.9\"\n        },\n        {\n            \"name\": \"Pulmonary embolism\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"I26.99\"\n        },\n        {\n            \"name\": \"Chronic obstructive pulmonary disease exacerbation\",\n            \"confidence\": 0.1,\n            \"icd_code\": \"J44.1\"\n        },\n        {\n            \"name\": \"Hypertensive emergency\",\n            \"confidence\": 0.15,\n            \"icd_code\": \"I16.0\"\n        }\n    ],\n    \"key_findings\": [\n        \"Progressive exertional dyspnea, orthopnea, paroxysmal nocturnal dyspnea\",\n        \"Tachycardia, hypertension, jugular venous distension, bibasilar crackles, S3 gallop\",\n        \"ECG: Sinus tachycardia with Q waves in V1\u2013V4\",\n        \"Echocardiogram: LVEF 25%, anterior wall akinesis, moderate mitral regurgitation\",\n        \"Elevated BNP, mild renal impairment\"\n    ],\n    \"tests\": [\n        {\n            \"test\": \"Troponin levels\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Chest X-ray\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Renal function tests (BUN, creatinine, electrolytes)\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Arterial blood gas (ABG)\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Cardiac catheterization\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management\": {\n        \"immediate\": [\n            \"Supplemental oxygen to maintain SpO2 \u226590%\",\n            \"IV loop diuretics (e.g., furosemide 40-80 mg IV bolus)\",\n            \"Nitroglycerin infusion for afterload reduction if BP permits\",\n            \"Continuous cardiac monitoring\"\n        ],\n        \"medications\": [\n            \"furosemide: 40-80 mg IV bolus, then 20-40 mg IV every 6 hours as needed\",\n            \"lisinopril: 2.5-5 mg PO daily (titrate as tolerated)\",\n            \"carvedilol: 3.125 mg PO BID (hold if decompensated)\",\n            \"spironolactone: 25 mg PO daily\",\n            \"empagliflozin: 10 mg PO daily\"\n        ],\n        \"consultations\": [\n            \"Cardiology: immediate\",\n            \"Nephrology: urgent (for renal impairment)\"\n        ]\n    },\n    \"red_flags\": [\n        \"Hypoxia (SpO2 <90%) despite oxygen therapy\",\n        \"Worsening renal function (rising creatinine)\",\n        \"Hypotension (systolic BP <90 mmHg)\",\n        \"New arrhythmias or hemodynamic instability\"\n    ]\n}\n```",
+      "response_time": 39.72490215301514,
+      "cached": false,
+      "case_id": "tmpf_7we8mt",
+      "timestamp": "2025-09-06T00:02:21.691589",
+      "tokens_used": 2147,
+      "input_tokens": 422,
+      "output_tokens": 1725
+    },
+    {
+      "model_name": "shisa-ai/shisa-v2-llama3.3-70b:free",
+      "response": "```json\n{\n  \"primary_diagnosis\": {\n    \"name\": \"Acute decompensated heart failure\",\n    \"confidence\": 0.9,\n    \"icd_code\": \"I50.21\"\n  },\n  \"differential_diagnoses\": [\n    {\n      \"name\": \"Acute coronary syndrome\",\n      \"confidence\": 0.3,\n      \"icd_code\": \"I21.4\"\n    },\n    {\n      \"name\": \"Pulmonary embolism\",\n      \"confidence\": 0.2,\n      \"icd_code\": \"I26.0\"\n    },\n    {\n      \"name\": \"Cardiac tamponade\",\n      \"confidence\": 0.1,\n      \"icd_code\": \"I31.3\"\n    },\n    {\n      \"name\": \"Atrial fibrillation with rapid ventricular response\",\n      \"confidence\": 0.2,\n      \"icd_code\": \"I48.3\"\n    }\n  ],\n  \"key_findings\": [\n    \"Progressive dyspnea\",\n    \"Orthopnea\",\n    \"Paroxysmal nocturnal dyspnea\",\n    \"Jugular venous distension\",\n    \"Bibasilar crackles\",\n    \"S3 gallop\",\n    \"Left ventricular ejection fraction (LVEF) of 25%\",\n    \"Moderate functional mitral regurgitation\",\n    \"Elevated BNP\"\n  ],\n  \"tests\": [\n    {\n      \"test\": \"Electrocardiogram (ECG)\",\n      \"priority\": \"immediate\"\n    },\n    {\n      \"test\": \"Troponins and complete blood count (CBC)\",\n      \"priority\": \"immediate\"\n    },\n    {\n      \"test\": \"Basic metabolic panel (BMP) and renal function tests\",\n      \"priority\": \"urgent\"\n    },\n    {\n      \"test\": \"Chest X-ray\",\n      \"priority\": \"urgent\"\n    },\n    {\n      \"test\": \"Cardiac MRI (if needed for further evaluation)\",\n      \"priority\": \"routine\"\n    }\n  ],\n  \"management\": {\n    \"immediate\": [\n      \"Oxygen therapy (if hypoxemic)\",\n      \"Nitroglycerin (sublingual or IV) for dyspnea and hypertension\",\n      \"Non-invasive positive pressure ventilation (NIPPV) if severe respiratory distress\"\n    ],\n    \"medications\": [\n      \"Furosemide: 20-80 mg IV bolus, followed by 5-10 mg/h IV drip (titrate based on urine output and clinical response)\",\n      \"Metoprolol succinate: 12.5-25 mg PO daily (titrate to heart rate and blood pressure goals)\",\n      \"Lisinopril: 2.5-5 mg PO daily (titrate to blood pressure and renal function)\",\n      \"Spironolactone: 12.5-25 mg PO daily (if no significant renal impairment)\"\n    ],\n    \"consultations\": [\n      \"Cardiology: urgent\",\n      \"Renal: routine (if renal impairment worsens)\"\n    ]\n  },\n  \"red_flags\": [\n    \"Sudden worsening of symptoms\",\n    \"Severe hypotension\",\n    \"Worsening renal function\",\n    \"New arrhythmias\",\n    \"Signs of cardiac tamponade\"\n  ]\n}\n```",
+      "response_time": 91.54369378089905,
+      "cached": false,
+      "case_id": "tmpf_7we8mt",
+      "timestamp": "2025-09-06T00:03:53.881000",
+      "tokens_used": 1179,
+      "input_tokens": 472,
+      "output_tokens": 707
+    }
+  ],
+  "total_models_analyzed": 3,
+  "geographical_distribution": {
+    "USA": 20,
+    "France": 3,
+    "China": 5,
+    "Canada": 2,
+    "Japan/USA": 1,
+    "Israel": 1
+  },
+  "consensus_analysis": {
+    "primary_counts": {
+      "Acute Decompensated Heart Failure due to Ischemic Cardiomyopathy": 2,
+      "Acute Decompensated Heart Failure": 1
+    },
+    "differential_counts": {
+      "Acute Coronary Syndrome": 3,
+      "Hypertensive Emergency with Heart Failure": 1,
+      "Diabetic Cardiomyopathy with Acute Decompensation": 1,
+      "Worsening Renal Function Contributing to Volume Overload": 1,
+      "Pulmonary Embolism": 3,
+      "COPD": 1,
+      "Hypertensive Emergency": 1,
+      "Cardiac Tamponade": 1,
+      "Atrial Fibrillation with Rapid Ventricular Response": 1
+    },
+    "total_counts": {
+      "Acute Decompensated Heart Failure due to Ischemic Cardiomyopathy": 2,
+      "Acute Coronary Syndrome": 3,
+      "Hypertensive Emergency with Heart Failure": 1,
+      "Diabetic Cardiomyopathy with Acute Decompensation": 1,
+      "Worsening Renal Function Contributing to Volume Overload": 1,
+      "Pulmonary Embolism": 3,
+      "COPD": 1,
+      "Hypertensive Emergency": 1,
+      "Acute Decompensated Heart Failure": 1,
+      "Cardiac Tamponade": 1,
+      "Atrial Fibrillation with Rapid Ventricular Response": 1
+    },
+    "sorted_diagnoses": [
+      [
+        "Acute Coronary Syndrome",
+        3
+      ],
+      [
+        "Pulmonary Embolism",
+        3
+      ],
+      [
+        "Acute Decompensated Heart Failure due to Ischemic Cardiomyopathy",
+        2
+      ],
+      [
+        "Hypertensive Emergency with Heart Failure",
+        1
+      ],
+      [
+        "Diabetic Cardiomyopathy with Acute Decompensation",
+        1
+      ],
+      [
+        "Worsening Renal Function Contributing to Volume Overload",
+        1
+      ],
+      [
+        "COPD",
+        1
+      ],
+      [
+        "Hypertensive Emergency",
+        1
+      ],
+      [
+        "Acute Decompensated Heart Failure",
+        1
+      ],
+      [
+        "Cardiac Tamponade",
+        1
+      ],
+      [
+        "Atrial Fibrillation with Rapid Ventricular Response",
+        1
+      ]
+    ],
+    "primary": [
+      "Acute Decompensated Heart Failure due to Ischemic Cardiomyopathy",
+      2
+    ],
+    "total_models": 3,
+    "icd_codes": {
+      "Acute Decompensated Heart Failure due to Ischemic Cardiomyopathy": [
+        "I50.21",
+        "I50.23"
+      ],
+      "Acute Coronary Syndrome": [
+        "I24.9",
+        "I21.4"
+      ],
+      "Hypertensive Emergency with Heart Failure": [
+        "I11.0"
+      ],
+      "Diabetic Cardiomyopathy with Acute Decompensation": [
+        "E11.9"
+      ],
+      "Worsening Renal Function Contributing to Volume Overload": [
+        "N19"
+      ],
+      "Pulmonary Embolism": [
+        "I26.0",
+        "I26.99"
+      ],
+      "COPD": [
+        "J44.1"
+      ],
+      "Hypertensive Emergency": [
+        "I16.0"
+      ],
+      "Acute Decompensated Heart Failure": [
+        "I50.21"
+      ],
+      "Cardiac Tamponade": [
+        "I31.3"
+      ],
+      "Atrial Fibrillation with Rapid Ventricular Response": [
+        "I48.3"
+      ]
+    },
+    "model_diagnoses": {
+      "Acute Decompensated Heart Failure due to Ischemic Cardiomyopathy": {
+        "primary": [
+          "deepseek/deepseek-chat-v3.1:free",
+          "deepseek/deepseek-r1:free"
+        ]
+      },
+      "Acute Coronary Syndrome": {
+        "differential": [
+          "deepseek/deepseek-chat-v3.1:free",
+          "deepseek/deepseek-r1:free",
+          "shisa-ai/shisa-v2-llama3.3-70b:free"
+        ]
+      },
+      "Hypertensive Emergency with Heart Failure": {
+        "differential": [
+          "deepseek/deepseek-chat-v3.1:free"
+        ]
+      },
+      "Diabetic Cardiomyopathy with Acute Decompensation": {
+        "differential": [
+          "deepseek/deepseek-chat-v3.1:free"
+        ]
+      },
+      "Worsening Renal Function Contributing to Volume Overload": {
+        "differential": [
+          "deepseek/deepseek-chat-v3.1:free"
+        ]
+      },
+      "Pulmonary Embolism": {
+        "differential": [
+          "deepseek/deepseek-chat-v3.1:free",
+          "deepseek/deepseek-r1:free",
+          "shisa-ai/shisa-v2-llama3.3-70b:free"
+        ]
+      },
+      "COPD": {
+        "differential": [
+          "deepseek/deepseek-r1:free"
+        ]
+      },
+      "Hypertensive Emergency": {
+        "differential": [
+          "deepseek/deepseek-r1:free"
+        ]
+      },
+      "Acute Decompensated Heart Failure": {
+        "primary": [
+          "shisa-ai/shisa-v2-llama3.3-70b:free"
+        ]
+      },
+      "Cardiac Tamponade": {
+        "differential": [
+          "shisa-ai/shisa-v2-llama3.3-70b:free"
+        ]
+      },
+      "Atrial Fibrillation with Rapid Ventricular Response": {
+        "differential": [
+          "shisa-ai/shisa-v2-llama3.3-70b:free"
+        ]
+      }
+    },
+    "geographical_patterns": {
+      "Unknown": {
+        "Acute Decompensated Heart Failure due to Ischemic Cardiomyopathy": 2,
+        "Acute Decompensated Heart Failure": 1
+      }
+    }
+  },
+  "free_models_used": true,
+  "diagnostic_landscape": {
+    "primary_diagnosis": {
+      "name": "Acute decompensated heart failure",
+      "icd_code": "I50.21",
+      "confidence": "High",
+      "supporting_models": [
+        "Model1",
+        "Model2",
+        "Model3"
+      ],
+      "percentage": 100,
+      "evidence": [
+        "Progressive exertional dyspnea",
+        "Orthopnea and PND",
+        "JVD and bibasilar crackles",
+        "S3 gallop",
+        "Elevated BNP",
+        "LVEF 25% with anterior wall akinesis"
+      ]
+    },
+    "strong_alternatives": [],
+    "alternatives": [],
+    "minority_opinions": [
+      {
+        "name": "Acute coronary syndrome",
+        "icd_code": "I21.4",
+        "frequency": 67,
+        "supporting_models": [
+          "Model1",
+          "Model3"
+        ],
+        "evidence": [
+          "Prior anterior MI",
+          "ECG showing Q waves in V1-V4",
+          "History of ischemic cardiomyopathy"
+        ],
+        "agreement_percentage": 7.4
+      },
+      {
+        "name": "Hypertensive emergency with heart failure",
+        "icd_code": "I11.0",
+        "frequency": 33,
+        "supporting_models": [
+          "Model1"
+        ],
+        "evidence": [
+          "Hypertension history",
+          "Currently hypertensive on exam"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "Pulmonary embolism",
+        "icd_code": "I26.0",
+        "frequency": 33,
+        "supporting_models": [
+          "Model3"
+        ],
+        "evidence": [
+          "Acute dyspnea",
+          "Tachycardia"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "Cardiac tamponade",
+        "icd_code": "I31.3",
+        "frequency": 33,
+        "supporting_models": [
+          "Model3"
+        ],
+        "evidence": [
+          "JVD",
+          "Dyspnea"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "Atrial fibrillation",
+        "icd_code": "I48.0",
+        "frequency": 33,
+        "supporting_models": [
+          "Model3"
+        ],
+        "evidence": [
+          "Tachycardia",
+          "History of heart disease"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "Chronic kidney disease exacerbation",
+        "icd_code": "N18.9",
+        "frequency": 33,
+        "supporting_models": [
+          "Model2"
+        ],
+        "evidence": [
+          "Mild renal impairment on labs"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "Pneumonia",
+        "icd_code": "J18.9",
+        "frequency": 33,
+        "supporting_models": [
+          "Model2"
+        ],
+        "evidence": [
+          "Bibasilar crackles",
+          "Fever potential"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "COPD exacerbation",
+        "icd_code": "J44.1",
+        "frequency": 33,
+        "supporting_models": [
+          "Model2"
+        ],
+        "evidence": [
+          "Exertional dyspnea",
+          "Crackles"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "Diabetic ketoacidosis",
+        "icd_code": "E10.10",
+        "frequency": 33,
+        "supporting_models": [
+          "Model2"
+        ],
+        "evidence": [
+          "Poorly controlled diabetes"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "Valvular heart disease",
+        "icd_code": "I35.0",
+        "frequency": 33,
+        "supporting_models": [
+          "Model2"
+        ],
+        "evidence": [
+          "Moderate functional mitral regurgitation"
+        ],
+        "agreement_percentage": 3.7
+      }
+    ],
+    "all_alternative_diagnoses": [
+      {
+        "name": "Acute coronary syndrome",
+        "icd_code": "I21.4",
+        "frequency": 67,
+        "supporting_models": [
+          "Model1",
+          "Model3"
+        ],
+        "evidence": [
+          "Prior anterior MI",
+          "ECG showing Q waves in V1-V4",
+          "History of ischemic cardiomyopathy"
+        ],
+        "agreement_percentage": 7.4
+      },
+      {
+        "name": "Hypertensive emergency with heart failure",
+        "icd_code": "I11.0",
+        "frequency": 33,
+        "supporting_models": [
+          "Model1"
+        ],
+        "evidence": [
+          "Hypertension history",
+          "Currently hypertensive on exam"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "Pulmonary embolism",
+        "icd_code": "I26.0",
+        "frequency": 33,
+        "supporting_models": [
+          "Model3"
+        ],
+        "evidence": [
+          "Acute dyspnea",
+          "Tachycardia"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "Cardiac tamponade",
+        "icd_code": "I31.3",
+        "frequency": 33,
+        "supporting_models": [
+          "Model3"
+        ],
+        "evidence": [
+          "JVD",
+          "Dyspnea"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "Atrial fibrillation",
+        "icd_code": "I48.0",
+        "frequency": 33,
+        "supporting_models": [
+          "Model3"
+        ],
+        "evidence": [
+          "Tachycardia",
+          "History of heart disease"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "Chronic kidney disease exacerbation",
+        "icd_code": "N18.9",
+        "frequency": 33,
+        "supporting_models": [
+          "Model2"
+        ],
+        "evidence": [
+          "Mild renal impairment on labs"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "Pneumonia",
+        "icd_code": "J18.9",
+        "frequency": 33,
+        "supporting_models": [
+          "Model2"
+        ],
+        "evidence": [
+          "Bibasilar crackles",
+          "Fever potential"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "COPD exacerbation",
+        "icd_code": "J44.1",
+        "frequency": 33,
+        "supporting_models": [
+          "Model2"
+        ],
+        "evidence": [
+          "Exertional dyspnea",
+          "Crackles"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "Diabetic ketoacidosis",
+        "icd_code": "E10.10",
+        "frequency": 33,
+        "supporting_models": [
+          "Model2"
+        ],
+        "evidence": [
+          "Poorly controlled diabetes"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "Valvular heart disease",
+        "icd_code": "I35.0",
+        "frequency": 33,
+        "supporting_models": [
+          "Model2"
+        ],
+        "evidence": [
+          "Moderate functional mitral regurgitation"
+        ],
+        "agreement_percentage": 3.7
+      }
+    ]
+  },
+  "comprehensive_bias_analysis": {
+    "geographical_representation": {
+      "total_countries": 6,
+      "western_dominance": {
+        "western_models": 25,
+        "percentage": 833.3333333333334,
+        "impact": "High Western medical paradigm influence expected"
+      },
+      "chinese_representation": {
+        "chinese_models": 5,
+        "percentage": 166.66666666666669,
+        "impact": "Traditional Chinese Medicine integration possible"
+      }
+    },
+    "case_specific_concerns": [
+      "Analysis strictly limited to tmpf_7we8mt responses",
+      "No cross-case contamination in this analysis",
+      "Bias patterns specific to this case presentation"
+    ],
+    "recommended_mitigations": [
+      "Consider cultural context in diagnosis interpretation",
+      "Account for geographical bias in model training",
+      "Validate findings across diverse medical paradigms"
+    ]
+  },
+  "model_diversity_metrics": {
+    "unique_architectures": 0,
+    "unique_providers": 0,
+    "unique_countries": 0,
+    "diversity_score": 0.0,
+    "case_id": "tmpf_7we8mt"
+  },
+  "management_strategies": {
+    "immediate_actions": [
+      "Assess airway, breathing, circulation",
+      "Administer supplemental oxygen to maintain SpO2 >90%",
+      "Establish IV access",
+      "Obtain 12-lead ECG",
+      "Initiate continuous cardiac monitoring",
+      "Position patient upright if tolerated"
+    ],
+    "differential_testing": [
+      {
+        "test": "BNP/NT-proBNP",
+        "purpose": "Diagnostic confirmation"
+      },
+      {
+        "test": "Troponin",
+        "purpose": "Diagnostic confirmation"
+      },
+      {
+        "test": "Complete metabolic panel (electrolytes, renal function)",
+        "purpose": "Diagnostic confirmation"
+      },
+      {
+        "test": "CBC",
+        "purpose": "Diagnostic confirmation"
+      },
+      {
+        "test": "Chest X-ray",
+        "purpose": "Diagnostic confirmation"
+      },
+      {
+        "test": "Arterial blood gas if hypoxic",
+        "purpose": "Diagnostic confirmation"
+      },
+      {
+        "test": "Echocardiogram",
+        "purpose": "Diagnostic confirmation"
+      },
+      {
+        "test": "Thyroid function tests",
+        "purpose": "Diagnostic confirmation"
+      }
+    ],
+    "medications": [
+      {
+        "medication_name": "Furosemide",
+        "dosage": "20-40 mg",
+        "route": "IV",
+        "frequency": "Every 6-12 hours as needed",
+        "duration": "Until euvolemic",
+        "indication": "Diuresis for volume overload"
+      },
+      {
+        "medication_name": "Nitroglycerin",
+        "dosage": "10-20 mcg/min",
+        "route": "IV infusion",
+        "frequency": "Continuous",
+        "duration": "Until hemodynamically stable",
+        "indication": "Afterload reduction in hypertensive heart failure"
+      },
+      {
+        "medication_name": "Morphine sulfate",
+        "dosage": "2-4 mg",
+        "route": "IV",
+        "frequency": "Every 5-15 minutes as needed",
+        "duration": "Symptom control",
+        "indication": "Anxiety and dyspnea relief (use with caution)"
+      }
+    ]
+  },
+  "evidence_synthesis": {
+    "key_clinical_findings": [
+      {
+        "finding": "Progressive exertional dyspnea",
+        "diagnostic_significance": "High"
+      },
+      {
+        "finding": "Orthopnea and PND",
+        "diagnostic_significance": "High"
+      },
+      {
+        "finding": "JVD and bibasilar crackles",
+        "diagnostic_significance": "High"
+      },
+      {
+        "finding": "S3 gallop",
+        "diagnostic_significance": "High"
+      },
+      {
+        "finding": "Elevated BNP",
+        "diagnostic_significance": "High"
+      },
+      {
+        "finding": "LVEF 25% with anterior wall akinesis",
+        "diagnostic_significance": "High"
+      },
+      {
+        "finding": "Prior anterior MI",
+        "diagnostic_significance": "High"
+      },
+      {
+        "finding": "ECG Q waves V1-V4",
+        "diagnostic_significance": "High"
+      },
+      {
+        "finding": "Hypertension",
+        "diagnostic_significance": "High"
+      },
+      {
+        "finding": "Tachycardia",
+        "diagnostic_significance": "High"
+      }
+    ],
+    "symptom_diagnosis_matrix": {
+      "symptoms": [
+        "Exertional dyspnea",
+        "Orthopnea/PND",
+        "JVD",
+        "Bibasilar crackles",
+        "S3 gallop",
+        "Tachycardia",
+        "Hypertension",
+        "ECG abnormalities",
+        "Elevated BNP",
+        "Renal impairment"
+      ],
+      "diagnoses": [
+        "Acute decompensated heart failure",
+        "Acute coronary syndrome",
+        "Hypertensive emergency",
+        "Pulmonary embolism",
+        "Cardiac tamponade",
+        "Atrial fibrillation",
+        "COPD exacerbation",
+        "Pneumonia",
+        "Chronic kidney disease",
+        "Valvular heart disease"
+      ],
+      "correlations": [
+        {
+          "symptom": "Exertional dyspnea",
+          "diagnosis": "Acute decompensated heart failure",
+          "strength": "Strong"
+        },
+        {
+          "symptom": "Orthopnea/PND",
+          "diagnosis": "Acute decompensated heart failure",
+          "strength": "Strong"
+        },
+        {
+          "symptom": "JVD",
+          "diagnosis": "Acute decompensated heart failure",
+          "strength": "Strong"
+        },
+        {
+          "symptom": "Bibasilar crackles",
+          "diagnosis": "Acute decompensated heart failure",
+          "strength": "Strong"
+        },
+        {
+          "symptom": "S3 gallop",
+          "diagnosis": "Acute decompensated heart failure",
+          "strength": "Strong"
+        },
+        {
+          "symptom": "Elevated BNP",
+          "diagnosis": "Acute decompensated heart failure",
+          "strength": "Strong"
+        },
+        {
+          "symptom": "ECG abnormalities",
+          "diagnosis": "Acute coronary syndrome",
+          "strength": "Medium"
+        },
+        {
+          "symptom": "Hypertension",
+          "diagnosis": "Hypertensive emergency",
+          "strength": "Medium"
+        },
+        {
+          "symptom": "Tachycardia",
+          "diagnosis": "Pulmonary embolism",
+          "strength": "Weak"
+        },
+        {
+          "symptom": "Renal impairment",
+          "diagnosis": "Chronic kidney disease",
+          "strength": "Weak"
+        }
+      ]
+    }
+  },
+  "generation_metadata": {
+    "pipeline_version": "General v1.0",
+    "timestamp": "20250906_000125",
+    "case_separation": "Strict",
+    "total_time_seconds": 148.73949575424194
+  },
+  "critical_decision_points": [
+    "Response to initial diuretic therapy",
+    "Need for vasopressor/inotropic support if hypotensive",
+    "Indication for non-invasive positive pressure ventilation",
+    "Evaluation for coronary angiography if ACS suspected",
+    "Assessment for advanced therapies (IABP, mechanical support)"
+  ],
+  "ai_model_bias_analysis": {
+    "geographic_bias": {
+      "detected": true,
+      "description": "Western medical bias evident in diagnostic focus on ischemic cardiomyopathy and ECG findings typical of Western populations, potentially underrepresenting rheumatic or Chagas-related heart failure common in developing regions",
+      "mitigation": "Incorporate global heart failure etiologies and region-specific diagnostic criteria in training data"
+    },
+    "training_bias": {
+      "detected": true,
+      "description": "Model training on Western medical literature creates bias toward technology-dependent diagnostics (ECG, imaging) over clinical exam findings relevant in resource-limited settings",
+      "mitigation": "Balance training data with clinical guidelines from diverse healthcare systems and resource environments"
+    },
+    "consensus_strength": "Moderate"
+  },
+  "clinical_decision_tree": {
+    "initial_assessment": "Evaluate presenting symptoms",
+    "diagnostic_tests": [
+      "BNP/NT-proBNP",
+      "Troponin",
+      "Complete metabolic panel (electrolytes, renal function)",
+      "CBC",
+      "Chest X-ray",
+      "Arterial blood gas if hypoxic",
+      "Echocardiogram",
+      "Thyroid function tests"
+    ],
+    "decision_points": [
+      "Response to initial diuretic therapy",
+      "Need for vasopressor/inotropic support if hypotensive",
+      "Indication for non-invasive positive pressure ventilation",
+      "Evaluation for coronary angiography if ACS suspected",
+      "Assessment for advanced therapies (IABP, mechanical support)"
+    ]
+  },
+  "primary_diagnosis_summaries": {
+    "key_clinical_findings": [
+      {
+        "finding": "Progressive exertional dyspnea",
+        "supporting_evidence": "Clinical presentation",
+        "model_support": 3,
+        "reasoning": "Key diagnostic indicator"
+      },
+      {
+        "finding": "Orthopnea and PND",
+        "supporting_evidence": "Clinical presentation",
+        "model_support": 3,
+        "reasoning": "Key diagnostic indicator"
+      },
+      {
+        "finding": "JVD and bibasilar crackles",
+        "supporting_evidence": "Clinical presentation",
+        "model_support": 3,
+        "reasoning": "Key diagnostic indicator"
+      },
+      {
+        "finding": "S3 gallop",
+        "supporting_evidence": "Clinical presentation",
+        "model_support": 3,
+        "reasoning": "Key diagnostic indicator"
+      },
+      {
+        "finding": "Elevated BNP",
+        "supporting_evidence": "Clinical presentation",
+        "model_support": 3,
+        "reasoning": "Key diagnostic indicator"
+      }
+    ],
+    "recommended_tests": [
+      {
+        "test_name": "BNP/NT-proBNP",
+        "test_type": "Laboratory",
+        "rationale": "Diagnostic confirmation",
+        "priority": "Urgent",
+        "model_support": 1,
+        "reasoning": "Essential for diagnosis"
+      },
+      {
+        "test_name": "Troponin",
+        "test_type": "Laboratory",
+        "rationale": "Diagnostic confirmation",
+        "priority": "Urgent",
+        "model_support": 1,
+        "reasoning": "Essential for diagnosis"
+      },
+      {
+        "test_name": "Complete metabolic panel (electrolytes, renal function)",
+        "test_type": "Laboratory",
+        "rationale": "Diagnostic confirmation",
+        "priority": "Urgent",
+        "model_support": 1,
+        "reasoning": "Essential for diagnosis"
+      },
+      {
+        "test_name": "CBC",
+        "test_type": "Laboratory",
+        "rationale": "Diagnostic confirmation",
+        "priority": "Urgent",
+        "model_support": 1,
+        "reasoning": "Essential for diagnosis"
+      },
+      {
+        "test_name": "Chest X-ray",
+        "test_type": "Laboratory",
+        "rationale": "Diagnostic confirmation",
+        "priority": "Urgent",
+        "model_support": 1,
+        "reasoning": "Essential for diagnosis"
+      }
+    ],
+    "immediate_management": [
+      {
+        "intervention": "Assess airway, breathing, circulation",
+        "category": "Medical",
+        "urgency": "Immediate",
+        "model_support": 1,
+        "reasoning": "Critical intervention"
+      },
+      {
+        "intervention": "Administer supplemental oxygen to maintain SpO2 >90%",
+        "category": "Medical",
+        "urgency": "Immediate",
+        "model_support": 1,
+        "reasoning": "Critical intervention"
+      },
+      {
+        "intervention": "Establish IV access",
+        "category": "Medical",
+        "urgency": "Immediate",
+        "model_support": 1,
+        "reasoning": "Critical intervention"
+      },
+      {
+        "intervention": "Obtain 12-lead ECG",
+        "category": "Medical",
+        "urgency": "Immediate",
+        "model_support": 1,
+        "reasoning": "Critical intervention"
+      },
+      {
+        "intervention": "Initiate continuous cardiac monitoring",
+        "category": "Medical",
+        "urgency": "Immediate",
+        "model_support": 1,
+        "reasoning": "Critical intervention"
+      }
+    ],
+    "medications": [
+      {
+        "medication_name": "Furosemide",
+        "dosage": "20-40 mg",
+        "route": "IV",
+        "frequency": "Every 6-12 hours as needed",
+        "duration": "Until euvolemic",
+        "indication": "Diuresis for volume overload",
+        "model_support": 1,
+        "reasoning": "Diuresis for volume overload"
+      },
+      {
+        "medication_name": "Nitroglycerin",
+        "dosage": "10-20 mcg/min",
+        "route": "IV infusion",
+        "frequency": "Continuous",
+        "duration": "Until hemodynamically stable",
+        "indication": "Afterload reduction in hypertensive heart failure",
+        "model_support": 1,
+        "reasoning": "Afterload reduction in hypertensive heart failure"
+      },
+      {
+        "medication_name": "Morphine sulfate",
+        "dosage": "2-4 mg",
+        "route": "IV",
+        "frequency": "Every 5-15 minutes as needed",
+        "duration": "Symptom control",
+        "indication": "Anxiety and dyspnea relief (use with caution)",
+        "model_support": 1,
+        "reasoning": "Anxiety and dyspnea relief (use with caution)"
+      }
+    ]
+  },
+  "quality_metrics": {
+    "total_models_analyzed": 3,
+    "consensus_strength": "Moderate",
+    "successful_responses": 3
+  },
+  "metadata": {
+    "analysis_timestamp": "2025-09-06T00:04:39.957782",
+    "orchestrator_model": "deepseek/deepseek-chat-v3.1:free",
+    "case_id": "tmpf_7we8mt",
+    "case_title": "Custom Case Analysis",
+    "orchestrator_quality": "free_models",
+    "quality_disclaimer": "\u26a0\ufe0f This analysis uses free orchestrator models which may provide suboptimal quality compared to premium models. For clinical applications, consider using premium orchestrator models for enhanced accuracy and comprehensive analysis."
+  },
+  "generated_at": "2025-09-06T00:04:39.957990"
+}

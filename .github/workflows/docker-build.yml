@@ -1,3 +1,9 @@
+# ============================================================================
+# MEDLEY - Docker Build & Push Workflow (2025)
+# Medical AI Ensemble Application 
+# SMAILE @ Karolinska Institutet
+# ============================================================================
+
 name: Build and Push Docker Image
 
 on:
@@ -50,7 +56,7 @@ jobs:
       uses: docker/build-push-action@v5
       with:
         context: .
-        file: ./deployment/Dockerfile.fast
+        file: ./Dockerfile
         push: ${{ github.event_name != 'pull_request' }}
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
@@ -63,7 +69,10 @@ jobs:
     - name: Generate deployment summary
       if: github.event_name != 'pull_request'
       run: |
-        echo "## ✅ Docker Image Built Successfully! 🐳" >> $GITHUB_STEP_SUMMARY
+        echo "## ✅ MEDLEY Docker Image Built Successfully! 🏥🐳" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "**Medical AI Ensemble Application**" >> $GITHUB_STEP_SUMMARY
+        echo "Built with production-ready gevent workers for DNS + SocketIO support" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
         echo "**Registry:** \`${{ env.REGISTRY }}\`" >> $GITHUB_STEP_SUMMARY
         echo "**Repository:** \`${{ env.IMAGE_NAME }}\`" >> $GITHUB_STEP_SUMMARY
@@ -78,13 +87,29 @@ jobs:
         echo "docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest" >> $GITHUB_STEP_SUMMARY
         echo '```' >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
-        echo "**Run MEDLEY web application:**" >> $GITHUB_STEP_SUMMARY
+        echo "**Run MEDLEY with docker-compose (recommended):**" >> $GITHUB_STEP_SUMMARY
+        echo '```bash' >> $GITHUB_STEP_SUMMARY
+        echo "# Clone repository and run" >> $GITHUB_STEP_SUMMARY
+        echo "git clone https://github.com/${{ env.IMAGE_NAME }}.git medley" >> $GITHUB_STEP_SUMMARY
+        echo "cd medley" >> $GITHUB_STEP_SUMMARY
+        echo "docker-compose up -d" >> $GITHUB_STEP_SUMMARY
+        echo '```' >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "**Or run directly:**" >> $GITHUB_STEP_SUMMARY
         echo '```bash' >> $GITHUB_STEP_SUMMARY
         echo "docker run -d \\" >> $GITHUB_STEP_SUMMARY
-        echo "  -p 5000:5000 \\" >> $GITHUB_STEP_SUMMARY
+        echo "  -p 5001:5000 \\" >> $GITHUB_STEP_SUMMARY
+        echo "  -e USE_FREE_MODELS=true \\" >> $GITHUB_STEP_SUMMARY
         echo "  -e OPENROUTER_API_KEY=your_api_key \\" >> $GITHUB_STEP_SUMMARY
         echo "  --name medley-app \\" >> $GITHUB_STEP_SUMMARY
         echo "  ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest" >> $GITHUB_STEP_SUMMARY
         echo '```' >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
-        echo "**Access the application:** http://localhost:5000" >> $GITHUB_STEP_SUMMARY
+        echo "**Access the application:** http://localhost:5001" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### 🩺 Features" >> $GITHUB_STEP_SUMMARY
+        echo "- **Multi-Model AI Ensemble**: 31 diverse AI models for medical diagnosis" >> $GITHUB_STEP_SUMMARY  
+        echo "- **Bias-Aware Analysis**: Systematic bias detection and attribution" >> $GITHUB_STEP_SUMMARY
+        echo "- **Real-time Progress**: WebSocket updates during analysis" >> $GITHUB_STEP_SUMMARY
+        echo "- **Interactive Reports**: HTML/PDF consensus reports with model responses" >> $GITHUB_STEP_SUMMARY
+        echo "- **Pre-analyzed Cases**: 12 medical cases ready for exploration" >> $GITHUB_STEP_SUMMARY

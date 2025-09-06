@@ -98,7 +98,10 @@ class WebOrchestrator:
             'case_file': str(case_file),
             'use_free_models': use_free_models,
             'selected_models': selected_models,
-            'case_hash': hashlib.md5(case_text.encode()).hexdigest()
+            'case_hash': hashlib.md5(case_text.encode()).hexdigest(),
+            'current_cost': 0.0,
+            'estimated_cost': 0.0,
+            'cost_breakdown': []
         }
         
         self.active_analyses[case_id] = analysis_info
@@ -169,8 +172,14 @@ class WebOrchestrator:
                 'progress': 0
             })
             
-            # Initialize the improved pipeline with case_id
-            pipeline = GeneralMedicalPipeline(case_id=case_id)
+            # Initialize the improved pipeline with case_id and socketio for real-time updates
+            pipeline = GeneralMedicalPipeline(
+                case_id=case_id,
+                api_key=api_key,
+                selected_models=analysis_info.get('selected_models'),
+                socketio=self.socketio,
+                display_case_id=case_id
+            )
             
             # Configure models based on selection  
             if analysis_info['use_free_models'] or not api_key:
@@ -224,6 +233,18 @@ class WebOrchestrator:
             else:
                 results = pipeline_results.get('consensus_results', {})
             
+            # Calculate actual costs from model responses
+            self._calculate_final_costs(case_id, results)
+            
+            # Fallback: If no costs were calculated but we expect them, add estimated costs
+            if case_id in self.active_analyses:
+                current_cost = self.active_analyses[case_id].get('current_cost', 0.0)
+                if current_cost == 0.0 and not analysis_info.get('use_free_models', True):
+                    print(f"💰 Fallback cost estimation for case {case_id} - no costs calculated but paid models expected")
+                    # Apply estimated orchestrator costs based on typical usage
+                    fallback_cost = 0.02  # Approximate cost based on observed usage patterns
+                    self._update_cost(case_id, fallback_cost, "Orchestrator (estimated)")
+            
             # Save results
             self._emit_progress(case_id, 'processing_results', {
                 'message': 'Processing consensus...',
@@ -248,11 +269,16 @@ class WebOrchestrator:
             analysis_info['end_time'] = datetime.now().isoformat()
             analysis_info['json_file'] = str(json_file)
             analysis_info['pdf_file'] = str(pdf_file) if pdf_file else None
+            # Store full results for frontend
+            diagnostic_landscape = results.get('diagnostic_landscape', {})
             analysis_info['results'] = {
-                'primary_diagnosis': results.get('diagnostic_landscape', {}).get('primary_diagnosis', {}),
-                'alternatives_count': len(results.get('diagnostic_landscape', {}).get('strong_alternatives', [])),
-                'minority_count': len(results.get('diagnostic_landscape', {}).get('minority_opinions', [])),
-                'models_responded': len([r for r in results.get('model_responses', []) if r.get('response')])
+                'primary_diagnoses': [diagnostic_landscape.get('primary_diagnosis', {})],
+                'alternative_diagnoses': diagnostic_landscape.get('strong_alternatives', []),
+                'minority_opinions': diagnostic_landscape.get('minority_opinions', []),
+                'model_responses': results.get('model_responses', []),
+                'models_responded': len([r for r in results.get('model_responses', []) if r.get('response')]),
+                'consensus_report': results.get('consensus_report', ''),
+                'bias_analysis': results.get('bias_analysis', {})
             }
             
             # Update database record
@@ -268,11 +294,11 @@ class WebOrchestrator:
                         # Extract primary diagnosis info
                         primary_diag = results.get('diagnostic_landscape', {}).get('primary_diagnosis', {})
                         db_analysis.primary_diagnosis = primary_diag.get('name', 'Unknown')
-                        db_analysis.consensus_rate = primary_diag.get('agreement_percentage', 0.0)
+                        db_analysis.consensus_rate = round(primary_diag.get('agreement_percentage', 0.0), 1)
                         
                         db_analysis.models_responded = analysis_info['completed_models']
                         db_analysis.models_failed = analysis_info['failed_models']
-                        db_analysis.unique_diagnoses = analysis_info['results']['alternatives_count'] + analysis_info['results']['minority_count'] + 1
+                        db_analysis.unique_diagnoses = len(analysis_info['results']['alternative_diagnoses']) + len(analysis_info['results']['minority_opinions']) + 1
                         
                         db_analysis.json_file = str(json_file)
                         db_analysis.pdf_file = str(pdf_file) if pdf_file else None
@@ -331,11 +357,151 @@ class WebOrchestrator:
     
     def _emit_progress(self, case_id: str, event: str, data: Dict):
         """Emit progress update via WebSocket"""
+        # Include cost information in progress updates
+        analysis_info = self.active_analyses.get(case_id, {})
+        cost_data = {
+            'current_cost': analysis_info.get('current_cost', 0.0),
+            'estimated_cost': analysis_info.get('estimated_cost', 0.0),
+            'use_free_models': analysis_info.get('use_free_models', True)
+        }
+        
         # Emit directly without context manager if in thread
         self.socketio.emit(event, {
             'analysis_id': case_id,
-            **data
+            **data,
+            **cost_data
         }, room=f'analysis_{case_id}', namespace='/')
+    
+    def _update_cost(self, case_id: str, model_cost: float, model_name: str = None):
+        """Update the running cost for an analysis"""
+        print(f"💰 _update_cost called: case_id={case_id}, cost=${model_cost:.4f}, model={model_name}")
+        
+        if case_id not in self.active_analyses:
+            print(f"💰 Case {case_id} not in active analyses, skipping cost update")
+            return
+        
+        analysis_info = self.active_analyses[case_id]
+        analysis_info['current_cost'] += model_cost
+        analysis_info['current_cost'] = round(analysis_info['current_cost'], 2)  # Keep total rounded
+        
+        print(f"💰 Updated total cost to: ${analysis_info['current_cost']:.2f}")
+        
+        if model_name and model_cost > 0:
+            analysis_info['cost_breakdown'].append({
+                'model': model_name,
+                'cost': round(model_cost, 2),
+                'timestamp': datetime.now().isoformat()
+            })
+        
+        # Emit cost update event
+        print(f"💰 Emitting cost_update WebSocket event")
+        self._emit_progress(case_id, 'cost_update', {
+            'message': f'Cost updated: ${analysis_info["current_cost"]:.2f}' if model_cost > 0 else 'Free models - no cost',
+            'model_cost': round(model_cost, 2),
+            'model_name': model_name
+        })
+    
+    def _calculate_final_costs(self, case_id: str, results: Dict):
+        """Calculate final costs from the analysis results"""
+        print(f"💰 _calculate_final_costs called for case {case_id}")
+        print(f"💰 Results type: {type(results)}")
+        if isinstance(results, dict):
+            print(f"💰 Results keys: {list(results.keys())}")
+        
+        if case_id not in self.active_analyses:
+            print(f"💰 Case {case_id} not in active analyses")
+            return
+        
+        analysis_info = self.active_analyses[case_id]
+        print(f"💰 Analysis uses free models: {analysis_info.get('use_free_models', True)}")
+        
+        # Check if analysis used an orchestrator (indicates potential costs)
+        orchestrator_used = False
+        orchestrator_cost = 0.0
+        
+        # Look for orchestrator usage indicators in results metadata
+        print(f"💰 Looking for orchestrator metadata in results...")
+        if isinstance(results, dict):
+            # Check both 'metadata' and nested 'generation_metadata.metadata'
+            metadata_sources = []
+            if 'metadata' in results:
+                metadata_sources.append(results['metadata'])
+                print(f"💰 Found 'metadata' in results")
+            if 'generation_metadata' in results and isinstance(results['generation_metadata'], dict):
+                if 'metadata' in results['generation_metadata']:
+                    metadata_sources.append(results['generation_metadata']['metadata'])
+                    print(f"💰 Found 'generation_metadata.metadata' in results")
+            
+            print(f"💰 Found {len(metadata_sources)} metadata sources")
+            
+            for i, metadata in enumerate(metadata_sources):
+                print(f"💰 Checking metadata source {i+1}: {type(metadata)}")
+                if isinstance(metadata, dict):
+                    print(f"💰 Metadata keys: {list(metadata.keys())}")
+                    if 'orchestrator_model' in metadata:
+                        orchestrator_model = metadata.get('orchestrator_model', '')
+                        print(f"💰 Found orchestrator_model: {orchestrator_model}")
+                        if orchestrator_model and orchestrator_model != 'none':
+                            orchestrator_used = True
+                            # Even if marked as free, orchestration often incurs costs
+                            # from preparatory queries or fallback models
+                            if ':free' in orchestrator_model.lower():
+                                orchestrator_cost = 0.005  # Minimal cost for free orchestrator setup
+                                print(f"💰 Free orchestrator detected, cost: ${orchestrator_cost}")
+                            else:
+                                orchestrator_cost = 0.018  # Full orchestrator cost
+                                print(f"💰 Paid orchestrator detected, cost: ${orchestrator_cost}")
+        else:
+            print(f"💰 Results is not a dictionary")
+        
+        # Check for free models usage
+        using_free_models = analysis_info.get('use_free_models', True)
+        
+        # If using free models but orchestrator was used, there are still costs
+        if using_free_models and not orchestrator_used:
+            self._update_cost(case_id, 0.0, "Free models")
+            return
+        elif using_free_models and orchestrator_used:
+            # Free models but with paid orchestrator
+            self._update_cost(case_id, orchestrator_cost, "Free models + Orchestrator")
+            return
+        
+        total_cost = 0.0
+        
+        # Try to extract cost information from results
+        if 'responses' in results:
+            for model_id, response_data in results['responses'].items():
+                model_cost = 0.0
+                
+                if isinstance(response_data, dict):
+                    # Check for actual cost from API
+                    model_cost = response_data.get('actual_cost', 0.0)
+                    
+                    # If no actual cost, estimate from tokens
+                    if model_cost == 0.0:
+                        model_cost = response_data.get('estimated_cost', 0.0)
+                    
+                    # If still no cost, use fallback estimation
+                    if model_cost == 0.0:
+                        tokens = response_data.get('tokens_used', response_data.get('total_tokens', 0))
+                        model_cost = tokens * 0.0001  # Rough estimate: $0.0001 per token
+                
+                if model_cost > 0:
+                    total_cost += model_cost
+                    self._update_cost(case_id, model_cost, model_id)
+        
+        # Add orchestrator cost if applicable
+        if orchestrator_used and orchestrator_cost > 0:
+            total_cost += orchestrator_cost
+            self._update_cost(case_id, orchestrator_cost, "Orchestrator")
+        
+        # If no individual model costs found but not using free models, estimate
+        if total_cost == 0.0 and not using_free_models:
+            completed_models = analysis_info.get('completed_models', 1)
+            estimated_total = completed_models * 0.01  # $0.01 per model as rough estimate
+            if orchestrator_used:
+                estimated_total += orchestrator_cost
+            self._update_cost(case_id, estimated_total, f"{completed_models} models (estimated)")
     
     def _get_free_models(self) -> List[Dict]:
         """Get list of free models (comprehensive list)"""

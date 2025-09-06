@@ -286,6 +286,45 @@ class FinalComprehensiveReportGenerator:
         # Title Page with Analysis Overview (Page 1)
         story.extend(self._create_title_page(ensemble_results))
         
+        # Add free model/orchestrator disclaimer if applicable
+        free_models_used = ensemble_results.get('free_models_used', False)
+        free_orchestrator_used = ensemble_results.get('orchestrator_used_free_models', False)
+        
+        if free_models_used or free_orchestrator_used:
+            disclaimer_parts = []
+            if free_models_used:
+                disclaimer_parts.append("free AI models")
+            if free_orchestrator_used:
+                disclaimer_parts.append("a free orchestrator")
+            
+            disclaimer_text = " and ".join(disclaimer_parts)
+            
+            story.append(Spacer(1, 0.3*inch))
+            story.append(Paragraph(
+                f"⚠️ Free Model Disclaimer: This analysis was generated using {disclaimer_text}",
+                ParagraphStyle(
+                    'FreeModelBanner',
+                    parent=self.styles['Normal'],
+                    fontSize=11,
+                    textColor=colors.darkred,
+                    alignment=1,  # Center
+                    borderColor=colors.darkred,
+                    borderWidth=1,
+                    borderPadding=10,
+                    backColor=colors.mistyrose
+                )
+            ))
+            story.append(Paragraph(
+                "Free models may provide suboptimal results. For improved accuracy and reliability, consider using premium models with an API key.",
+                ParagraphStyle(
+                    'FreeModelNote',
+                    parent=self.styles['Normal'],
+                    fontSize=9,
+                    textColor=colors.grey,
+                    alignment=1  # Center
+                )
+            ))
+
         # Add fallback extraction banner if applicable
         if ensemble_results.get("metadata", {}).get("orchestrator_model") == "fallback":
             story.append(Spacer(1, 0.3*inch))
@@ -477,13 +516,18 @@ class FinalComprehensiveReportGenerator:
             
             # Add strong alternatives (≥30%) with evidence
             for alt in strong_alternatives:
-                diagnosis_name = alt.get('name', 'Unknown')
-                # First try to get ICD from the data itself, then fallback to lookup
-                icd_code = alt.get('icd10_code', '') or alt.get('icd_code', '') or self._get_diagnosis_icd_code(alt.get('name', 'Unknown'))
-                agreement_pct = alt.get('agreement_percentage', alt.get('percentage', 0))
-                
-                # Include evidence if available
-                evidence = alt.get('evidence', [])
+                if isinstance(alt, dict):
+                    diagnosis_name = alt.get('name', 'Unknown')
+                    # First try to get ICD from the data itself, then fallback to lookup
+                    icd_code = alt.get('icd10_code', '') or alt.get('icd_code', '') or self._get_diagnosis_icd_code(alt.get('name', 'Unknown'))
+                    agreement_pct = alt.get('agreement_percentage', alt.get('percentage', 0))
+                    # Include evidence if available
+                    evidence = alt.get('evidence', [])
+                else:
+                    diagnosis_name = str(alt)
+                    icd_code = self._get_diagnosis_icd_code(str(alt))
+                    agreement_pct = 0
+                    evidence = []
                 if evidence:
                     name_with_evidence = f"{diagnosis_name}<br/><i>Evidence: {', '.join(evidence[:3])}</i>"
                     name_para = Paragraph(name_with_evidence, self.styles['TableCellStyle'])
@@ -499,12 +543,17 @@ class FinalComprehensiveReportGenerator:
             
             # Add regular alternatives (10-29%) 
             for alt in alternatives:
-                diagnosis_name = alt.get('name', 'Unknown')
-                icd_code = alt.get('icd10_code', '') or alt.get('icd_code', '') or self._get_diagnosis_icd_code(alt.get('name', 'Unknown'))
-                agreement_pct = alt.get('agreement_percentage', alt.get('percentage', 0))
-                
-                # Include evidence if available
-                evidence = alt.get('evidence', [])
+                if isinstance(alt, dict):
+                    diagnosis_name = alt.get('name', 'Unknown')
+                    icd_code = alt.get('icd10_code', '') or alt.get('icd_code', '') or self._get_diagnosis_icd_code(alt.get('name', 'Unknown'))
+                    agreement_pct = alt.get('agreement_percentage', alt.get('percentage', 0))
+                    # Include evidence if available
+                    evidence = alt.get('evidence', [])
+                else:
+                    diagnosis_name = str(alt)
+                    icd_code = self._get_diagnosis_icd_code(str(alt))
+                    agreement_pct = 0
+                    evidence = []
                 if evidence:
                     name_with_evidence = f"{diagnosis_name}<br/><i>Evidence: {', '.join(evidence[:3])}</i>"
                     name_para = Paragraph(name_with_evidence, self.styles['TableCellStyle'])
@@ -520,13 +569,19 @@ class FinalComprehensiveReportGenerator:
             
             # Add minority opinions (<10%) with clinical significance
             for opinion in minority:
-                diagnosis_name = opinion.get('name', 'Unknown')
-                icd_code = opinion.get('icd10_code', '') or opinion.get('icd_code', '') or self._get_diagnosis_icd_code(opinion.get('name', 'Unknown'))
-                agreement_pct = opinion.get('agreement_percentage', opinion.get('percentage', 0))
-                
-                # Include clinical significance or evidence
-                significance = opinion.get('clinical_significance', '')
-                evidence = opinion.get('evidence', [])
+                if isinstance(opinion, dict):
+                    diagnosis_name = opinion.get('name', 'Unknown')
+                    icd_code = opinion.get('icd10_code', '') or opinion.get('icd_code', '') or self._get_diagnosis_icd_code(opinion.get('name', 'Unknown'))
+                    agreement_pct = opinion.get('agreement_percentage', opinion.get('percentage', 0))
+                    # Include clinical significance or evidence
+                    significance = opinion.get('clinical_significance', '')
+                    evidence = opinion.get('evidence', [])
+                else:
+                    diagnosis_name = str(opinion)
+                    icd_code = self._get_diagnosis_icd_code(str(opinion))
+                    agreement_pct = 0
+                    significance = ''
+                    evidence = []
                 if significance:
                     name_with_sig = f"{diagnosis_name}<br/><i>Significance: {significance[:60]}</i>"
                     name_para = Paragraph(name_with_sig, self.styles['TableCellStyle'])
@@ -563,7 +618,7 @@ class FinalComprehensiveReportGenerator:
         # Analysis overview
         # Calculate correct statistics from model responses
         total_models = len(ensemble_results.get('model_responses', []))
-        successful_models = sum(1 for r in ensemble_results.get('model_responses', []) if r.get('response') and not r.get('error'))
+        successful_models = sum(1 for r in ensemble_results.get('model_responses', []) if isinstance(r, dict) and r.get('response') and not r.get('error'))
         
         # Calculate total estimated cost
         try:
@@ -586,6 +641,11 @@ class FinalComprehensiveReportGenerator:
                 except:
                     pass
         
+        # Add orchestrator cost if available
+        orchestrator_cost = ensemble_results.get('orchestrator_cost', 0.0)
+        if orchestrator_cost > 0:
+            total_cost += orchestrator_cost
+        
         # Get diagnostic data for overview
         diagnostic_data = ensemble_results.get('diagnostic_landscape', {})
         primary_data = diagnostic_data.get('primary_diagnosis', {})
@@ -596,7 +656,7 @@ class FinalComprehensiveReportGenerator:
             [f"Models Queried: {total_models}"],
             [f"Successful Responses: {successful_models}"],
             [f"Consensus Level: {confidence_level}"],
-            [f"Total Estimated Cost: {format_cost(total_cost)}"]
+            [f"Total Cost: {format_cost(total_cost)}"]
         ]
         
         overview_table = Table(overview_data, colWidths=[6.5*inch])
@@ -841,8 +901,13 @@ class FinalComprehensiveReportGenerator:
         
         # Add diagnostic overview
         primary_data = diagnostic_data.get('primary_diagnosis', {})
-        if primary_data:
-            overview_text = f"The ensemble analysis identified <b>{primary_data.get('name', 'Unknown')}</b> as the primary diagnosis with {primary_data.get('agreement_percentage', 0):.1f}% consensus among {len(primary_data.get('supporting_models', []))} models."
+        if primary_data and isinstance(primary_data, dict):
+            agreement_pct = primary_data.get('agreement_percentage', 0) if isinstance(primary_data, dict) else 0
+            consensus_display = f"{agreement_pct:.1f}%" if agreement_pct > 0 else "limited"
+            primary_name = primary_data.get('name', 'Unknown') if isinstance(primary_data, dict) else str(primary_data)
+            supporting_models = primary_data.get('supporting_models', []) if isinstance(primary_data, dict) else []
+            model_count = len(supporting_models)
+            overview_text = f"The ensemble analysis identified <b>{primary_name}</b> as the primary diagnosis with {consensus_display} consensus among {model_count} models."
             content.append(Paragraph(overview_text, self.styles['ContentStyle']))
             content.append(Spacer(1, 0.1*inch))
         
@@ -1031,7 +1096,10 @@ class FinalComprehensiveReportGenerator:
             action_data = [["Priority", "Action", "Rationale", "Consensus"]]
             
             for i, action in enumerate(immediate_actions[:5], 1):
-                consensus_val = action.get('consensus', '50%')
+                if isinstance(action, dict):
+                    consensus_val = action.get('consensus', '50%')
+                else:
+                    consensus_val = '50%'
                 if isinstance(consensus_val, str):
                     if '%' in consensus_val:
                         consensus_display = consensus_val
@@ -1045,10 +1113,17 @@ class FinalComprehensiveReportGenerator:
                 else:
                     consensus_display = f"{consensus_val:.0f}%"
                     
+                if isinstance(action, dict):
+                    action_text = action.get('action', '')
+                    rationale_text = action.get('rationale', 'Clinical indication')
+                else:
+                    action_text = str(action)
+                    rationale_text = 'Clinical indication'
+                
                 action_data.append([
                     f"{i}",
-                    Paragraph(action.get('action', ''), self.styles['TableCellStyle']),
-                    Paragraph(action.get('rationale', 'Clinical indication'), self.styles['TableCellStyle']),
+                    Paragraph(action_text, self.styles['TableCellStyle']),
+                    Paragraph(rationale_text, self.styles['TableCellStyle']),
                     consensus_display
                 ])
                 
@@ -1216,10 +1291,20 @@ class FinalComprehensiveReportGenerator:
             ]))
             content.append(model_table)
             
+            # Add orchestrator cost if available
+            orchestrator_cost = ensemble_results.get('orchestrator_cost', 0.0)
+            if orchestrator_cost > 0:
+                total_cost += orchestrator_cost
+                print(f"  📊 Added orchestrator cost: ${orchestrator_cost:.4f} to total")
+            
             # Add total cost summary
             content.append(Spacer(1, 0.1*inch))
-            cost_summary = f"**Total Estimated Cost: {format_cost(total_cost)}**"
-            content.append(Paragraph(cost_summary, self.styles['ContentStyle']))
+            if orchestrator_cost > 0:
+                cost_breakdown = f"**Total Cost: {format_cost(total_cost)}** (Models: {format_cost(total_cost - orchestrator_cost)} + Orchestrator: {format_cost(orchestrator_cost)})"
+                content.append(Paragraph(cost_breakdown, self.styles['ContentStyle']))
+            else:
+                cost_summary = f"**Total Estimated Cost: {format_cost(total_cost)}**"
+                content.append(Paragraph(cost_summary, self.styles['ContentStyle']))
             
         # Training Profile Information
         content.append(Spacer(1, 0.15*inch))

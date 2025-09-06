@@ -65,7 +65,7 @@ def get_comprehensive_model_metadata() -> Dict[str, Dict[str, Any]]:
             },
             "strengths": ["Open-weight", "Apache 2.0 license", "Efficient inference", "Strong reasoning"],
             "limitations": ["Still Western-trained", "MoE complexity", "Large memory requirements"],
-            "cost_tier": "Open Source"
+            "cost_tier": "Free"
         },
         
         # Anthropic Models
@@ -214,6 +214,24 @@ def get_comprehensive_model_metadata() -> Dict[str, Dict[str, Any]]:
             "cost_tier": "Free"
         },
         
+        "google/gemma-3-12b-it": {
+            "provider": "Google",
+            "origin_country": "USA", 
+            "release_date": "2024-12-11",
+            "parameters": "12B",
+            "architecture": "Open Transformer",
+            "training_cutoff": "2024-10",
+            "bias_characteristics": {
+                "primary_biases": ["Open model with Google values", "Instruction-tuned responses"],
+                "demographic_issues": ["Western tech culture"],
+                "medical_bias": ["Google Health data influence", "Consumer health focus"],
+                "socioeconomic_bias": "Consumer-focused healthcare perspectives"
+            },
+            "strengths": ["Open weights", "Larger capacity", "Latest Gemma architecture"],
+            "limitations": ["Google-centric training", "Western bias"],
+            "cost_tier": "Free"
+        },
+        
         # Meta Models
         "meta-llama/llama-3.2-3b-instruct": {
             "provider": "Meta",
@@ -322,6 +340,24 @@ def get_comprehensive_model_metadata() -> Dict[str, Dict[str, Any]]:
             },
             "strengths": ["Advanced reasoning", "Chinese perspectives", "Open source"],
             "limitations": ["Reasoning focus may miss emotional aspects", "Chinese regulatory constraints"],
+            "cost_tier": "Free"
+        },
+        
+        "deepseek/deepseek-chat-v3.1": {
+            "provider": "DeepSeek",
+            "origin_country": "China",
+            "release_date": "2024-12-26",
+            "parameters": "~32B",
+            "architecture": "Mixture-of-Experts Transformer",
+            "training_cutoff": "2024-11",
+            "bias_characteristics": {
+                "primary_biases": ["Chinese AI research", "Technical reasoning focus"],
+                "demographic_issues": ["Chinese academic and tech culture"],
+                "medical_bias": ["Chinese medical knowledge", "Technical medical focus"],
+                "socioeconomic_bias": "Chinese tech industry perspectives"
+            },
+            "strengths": ["Advanced reasoning", "Latest DeepSeek architecture", "Chinese perspectives"],
+            "limitations": ["Chinese regulatory constraints", "Technical focus may miss nuance"],
             "cost_tier": "Free"
         },
         

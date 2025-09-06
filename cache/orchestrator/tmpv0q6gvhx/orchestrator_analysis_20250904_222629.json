@@ -1,0 +1,642 @@
+{
+  "case_id": "tmpv0q6gvhx",
+  "case_title": "Custom Case Analysis",
+  "case_content": "A 28-year-old male of Mediterranean descent presents with:\n- Recurrent episodes of fever lasting 1-3 days\n- Severe abdominal pain during episodes\n- Chest pain with breathing difficulties\n- Joint pain affecting knees and ankles\n- Family history: Father and paternal uncle have similar symptoms\n- Episodes occur every 2-3 weeks\n- Labs during attack: Elevated CRP, ESR, and WBC\n- Between attacks: Completely asymptomatic\n\nPatient reports episodes started in childhood around age 7. Recent genetic testing is pending.",
+  "model_responses": [
+    {
+      "model_name": "deepseek/deepseek-chat-v3.1:free",
+      "response": "```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"Familial Mediterranean Fever\",\n        \"confidence\": 0.95,\n        \"icd_code\": \"E85.0\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Periodic Fever Syndrome (other types)\",\n            \"confidence\": 0.7,\n            \"icd_code\": \"E85.8\"\n        },\n        {\n            \"name\": \"Systemic Juvenile Idiopathic Arthritis\",\n            \"confidence\": 0.4,\n            \"icd_code\": \"M08.2\"\n        },\n        {\n            \"name\":... [truncated]",
+      "response_time": 33.983835220336914,
+      "cached": false,
+      "case_id": "tmpv0q6gvhx",
+      "timestamp": "2025-09-04T22:24:17.896241",
+      "tokens_used": 963,
+      "input_tokens": 348,
+      "output_tokens": 615
+    },
+    {
+      "model_name": "google/gemma-2-9b-it:free",
+      "response": "\nI understand you're looking for information about a medical condition based on the provided symptoms. \n\n**I am an AI and cannot give medical advice.**  It is dangerous and potentially harmful to rely on AI for diagnosing or treating medical conditions. \n\nThe symptoms you described could be caused by a variety of things, some minor and some serious.  \n\n**It is crucial that you seek immediate medical attention from a qualified healthcare professional.** They can properly evaluate your symptoms, r... [truncated]",
+      "response_time": 6.9492506980896,
+      "cached": false,
+      "case_id": "tmpv0q6gvhx",
+      "timestamp": "2025-09-04T22:24:25.475656",
+      "tokens_used": 562,
+      "input_tokens": 380,
+      "output_tokens": 182
+    },
+    {
+      "model_name": "google/gemma-3-12b-it:free",
+      "response": "```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"Periodic Fever Syndrome (likely Familial Mediterranean Fever - FMF)\",\n        \"confidence\": 0.85,\n        \"icd_code\": \"M69.8\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Adult-Onset Still's Disease\",\n            \"confidence\": 0.6,\n            \"icd_code\": \"M05.8\"\n        },\n        {\n            \"name\": \"Systemic Juvenile Idiopathic Arthritis (sJIA)\",\n            \"confidence\": 0.5,\n            \"icd_code\": \"M08.0\"\n    ... [truncated]",
+      "response_time": 25.45802879333496,
+      "cached": false,
+      "case_id": "tmpv0q6gvhx",
+      "timestamp": "2025-09-04T22:24:50.934632",
+      "tokens_used": 372,
+      "input_tokens": 372,
+      "output_tokens": 750
+    },
+    {
+      "model_name": "mistralai/mistral-7b-instruct:free",
+      "response": " Based on the provided symptoms, family history, and timeline, a potential primary diagnosis could be Familial Mediterranean Fever (FMF). However, please note that this is an educated guess and the final diagnosis should be made by a healthcare professional.\n\nHere's the JSON representation:\n\n```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"Familial Mediterranean Fever\",\n        \"confidence\": 0.7,\n        \"icd_code\": \"M39.0\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\"... [truncated]",
+      "response_time": 8.928483247756958,
+      "cached": false,
+      "case_id": "tmpv0q6gvhx",
+      "timestamp": "2025-09-04T22:25:00.659913",
+      "tokens_used": 1158,
+      "input_tokens": 430,
+      "output_tokens": 728
+    },
+    {
+      "model_name": "shisa-ai/shisa-v2-llama3.3-70b:free",
+      "response": "```json\n{\n  \"primary_diagnosis\": {\n    \"name\": \"Familial Mediterranean Fever (FMF)\",\n    \"confidence\": 0.9,\n    \"icd_code\": \"E85.0\"\n  },\n  \"differential_diagnoses\": [\n    {\n      \"name\": \"Periodic Fever, Aphthous Stomatitis, Pharyngitis, and Adenitis (PFAPA)\",\n      \"confidence\": 0.3,\n      \"icd_code\": \"M89.1\"\n    },\n    {\n      \"name\": \"Hyper-IgD Syndrome (MKD)\",\n      \"confidence\": 0.2,\n      \"icd_code\": \"E85.8\"\n    },\n    {\n      \"name\": \"TNF Receptor-Associated Periodic Syndrome (TRAPS)\",\n  ... [truncated]",
+      "response_time": 28.697265148162842,
+      "cached": false,
+      "case_id": "tmpv0q6gvhx",
+      "timestamp": "2025-09-04T22:25:29.645839",
+      "tokens_used": 952,
+      "input_tokens": 378,
+      "output_tokens": 574
+    }
+  ],
+  "total_models_analyzed": 5,
+  "geographical_distribution": {
+    "USA": 20,
+    "France": 3,
+    "China": 5,
+    "Canada": 2,
+    "Japan/USA": 1,
+    "Israel": 1
+  },
+  "consensus_analysis": {
+    "primary_counts": {
+      "Familial Mediterranean Fever": 3,
+      "PFAPA Syndrome": 1
+    },
+    "differential_counts": {
+      "PFAPA Syndrome": 1,
+      "Systemic Juvenile Idiopathic Arthritis": 2,
+      "Acute Intermittent Porphyria": 1,
+      "Inflammatory Bowel Disease": 2,
+      "Adult-Onset Still's Disease": 1,
+      "Systemic Juvenile Idiopathic Arthritis (sjia)": 2,
+      "Vasculitis (e.g., Polyarteritis Nodosa)": 1,
+      "Beh\u00e7et's Disease": 1,
+      "Ankylosing Spondylitis": 1,
+      "Reactive Arthritis": 1,
+      "Inflammatory Bowel Disease with Extra-intestinal Manifestations": 1,
+      "Hyperimmunoglobulin D Syndrome": 1,
+      "Periodic Fever, Aphthous Stomatitis, Pharyngitis, and Adenitis (pfapa)": 1,
+      "Hyper-igd Syndrome (mkd)": 1,
+      "TRAPS": 1
+    },
+    "total_counts": {
+      "Familial Mediterranean Fever": 3,
+      "PFAPA Syndrome": 2,
+      "Systemic Juvenile Idiopathic Arthritis": 2,
+      "Acute Intermittent Porphyria": 1,
+      "Inflammatory Bowel Disease": 2,
+      "Adult-Onset Still's Disease": 1,
+      "Systemic Juvenile Idiopathic Arthritis (sjia)": 2,
+      "Vasculitis (e.g., Polyarteritis Nodosa)": 1,
+      "Beh\u00e7et's Disease": 1,
+      "Ankylosing Spondylitis": 1,
+      "Reactive Arthritis": 1,
+      "Inflammatory Bowel Disease with Extra-intestinal Manifestations": 1,
+      "Hyperimmunoglobulin D Syndrome": 1,
+      "Periodic Fever, Aphthous Stomatitis, Pharyngitis, and Adenitis (pfapa)": 1,
+      "Hyper-igd Syndrome (mkd)": 1,
+      "TRAPS": 1
+    },
+    "sorted_diagnoses": [
+      [
+        "Familial Mediterranean Fever",
+        3
+      ],
+      [
+        "PFAPA Syndrome",
+        2
+      ],
+      [
+        "Systemic Juvenile Idiopathic Arthritis",
+        2
+      ],
+      [
+        "Inflammatory Bowel Disease",
+        2
+      ],
+      [
+        "Systemic Juvenile Idiopathic Arthritis (sjia)",
+        2
+      ],
+      [
+        "Acute Intermittent Porphyria",
+        1
+      ],
+      [
+        "Adult-Onset Still's Disease",
+        1
+      ],
+      [
+        "Vasculitis (e.g., Polyarteritis Nodosa)",
+        1
+      ],
+      [
+        "Beh\u00e7et's Disease",
+        1
+      ],
+      [
+        "Ankylosing Spondylitis",
+        1
+      ],
+      [
+        "Reactive Arthritis",
+        1
+      ],
+      [
+        "Inflammatory Bowel Disease with Extra-intestinal Manifestations",
+        1
+      ],
+      [
+        "Hyperimmunoglobulin D Syndrome",
+        1
+      ],
+      [
+        "Periodic Fever, Aphthous Stomatitis, Pharyngitis, and Adenitis (pfapa)",
+        1
+      ],
+      [
+        "Hyper-igd Syndrome (mkd)",
+        1
+      ],
+      [
+        "TRAPS",
+        1
+      ]
+    ],
+    "primary": [
+      "Familial Mediterranean Fever",
+      3
+    ],
+    "total_models": 5,
+    "icd_codes": {
+      "Familial Mediterranean Fever": [
+        "E85.0",
+        "M39.0"
+      ],
+      "PFAPA Syndrome": [
+        "E85.8",
+        "M69.8"
+      ],
+      "Systemic Juvenile Idiopathic Arthritis": [
+        "M06.09",
+        "M08.2"
+      ],
+      "Acute Intermittent Porphyria": [
+        "E80.21"
+      ],
+      "Inflammatory Bowel Disease": [
+        "K50",
+        "K50.9"
+      ],
+      "Adult-Onset Still's Disease": [
+        "M05.8"
+      ],
+      "Systemic Juvenile Idiopathic Arthritis (sjia)": [
+        "M08.0",
+        "M08.2"
+      ],
+      "Vasculitis (e.g., Polyarteritis Nodosa)": [
+        "M30"
+      ],
+      "Beh\u00e7et's Disease": [
+        "M35.5"
+      ],
+      "Ankylosing Spondylitis": [
+        "M45.0"
+      ],
+      "Reactive Arthritis": [
+        "M40.3"
+      ],
+      "Inflammatory Bowel Disease with Extra-intestinal Manifestations": [
+        "K50.0"
+      ],
+      "Hyperimmunoglobulin D Syndrome": [
+        "D21.9"
+      ],
+      "Periodic Fever, Aphthous Stomatitis, Pharyngitis, and Adenitis (pfapa)": [
+        "M89.1"
+      ],
+      "Hyper-igd Syndrome (mkd)": [
+        "E85.8"
+      ],
+      "TRAPS": [
+        "M89.2"
+      ]
+    },
+    "model_diagnoses": {
+      "Familial Mediterranean Fever": {
+        "primary": [
+          "deepseek/deepseek-chat-v3.1:free",
+          "mistralai/mistral-7b-instruct:free",
+          "shisa-ai/shisa-v2-llama3.3-70b:free"
+        ]
+      },
+      "PFAPA Syndrome": {
+        "differential": [
+          "deepseek/deepseek-chat-v3.1:free"
+        ],
+        "primary": [
+          "google/gemma-3-12b-it:free"
+        ]
+      },
+      "Systemic Juvenile Idiopathic Arthritis": {
+        "differential": [
+          "deepseek/deepseek-chat-v3.1:free",
+          "mistralai/mistral-7b-instruct:free"
+        ]
+      },
+      "Acute Intermittent Porphyria": {
+        "differential": [
+          "deepseek/deepseek-chat-v3.1:free"
+        ]
+      },
+      "Inflammatory Bowel Disease": {
+        "differential": [
+          "deepseek/deepseek-chat-v3.1:free",
+          "google/gemma-3-12b-it:free"
+        ]
+      },
+      "Adult-Onset Still's Disease": {
+        "differential": [
+          "google/gemma-3-12b-it:free"
+        ]
+      },
+      "Systemic Juvenile Idiopathic Arthritis (sjia)": {
+        "differential": [
+          "google/gemma-3-12b-it:free",
+          "shisa-ai/shisa-v2-llama3.3-70b:free"
+        ]
+      },
+      "Vasculitis (e.g., Polyarteritis Nodosa)": {
+        "differential": [
+          "google/gemma-3-12b-it:free"
+        ]
+      },
+      "Beh\u00e7et's Disease": {
+        "differential": [
+          "google/gemma-3-12b-it:free"
+        ]
+      },
+      "Ankylosing Spondylitis": {
+        "differential": [
+          "mistralai/mistral-7b-instruct:free"
+        ]
+      },
+      "Reactive Arthritis": {
+        "differential": [
+          "mistralai/mistral-7b-instruct:free"
+        ]
+      },
+      "Inflammatory Bowel Disease with Extra-intestinal Manifestations": {
+        "differential": [
+          "mistralai/mistral-7b-instruct:free"
+        ]
+      },
+      "Hyperimmunoglobulin D Syndrome": {
+        "differential": [
+          "mistralai/mistral-7b-instruct:free"
+        ]
+      },
+      "Periodic Fever, Aphthous Stomatitis, Pharyngitis, and Adenitis (pfapa)": {
+        "differential": [
+          "shisa-ai/shisa-v2-llama3.3-70b:free"
+        ]
+      },
+      "Hyper-igd Syndrome (mkd)": {
+        "differential": [
+          "shisa-ai/shisa-v2-llama3.3-70b:free"
+        ]
+      },
+      "TRAPS": {
+        "differential": [
+          "shisa-ai/shisa-v2-llama3.3-70b:free"
+        ]
+      }
+    },
+    "geographical_patterns": {
+      "Unknown": {
+        "Familial Mediterranean Fever": 3,
+        "PFAPA Syndrome": 1
+      }
+    }
+  },
+  "diagnostic_landscape": {
+    "primary_diagnosis": {
+      "name": "Familial Mediterranean Fever",
+      "icd_code": "E85.0",
+      "confidence": 0.95,
+      "agreement_percentage": 60.0,
+      "supporting_models": [
+        "deepseek-chat-v3.1:free",
+        "shisa-v2-llama3.3-70b:free",
+        "mistral-7b-instruct:free"
+      ]
+    },
+    "strong_alternatives": [
+      {
+        "name": "Systemic Juvenile Idiopathic Arthritis",
+        "icd10_code": "",
+        "agreement_percentage": 40.0,
+        "supporting_models": [
+          "Model_1",
+          "Model_2"
+        ],
+        "frequency": 2
+      },
+      {
+        "name": "PFAPA Syndrome",
+        "icd10_code": "M04.8",
+        "agreement_percentage": 40.0,
+        "supporting_models": [
+          "Model_1",
+          "Model_2"
+        ],
+        "frequency": 2
+      },
+      {
+        "name": "Inflammatory Bowel Disease",
+        "icd10_code": "K50.9",
+        "agreement_percentage": 40.0,
+        "supporting_models": [
+          "Model_1",
+          "Model_2"
+        ],
+        "frequency": 2
+      }
+    ],
+    "alternatives": [
+      {
+        "name": "Periodic Fever Syndrome (other types)",
+        "icd10_code": "E85.8",
+        "agreement_percentage": 20.0,
+        "supporting_models": [
+          "Model_1"
+        ],
+        "frequency": 1
+      },
+      {
+        "name": "Adult-Onset Still's Disease",
+        "icd10_code": "M06.1",
+        "agreement_percentage": 20.0,
+        "supporting_models": [
+          "Model_1"
+        ],
+        "frequency": 1
+      },
+      {
+        "name": "Hyper-IgD Syndrome (MKD)",
+        "icd10_code": "E85.8",
+        "agreement_percentage": 20.0,
+        "supporting_models": [
+          "Model_1"
+        ],
+        "frequency": 1
+      },
+      {
+        "name": "TNF Receptor-Associated Periodic Syndrome (TRAPS)",
+        "icd10_code": "",
+        "agreement_percentage": 20.0,
+        "supporting_models": [
+          "Model_1"
+        ],
+        "frequency": 1
+      },
+      {
+        "name": "Acute Intermittent Porphyria",
+        "icd10_code": "E80.21",
+        "agreement_percentage": 20.0,
+        "supporting_models": [
+          "Model_1"
+        ],
+        "frequency": 1
+      },
+      {
+        "name": "Vasculitis (e.g., Polyarteritis Nodosa)",
+        "icd10_code": "",
+        "agreement_percentage": 20.0,
+        "supporting_models": [
+          "Model_1"
+        ],
+        "frequency": 1
+      }
+    ],
+    "minority_opinions": [],
+    "all_alternative_diagnoses": [
+      {
+        "name": "Systemic Juvenile Idiopathic Arthritis",
+        "icd10_code": "",
+        "agreement_percentage": 40.0,
+        "supporting_models": [
+          "Model_1",
+          "Model_2"
+        ],
+        "frequency": 2
+      },
+      {
+        "name": "PFAPA Syndrome",
+        "icd10_code": "M04.8",
+        "agreement_percentage": 40.0,
+        "supporting_models": [
+          "Model_1",
+          "Model_2"
+        ],
+        "frequency": 2
+      },
+      {
+        "name": "Inflammatory Bowel Disease",
+        "icd10_code": "K50.9",
+        "agreement_percentage": 40.0,
+        "supporting_models": [
+          "Model_1",
+          "Model_2"
+        ],
+        "frequency": 2
+      },
+      {
+        "name": "Periodic Fever Syndrome (other types)",
+        "icd10_code": "E85.8",
+        "agreement_percentage": 20.0,
+        "supporting_models": [
+          "Model_1"
+        ],
+        "frequency": 1
+      },
+      {
+        "name": "Adult-Onset Still's Disease",
+        "icd10_code": "M06.1",
+        "agreement_percentage": 20.0,
+        "supporting_models": [
+          "Model_1"
+        ],
+        "frequency": 1
+      },
+      {
+        "name": "Hyper-IgD Syndrome (MKD)",
+        "icd10_code": "E85.8",
+        "agreement_percentage": 20.0,
+        "supporting_models": [
+          "Model_1"
+        ],
+        "frequency": 1
+      },
+      {
+        "name": "TNF Receptor-Associated Periodic Syndrome (TRAPS)",
+        "icd10_code": "",
+        "agreement_percentage": 20.0,
+        "supporting_models": [
+          "Model_1"
+        ],
+        "frequency": 1
+      },
+      {
+        "name": "Acute Intermittent Porphyria",
+        "icd10_code": "E80.21",
+        "agreement_percentage": 20.0,
+        "supporting_models": [
+          "Model_1"
+        ],
+        "frequency": 1
+      },
+      {
+        "name": "Vasculitis (e.g., Polyarteritis Nodosa)",
+        "icd10_code": "",
+        "agreement_percentage": 20.0,
+        "supporting_models": [
+          "Model_1"
+        ],
+        "frequency": 1
+      }
+    ]
+  },
+  "comprehensive_bias_analysis": {
+    "geographical_representation": {
+      "total_countries": 6,
+      "western_dominance": {
+        "western_models": 25,
+        "percentage": 500.0,
+        "impact": "High Western medical paradigm influence expected"
+      },
+      "chinese_representation": {
+        "chinese_models": 5,
+        "percentage": 100.0,
+        "impact": "Traditional Chinese Medicine integration possible"
+      }
+    },
+    "case_specific_concerns": [
+      "Analysis strictly limited to tmpv0q6gvhx responses",
+      "No cross-case contamination in this analysis",
+      "Bias patterns specific to this case presentation"
+    ],
+    "recommended_mitigations": [
+      "Consider cultural context in diagnosis interpretation",
+      "Account for geographical bias in model training",
+      "Validate findings across diverse medical paradigms"
+    ]
+  },
+  "model_diversity_metrics": {
+    "unique_architectures": 0,
+    "unique_providers": 0,
+    "unique_countries": 0,
+    "diversity_score": 0.0,
+    "case_id": "tmpv0q6gvhx"
+  },
+  "management_strategies": {
+    "immediate_actions": [
+      {
+        "action": "Seek immediate medical attention",
+        "consensus_percentage": 0,
+        "urgency": "High"
+      },
+      {
+        "action": "Consult a healthcare professional",
+        "consensus_percentage": 0,
+        "urgency": "High"
+      }
+    ],
+    "differential_testing": [
+      {
+        "test": "Genetic testing for FMF",
+        "purpose": "Diagnostic confirmation"
+      },
+      {
+        "test": "Inflammatory markers",
+        "purpose": "Diagnostic confirmation"
+      }
+    ]
+  },
+  "evidence_synthesis": {
+    "key_clinical_findings": [
+      {
+        "finding": "Fever",
+        "diagnostic_significance": "High"
+      },
+      {
+        "finding": "Pain",
+        "diagnostic_significance": "High"
+      },
+      {
+        "finding": "Joint symptoms",
+        "diagnostic_significance": "High"
+      },
+      {
+        "finding": "Abdominal pain",
+        "diagnostic_significance": "High"
+      },
+      {
+        "finding": "GI symptoms",
+        "diagnostic_significance": "High"
+      },
+      {
+        "finding": "Chronic inflammation",
+        "diagnostic_significance": "High"
+      }
+    ]
+  },
+  "generation_metadata": {
+    "pipeline_version": "General v1.0",
+    "timestamp": "20250904_222343",
+    "case_separation": "Strict",
+    "total_time_seconds": 105.74457812309265
+  },
+  "critical_decision_points": [
+    "Differentiating between FMF and other periodic fever syndromes",
+    "Evaluating for systemic juvenile idiopathic arthritis"
+  ],
+  "clinical_decision_tree": {
+    "initial_assessment": "Evaluate presenting symptoms",
+    "diagnostic_tests": [],
+    "decision_points": []
+  },
+  "primary_diagnosis_summaries": {
+    "Familial Mediterranean Fever": {
+      "supporting_models": [],
+      "confidence": 0.95,
+      "key_evidence": []
+    }
+  },
+  "quality_metrics": {
+    "total_models_analyzed": 5,
+    "successful_responses": 5
+  },
+  "ai_model_bias_analysis": {},
+  "metadata": {
+    "analysis_timestamp": "2025-09-04T22:26:29.460979",
+    "orchestrator_model": "openai/gpt-oss-20b:free",
+    "case_id": "tmpv0q6gvhx",
+    "case_title": "Custom Case Analysis",
+    "orchestrator_quality": "free_models",
+    "quality_disclaimer": "\u26a0\ufe0f This analysis uses free orchestrator models which may provide suboptimal quality compared to premium models. For clinical applications, consider using premium orchestrator models for enhanced accuracy and comprehensive analysis."
+  },
+  "generated_at": "2025-09-04T22:26:29.461091"
+}

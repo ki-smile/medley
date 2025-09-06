@@ -1,0 +1,57 @@
+# ============================================================================
+# MEDLEY - Production Docker Compose (2025)
+# Medical AI Ensemble Application 
+# SMAILE @ Karolinska Institutet
+# ============================================================================
+
+version: '3.8'
+
+services:
+  medley:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        BUILD_VERSION: "prod-${BUILD_VERSION:-$(date +%Y%m%d_%H%M%S)}"
+    image: medley:prod
+    container_name: medley-production
+    ports:
+      - "5001:5000"
+    environment:
+      - FLASK_ENV=production
+      - FLASK_DEBUG=0
+      - USE_FREE_MODELS=true
+      - PYTHONPATH=/app
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    volumes:
+      - medley_logs:/app/logs
+      - medley_reports:/app/reports
+      - medley_cache:/app/cache
+    networks:
+      - medley_network
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  medley_logs:
+    driver: local
+  medley_reports:
+    driver: local
+  medley_cache:
+    driver: local
+
+networks:
+  medley_network:
+    driver: bridge

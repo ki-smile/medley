@@ -673,7 +673,8 @@
         document.getElementById('primary-icd').textContent = icdCode;
         
         const agreementPct = primaryDiagnosis.agreement_percentage || 0;
-        document.getElementById('primary-agreement').textContent = `Agreement: ${agreementPct.toFixed(1)}%`;
+        const agreementDisplay = agreementPct > 0 ? `${agreementPct.toFixed(1)}%` : '-';
+        document.getElementById('primary-agreement').textContent = `Agreement: ${agreementDisplay}`;
         document.getElementById('primary-confidence').textContent = `Confidence: ${primaryDiagnosis.confidence || 'Unknown'}`;
         document.getElementById('primary-consensus-meter').style.width = `${agreementPct}%`;
         
@@ -798,6 +799,7 @@
         div.className = 'diagnosis-card';
         
         const agreementPct = diagnosis.agreement_percentage || 0;
+        const agreementDisplay = agreementPct > 0 ? `${agreementPct.toFixed(1)}%` : '-';
         const icd = diagnosis.icd10_code || diagnosis.icd_code || getICDFromDiagnosis(diagnosis.name);
         // Use actual supporting_models length as the count
         const supportingModels = diagnosis.supporting_models || [];
@@ -824,7 +826,7 @@
                     
                     <div style="display: flex; gap: 16px; margin-top: 8px; align-items: center;">
                         <span style="font-size: 12px; color: var(--md-sys-color-on-surface-variant);">
-                            Support: ${agreementPct.toFixed(1)}%
+                            Support: ${agreementDisplay}
                         </span>
                         <a href="#" onclick="showSupportingModels('${diagnosis.name.replace(/'/g, "\\'")}', ${JSON.stringify(supportingModels).replace(/"/g, '&quot;')}, ${modelCount}); return false;" 
                            style="color: var(--md-sys-color-primary); font-size: 11px; text-decoration: underline;">

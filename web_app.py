@@ -18,6 +18,7 @@ from flask import Flask, render_template, request, jsonify, send_file, session, 
 from flask_socketio import SocketIO, emit, join_room, leave_room
 from flask_cors import CORS
 from flask_session import Session
+from src.medley.utils.validators import ResponseValidator
 from flask_compress import Compress
 from flask_caching import Cache
 from dotenv import load_dotenv
@@ -59,6 +60,8 @@ app.config['SESSION_TYPE'] = 'filesystem'
 app.config['SESSION_PERMANENT'] = False
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(hours=2)
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
+app.config['TEMPLATES_AUTO_RELOAD'] = True  # Force template reload
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0  # Disable caching
 
 # Performance configuration
 app.config['COMPRESS_MIMETYPES'] = [
@@ -77,7 +80,31 @@ Session(app)
 compress = Compress(app)
 cache = Cache(app)
 CORS(app)
-socketio = SocketIO(app, cors_allowed_origins="*", async_mode='threading')
+socketio = SocketIO(app, cors_allowed_origins="*", async_mode='gevent')
+
+# Helper function for safe WebSocket emission
+def safe_socketio_emit(event, data):
+    """Safely emit SocketIO events with error handling for broken connections."""
+    try:
+        socketio.emit(event, data)
+        return True
+    except (BrokenPipeError, ConnectionResetError, OSError) as socket_error:
+        print(f"⚠️ WebSocket connection lost during {event} emission: {socket_error}")
+        return False
+    except Exception as emit_error:
+        print(f"❌ Error emitting {event}: {emit_error}")
+        return False
+
+# Helper function to validate model response success
+def is_model_response_valid(response_dict):
+    """Check if a model response is valid and successful using enhanced validation"""
+    # Check for basic presence of response and absence of error
+    if not response_dict.get('response') or response_dict.get('error'):
+        return False
+    
+    # Use enhanced medical response validation
+    response_text = response_dict.get('response', '')
+    return ResponseValidator.validate_medical_response(response_text)
 
 # Add security headers to all responses
 @app.after_request
@@ -349,14 +376,22 @@ def get_case_report(case_key):
         return jsonify({"error": "Case not found"}), 404
     
     # Find the latest ensemble data
-    # Try exact match first for custom cases
+    json_files = []
+    
+    # First, try to find in reports directory (legacy location)
     json_pattern = f"{case_id}_ensemble_data.json"
     json_files = list(REPORTS_DIR.glob(json_pattern))
     
-    # If not found, try with wildcard
+    # If not found, try with wildcard in reports directory
     if not json_files:
         json_pattern = f"{case_id}_ensemble_data_*.json"
         json_files = list(REPORTS_DIR.glob(json_pattern))
+    
+    # If still not found, try orchestrator cache directory
+    if not json_files:
+        orchestrator_cache_dir = Path("cache") / "orchestrator" / case_id
+        if orchestrator_cache_dir.exists():
+            json_files = list(orchestrator_cache_dir.glob("orchestrator_analysis_*.json"))
     
     if not json_files:
         return jsonify({"error": "No report available for this case"}), 404
@@ -430,11 +465,31 @@ def generate_analysis_html_report(ensemble_data, analysis_id):
     model_responses = ensemble_data.get('model_responses', [])
     consensus = ensemble_data.get('consensus_analysis', {})
     
-    # Calculate statistics
+    # Calculate statistics - use same criteria as comprehensive report
     total_models = len(model_responses)
-    successful_models = sum(1 for r in model_responses if r.get('success', False))
+    successful_models = sum(1 for r in model_responses if is_model_response_valid(r))
     failed_models = total_models - successful_models
     success_rate = (successful_models / total_models * 100) if total_models > 0 else 0
+    
+    # Check if free models or orchestrator were used and generate disclaimers
+    free_models_disclaimer = ""
+    free_models_used = ensemble_data.get('free_models_used', False)
+    free_orchestrator_used = ensemble_data.get('orchestrator_used_free_models', False)
+    
+    if free_models_used or free_orchestrator_used:
+        disclaimer_parts = []
+        if free_models_used:
+            disclaimer_parts.append("free AI models")
+        if free_orchestrator_used:
+            disclaimer_parts.append("a free orchestrator")
+        
+        disclaimer_text = " and ".join(disclaimer_parts)
+        free_models_disclaimer = f'''
+                <div style="background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 6px; padding: 15px; margin: 15px 0; font-size: 0.85em;">
+                    <p style="margin: 0; color: #856404;"><strong>⚠️ Free Model Disclaimer:</strong> 
+                    This analysis was generated using {disclaimer_text}, which may provide suboptimal results. 
+                    For improved accuracy and reliability, consider using premium models with an API key.</p>
+                </div>'''
     
     html_content = f"""
     <!DOCTYPE html>
@@ -582,6 +637,8 @@ def generate_analysis_html_report(ensemble_data, analysis_id):
                 <p>Analysis ID: {analysis_id}</p>
                 <p>Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}</p>
             </div>
+            
+            {free_models_disclaimer}
             
             <div class="section">
                 <h2>📊 Analysis Overview</h2>
@@ -763,19 +820,19 @@ def enrich_diagnosis_with_models(ensemble_data):
             if normalized_primary in model_diagnoses:
                 diagnostic_landscape['primary_diagnosis']['supporting_models'] = list(model_diagnoses[normalized_primary])
                 diagnostic_landscape['primary_diagnosis']['model_count'] = len(model_diagnoses[normalized_primary])
-                # Update agreement percentage based on actual model count
+                # Update agreement percentage based on actual model count (successful models only)
                 primary_model_count = len(model_diagnoses[normalized_primary])
-                total_models = len(ensemble_data.get('model_responses', []))
-                if total_models > 0:
-                    diagnostic_landscape['primary_diagnosis']['agreement_percentage'] = (primary_model_count / total_models) * 100
+                successful_models_count = sum(1 for r in ensemble_data.get('model_responses', []) if is_model_response_valid(r))
+                if successful_models_count > 0:
+                    diagnostic_landscape['primary_diagnosis']['agreement_percentage'] = (primary_model_count / successful_models_count) * 100
             elif primary_name in model_diagnoses:
                 diagnostic_landscape['primary_diagnosis']['supporting_models'] = list(model_diagnoses[primary_name])
                 diagnostic_landscape['primary_diagnosis']['model_count'] = len(model_diagnoses[primary_name])
-                # Update agreement percentage based on actual model count
+                # Update agreement percentage based on actual model count (successful models only)
                 primary_model_count = len(model_diagnoses[primary_name])
-                total_models = len(ensemble_data.get('model_responses', []))
-                if total_models > 0:
-                    diagnostic_landscape['primary_diagnosis']['agreement_percentage'] = (primary_model_count / total_models) * 100
+                successful_models_count = sum(1 for r in ensemble_data.get('model_responses', []) if is_model_response_valid(r))
+                if successful_models_count > 0:
+                    diagnostic_landscape['primary_diagnosis']['agreement_percentage'] = (primary_model_count / successful_models_count) * 100
         
         # Update alternatives
         for alt in diagnostic_landscape.get('strong_alternatives', []):
@@ -807,15 +864,15 @@ def enrich_diagnosis_with_models(ensemble_data):
         regular_alternatives = []
         minority_opinions = []
         
-        # Get total models for percentage calculation
-        total_models = len(ensemble_data.get('model_responses', []))
+        # Get successful models count for percentage calculation
+        successful_models_count = sum(1 for r in ensemble_data.get('model_responses', []) if is_model_response_valid(r))
         
         for alt in all_alternatives:
             model_count = len(alt.get('supporting_models', []))
             
-            # Calculate agreement percentage
-            if total_models > 0:
-                agreement_percentage = (model_count / total_models) * 100
+            # Calculate agreement percentage (based on successful models only)
+            if successful_models_count > 0:
+                agreement_percentage = (model_count / successful_models_count) * 100
                 alt['agreement_percentage'] = agreement_percentage
                 
                 # Apply updated categorization thresholds (10% instead of 20%)
@@ -1019,8 +1076,22 @@ def download_case_pdf(case_key):
         return jsonify({"error": "Case not found"}), 404
     
     # Find the latest PDF report
-    pdf_pattern = f"FINAL_{case_id}_*.pdf"
-    pdf_files = list(REPORTS_DIR.glob(pdf_pattern))
+    # For custom cases, handle the naming mismatch between Case_timestamp format and tmp_id format
+    if case_key.startswith('Case_20'):
+        # Extract timestamp from Case_20250905_083643 format
+        timestamp_part = case_key.replace('Case_', '')
+        # Look for both formats: FINAL_Case_timestamp and FINAL_tmp*_comprehensive_timestamp
+        pdf_patterns = [
+            f"FINAL_{case_id}_*.pdf",
+            f"FINAL_tmp*_comprehensive_{timestamp_part}.pdf",
+            f"FINAL_*_{timestamp_part}.pdf"
+        ]
+        pdf_files = []
+        for pattern in pdf_patterns:
+            pdf_files.extend(list(REPORTS_DIR.glob(pattern)))
+    else:
+        pdf_pattern = f"FINAL_{case_id}_*.pdf"
+        pdf_files = list(REPORTS_DIR.glob(pdf_pattern))
     
     if not pdf_files:
         return jsonify({"error": "No PDF report available"}), 404
@@ -1048,14 +1119,22 @@ def get_model_responses(case_key):
         return jsonify({"error": "Case not found"}), 404
     
     # Find the latest ensemble data
-    # Try exact match first for custom cases
+    json_files = []
+    
+    # First, try to find in reports directory (legacy location)
     json_pattern = f"{case_id}_ensemble_data.json"
     json_files = list(REPORTS_DIR.glob(json_pattern))
     
-    # If not found, try with wildcard
+    # If not found, try with wildcard in reports directory
     if not json_files:
         json_pattern = f"{case_id}_ensemble_data_*.json"
         json_files = list(REPORTS_DIR.glob(json_pattern))
+    
+    # If still not found, try orchestrator cache directory
+    if not json_files:
+        orchestrator_cache_dir = Path("cache") / "orchestrator" / case_id
+        if orchestrator_cache_dir.exists():
+            json_files = list(orchestrator_cache_dir.glob("orchestrator_analysis_*.json"))
     
     if not json_files:
         return jsonify({"error": "No data available"}), 404
@@ -1300,7 +1379,7 @@ def test_connection():
             "https://openrouter.ai/api/v1/chat/completions",
             headers=headers,
             json=test_data,
-            timeout=5
+            timeout=30
         )
         
         if response.status_code == 200:
@@ -1397,8 +1476,15 @@ def analyze():
         session['api_key'] = os.getenv('OPENROUTER_API_KEY')
         session['openrouter_api_key'] = os.getenv('OPENROUTER_API_KEY')
     
-    # Use the fixed template with proper CSS classes
-    return render_template('analyze_fixed.html')
+    # Get API key for template
+    api_key = session.get('api_key', '') or session.get('openrouter_api_key', '')
+    
+    # Use the v3 template with better styling and progress section
+    # Add cache buster to force template refresh
+    import time
+    cache_buster = str(int(time.time()))
+    print(f"🚀 DEBUG: Serving analyze_v4.html template with api_key='{api_key[:10] if api_key else 'None'}...'")
+    return render_template('analyze_v4.html', api_key=api_key, cache_buster=cache_buster)
 
 @app.route('/settings')
 def settings():
@@ -1689,11 +1775,75 @@ def api_analyze_case():
 @app.route('/api/analyze/<analysis_id>/status', methods=['GET'])
 def api_get_analysis_status(analysis_id):
     """Get current status of an analysis"""
-    if not orchestrator:
-        return jsonify({'error': 'Orchestrator not available'}), 503
+    # First check session storage for current user's analyses
+    if 'analyses' in session and analysis_id in session['analyses']:
+        analysis_data = session['analyses'][analysis_id]
+        
+        # Calculate elapsed time
+        start_time = analysis_data.get('started_at', time.time())
+        elapsed_seconds = int(time.time() - start_time)
+        
+        status = {
+            'analysis_id': analysis_id,
+            'status': analysis_data.get('status', 'unknown'),
+            'elapsed_time': elapsed_seconds,
+            'title': analysis_data.get('title', 'Custom Analysis')
+        }
+        
+        if analysis_data.get('status') == 'completed':
+            status.update({
+                'report_file': analysis_data.get('report_file'),
+                'data_file': analysis_data.get('data_file'),
+                'report_available': bool(analysis_data.get('report_file'))
+            })
+        elif analysis_data.get('status') == 'failed':
+            status['error'] = analysis_data.get('error', 'Unknown error')
+            
+        return jsonify(status)
     
-    status = orchestrator.get_analysis_status(analysis_id)
-    return jsonify(status)
+    # Fallback to orchestrator if available
+    if orchestrator:
+        status = orchestrator.get_analysis_status(analysis_id)
+        return jsonify(status)
+    
+    return jsonify({'error': 'Analysis not found', 'analysis_id': analysis_id}), 404
+
+@app.route('/api/user/analyses', methods=['GET'])
+def api_get_user_analyses():
+    """Get all analyses for the current user session"""
+    if 'analyses' not in session:
+        return jsonify({'analyses': []})
+    
+    analyses = []
+    for analysis_id, analysis_data in session['analyses'].items():
+        # Calculate elapsed/completion time
+        start_time = analysis_data.get('started_at', time.time())
+        if analysis_data.get('status') == 'completed':
+            elapsed_seconds = int(analysis_data.get('completed_at', time.time()) - start_time)
+        else:
+            elapsed_seconds = int(time.time() - start_time)
+        
+        analysis_info = {
+            'id': analysis_id,
+            'title': analysis_data.get('title', 'Custom Analysis'),
+            'status': analysis_data.get('status', 'unknown'),
+            'elapsed_time': elapsed_seconds,
+            'started_at': analysis_data.get('started_at'),
+            'case_preview': analysis_data.get('case_text', ''),
+            'use_free_models': analysis_data.get('use_free_models', True)
+        }
+        
+        if analysis_data.get('status') == 'completed':
+            analysis_info['report_available'] = bool(analysis_data.get('report_file'))
+        elif analysis_data.get('status') == 'failed':
+            analysis_info['error'] = analysis_data.get('error', 'Unknown error')
+        
+        analyses.append(analysis_info)
+    
+    # Sort by start time, most recent first
+    analyses.sort(key=lambda x: x.get('started_at', 0), reverse=True)
+    
+    return jsonify({'analyses': analyses})
 
 @app.route('/api/analyze/<analysis_id>', methods=['DELETE'])
 def api_cancel_analysis(analysis_id):
@@ -1959,8 +2109,9 @@ def handle_analyze_case(data):
     case_text = data.get('case_text') or data.get('content', '')
     
     # Check if we should use simulation or real analysis
-    # Changed default to False to use real CLI analysis
-    use_simulation = data.get('use_simulation', False)
+    # Force real analysis - always set to False
+    use_simulation = False  # Always use real CLI analysis
+    print(f"🔄 FORCED use_simulation = {use_simulation} (ignoring frontend request)")
     
     if use_simulation:
         # Use simulation mode
@@ -2139,17 +2290,31 @@ def handle_analyze_case(data):
         
         analysis_id = 'Case_' + datetime.now().strftime('%Y%m%d_%H%M%S')
         
+        # Store analysis metadata in session for persistence
+        if 'analyses' not in session:
+            session['analyses'] = {}
+        
+        session['analyses'][analysis_id] = {
+            'id': analysis_id,
+            'title': data.get('case_title', 'Custom Analysis'),
+            'status': 'running',
+            'started_at': time.time(),
+            'case_text': case_text[:200] + '...' if len(case_text) > 200 else case_text,  # Store preview
+            'use_free_models': data.get('use_free_models', True)
+        }
+        
         # Get selected models from the request data FIRST
         selected_models = data.get('selected_models', [])
         if not selected_models:
             # Default free models if none selected
             selected_models = [
-                'mistralai/mistral-7b-instruct:free',
-                'google/gemma-2-9b-it:free', 
+                'deepseek/deepseek-chat-v3.1:free',
+                'deepseek/deepseek-r1:free',
+                'google/gemma-2-9b-it:free',
+                'google/gemma-3-12b-it:free',
                 'meta-llama/llama-3.2-3b-instruct:free',
-                'qwen/qwen-2.5-coder-32b-instruct',
-                'google/gemini-2.0-flash-exp:free',
-                'deepseek/deepseek-chat-v3-0324:free'
+                'mistralai/mistral-7b-instruct:free',
+                'shisa-ai/shisa-v2-llama3.3-70b:free'
             ]
         
         # Define model display names mapping
@@ -2158,7 +2323,9 @@ def handle_analyze_case(data):
             'google/gemini-2.0-flash-exp:free': 'Gemini 2.0 Flash',
             'google/gemini-flash-1.5-8b:free': 'Gemini Flash 1.5 8B',
             'google/gemma-2-9b-it:free': 'Gemma 2 9B',
+            'google/gemma-3-12b-it:free': 'Gemma 3 12B',
             'meta-llama/llama-3.2-3b-instruct:free': 'Llama 3.2 3B',
+            'openai/gpt-oss-120b': 'GPT-OSS 120B',
             'meta-llama/llama-3.2-1b-instruct:free': 'Llama 3.2 1B',
             'meta-llama/llama-3.1-8b-instruct:free': 'Llama 3.1 8B',
             'microsoft/phi-3-medium-128k-instruct:free': 'Phi-3 Medium',
@@ -2166,6 +2333,7 @@ def handle_analyze_case(data):
             'mistralai/mistral-7b-instruct:free': 'Mistral 7B',
             'qwen/qwen-2.5-coder-32b-instruct': 'Qwen 2.5 Coder',
             'deepseek/deepseek-chat-v3-0324:free': 'DeepSeek Chat',
+            'deepseek/deepseek-chat-v3.1:free': 'DeepSeek Chat v3.1',
             'huggingfaceh4/zephyr-7b-beta:free': 'Zephyr 7B',
             'openchat/openchat-7b:free': 'OpenChat 7B',
             'undi95/toppy-m-7b:free': 'Toppy M 7B',
@@ -2252,19 +2420,23 @@ def handle_analyze_case(data):
                     
                     print(f"Using {len(selected_models)} selected models: {selected_models}")
                     
-                    # Emit initial progress
-                    socketio.emit('model_progress', {
-                        'analysis_id': analysis_id,
-                        'status': 'Initializing ensemble analysis...',
-                        'progress': 5
-                    })
+                    # Real progress will be emitted by the GeneralMedicalPipeline via SocketIO
                     
                     # Use GeneralMedicalPipeline directly instead of CLI
                     # This ensures we get the new report format with all sections
                     from general_medical_pipeline import GeneralMedicalPipeline
                     
-                    # Initialize pipeline for this case
-                    pipeline = GeneralMedicalPipeline(case_name)
+                    # Get user's API key from captured session variables
+                    user_api_key = session_api_key or session_openrouter_key
+                    if user_api_key:
+                        print("✅ Using API key from user session")
+                    else:
+                        # Fallback to environment variable for backward compatibility
+                        user_api_key = os.getenv('OPENROUTER_API_KEY')
+                        if user_api_key:
+                            print("✅ Using API key from environment")
+                        else:
+                            print("⚠️  No API key found in session or environment")
                     
                     # Set environment for model selection
                     if use_free_models or all(':free' in model for model in selected_models):
@@ -2272,7 +2444,10 @@ def handle_analyze_case(data):
                         print("Using free models only")
                     else:
                         os.environ.pop('USE_FREE_MODELS', None)
-                        print("Using mix of free and paid models")
+                    
+                    # Initialize pipeline with user's API key, selected models, and socketio for real-time progress
+                    # Use case_name for caching but analysis_id for SocketIO progress events
+                    pipeline = GeneralMedicalPipeline(case_name, api_key=user_api_key, selected_models=selected_models, socketio=socketio, display_case_id=analysis_id)
                     
                     # Read case content
                     with open(case_file_path, 'r') as f:
@@ -2284,6 +2459,7 @@ def handle_analyze_case(data):
                     
                     # Create case directory name (will be created by CLI)
                     case_id = Path(case_file_path).stem
+                    cache_base = Path("cache/responses")
                     cache_dir = cache_base / case_id
                     
                     completed_models = set()
@@ -2323,105 +2499,7 @@ def handle_analyze_case(data):
                         'meta-llama/llama-3.1-405b-instruct': 'Llama 3.1 405B'
                     }
                     
-                    # Since cache monitoring is complex, let's use simulated progress
-                    # while the real CLI runs in background
-                    
-                    # Simulate progress updates while CLI runs
-                    # Use the same display names we sent in analysis_started
-                    model_names = display_model_names  # Use the same list from above
-                    
-                    # Phase 1: Model Responses (0-60%)
-                    socketio.emit('model_progress', {
-                        'analysis_id': analysis_id,
-                        'status': '📊 Stage 1/3: Collecting model responses...',
-                        'progress': 5,
-                        'stage': 1,
-                        'stage_name': 'Model Collection'
-                    })
-                    
-                    for i, model in enumerate(model_names):
-                        if process.poll() is not None:
-                            break
-                            
-                        time.sleep(2)  # Simulate model query time
-                        progress = 5 + ((i + 1) / len(model_names)) * 55  # 5-60%
-                        
-                        socketio.emit('model_progress', {
-                            'analysis_id': analysis_id,
-                            'model': model,
-                            'status': f'Stage 1/3: {model} completed ({i+1}/{len(model_names)})',
-                            'progress': progress,
-                            'stage': 1,
-                            'stage_name': 'Model Collection'
-                        })
-                    
-                    # Phase 2: Orchestration (60-85%)
-                    # Always show Stage 2 progress regardless of process state
-                    socketio.emit('model_progress', {
-                        'analysis_id': analysis_id,
-                        'status': '🧠 Stage 2/3: Building consensus and analyzing biases...',
-                        'progress': 65,
-                        'stage': 2,
-                        'stage_name': 'Orchestration'
-                    })
-                    time.sleep(2)
-                    
-                    if process.poll() is None:  # Only wait if still running
-                        socketio.emit('model_progress', {
-                            'analysis_id': analysis_id,
-                            'status': '🧠 Stage 2/3: Identifying diagnostic patterns...',
-                            'progress': 75,
-                            'stage': 2,
-                            'stage_name': 'Orchestration'
-                        })
-                        time.sleep(2)
-                        
-                        socketio.emit('model_progress', {
-                            'analysis_id': analysis_id,
-                            'status': '🧠 Stage 2/3: Synthesizing minority opinions...',
-                            'progress': 82,
-                            'stage': 2,
-                            'stage_name': 'Orchestration'
-                        })
-                        time.sleep(1)
-                    else:
-                        # Process completed quickly, show rapid progress
-                        socketio.emit('model_progress', {
-                            'analysis_id': analysis_id,
-                            'status': '🧠 Stage 2/3: Orchestration completed...',
-                            'progress': 82,
-                            'stage': 2,
-                            'stage_name': 'Orchestration'
-                        })
-                    
-                    # Phase 3: Report Generation (85-100%)
-                    # Always show Stage 3 progress
-                    socketio.emit('model_progress', {
-                        'analysis_id': analysis_id,
-                        'status': '📄 Stage 3/3: Generating HTML report...',
-                        'progress': 88,
-                        'stage': 3,
-                        'stage_name': 'Report Generation'
-                    })
-                    
-                    if process.poll() is None:  # Only wait if still running
-                        time.sleep(2)
-                        socketio.emit('model_progress', {
-                            'analysis_id': analysis_id,
-                            'status': '📑 Stage 3/3: Creating PDF document...',
-                            'progress': 94,
-                            'stage': 3,
-                            'stage_name': 'Report Generation'
-                        })
-                        time.sleep(1)
-                    
-                    socketio.emit('model_progress', {
-                        'analysis_id': analysis_id,
-                        'status': '✨ Stage 3/3: Finalizing reports...',
-                        'progress': 98,
-                        'stage': 3,
-                        'stage_name': 'Report Generation'
-                    })
+                    # Let the GeneralMedicalPipeline handle all progress updates via SocketIO
                     
                     # Run the pipeline analysis
                     try:
@@ -2476,19 +2554,14 @@ def handle_analyze_case(data):
                     else:
                         print("WARNING: No ensemble files found after CLI completion")
                     
-                    # Rename JSON file to match analysis_id
-                    new_ensemble_path = None
+                    # Files already renamed above, get the new paths
                     if ensemble_files:
-                        latest_ensemble = ensemble_files[0]
                         new_ensemble_path = REPORTS_DIR / f"{analysis_id}_ensemble_data.json"
-                        os.rename(latest_ensemble, new_ensemble_path)
-                        print(f"Renamed JSON: {latest_ensemble} -> {new_ensemble_path}")
+                        print(f"✅ Using renamed JSON: {new_ensemble_path}")
                     
                     if pdf_files:
-                        latest_pdf = max(pdf_files, key=os.path.getctime)
-                        new_pdf_path = REPORTS_DIR / f"FINAL_{analysis_id}_comprehensive.pdf"
-                        os.rename(latest_pdf, new_pdf_path)
-                        print(f"Renamed PDF: {latest_pdf} -> {new_pdf_path}")
+                        new_pdf_path = REPORTS_DIR / f"FINAL_{analysis_id}_comprehensive.pdf"  
+                        print(f"✅ Using renamed PDF: {new_pdf_path}")
                     
                     # Clean up temp file
                     Path(case_file_path).unlink(missing_ok=True)
@@ -2652,7 +2725,7 @@ def handle_analyze_case(data):
                         'message': 'Analysis complete',
                         'results': formatted_results,
                         'report_url': f'/case/{analysis_id}',  # Use case viewer format
-                        'pdf_url': f'/api/analyze/{analysis_id}/download' if new_pdf_path else None,
+                        'pdf_url': f'/api/case/{analysis_id}/pdf' if new_pdf_path else None,
                         'html_report': f'/case/{analysis_id}'  # Direct to case viewer
                     })
                     
@@ -2692,70 +2765,62 @@ def handle_analyze_case(data):
             'models': models
         })
         
-        # Simulate progress - wrap in app context for thread safety
-        def simulate_progress():
+        # Execute real pipeline analysis
+        def run_real_analysis():
             with app.app_context():
-                for i, model in enumerate(models):
-                    time.sleep(0.8)
+                try:
+                    # Run the complete pipeline analysis
+                    print(f"🚀 Starting real analysis with {len(selected_models)} models")
+                    results = pipeline.run_complete_analysis(case_content, case_title=case_name)
                     
-                    # Show processing status - emit to all connected clients
-                    socketio.emit('model_progress', {
+                    # Send completion notification with error handling
+                    success = safe_socketio_emit('analysis_complete', {
                         'analysis_id': analysis_id,
-                        'model': model,
-                        'status': f'Querying {model}...',
-                        'progress': (i / len(models)) * 100
+                        'message': 'Analysis complete!',
+                        'results': {
+                            'report_file': results.get('report_file'),
+                            'data_file': results.get('data_file'),
+                            'total_models': results.get('total_models', len(selected_models))
+                        }
                     })
                     
-                    time.sleep(0.7)
+                    # Update session status to completed
+                    if 'analyses' in session and analysis_id in session['analyses']:
+                        session['analyses'][analysis_id].update({
+                            'status': 'completed',
+                            'completed_at': time.time(),
+                            'report_file': results.get('report_file'),
+                            'data_file': results.get('data_file')
+                        })
+                        session.modified = True
                     
-                    # Simulate Zephyr failing sometimes
-                    if model == 'Zephyr 7B Beta':
-                        socketio.emit('model_error', {
-                            'analysis_id': analysis_id,
-                            'model': model,
-                            'error': 'Model timeout after 30 seconds',
-                            'status': 'failed'
-                        })
-                        socketio.emit('model_progress', {
-                            'analysis_id': analysis_id,
-                            'model': model,
-                            'status': 'Failed - timeout',
-                            'progress': ((i + 1) / len(models)) * 100
-                        })
+                    if success:
+                        print(f"✅ Analysis complete - report: {results.get('report_file')}")
                     else:
-                        # Mark as completed
-                        socketio.emit('model_progress', {
-                            'analysis_id': analysis_id,
-                            'model': model,
-                            'status': f'{model} completed',
-                            'progress': ((i + 1) / len(models)) * 100
+                        print(f"✅ Analysis completed (WebSocket disconnected) - report: {results.get('report_file')}")
+                    
+                except Exception as e:
+                    print(f"❌ Pipeline analysis failed: {str(e)}")
+                    
+                    # Update session status to failed
+                    if 'analyses' in session and analysis_id in session['analyses']:
+                        session['analyses'][analysis_id].update({
+                            'status': 'failed',
+                            'error': str(e),
+                            'completed_at': time.time()
                         })
-                
-                # Send completion with sample results
-                socketio.emit('analysis_complete', {
-                    'analysis_id': analysis_id,
-                    'message': 'Analysis complete (simulated)',
-                    'results': {
-                        'primary_diagnoses': [
-                            {'diagnosis': 'Acute Myocardial Infarction (STEMI)', 'confidence': 85},
-                            {'diagnosis': 'Unstable Angina', 'confidence': 72}
-                        ],
-                        'alternative_diagnoses': [
-                            {'diagnosis': 'Pulmonary Embolism', 'confidence': 45},
-                            {'diagnosis': 'Aortic Dissection', 'confidence': 38}
-                        ],
-                        'minority_opinions': [
-                            {'diagnosis': 'Costochondritis', 'confidence': 15},
-                            {'diagnosis': 'Panic Attack', 'confidence': 10}
-                        ]
-                    }
-                })
+                        session.modified = True
+                    
+                    safe_socketio_emit('analysis_error', {
+                        'analysis_id': analysis_id,
+                        'error': f'Analysis failed: {str(e)}'
+                    })
         
-        thread = threading.Thread(target=simulate_progress)
+        thread = threading.Thread(target=run_real_analysis)
         thread.daemon = True
         thread.start()
 
 if __name__ == '__main__':
     # Use socketio.run for WebSocket support
     port = int(os.environ.get('FLASK_PORT', 5003))
-    socketio.run(app, debug=True, host='127.0.0.1', port=port, allow_unsafe_werkzeug=True)
+    socketio.run(app, debug=True, host='0.0.0.0', port=port, allow_unsafe_werkzeug=True)

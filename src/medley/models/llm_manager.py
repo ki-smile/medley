@@ -26,6 +26,8 @@ class LLMResponse:
     tokens_used: int = 0
     input_tokens: int = 0
     output_tokens: int = 0
+    actual_cost: float = 0.0  # OpenRouter API actual cost
+    estimated_cost: float = 0.0  # Calculated from pricing table
     error: Optional[str] = None
     raw_response: Optional[Dict] = None
     
@@ -71,6 +73,9 @@ class LLMManager:
             "messages": messages,
             "max_tokens": model_config.max_tokens,
             "temperature": model_config.temperature,
+            "usage": {
+                "include": True
+            }
         }
         
         try:
@@ -107,11 +112,16 @@ class LLMManager:
                 else:
                     content = ""
                 
-                # Extract token usage from API response
+                # Extract token usage and cost from API response
                 usage = data.get("usage", {})
                 api_total_tokens = usage.get("total_tokens", 0)
                 api_input_tokens = usage.get("prompt_tokens", 0)
                 api_output_tokens = usage.get("completion_tokens", 0)
+                
+                # Extract actual cost if provided by OpenRouter
+                api_total_cost = usage.get("total_cost", 0.0)  # OpenRouter may provide actual cost
+                api_prompt_cost = usage.get("prompt_cost", 0.0)
+                api_completion_cost = usage.get("completion_cost", 0.0)
                 
                 # Calculate local token stats as backup
                 token_stats = get_token_stats(
@@ -125,6 +135,13 @@ class LLMManager:
                 final_input_tokens = api_input_tokens if api_input_tokens > 0 else token_stats["input_tokens"]
                 final_output_tokens = api_output_tokens if api_output_tokens > 0 else token_stats["output_tokens"]
                 
+                # Calculate estimated cost using our pricing table
+                from ..utils.model_pricing import calculate_model_cost
+                estimated_cost = calculate_model_cost(model_config.model_id, final_input_tokens, final_output_tokens)
+                
+                # Use actual cost if provided by OpenRouter, otherwise use estimated
+                actual_cost = api_total_cost if api_total_cost > 0 else estimated_cost
+                
                 return LLMResponse(
                     model_name=model_config.name,
                     model_id=model_config.model_id,
@@ -134,6 +151,8 @@ class LLMManager:
                     tokens_used=final_total_tokens,
                     input_tokens=final_input_tokens,
                     output_tokens=final_output_tokens,
+                    actual_cost=actual_cost,
+                    estimated_cost=estimated_cost,
                     raw_response=data
                 )
             else:
@@ -187,6 +206,9 @@ class LLMManager:
             "messages": messages,
             "max_tokens": model_config.max_tokens,
             "temperature": model_config.temperature,
+            "usage": {
+                "include": True
+            }
         }
         
         try:
@@ -223,11 +245,16 @@ class LLMManager:
                     else:
                         content = ""
                     
-                    # Extract token usage from API response
+                    # Extract token usage and cost from API response
                     usage = data.get("usage", {})
                     api_total_tokens = usage.get("total_tokens", 0)
                     api_input_tokens = usage.get("prompt_tokens", 0)
                     api_output_tokens = usage.get("completion_tokens", 0)
+                    
+                    # Extract actual cost if provided by OpenRouter
+                    api_total_cost = usage.get("total_cost", 0.0)
+                    api_prompt_cost = usage.get("prompt_cost", 0.0)
+                    api_completion_cost = usage.get("completion_cost", 0.0)
                     
                     # Calculate local token stats as backup
                     token_stats = get_token_stats(
@@ -241,6 +268,13 @@ class LLMManager:
                     final_input_tokens = api_input_tokens if api_input_tokens > 0 else token_stats["input_tokens"]
                     final_output_tokens = api_output_tokens if api_output_tokens > 0 else token_stats["output_tokens"]
                     
+                    # Calculate estimated cost using our pricing table
+                    from ..utils.model_pricing import calculate_model_cost
+                    estimated_cost = calculate_model_cost(model_config.model_id, final_input_tokens, final_output_tokens)
+                    
+                    # Use actual cost if provided by OpenRouter, otherwise use estimated
+                    actual_cost = api_total_cost if api_total_cost > 0 else estimated_cost
+                    
                     return LLMResponse(
                         model_name=model_config.name,
                         model_id=model_config.model_id,
@@ -250,6 +284,8 @@ class LLMManager:
                         tokens_used=final_total_tokens,
                         input_tokens=final_input_tokens,
                         output_tokens=final_output_tokens,
+                        actual_cost=actual_cost,
+                        estimated_cost=estimated_cost,
                         raw_response=data
                     )
                 else:

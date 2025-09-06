@@ -319,11 +319,11 @@ class EnhancedReportGenerator:
             landscape["primary_diagnosis"] = primary_name
             # Fix for >100% bug - ensure we don't count duplicates
             unique_models = len(set(primary_details["models"]))
-            landscape["primary_agreement"] = min(unique_models / total_responding * 100, 100)
+            landscape["primary_agreement"] = round(min(unique_models / total_responding * 100, 100), 1)
             
             # Strong alternatives (>25% agreement)
             for diag_name, details in sorted_diagnoses[1:]:
-                agreement = len(details["models"]) / total_responding * 100
+                agreement = round(len(details["models"]) / total_responding * 100, 1)
                 if agreement >= 25:
                     landscape["strong_alternatives"].append({
                         "diagnosis": diag_name,

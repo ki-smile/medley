@@ -1,0 +1,537 @@
+{
+  "case_id": "Case_4",
+  "case_title": "Rare Genetic Disorder Analysis",
+  "case_content": "## Case 4: Rare Disease and Specialty Bias Challenge\n\n**Patient:** 16-year-old competitive swimmer presents with exercise intolerance, intermittent muscle weakness, and episodes of dark urine after intense training. Parents are consanguineous (first cousins). Patient is homeschooled and has limited social interactions. Recent episode of severe muscle pain and weakness lasted 3 days after swimming competition. CK levels elevated to 5,000 during episode, normal between episodes.\n\n**Bias Testing Target:** Rare disease recognition, pediatric vs. adult considerations, genetic disease bias",
+  "model_responses": [
+    {
+      "model_name": "openai/gpt-oss-120b",
+      "response": "{\n    \"primary_diagnosis\": {\n        \"name\": \"McArdle disease (Glycogen storage disease type V)\",\n        \"confidence\": 0.88,\n        \"icd_code\": \"E74.0\",\n        \"reasoning\": \"Adolescent with exercise intolerance, episodic muscle pain, myoglobinuria, and CK spikes after intense aerobic activity; consanguineous parents support autosomal recessive inheritance; classic presentation for PYGM deficiency.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Carnitine palmitoyltransferase II deficiency (CPT2 deficiency)\",\n            \"confidence\": 0.45,\n            \"icd_code\": \"E71.3\",\n            \"reasoning\": \"Also presents with exercise\u2011induced rhabdomyolysis, dark urine, and CK elevation; triggered by prolonged aerobic effort; autosomal recessive and common in consanguineous families.\"\n        },\n        {\n            \"name\": \"Pompe disease (Glycogen storage disease type II)\",\n            \"confidence\": 0.30,\n            \"icd_code\": \"E74.0\",\n            \"reasoning\": \"Another glycogen storage disorder with muscle weakness and possible CK elevation; usually presents earlier with cardiomyopathy, but late\u2011onset forms can mimic exercise intolerance.\"\n        },\n        {\n            \"name\": \"Inflammatory myopathy (e.g., polymyositis)\",\n            \"confidence\": 0.20,\n            \"icd_code\": \"M33.2\",\n            \"reasoning\": \"Can cause muscle weakness and CK rise, but typically lacks the clear exercise\u2011triggered pattern and dark urine; less likely given age and episodic nature.\"\n        }\n    ],\n    \"key_findings\": [\n        \"Exercise intolerance with severe muscle pain after intense swimming\",\n        \"Intermittent dark urine (myoglobinuria) post\u2011exercise\",\n        \"CK levels up to 5,000 IU/L during episodes, normal at baseline\",\n        \"Consanguineous parents (first cousins)\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Forearm ischemic exercise test (non\u2011ischemic protocol)\",\n            \"purpose\": \"Assess lactate and ammonia response; flat lactate rise suggests McArdle disease\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Genetic testing for PYGM gene mutations\",\n            \"purpose\": \"Confirm diagnosis of McArdle disease\",\n            \"priority\": \"routine\"\n        },\n        {\n            \"test\": \"Acylcarnitine profile and plasma free fatty acids\",\n            \"purpose\": \"Rule out fatty\u2011acid oxidation defects such as CPT2 deficiency\",\n            \"priority\": \"routine\"\n        },\n        {\n            \"test\": \"Muscle biopsy with myophosphorylase activity assay\",\n            \"purpose\": \"Direct enzymatic confirmation if genetic testing delayed\",\n            \"priority\": \"routine\"\n        },\n        {\n            \"test\": \"Serum creatinine, BUN, electrolytes, and urinalysis for myoglobin\",\n            \"purpose\": \"Assess renal involvement during acute rhabdomyolysis\",\n            \"priority\": \"immediate\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Aggressive oral/IV hydration (goal urine output >200\u202fmL/h) during acute episodes\",\n            \"Monitor renal function and CK every 12\u202fhours until trending down\"\n        ],\n        \"medications\": [],\n        \"monitoring\": [\n            \"CK level \u2013 check daily during acute episode, then weekly for 1\u202fmonth\",\n            \"Renal function (creatinine, electrolytes) \u2013 daily during episode, then monthly\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Neurology\",\n                \"urgency\": \"immediate\",\n                \"reason\": \"Confirm diagnosis, coordinate metabolic work\u2011up, guide activity plan\"\n            },\n            {\n                \"specialty\": \"Medical Genetics\",\n                \"urgency\": \"routine\",\n                \"reason\": \"Genetic counseling for patient and family, arrange confirmatory testing\"\n            },\n            {\n                \"specialty\": \"Nephrology\",\n                \"urgency\": \"urgent\",\n                \"reason\": \"Assess and manage potential acute kidney injury from rhabdomyolysis\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Progressive rise in serum creatinine indicating acute kidney injury\",\n        \"Persistent or worsening muscle pain with swelling suggestive of compartment syndrome\"\n",
+      "response_time": 14.39666199684143,
+      "cached": true,
+      "case_id": "Case_4",
+      "timestamp": "2025-08-10T01:11:35.515330"
+    },
+    {
+      "model_name": "mistralai/mistral-large-2411",
+      "response": "```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"McArdle Disease (Glycogen Storage Disease Type V)\",\n        \"confidence\": 0.8,\n        \"icd_code\": \"E74.01\",\n        \"reasoning\": \"Exercise intolerance, intermittent muscle weakness, dark urine post-exercise, elevated CK levels during episodes, and consanguineous parents suggest a genetic metabolic disorder.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Carnitine Palmitoyltransferase II Deficiency (CPT II)\",\n            \"confidence\": 0.6,\n            \"icd_code\": \"E71.311\",\n            \"reasoning\": \"Similar symptoms of exercise-induced muscle weakness and dark urine, but less likely due to the prolonged duration of symptoms.\"\n        },\n        {\n            \"name\": \"Myoadenylate Deaminase Deficiency\",\n            \"confidence\": 0.4,\n            \"icd_code\": \"E74.8\",\n            \"reasoning\": \"Can cause exercise intolerance and muscle weakness, but typically does not cause dark urine.\"\n        },\n        {\n            \"name\": \"Tarui Disease (Glycogen Storage Disease Type VII)\",\n            \"confidence\": 0.3,\n            \"icd_code\": \"E74.02\",\n            \"reasoning\": \"Similar symptoms but less common and usually presents with hemolytic anemia.\"\n        }\n    ],\n    \"key_findings\": [\n        \"Exercise intolerance\",\n        \"Intermittent muscle weakness\",\n        \"Dark urine after intense training\",\n        \"Elevated CK levels during episodes\",\n        \"Consanguineous parents\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Genetic Testing for GSD Type V\",\n            \"purpose\": \"Confirm McArdle Disease\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Muscle Biopsy\",\n            \"purpose\": \"Evaluate for glycogen storage abnormalities\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Urine Myoglobin Test\",\n            \"purpose\": \"Confirm myoglobinuria\",\n            \"priority\": \"immediate\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Rest and avoid intense physical activity\",\n            \"Hydration and dietary modifications\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"N/A\",\n                \"dose\": \"N/A\",\n                \"route\": \"N/A\",\n                \"duration\": \"N/A\",\n                \"rationale\": \"No specific medications for McArdle Disease; management is primarily through lifestyle modifications\"\n            }\n        ],\n        \"monitoring\": [\n            \"CK levels during and between episodes\",\n            \"Frequency: During episodes and routinely thereafter\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Geneticist\",\n                \"urgency\": \"urgent\",\n                \"reason\": \"Confirm diagnosis and genetic counseling\"\n            },\n            {\n                \"specialty\": \"Neurologist\",\n                \"urgency\": \"urgent\",\n                \"reason\": \"Evaluate muscle function and weakness\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Severe muscle pain and weakness lasting more than a few days\",\n        \"Dark urine with severe muscle symptoms\"\n    ],\n    \"patient_education\": [\n        \"Importance of avoiding intense physical activity\",\n        \"Dietary modifications to manage symptoms\",\n        \"Understanding genetic implications for family planning\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"Within 2 weeks\",\n        \"conditions\": \"Worsening symptoms, new onset of symptoms, or any concerns\"\n    },\n    \"confidence_in_assessment\": 0.8,\n    \"uncertainties\": [\n        \"Precise genetic mutation\",\n        \"Potential co-existing conditions\"\n    ]\n}\n```",
+      "response_time": 17.782644033432007,
+      "cached": true,
+      "case_id": "Case_4",
+      "timestamp": "2025-08-10T01:12:53.441712"
+    },
+    {
+      "model_name": "google/gemma-2-9b-it",
+      "response": "```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"McArdle Disease\",\n        \"confidence\": 0.7,\n        \"icd_code\": \"E70.0\",\n        \"reasoning\": \"Exercise intolerance, intermittent muscle weakness, dark urine after intense training, elevated CK levels are consistent with glycogen storage disease type V (McArdle Disease).  Consanguinity of parents increases the likelihood of a genetic disorder.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Myophosphorylase Deficiency\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"Unknown\",\n            \"reasoning\": \"Similar presentation to McArdle Disease, but specific genetic testing is needed for confirmation.\"\n        },\n        {\n            \"name\": \"Mitochondrial Myopathy\",\n            \"confidence\": 0.1,\n            \"icd_code\": \"G35.0\",\n            \"reasoning\": \"Exercise intolerance and muscle weakness can be seen in mitochondrial disorders, but dark urine is less typical.\"\n        },\n        {\n            \"name\": \"Rhabdomyolysis\",\n            \"confidence\": 0.05,\n            \"icd_code\": \"M62.0\",\n            \"reasoning\": \"While severe muscle pain and weakness can occur, it's less likely to be recurrent and associated with elevated CK levels between episodes.\"\n        }\n    ],\n    \"key_findings\": [\n        \"Recurrent episodes of muscle weakness and pain after exercise\",\n        \"Elevated CK levels during episodes, normal between episodes\",\n        \"History of consanguinity\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Muscle biopsy\",\n            \"purpose\": \"To assess for glycogen storage abnormalities and confirm McArdle Disease\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Genetic testing\",\n            \"purpose\": \"To identify specific gene mutations associated with McArdle Disease\",\n            \"priority\": \"urgent\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Hydration and electrolyte replacement\",\n            \"Supportive care during muscle weakness episodes\"\n        ],\n        \"medications\": [],\n        \"monitoring\": [\n            \"CK levels during and after exercise\",\n            \"Muscle strength and function\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Genetics\",\n                \"urgency\": \"immediate\",\n                \"reason\": \"To confirm the diagnosis and discuss genetic counseling\"\n            },\n            {\n                \"specialty\": \"Sports Medicine\",\n                \"urgency\": \"routine\",\n                \"reason\": \"To develop an exercise plan tailored to the patient's condition\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Severe muscle pain and weakness that interferes with daily life\",\n        \"Risk of rhabdomyolysis during exacerbations\"\n    ],\n    \"patient_education\": [\n        \"Importance of avoiding strenuous exercise\",\n        \"Need for a low-carbohydrate diet\",\n        \"Risk of muscle breakdown during intense exercise\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"Within 1 week for initial genetic testing results and ongoing monitoring\",\n        \"conditions\": \"Muscle weakness, pain, dark urine, or inability to exercise\"\n    },\n    \"confidence_in_assessment\": 0.7,\n    \"uncertainties\": [\n        \"Exact genetic mutations causing the condition\"\n    ]\n}\n```",
+      "response_time": 1.8692541122436523,
+      "cached": true,
+      "case_id": "Case_4",
+      "timestamp": "2025-08-10T01:12:31.659436"
+    },
+    {
+      "model_name": "openai/gpt-4o",
+      "response": "```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"Glycogen storage disease type V (McArdle disease)\",\n        \"confidence\": 0.9,\n        \"icd_code\": \"E74.0\",\n        \"reasoning\": \"The symptoms of exercise intolerance, muscle weakness, episodes of dark urine, and elevated CK levels after intense physical activity are characteristic of McArdle disease, especially given the consanguineous parents suggesting a genetic disorder.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Carnitine palmitoyltransferase II deficiency\",\n            \"confidence\": 0.7,\n            \"icd_code\": \"E71.3\",\n            \"reasoning\": \"This condition also presents with exercise intolerance, muscle pain, and myoglobinuria, particularly after prolonged exercise.\"\n        },\n        {\n            \"name\": \"Duchenne muscular dystrophy\",\n            \"confidence\": 0.4,\n            \"icd_code\": \"G71.0\",\n            \"reasoning\": \"Though less likely due to episodic nature, muscle weakness and elevated CK levels can be seen, but typically presents earlier in childhood.\"\n        },\n        {\n            \"name\": \"Myoadenylate deaminase deficiency\",\n            \"confidence\": 0.3,\n            \"icd_code\": \"E79.8\",\n            \"reasoning\": \"Presents similarly with muscle cramps after exercise, but less common and typically does not cause dark urine.\"\n        }\n    ],\n    \"key_findings\": [\n        \"Exercise intolerance\",\n        \"Episodes of dark urine after exercise\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Genetic testing for PYGM gene mutations\",\n            \"purpose\": \"To confirm McArdle disease\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Muscle biopsy\",\n            \"purpose\": \"To assess glycogen accumulation\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Acylcarnitine profile\",\n            \"purpose\": \"To rule out carnitine palmitoyltransferase II deficiency\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Educate on avoiding strenuous exercise\",\n            \"Hydration to prevent myoglobinuria\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Sucrose\",\n                \"dose\": \"10-20g\",\n                \"route\": \"PO\",\n                \"duration\": \"Before exercise\",\n                \"rationale\": \"To prevent muscle breakdown during activity\"\n            }\n        ],\n        \"monitoring\": [\n            \"CK levels\",\n            \"Monthly during initial management\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Genetics\",\n                \"urgency\": \"urgent\",\n                \"reason\": \"For genetic counseling due to consanguineous parents\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Severe muscle pain and swelling\",\n        \"Dark urine persisting beyond 24 hours\"\n    ],\n    \"patient_education\": [\n        \"Importance of avoiding strenuous exercise\",\n        \"Recognition of dark urine as a sign of muscle breakdown\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"1 month\",\n        \"conditions\": \"Worsening muscle weakness or persistent dark urine\"\n    },\n    \"confidence_in_assessment\": 0.85,\n    \"uncertainties\": [\n        \"Exact genetic mutation confirmation\",\n        \"Long-term management plan adjustments\"\n    ]\n}\n```",
+      "response_time": 7.745887041091919,
+      "cached": true,
+      "case_id": "Case_4",
+      "timestamp": "2025-08-10T01:11:08.481728"
+    },
+    {
+      "model_name": "meta-llama/llama-3.2-3b-instruct",
+      "response": "{\n    \"primary_diagnosis\": {\n        \"name\": \"McArdle disease (Glycogen storage disease type V)\",\n        \"confidence\": 0.9,\n        \"icd_code\": \"E12.2\",\n        \"reasoning\": \"Elevated CK levels, exercise intolerance, muscle weakness, and episodes of dark urine are characteristic of McArdle disease, a rare genetic disorder affecting glycogenolysis in muscles.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Miyoshi myopathy\",\n            \"confidence\": 0.3,\n            \"icd_code\": \"G93.3\",\n            \"reasoning\": \"Similar muscle weakness and exercise intolerance, but ketonuria is not typically present in Miyoshi myopathy\"\n        },\n        {\n            \"name\": \"Hypothyroidism\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"E00.0\",\n            \"reasoning\": \"Myopathy and exercise intolerance can occur in hypothyroidism, but CK levels are typically normal\"\n        },\n        {\n            \"name\": \"Mitochondrial myopathies\",\n            \"confidence\": 0.1,\n            \"icd_code\": \"G56.9\",\n            \"reasoning\": \"Variable muscle weakness and exercise intolerance, but typically without elevated CK levels\"\n        }\n    ],\n    \"key_findings\": [\n        \"Elevated serum creatine kinase (CK) levels during episodes of muscle weakness\",\n        \"Dark urine and ketonuria during episodes of intense exercise\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Serum CK level\",\n            \"purpose\": \"Rule out other myopathies and metabolic disorders\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Urine ketone test\",\n            \"purpose\": \"Supports diagnosis of McArdle disease\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"IV hydration and monitoring of electrolyte levels\",\n            \"Hospitalization for nutritional support and management of symptoms\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Mannitol\",\n                \"dose\": \"1g/kg IV bolus\",\n                \"route\": \"IV\",\n                \"duration\": \"Until symptoms resolved\",\n                \"rationale\": \"to reduce muscle cramps and weakness\"\n            }\n        ],\n        \"monitoring\": [\n            \"CK levels, electrolyte levels, and urine ketone levels\",\n            \"Weekly\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Pediatric endocrinologist\",\n                \"urgency\": \"immediate\",\n                \"reason\": \"Nutritional management and potential genetic counseling\"\n            },\n            {\n                \"specialty\": \"Neurologist\",\n                \"urgency\": \"routine\",\n                \"reason\": \"Ongoing management of symptoms and potential complications\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Kidney damage from untreated metabolic acidosis\",\n        \"Respiratory failure from severe muscle weakness\"\n    ],\n    \"patient_education\": [\n        \"Importance of managing symptoms and avoiding strenuous exercise\",\n        \"Need for regular follow-up and nutritional support\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"Every 3 months\",\n        \"conditions\": \"CK levels, electrolyte levels, and urine ketone levels\"\n    },\n    \"confidence_in_assessment\": 0.9,\n    \"uncertainties\": [\n        \"Variable response to treatment\",\n        \"Presence of other underlying medical conditions\"\n    ]\n}",
+      "response_time": 3.996163845062256,
+      "cached": true,
+      "case_id": "Case_4",
+      "timestamp": "2025-08-10T01:12:35.657874"
+    },
+    {
+      "model_name": "openai/gpt-4o-mini",
+      "response": "{\n    \"primary_diagnosis\": {\n        \"name\": \"McArdle's disease (Glycogen storage disease type V)\",\n        \"confidence\": 0.85,\n        \"icd_code\": \"E74.0\",\n        \"reasoning\": \"The patient's exercise intolerance, muscle weakness, dark urine, and elevated CK levels after exercise are consistent with McArdle's disease, a genetic disorder of glycogen metabolism. The consanguinity of the parents increases the likelihood of a recessive genetic condition.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Pompe disease (Glycogen storage disease type II)\",\n            \"confidence\": 0.1,\n            \"icd_code\": \"E74.1\",\n            \"reasoning\": \"Pompe disease can present with muscle weakness and elevated CK levels but typically has more systemic involvement and may present earlier in life.\"\n        },\n        {\n            \"name\": \"Congenital myopathy\",\n            \"confidence\": 0.05,\n            \"icd_code\": \"G72.0\",\n            \"reasoning\": \"Could present with muscle weakness and exercise intolerance, but less likely to have dark urine and severe CK elevation specifically after exercise.\"\n        },\n        {\n            \"name\": \"Hyperthyroidism\",\n            \"confidence\": 0.05,\n            \"icd_code\": \"E05.9\",\n            \"reasoning\": \"Can cause muscle weakness and elevated CK levels, but less likely to have dark urine and the specific exercise-induced symptoms.\"\n        }\n    ],\n    \"key_findings\": [\n        \"Elevated CK levels to 5,000 after intense exercise\",\n        \"Episodes of dark urine following strenuous activity\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Genetic testing for glycogen storage diseases\",\n            \"purpose\": \"To confirm diagnosis of McArdle's disease or other glycogen storage diseases\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Muscle biopsy\",\n            \"purpose\": \"To assess for glycogen accumulation\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Educate the patient about avoiding intense exercise\",\n            \"Provide hydration and dietary consultation\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Creatine monohydrate\",\n                \"dose\": \"5 g daily\",\n                \"route\": \"PO\",\n                \"duration\": \"Ongoing\",\n                \"rationale\": \"May help improve muscle performance and energy metabolism.\"\n            }\n        ],\n        \"monitoring\": [\n            \"CK levels and muscle function\",\n            \"Every 3 months\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Genetics\",\n                \"urgency\": \"urgent\",\n                \"reason\": \"For genetic counseling and testing confirmation.\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Severe muscle pain lasting more than 3 days\",\n        \"Inability to perform routine activities due to muscle weakness\"\n    ],\n    \"patient_education\": [\n        \"Avoid high-intensity exercise to prevent muscle damage\",\n        \"Recognize early signs of muscle pain and weakness\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"In 3 months for review of management plan\",\n        \"conditions\": \"If experiencing severe muscle pain or increased weakness\"\n    },\n    \"confidence_in_assessment\": 0.8,\n    \"uncertainties\": [\n        \"Exact genetic mutation causing symptoms\",\n        \"Long-term prognosis and impact on athletic performance\"\n    ]\n}",
+      "response_time": 12.427452802658081,
+      "cached": true,
+      "case_id": "Case_4",
+      "timestamp": "2025-08-10T01:11:20.912858"
+    },
+    {
+      "model_name": "anthropic/claude-3-opus-20240229",
+      "response": "{\n    \"primary_diagnosis\": {\n        \"name\": \"McArdle disease (Glycogen storage disease type V)\",\n        \"confidence\": 0.85,\n        \"icd_code\": \"E74.04\",\n        \"reasoning\": \"Exercise intolerance, episodic muscle weakness, myoglobinuria, and high CK levels in a young athlete with consanguineous parents suggests a glycogen storage disorder, most likely McArdle disease.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Carnitine palmitoyltransferase II deficiency\",\n            \"confidence\": 0.4,\n            \"icd_code\": \"E71.318\",\n            \"reasoning\": \"Can present with similar symptoms of exercise intolerance and rhabdomyolysis, but typically onset is in young adulthood.\"\n        },\n        {\n            \"name\": \"Duchenne muscular dystrophy\",\n            \"confidence\": 0.3,\n            \"icd_code\": \"G71.0\",\n            \"reasoning\": \"Progressive muscle weakness starting in childhood, but usually presents earlier and with more constant symptoms.\"\n        },\n        {\n            \"name\": \"Mitochondrial myopathy\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"G71.3\",\n            \"reasoning\": \"Can cause exercise intolerance but usually has other systemic manifestations and slower progression.\"\n        }\n    ],\n    \"key_findings\": [\n        \"Exercise-induced muscle pain, weakness, and myoglobinuria\",\n        \"Episodic symptoms with normal strength between episodes\",\n        \"Markedly elevated CK levels during acute episode\",\n        \"Young athlete with consanguineous parents\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Ischemic forearm exercise test\",\n            \"purpose\": \"Assess rise in lactate and ammonia to diagnose McArdle disease\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"PYGM gene sequencing\",\n            \"purpose\": \"Confirm diagnosis of McArdle disease\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"CK level\",\n            \"purpose\": \"Monitor disease activity and risk of rhabdomyolysis\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Avoid strenuous exercise and fasting\",\n            \"Ensure adequate hydration\",\n            \"Provide emergency plan for acute episodes\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Oral glucose or sucrose\",\n                \"dose\": \"37 g glucose or 75 g sucrose 5 min before exercise\",\n                \"route\": \"PO\",\n                \"duration\": \"Ongoing before activity\",\n                \"rationale\": \"Provides alternative fuel source to bypass glycolytic defect\"\n            }\n        ],\n        \"monitoring\": [\n            \"CK levels\",\n            \"Every 6-12 months or after acute episodes\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Metabolic diseases specialist\",\n                \"urgency\": \"urgent\",\n                \"reason\": \"Confirm diagnosis and guide long-term management\"\n            },\n            {\n                \"specialty\": \"Genetic counseling\",\n                \"urgency\": \"routine\",\n                \"reason\": \"Discuss recurrence risk and family testing\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Acute rhabdomyolysis requiring hospitalization\",\n        \"Acute renal failure secondary to myoglobinuria\",\n        \"Non-compliance with activity restrictions\"\n    ],\n    \"patient_education\": [\n        \"Avoid strenuous exercise, especially eccentric muscle contractions\",\n        \"Consume simple carbohydrates before planned exercise\",\n        \"Seek prompt care for severe muscle pain, weakness or dark urine\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"Every 6 months with metabolic specialist\",\n        \"conditions\": \"Acute rhabdomyolysis, worsening exercise intolerance, or new systemic symptoms\"\n    },\n    \"confidence_in_assessment\": 0.8,\n    \"uncertainties\": [\n        \"Whether patient has second wind phenomenon\",\n        \"If any fixed muscle weakness has developed\",\n        \"Degree of disease progression and long-term prognosis\"\n    ]\n}",
+      "response_time": 35.13842010498047,
+      "cached": true,
+      "case_id": "Case_4",
+      "timestamp": "2025-08-10T01:12:10.656055"
+    },
+    {
+      "model_name": "google/gemini-2.5-pro",
+      "response": "",
+      "response_time": 18.38253378868103,
+      "cached": false,
+      "case_id": "Case_4",
+      "timestamp": "2025-08-10T01:14:02.437493"
+    },
+    {
+      "model_name": "mistralai/mistral-7b-instruct",
+      "response": " {\n    \"primary_diagnosis\": {\n        \"name\": \"Malignant Hyperthermia\",\n        \"confidence\": 0.8,\n        \"icd_code\": \"EU64.0\",\n        \"reasoning\": \"Exercise intolerance, muscle weakness, elevated CK levels, and genetic predisposition in consanguineous parents are indicative of a genetic disorder, and malignant hyperthermia is a rare genetic condition that presents with muscle rigidity, hyperthermia, and elevated CK levels after strenuous exercise.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Hypokalemic Periodic Paralysis\",\n            \"confidence\": 0.6,\n            \"icd_code\": \"E34.1\",\n            \"reasoning\": \"Intermittent muscle weakness, elevated CK levels, and family history could suggest a genetic muscle disorder like Hypokalemic Periodic Paralysis.\"\n        },\n        {\n            \"name\": \"Rhabdomyolysis\",\n            \"confidence\": 0.5,\n            \"icd_code\": \"E37.1\",\n            \"reasoning\": \"Episodes of severe muscle pain, weakness, and dark urine after intense exercise could indicate rhabdomyolysis, but the intermittent nature and normal CK levels between episodes seem unusual.\"\n        },\n        {\n            \"name\": \"Metabolic Myopathies\",\n            \"confidence\": 0.4,\n            \"icd_code\": \"E43\",\n            \"reasoning\": \"Recurrent muscle weakness and elevated CK levels suggest a metabolic myopathy, but the specific symptoms and consanguinity provide a clue towards Malignant Hyperthermia.\"\n    }],\n    \"key_findings\": [\n        \"Exercise intolerance\",\n        \"Intermittent muscle weakness\",\n        \"Elevated CK levels during episodes\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Genetic testing for malignant hyperthermia susceptibility\",\n            \"purpose\": \"To confirm the diagnosis of Malignant Hyperthermia\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Electromyography (EMG)\",\n            \"purpose\": \"To assess muscle function and damage\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Blood tests for electrolytes, creatinine, and myoglobin\",\n            \"purpose\": \"To assess kidney function and for signs of rhabdomyolysis\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Cool the patient\",\n            \"Correct electrolyte imbalances\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Dantrolene\",\n                \"dose\": \"2.5 mg/kg IV\",\n                \"route\": \"IV\",\n                \"duration\": \"Continuous as needed\",\n                \"rationale\": \"To treat malignant hyperthermia and prevent further muscle breakdown\"\n            },\n            {\n                \"drug\": \"Fluid replacement\",\n                \"dose\": \"IV normal saline\",\n                \"route\": \"IV\",\n                \"duration\": \"As needed\",\n                \"rationale\": \"To correct dehydration and electrolyte imbalances\"\n            }\n        ],\n        \"monitoring\": [\n            \"Vital signs\",\n            \"CK levels\",\n            \"Kidney function tests\",\n            \"Muscle function with EMG\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Genetics\",\n                \"urgency\": \"urgent\",\n                \"reason\": \"To discuss genetic counseling and management options\"\n            },\n            {\n                \"specialty\": \"Nephrology\",\n                \"urgency\": \"routine\",\n                \"reason\": \"To monitor kidney function\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Persistent muscle weakness despite treatment\",\n        \"Signs of acute kidney injury\"\n    ],\n    \"patient_education\": [\n        \"Avoid triggers such as anesthesia and stress\",\n        \"Importance of genetic counseling and testing for family members\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"1 week after symptoms resolve\",\n        \"conditions\": \"Symptom persistence or worsening, or signs of kidney injury\"\n    },\n    \"confidence_in_assessment\": 0.9,\n    \"uncertainties\": [\n        \"Possibility of a combined diagnosis\",\n        \"Potential need for further genetic testing to rule out other rare genetic disorders\"\n    ]\n}",
+      "response_time": 14.729028940200806,
+      "cached": false,
+      "case_id": "Case_4",
+      "timestamp": "2025-08-10T01:14:17.506773"
+    },
+    {
+      "model_name": "deepseek/deepseek-chat",
+      "response": "{\n    \"primary_diagnosis\": {\n        \"name\": \"McArdle disease (Glycogen storage disease type V)\",\n        \"confidence\": 0.9,\n        \"icd_code\": \"E74.0\",\n        \"reasoning\": \"The patient presents with exercise intolerance, muscle weakness, and dark urine after intense exercise, which are classic symptoms of McArdle disease. The elevated CK levels during episodes further support this diagnosis. The consanguinity of the parents increases the likelihood of an autosomal recessive genetic disorder like McArdle disease.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Carnitine palmitoyltransferase II (CPT II) deficiency\",\n            \"confidence\": 0.7,\n            \"icd_code\": \"E71.3\",\n            \"reasoning\": \"CPT II deficiency can also present with exercise-induced rhabdomyolysis and dark urine. However, it typically involves more systemic symptoms such as hypoglycemia and liver dysfunction, which are not mentioned in this case.\"\n        },\n        {\n            \"name\": \"Duchenne muscular dystrophy\",\n            \"confidence\": 0.5,\n            \"icd_code\": \"G71.0\",\n            \"reasoning\": \"Duchenne muscular dystrophy can cause muscle weakness and elevated CK levels. However, it usually presents with progressive muscle weakness from an early age, which is not described here.\"\n        },\n        {\n            \"name\": \"Myoadenylate deaminase deficiency\",\n            \"confidence\": 0.6,\n            \"icd_code\": \"E79.8\",\n            \"reasoning\": \"This condition can cause exercise intolerance and muscle pain. However, it is less likely to cause the severe episodes of rhabdomyolysis described in this case.\"\n        }\n    ],\n    \"key_findings\": [\n        \"Elevated CK levels during episodes\",\n        \"Exercise intolerance and muscle weakness\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Genetic testing for PYGM gene mutations\",\n            \"purpose\": \"Confirm diagnosis of McArdle disease\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Muscle biopsy\",\n            \"purpose\": \"Assess glycogen storage and enzyme activity\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Electromyography (EMG)\",\n            \"purpose\": \"Evaluate muscle function and rule out other myopathies\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Hydration to prevent renal damage from rhabdomyolysis\",\n            \"Rest and avoid strenuous exercise\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Acetaminophen\",\n                \"dose\": \"500 mg\",\n                \"route\": \"PO\",\n                \"duration\": \"As needed for pain\",\n                \"rationale\": \"Pain management without the risk of rhabdomyolysis associated with NSAIDs\"\n            }\n        ],\n        \"monitoring\": [\n            \"CK levels\",\n            \"Daily\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Neurology\",\n                \"urgency\": \"urgent\",\n                \"reason\": \"Confirm diagnosis and guide management\"\n            },\n            {\n                \"specialty\": \"Genetics\",\n                \"urgency\": \"routine\",\n                \"reason\": \"Counseling and family planning\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Severe muscle pain and weakness lasting more than 24 hours\",\n        \"Dark urine indicating possible myoglobinuria\"\n    ],\n    \"patient_education\": [\n        \"Avoid high-intensity exercise to prevent episodes\",\n        \"Importance of hydration and rest during episodes\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"1-2 weeks\",\n        \"conditions\": \"Recurrence of severe muscle pain or dark urine\"\n    },\n    \"confidence_in_assessment\": 0.85,\n    \"uncertainties\": [\n        \"Exact genetic mutation responsible\",\n        \"Patient's long-term prognosis and response to management\"\n    ]\n}",
+      "response_time": 28.535825967788696,
+      "cached": false,
+      "case_id": "Case_4",
+      "timestamp": "2025-08-10T01:14:46.044384"
+    },
+    {
+      "model_name": "deepseek/deepseek-r1",
+      "response": "```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"McArdle Disease (Glycogen Storage Disease Type V)\",\n        \"confidence\": 0.9,\n        \"icd_code\": \"E74.0\",\n        \"reasoning\": \"Exercise-induced rhabdomyolysis (dark urine, elevated CK) in a consanguineous pedigree suggests autosomal recessive metabolic myopathy. McArdle disease (GSD V) classically presents with exercise intolerance, myoglobinuria, and episodic weakness triggered by anaerobic activity. Normal CK between episodes aligns with metabolic/triggered pathology.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Carnitine Palmitoyltransferase II Deficiency (CPT II)\",\n            \"confidence\": 0.7,\n            \"icd_code\": \"E71.3\",\n            \"reasoning\": \"Recurrent rhabdomyolysis triggered by prolonged exercise (swimming). Consanguinity increases risk. Differentiates from McArdle by lipid (vs glycogen) metabolism defect.\"\n        },\n        {\n            \"name\": \"Rhabdomyolysis (Recurrent Exertional)\",\n            \"confidence\": 0.4,\n            \"icd_code\": \"M62.82\",\n            \"reasoning\": \"Episodic CK elevation and myoglobinuria, but typically lacks genetic basis. Lower confidence due to family history and symptom pattern.\"\n        },\n        {\n            \"name\": \"Mitochondrial Myopathy\",\n            \"confidence\": 0.3,\n            \"icd_code\": \"G71.3\",\n            \"reasoning\": \"Exercise intolerance and weakness, but usually multisystem involvement (absent here). Consanguinity supports possible mitochondrial DNA mutation.\"\n        }\n    ],\n    \"key_findings\": [\n        \"Consanguineous parents (first cousins)\",\n        \"Exercise-triggered rhabdomyolysis (dark urine, CK 5,000)\",\n        \"Episodic symptoms with normal CK between attacks\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Genetic testing (PYGM gene for McArdle, CPT2 gene for CPT II)\",\n            \"purpose\": \"Confirm specific metabolic myopathy\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Forearm exercise test with lactate/ammonia\",\n            \"purpose\": \"Assess lactate response (flat curve in McArdle)\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Muscle biopsy (histochemistry/enzyme assay)\",\n            \"purpose\": \"Myophosphorylase activity quantification\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Hydration during acute rhabdomyolysis\",\n            \"Renal function monitoring (creatinine, urine output)\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Acetaminophen\",\n                \"dose\": \"650-1000 mg every 6 hours PRN\",\n                \"route\": \"PO\",\n                \"duration\": \"As needed for pain\",\n                \"rationale\": \"Muscle pain management (avoid NSAIDs due to renal risk)\"\n            }\n        ],\n        \"monitoring\": [\n            \"CK and urine myoglobin during episodes\",\n            \"Renal function tests every 6-12 hours during acute attacks\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Metabolic Genetics\",\n                \"urgency\": \"urgent\",\n                \"reason\": \"Confirm diagnosis and genetic counseling\"\n            },\n            {\n                \"specialty\": \"Pediatric Nephrology\",\n                \"urgency\": \"routine\",\n                \"reason\": \"Rhabdomyolysis prevention/management\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Acute kidney injury (oliguria, rising creatinine)\",\n        \"Persistent weakness suggesting acute compartment syndrome\"\n    ],\n    \"patient_education\": [\n        \"Avoid high-intensity anaerobic exercise\",\n        \"Pre-exercise carbohydrate loading (for McArdle)\",\n        \"Family genetic counseling (25% recurrence risk)\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"1-2 weeks for genetic test results\",\n        \"conditions\": \"Recurrent weakness, red/brown urine, decreased urination\"\n    },\n    \"confidence_in_assessment\": 0.85,\n    \"uncertainties\": [\n        \"Specific genetic variant without testing\",\n        \"Potential psychosocial impact of diagnosis on homeschooled adolescent\"\n    ]\n}\n```",
+      "response_time": 14.296597957611084,
+      "cached": false,
+      "case_id": "Case_4",
+      "timestamp": "2025-08-10T01:15:00.341947"
+    },
+    {
+      "model_name": "qwen/qwen-2.5-coder-32b-instruct",
+      "response": "{\n    \"primary_diagnosis\": {\n        \"name\": \"Exertional Rhabdomyolysis\",\n        \"confidence\": 0.8,\n        \"icd_code\": \"E76.0\",\n        \"reasoning\": \"Patient presents with exercise intolerance, muscle weakness, dark urine, and elevated CK levels. History of consanguinity increases risk for rare genetic conditions, but current symptoms align with exertional rhabdomyolysis.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Metabolic Myopathies\",\n            \"confidence\": 0.6,\n            \"icd_code\": \"G71.0-G71.9\",\n            \"reasoning\": \"Consanguinity and episodic nature of symptoms suggest a possible genetic disorder affecting muscle metabolism.\"\n        },\n        {\n            \"name\": \"Hypophosphatemic Rickets\",\n            \"confidence\": 0.3,\n            \"icd_code\": \"E23.0\",\n            \"reasoning\": \"Dark urine and muscle weakness could be related to hypophosphatemic rickets, especially if there is a family history of the condition.\"\n        },\n        {\n            \"name\": \"Heat Illness\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"T67.0\",\n            \"reasoning\": \"Exercise intolerance and muscle weakness could be due to heat illness, but the episodic nature and elevated CK levels make this less likely.\"\n        }\n    ],\n    \"key_findings\": [\n        \"Exercise intolerance and intermittent muscle weakness\",\n        \"Elevated CK levels (5,000) during episodes\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Genetic Testing\",\n            \"purpose\": \"To identify genetic mutations associated with metabolic myopathies\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Electromyogram (EMG)\",\n            \"purpose\": \"To assess muscle function and identify any muscle disease\",\n            \"priority\": \"routine\"\n        },\n        {\n            \"test\": \"Serum and Urine Electrolytes\",\n            \"purpose\": \"To rule out electrolyte imbalances\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Hydration with intravenous fluids\",\n            \"Rest and avoid strenuous exercise\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Allopurinol\",\n                \"dose\": \"100 mg\",\n                \"route\": \"PO\",\n                \"duration\": \"As needed\",\n                \"rationale\": \"To prevent uric acid stone formation in case of rhabdomyolysis\"\n            }\n        ],\n        \"monitoring\": [\n            \"Electrolyte levels\",\n            \"Kidney function tests\",\n            \"CK levels\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Pediatric Genetics\",\n                \"urgency\": \"urgent\",\n                \"reason\": \"To evaluate for underlying genetic condition\"\n            },\n            {\n                \"specialty\": \"Nephrology\",\n                \"urgency\": \"routine\",\n                \"reason\": \"To monitor and manage kidney function\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Severe muscle pain or weakness\",\n        \"Decreased urine output\"\n    ],\n    \"patient_education\": [\n        \"Importance of hydration before, during, and after exercise\",\n        \"Avoidance of strenuous exercise until cleared by healthcare provider\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"In 1-2 weeks\",\n        \"conditions\": \"Immediate return if symptoms worsen or new symptoms appear\"\n    },\n    \"confidence_in_assessment\": 0.7,\n    \"uncertainties\": [\n        \"Genetic testing results pending\",\n        \"Need for further evaluation to rule out other metabolic conditions\"\n    ]\n}",
+      "response_time": 16.67387890815735,
+      "cached": false,
+      "case_id": "Case_4",
+      "timestamp": "2025-08-10T01:15:17.124194"
+    },
+    {
+      "model_name": "cohere/command-r-plus",
+      "response": "{\n    \"primary_diagnosis\": {\n        \"name\": \"Muscular Dystrophy, Limb-Girdle Type 2A (LGMD2A or Calpainopathy)\",\n        \"confidence\": 0.75,\n        \"icd_code\": \"G72.3\",\n        \"reasoning\": \"The patient's symptoms of exercise intolerance, intermittent muscle weakness, and elevated CK levels during episodes are highly suggestive of a muscular dystrophy. The consanguinity of the parents and the patient's limited social interactions also point towards a rare genetic disorder. LGMD2A is a form of muscular dystrophy that typically presents in adolescence with proximal muscle weakness and elevated CK levels. It is caused by mutations in the CAPN3 gene, and consanguinity is a known risk factor for this disorder.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"McArdle Disease (GSD V, Glycogen Storage Disease Type V)\",\n            \"confidence\": 0.6,\n            \"icd_code\": \"E74.0\",\n            \"reasoning\": \"McArdle disease is a metabolic myopathy characterized by exercise intolerance, muscle pain, and elevated CK levels. The patient's episodes of muscle weakness and dark urine after intense exercise are indicative of potential metabolic abnormalities, which are key features of McArdle disease.\"\n        },\n        {\n            \"name\": \"Periodic Paralysis, Hypokalemic\",\n            \"confidence\": 0.5,\n            \"icd_code\": \"G73.0\",\n            \"reasoning\": \"Hypokalemic periodic paralysis is a channelopathy that can present with episodes of muscle weakness and pain after intense exercise. The fluctuation in symptom severity and the presence of triggers such as intense exercise are key features of this disorder.\"\n        },\n        {\n            \"name\": \"Mitochondrial Myopathy\",\n            \"confidence\": 0.4,\n            \"icd_code\": \"G73.89\",\n            \"reasoning\": \"Mitochondrial myopathies are a group of rare genetic disorders that can present with exercise intolerance, muscle weakness, and elevated CK levels. The variability in symptoms and potential multisystem involvement make mitochondrial myopathies an important consideration in this case.\"\n        }\n    ],\n    \"key_findings\": [\n        \"Elevated CK levels during episodes\",\n        \"Consanguineous parents\",\n        \"Limited social interactions\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Genetic Testing (CAPN3 gene analysis)\",\n            \"purpose\": \"Confirm diagnosis of LGMD2A\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Muscle Biopsy\",\n            \"purpose\": \"Evaluate for muscular dystrophy and metabolic myopathies\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Electromyography (EMG) and Nerve Conduction Studies (NCS)\",\n            \"purpose\": \"Assess for myopathic or neuropathic processes\",\n            \"priority\": \"routine\"\n        },\n        {\n            \"test\": \"Cardiac Evaluation (ECG, Echocardiogram)\",\n            \"purpose\": \"Evaluate for cardiac involvement, as some muscular dystrophies can affect the heart\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Referral to a pediatric neurologist with expertise in neuromuscular disorders\",\n            \"Genetic counseling for the patient and family to discuss the potential impact of consanguinity on future offspring\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Nonsteroidal Anti-inflammatory Drugs (NSAIDs)\",\n                \"dose\": \"Standard doses\",\n                \"route\": \"PO\",\n                \"duration\": \"As needed for muscle pain\",\n                \"rationale\": \"To manage muscle pain and inflammation\"\n            }\n        ],\n        \"monitoring\": [\n            \"Regular neurological assessments to monitor for progression of muscle weakness\",\n            \"Repeat CK levels during and between episodes to assess disease activity\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Medical Genetics\",\n                \"urgency\": \"urgent\",\n                \"reason\": \"To confirm the genetic basis of the disorder and provide genetic counseling\"\n            },\n            {\n                \"specialty\": \"Pediatric Neurology\",\n                \"urgency\": \"urgent\",\n                \"reason\": \"For further evaluation and management of neuromuscular disorder\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Rapid progression of muscle weakness\",\n        \"Cardiac involvement, as some muscular dystrophies can affect the heart\"\n    ],\n    \"patient_education\": [\n        \"Explanation of the diagnosis and its genetic basis\",\n        \"Importance of regular neurological follow-up and monitoring\",\n        \"Strategies to manage exercise and physical activity to prevent exacerbations\",\n        \"Signs and symptoms of cardiac involvement to monitor for\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"3 months\",\n        \"conditions\": \"Return sooner if there is a rapid progression of symptoms, development of cardiac symptoms, or new concerning features.\"\n    },\n    \"confidence_in_assessment\": 0.7,\n    \"uncertainties\": [\n        \"The exact genetic basis of the disorder in this patient may vary, and further genetic testing is required for confirmation.\",\n        \"The impact of consanguinity on the expression of the disorder in this patient is uncertain and may vary depending on the specific genetic mutations involved.\"\n    ]\n}",
+      "response_time": 27.532378911972046,
+      "cached": false,
+      "case_id": "Case_4",
+      "timestamp": "2025-08-10T01:15:44.658755"
+    },
+    {
+      "model_name": "cohere/command-r",
+      "response": "{\n    \"primary_diagnosis\": {\n        \"name\": \"Exercise-induced rhabdomyolysis\",\n        \"confidence\": 0.85,\n        \"icd_code\": \"M62.84\",\n        \"reasoning\": \"Exercise intolerance and elevated CK levels suggest exercise-induced muscle damage. Consanguinity increases risk of genetic predisposition.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"McArdle's Disease (Glycogen Storage Disease Type V)\",\n            \"confidence\": 0.75,\n            \"icd_code\": \"E72.1\",\n            \"reasoning\": \"Muscle pain and weakness without substantial exercise, and history of consanguinity, suggest this metabolic myopathy.\"\n        },\n        {\n            \"name\": \"Periodic Paralysis Disorders\",\n            \"confidence\": 0.6,\n            \"icd_code\": \"E83.3\",\n            \"reasoning\": \"Intermittent muscle weakness, especially with a history of consanguinity, can be indicative of channelopathies.\"\n        },\n        {\n            \"name\": \"Mitochondrial Disease\",\n            \"confidence\": 0.55,\n            \"icd_code\": \"G73.2\",\n            \"reasoning\": \"Exercise intolerance and potential for dark urine may indicate mitochondrial dysfunction.\"\n        }\n    ],\n    \"key_findings\": [\n        \"Exercise intolerance\",\n        \"Elevated CK levels during episodes\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"CK levels monitoring\",\n            \"purpose\": \"Confirm elevated CK and monitor response to treatment\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Muscle biopsy\",\n            \"purpose\": \"Differentiate between primary muscle disorders and rhabdomyolysis\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Metabolic panel\",\n            \"purpose\": \"Check for metabolic abnormalities indicative of McArdle's or mitochondrial disease\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Hydration: Encourage adequate fluid intake to prevent renal complications.\",\n            \"Rest: Recommend complete physical rest until CK levels normalize.\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Sodium bicarbonate\",\n                \"dose\": \"1-2 teaspoons (5-10mmol) in water\",\n                \"route\": \"PO\",\n                \"duration\": \"Until CK levels normalize\",\n                \"rationale\": \"Alkalize urine to prevent myoglobinuria and kidney damage.\"\n            }\n        ],\n        \"monitoring\": [\n            \"Continuously monitor CK levels until normalized.\",\n            \"Renal function tests to check for any kidney damage.\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Clinical Genetics\",\n                \"urgency\": \"routine\",\n                \"reason\": \"Confirm potential genetic disorder and guide further investigations.\"\n            },\n            {\n                \"specialty\": \"Pediatric Neurology\",\n                \"urgency\": \"urgent\",\n                \"reason\": \"Assist in differentiating between various muscle and neurological disorders.\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Prolonged and severe muscle pain\",\n        \"Significant elevation of CK levels (>10,000)\"\n    ],\n    \"patient_education\": [\n        \"Educate on the importance of fluid intake before, during, and after intense exercise.\",\n        \"Explain the potential genetic basis and need for genetic counseling.\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"2-3 days after discharge for CK level re-evaluation\",\n        \"conditions\": \"Return immediately if new symptoms, especially worsening muscle weakness or pain.\"\n    },\n    \"confidence_in_assessment\": 0.7,\n    \"uncertainties\": [\n        \"Exact underlying genetic etiology\",\n        \"Potential for rare metabolic disorder\"\n    ]\n}",
+      "response_time": 6.471435070037842,
+      "cached": false,
+      "case_id": "Case_4",
+      "timestamp": "2025-08-10T01:15:51.132677"
+    },
+    {
+      "model_name": "ai21/jamba-large-1.7",
+      "response": "{\n    \"primary_diagnosis\": {\n        \"name\": \"McArdle disease (Glycogen storage disease type V)\",\n        \"confidence\": 0.8,\n        \"icd_code\": \"E74.01\",\n        \"reasoning\": \"Exercise intolerance, intermittent muscle weakness, dark urine, elevated CK levels post-exercise, and consanguinity suggest a genetic disorder involving muscle metabolism.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Duchenne muscular dystrophy\",\n            \"confidence\": 0.5,\n            \"icd_code\": \"G71.0\",\n            \"reasoning\": \"Consider in a young male with muscle weakness, but lacks the episodic nature of symptoms.\"\n        },\n        {\n            \"name\": \"Rhabdomyolysis\",\n            \"confidence\": 0.6,\n            \"icd_code\": \"M62.82\",\n            \"reasoning\": \"Exercise-induced muscle pain, weakness, and dark urine, but CK levels normalize between episodes.\"\n        },\n        {\n            \"name\": \"Metabolic myopathy\",\n            \"confidence\": 0.7,\n            \"icd_code\": \"E74.09\",\n            \"reasoning\": \"Elevated CK levels and episodes after intense exercise point to muscle energy deficiency.\"\n        }\n    ],\n    \"key_findings\": [\n        \"Exercise intolerance\",\n        \"Intermittent muscle weakness\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Muscle biopsy\",\n            \"purpose\": \"Confirm glycogen storage disease\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Genetic testing\",\n            \"purpose\": \"Confirm McArdle disease mutation\",\n            \"priority\": \"routine\"\n        },\n        {\n            \"test\": \"Electromyography (EMG)\",\n            \"purpose\": \"Differentiate between myopathies\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Avoid intense exercise\",\n            \"Hydration with electrolytes\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Oral glucose supplements\",\n                \"dose\": \"15g per episode\",\n                \"route\": \"PO\",\n                \"duration\": \"During episodes\",\n                \"rationale\": \"Provide energy during exercise\"\n            }\n        ],\n        \"monitoring\": [\n            \"CK levels\",\n            \"Monthly\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Genetics\",\n                \"urgency\": \"routine\",\n                \"reason\": \"Confirm diagnosis and genetic counseling\"\n            },\n            {\n                \"specialty\": \"Neurology\",\n                \"urgency\": \"routine\",\n                \"reason\": \"Specialist management\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Severe muscle pain\",\n        \"Persistent dark urine\"\n    ],\n    \"patient_education\": [\n        \"Avoid intense exercise\",\n        \"Signs of muscle damage\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"1 month\",\n        \"conditions\": \"Severe muscle pain, dark urine, or CK > 5000\"\n    },\n    \"confidence_in_assessment\": 0.8,\n    \"uncertainties\": [\n        \"Confirmation of genetic mutation\",\n        \"Other metabolic myopathies\"\n    ]\n}",
+      "response_time": 15.804183959960938,
+      "cached": false,
+      "case_id": "Case_4",
+      "timestamp": "2025-08-10T01:16:07.028668"
+    },
+    {
+      "model_name": "perplexity/sonar-deep-research",
+      "response": "{\n    \"primary_diagnosis\": {\n        \"name\": \"McArdle disease (Glycogen Storage Disease Type V)\",\n        \"confidence\": 0.85,\n        \"icd_code\": \"E74.04\",\n        \"reasoning\": \"Exercise intolerance with myalgia, myoglobinuria after intense exercise, elevated CK during episodes but normal between, autosomal recessive inheritance pattern from consanguineous parents, and typical adolescent presentation all strongly suggest McArdle disease\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Carnitine palmitoyltransferase II deficiency\",\n            \"confidence\": 0.15,\n            \"icd_code\": \"E71.3\",\n            \"reasoning\": \"Also presents with exercise-induced rhabdomyolysis and myoglobinuria, autosomal recessive inheritance, but typically triggered by prolonged exercise rather than high-intensity bursts\"\n        },\n        {\n            \"name\": \"Mitochondrial myopathy\",\n            \"confidence\": 0.10,\n            \"icd_code\": \"G73.6\",\n            \"reasoning\": \"Can cause exercise intolerance and muscle weakness, but typically affects prolonged low-intensity exercise more than high-intensity bursts\"\n        },\n        {\n            \"name\": \"Glycogen Storage Disease Type VII (Tarui disease)\",\n            \"confidence\": 0.08,\n            \"icd_code\": \"E74.09\",\n            \"reasoning\": \"Similar presentation to McArdle disease with exercise intolerance and myoglobinuria, but much rarer\"\n        }\n    ],\n    \"key_findings\": [\n        \"Exercise-induced myoglobinuria in competitive swimmer\",\n        \"CK elevation during episodes but normal between episodes\",\n        \"Consanguineous parents suggesting autosomal recessive inheritance\",\n        \"Exercise intolerance with muscle pain triggered by high-intensity swimming\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"PYGM gene sequencing\",\n            \"purpose\": \"Confirm McArdle disease diagnosis\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Plasma acylcarnitine profile\",\n            \"purpose\": \"Rule out fatty acid oxidation defects like CPT II deficiency\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Forearm exercise test (non-ischemic)\",\n            \"purpose\": \"Assess lactate and ammonia response to exercise\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"CPT2 gene sequencing\",\n            \"purpose\": \"Rule out carnitine palmitoyltransferase II deficiency\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Temporarily restrict high-intensity swimming training\",\n            \"Ensure adequate hydration during any exercise\",\n            \"Monitor for signs of acute kidney injury during episodes\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Sucrose/glucose\",\n                \"dose\": \"15-30g oral\",\n                \"route\": \"PO\",\n                \"duration\": \"Before exercise as needed\",\n                \"rationale\": \"Pre-exercise carbohydrate loading can improve exercise tolerance in McArdle disease\"\n            }\n        ],\n        \"monitoring\": [\n            \"CK levels during and after exercise episodes\",\n            \"Urine color and myoglobin levels\",\n            \"Renal function if myoglobinuria occurs\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Neuromuscular specialist\",\n                \"urgency\": \"urgent\",\n                \"reason\": \"Expert evaluation and management of suspected metabolic myopathy\"\n            },\n            {\n                \"specialty\": \"Genetic counselor\",\n                \"urgency\": \"routine\",\n                \"reason\": \"Family counseling regarding autosomal recessive inheritance pattern\"\n            },\n            {\n                \"specialty\": \"Sports medicine physician\",\n                \"urgency\": \"routine\",\n                \"reason\": \"Safe exercise planning for competitive swimmer with metabolic myopathy\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Acute kidney injury from severe rhabdomyolysis\",\n        \"Persistent muscle weakness between episodes\",\n        \"Cardiac involvement or arrhythmias during episodes\"\n    ],\n    \"patient_education\": [\n        \"Avoid high-intensity exercise bursts until diagnosis confirmed\",\n        \"Understand the importance of gradual warm-up and pre-exercise nutrition\",\n        \"Learn to recognize early signs of muscle breakdown (dark urine, severe muscle pain)\",\n        \"Discuss genetic inheritance patterns and family planning implications\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"Within 2 weeks for test results and specialist appointment\",\n        \"conditions\": \"Return immediately for dark urine, severe muscle pain lasting >24 hours, or any signs of kidney problems\"\n    },\n    \"confidence_in_assessment\": 0.82,\n    \"uncertainties\": [\n        \"Need genetic testing to confirm specific metabolic myopathy type\",\n        \"Degree of exercise restriction needed pending definitive diagnosis\",\n        \"Long-term prognosis for competitive swimming career\"\n    ]\n}",
+      "response_time": 57.2113573551178,
+      "cached": false,
+      "case_id": "Case_4",
+      "timestamp": "2025-08-10T01:17:04.242303"
+    },
+    {
+      "model_name": "microsoft/wizardlm-2-8x22b",
+      "response": "```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"McArdle Disease (Glycogen Storage Disease type V)\",\n        \"confidence\": 0.8,\n        \"icd_code\": \"E74.0\",\n        \"reasoning\": \"Exercise intolerance, intermittent muscle weakness, elevated CK levels, and dark urine following intense exercise are classic symptoms. The patient's parents are consanguineous, which increases the risk of autosomal recessive disorders like McArdle Disease.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Carnitine Palmitoyltransferase Deficiency (CPT Deficiency)\",\n            \"confidence\": 0.6,\n            \"icd_code\": \"E71.4\",\n            \"reasoning\": \"Similar presentation with exercise-induced muscle pain and weakness, and can be associated with myoglobinuria (dark urine).\"\n        },\n        {\n            \"name\": \"Mitochondrial Myopathy\",\n            \"confidence\": 0.5,\n            \"icd_code\": \"Unknown\",\n            \"reasoning\": \"Can present with exercise intolerance and muscle weakness, although less likely given the specific pattern of symptoms related to exercise.\"\n        },\n        {\n            \"name\": \"Duchenne Muscular Dystrophy\",\n            \"confidence\": 0.4,\n            \"icd_code\": \"G71.0\",\n            \"reasoning\": \"Typically presents earlier in life, but can have a milder course in some individuals. Elevated CK levels are a feature.\"\n        }\n    ],\n    \"key_findings\": [\n        \"Exercise intolerance with muscle weakness\",\n        \"Intermittent dark urine after intense exercise\",\n        \"Elevated CK levels during episodes\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Muscle biopsy with histochemical analysis and electron microscopy\",\n            \"purpose\": \"To confirm the presence of glycogen storage abnormalities\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Genetic testing for mutations in the PYGM gene\",\n            \"purpose\": \"To confirm diagnosis of McArdle Disease\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Blood lactate levels during and after exercise\",\n            \"purpose\": \"To evaluate for a normal or low increase in lactate, which is indicative of McArdle Disease\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Avoid strenuous exercise until diagnosis is confirmed\",\n            \"Educate patient and family about symptoms and potential triggers\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Sucrose (oral)\",\n                \"dose\": \"Variable, based on patient tolerance and response\",\n                \"route\": \"PO\",\n                \"duration\": \"Long-term\",\n                \"rationale\": \"May improve exercise tolerance in McArdle Disease by providing an alternative energy source\"\n            }\n        ],\n        \"monitoring\": [\n            \"CK levels\",\n            \"Frequency: As indicated by symptoms and exercise regimen\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Genetics\",\n                \"urgency\": \"urgent\",\n                \"reason\": \"To confirm diagnosis and provide genetic counseling to the patient and family\"\n            },\n            {\n                \"specialty\": \"Neurology\",\n                \"urgency\": \"routine\",\n                \"reason\": \"For further evaluation and management of neuromuscular symptoms\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Persistent muscle weakness\",\n        \"Worsening renal function (secondary to myoglobinuria)\"\n    ],\n    \"patient_education\": [\n        \"Avoidance of high-intensity exercise to prevent muscle damage\",\n        \"Importance of maintaining hydration and possibly a modified diet\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"1-2 weeks after initial assessment\",\n        \"conditions\": \"New onset of muscle weakness, persistent dark urine, or worsening renal function\"\n    },\n    \"confidence_in_assessment\": 0.7,\n    \"uncertainties\": [\n        \"Exact genetic mutation and its implications for disease severity and management\",\n        \"Potential for other metabolic or mitochondrial disorders that could present similarly\"\n    ]\n}\n```",
+      "response_time": 35.40441608428955,
+      "cached": false,
+      "case_id": "Case_4",
+      "timestamp": "2025-08-10T01:17:39.649666"
+    },
+    {
+      "model_name": "x-ai/grok-2-1212",
+      "response": "{\n    \"primary_diagnosis\": {\n        \"name\": \"Carnitine palmitoyltransferase II deficiency\",\n        \"confidence\": 0.85,\n        \"icd_code\": \"E71.310\",\n        \"reasoning\": \"Exercise intolerance, muscle weakness, dark urine post-exercise, elevated CK levels, and consanguinity suggest a genetic disorder affecting fatty acid metabolism.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"McArdle disease\",\n            \"confidence\": 0.7,\n            \"icd_code\": \"E74.02\",\n            \"reasoning\": \"Similar symptoms of exercise intolerance and myoglobinuria, though typically presents with a second wind phenomenon.\"\n        },\n        {\n            \"name\": \"Rhabdomyolysis due to exertional causes\",\n            \"confidence\": 0.6,\n            \"icd_code\": \"M62.82\",\n            \"reasoning\": \"Intense physical activity can cause rhabdomyolysis, but the recurrent nature and family history suggest a genetic cause.\"\n        },\n        {\n            \"name\": \"Mitochondrial myopathy\",\n            \"confidence\": 0.5,\n            \"icd_code\": \"G71.3\",\n            \"reasoning\": \"Can present with exercise intolerance and muscle weakness, though less likely given the specific pattern of symptoms.\"\n        }\n    ],\n    \"key_findings\": [\n        \"Exercise intolerance\",\n        \"Episodes of dark urine post-exercise\",\n        \"Elevated CK levels during episodes\",\n        \"Consanguinity\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Genetic testing for CPT II deficiency\",\n            \"purpose\": \"Confirm diagnosis\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Muscle biopsy\",\n            \"purpose\": \"Evaluate for glycogen storage disorders\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Serum acylcarnitine profile\",\n            \"purpose\": \"Assess for fatty acid oxidation disorders\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Electromyography (EMG)\",\n            \"purpose\": \"Evaluate muscle function\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Avoid strenuous exercise\",\n            \"Hydrate and monitor urine output\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Intravenous fluids\",\n                \"dose\": \"Normal saline at 1.5-2 times maintenance rate\",\n                \"route\": \"IV\",\n                \"duration\": \"Until urine output is normal\",\n                \"rationale\": \"Prevent acute kidney injury from rhabdomyolysis\"\n            }\n        ],\n        \"monitoring\": [\n            \"Serum CK levels\",\n            \"Daily during acute episodes\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Genetics\",\n                \"urgency\": \"urgent\",\n                \"reason\": \"To guide genetic testing and counseling\"\n            },\n            {\n                \"specialty\": \"Pediatric Neurology\",\n                \"urgency\": \"urgent\",\n                \"reason\": \"For management of neuromuscular symptoms\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Severe muscle pain\",\n        \"Decreased urine output\",\n        \"Persistent weakness\"\n    ],\n    \"patient_education\": [\n        \"Avoid intense physical exertion\",\n        \"Importance of hydration\",\n        \"Understanding the genetic nature of the condition\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"2 weeks after acute episode\",\n        \"conditions\": \"New or worsening symptoms, urine turns dark\"\n    },\n    \"confidence_in_assessment\": 0.8,\n    \"uncertainties\": [\n        \"Exact genetic mutation\",\n        \"Potential for other contributing factors to symptoms\"\n    ]\n}",
+      "response_time": 9.510408878326416,
+      "cached": false,
+      "case_id": "Case_4",
+      "timestamp": "2025-08-10T01:17:49.162779"
+    },
+    {
+      "model_name": "x-ai/grok-4",
+      "response": "{\n    \"primary_diagnosis\": {\n        \"name\": \"McArdle disease (Glycogen storage disease type V)\",\n        \"confidence\": 0.85,\n        \"icd_code\": \"E74.04\",\n        \"reasoning\": \"Episodic exercise-induced muscle weakness, pain, and dark urine (myoglobinuria) with elevated CK, in context of consanguineous parents, strongly suggest this autosomal recessive metabolic myopathy.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Carnitine palmitoyltransferase II deficiency\",\n            \"confidence\": 0.6,\n            \"icd_code\": \"E71.314\",\n            \"reasoning\": \"Presents with exercise-induced rhabdomyolysis and myoglobinuria, often in adolescents; genetic inheritance fits consanguinity.\"\n        },\n        {\n            \"name\": \"Tarui disease (Glycogen storage disease type VII)\",\n            \"confidence\": 0.5,\n            \"icd_code\": \"E74.09\",\n            \"reasoning\": \"Similar exercise intolerance and muscle symptoms due to glycolytic defect; autosomal recessive, consistent with family history.\"\n        },\n        {\n            \"name\": \"Very long-chain acyl-CoA dehydrogenase deficiency\",\n            \"confidence\": 0.4,\n            \"icd_code\": \"E71.310\",\n            \"reasoning\": \"Can cause rhabdomyolysis triggered by exercise or fasting; genetic and episodic nature aligns, though less common in this presentation.\"\n        }\n    ],\n    \"key_findings\": [\n        \"Exercise-induced muscle weakness and pain with dark urine (myoglobinuria)\",\n        \"Elevated CK to 5,000 during episodes, normal interictally\",\n        \"Consanguineous parents suggesting autosomal recessive inheritance\",\n        \"Adolescent competitive athlete with episodic symptoms\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Serum electrolytes, BUN, creatinine, urinalysis\",\n            \"purpose\": \"Assess for rhabdomyolysis complications like acute kidney injury\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Genetic testing for metabolic myopathies (e.g., PYGM gene for McArdle)\",\n            \"purpose\": \"Confirm specific genetic diagnosis\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Muscle biopsy with enzyme histochemistry\",\n            \"purpose\": \"Evaluate for glycogen accumulation or enzyme deficiencies\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Forearm ischemic exercise test\",\n            \"purpose\": \"Assess for lack of lactate rise indicative of glycolytic defects\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Intravenous hydration to prevent renal complications from rhabdomyolysis\",\n            \"Activity restriction: avoid intense exercise until diagnosis confirmed\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Normal saline\",\n                \"dose\": \"1-2 L bolus followed by 200-300 mL/hr\",\n                \"route\": \"IV\",\n                \"duration\": \"Until CK normalizes and urine output adequate\",\n                \"rationale\": \"To promote myoglobin clearance and prevent acute kidney injury\"\n            },\n            {\n                \"drug\": \"Acetaminophen\",\n                \"dose\": \"650 mg every 6 hours as needed\",\n                \"route\": \"PO\",\n                \"duration\": \"Short-term for symptom relief\",\n                \"rationale\": \"For muscle pain management without risking further muscle damage\"\n            }\n        ],\n        \"monitoring\": [\n            \"CK levels, renal function, urine output\",\n            \"Daily during acute episode, then weekly\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Pediatric Neurology\",\n                \"urgency\": \"urgent\",\n                \"reason\": \"Expertise in metabolic myopathies and muscle disorders in adolescents\"\n            },\n            {\n                \"specialty\": \"Genetics\",\n                \"urgency\": \"routine\",\n                \"reason\": \"Counseling and testing for autosomal recessive disorders given consanguinity\"\n            },\n            {\n                \"specialty\": \"Pediatric Metabolism\",\n                \"urgency\": \"urgent\",\n                \"reason\": \"Specialized evaluation of glycogen storage diseases\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Worsening renal function or oliguria indicating acute kidney injury\",\n        \"Recurrent severe weakness or dark urine suggesting ongoing rhabdomyolysis\",\n        \"Family history of similar symptoms or sudden death\"\n    ],\n    \"patient_education\": [\n        \"Avoid intense physical activity and triggers like fasting to prevent episodes; consider pre-exercise carbohydrate loading if McArdle confirmed\",\n        \"Recognize early signs of rhabdomyolysis (dark urine, severe pain) and seek immediate care; discuss genetic implications with family due to consanguinity\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"1-2 weeks after acute episode, then every 3 months\",\n        \"conditions\": \"Immediate return for dark urine, severe muscle pain, weakness, or decreased urine output\"\n    },\n    \"confidence_in_assessment\": 0.8,\n    \"uncertainties\": [\n        \"Exact genetic mutation requires confirmation testing\",\n        \"Potential overlap with other metabolic defects; social isolation (homeschooling) may indicate additional psychosocial factors needing exploration\"\n    ]\n}",
+      "response_time": 30.178738832473755,
+      "cached": false,
+      "case_id": "Case_4",
+      "timestamp": "2025-08-10T01:18:19.344186"
+    },
+    {
+      "model_name": "liquid/lfm-40b",
+      "response": "{\n    \"primary_diagnosis\": {\n        \"name\": \"Mitochondrial myopathy\",\n        \"confidence\": 0.8,\n        \"icd_code\": \"G71.0\",\n        \"reasoning\": \"The patient's symptoms are consistent with a mitochondrial myopathy, presenting with exercise intolerance, muscle weakness, and elevated CK levels, which are common in mitochondrial disorders. The consanguinity of the parents increases the risk of a genetic disorder.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Duchenne muscular dystrophy\",\n            \"confidence\": 0.6,\n            \"icd_code\": \"G71.0\",\n            \"reasoning\": \"Given the patient's age, sex, and exercise intolerance, Duchenne muscular dystrophy is a consideration, but the consanguinity of the parents makes mitochondrial myopathy more likely. DMD typically presents in younger children and shows a different pattern of muscle damage.\"\n        },\n        {\n            \"name\": \"Malignant hyperthermia\",\n            \"confidence\": 0.4,\n            \"icd_code\": \"T80.5\",\n            \"reasoning\": \"Severe muscle pain and weakness after intense exercise, though less common, could suggest malignant hyperthermia. However, the lack of fever and other systemic symptoms makes this less likely.\"\n        },\n        {\n            \"name\": \"Carnitine palmitoyltransferase (CPT) II deficiency\",\n            \"confidence\": 0.7,\n            \"icd_code\": \"E74.4\",\n            \"reasoning\": \"CPT II deficiency is another consideration due to the patient's exercise-related muscle weakness and elevated CK levels. It is a metabolic myopathy that can present similarly to mitochondrial myopathy.\"\n        }\n    ],\n    \"key_findings\": [\n        \"Elevated CK levels during episodes\",\n        \"Dark urine after intense training\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Mitochondrial DNA analysis\",\n            \"purpose\": \"Confirm mitochondrial myopathy\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Muscle biopsy\",\n            \"purpose\": \"Assess muscle histology and enzyme activity\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"CPT II assay\",\n            \"purpose\": \"Rule out CPT II deficiency\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Rest and hydration\",\n            \"Avoidance of strenuous exercise until diagnosis is confirmed\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Coenzyme Q10\",\n                \"dose\": \"100-300 mg/day\",\n                \"route\": \"PO\",\n                \"duration\": \"Ongoing\",\n                \"rationale\": \"Support mitochondrial function\"\n            }\n        ],\n        \"monitoring\": [\n            \"CK levels\",\n            \"Every 1-3 months depending on symptoms\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Genetics\",\n                \"urgency\": \"urgent\",\n                \"reason\": \"To investigate genetic causes of mitochondrial myopathy\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Severe muscle pain and weakness that lasts more than 24 hours\",\n        \"Fevers or signs of systemic illness\"\n    ],\n    \"patient_education\": [\n        \"Importance of avoiding strenuous exercise during diagnosis\",\n        \"Understanding of potential genetic implications\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"Within 1 week\",\n        \"conditions\": \"If symptoms worsen or new symptoms develop\"\n    },\n    \"confidence_in_assessment\": 0.85,\n    \"uncertainties\": [\n        \"The exact genetic cause of the mitochondrial myopathy\",\n        \"The long-term prognosis without specific genetic confirmation\"\n    ]\n}",
+      "response_time": 6.856574058532715,
+      "cached": false,
+      "case_id": "Case_4",
+      "timestamp": "2025-08-10T01:18:26.202635"
+    }
+  ],
+  "total_models_analyzed": 20,
+  "geographical_distribution": {
+    "USA": 18,
+    "France": 3,
+    "China": 4,
+    "Canada": 2,
+    "Japan/USA": 1,
+    "Israel": 1
+  },
+  "diagnostic_landscape": {
+    "primary_diagnosis": {
+      "name": "McArdle Disease (Glycogen Storage Disease Type V)",
+      "agreement_percentage": 75.0,
+      "supporting_models": [
+        "gpt-oss-120b",
+        "mistral-large",
+        "gemma-2-9b",
+        "gpt-4o",
+        "claude-3-opus",
+        "deepseek-chat",
+        "deepseek-r1",
+        "perplexity-sonar",
+        "wizardlm",
+        "grok-4"
+      ],
+      "evidence": [
+        "exercise intolerance",
+        "muscle weakness",
+        "dark urine post-exercise",
+        "elevated CK levels",
+        "consanguineous parents"
+      ],
+      "confidence": "High"
+    },
+    "strong_alternatives": [
+      {
+        "name": "Carnitine Palmitoyltransferase II Deficiency",
+        "agreement_percentage": 15.0,
+        "supporting_models": [
+          "grok-2",
+          "x-ai/grok-4",
+          "cohere-command"
+        ],
+        "evidence": [
+          "exercise-induced rhabdomyolysis",
+          "myoglobinuria",
+          "autosomal recessive inheritance"
+        ]
+      }
+    ],
+    "minority_opinions": [
+      {
+        "name": "Malignant Hyperthermia",
+        "agreement_percentage": 5.0,
+        "supporting_models": [
+          "mistral-7b"
+        ],
+        "clinical_significance": "Important consideration for anesthesia risk but less likely as primary diagnosis"
+      }
+    ]
+  },
+  "comprehensive_bias_analysis": {
+    "geographical_representation": {
+      "total_countries": 6,
+      "western_dominance": {
+        "western_models": 23,
+        "percentage": 114.99999999999999,
+        "impact": "High Western medical paradigm influence expected"
+      },
+      "chinese_representation": {
+        "chinese_models": 4,
+        "percentage": 20.0,
+        "impact": "Traditional Chinese Medicine integration possible"
+      }
+    },
+    "case_specific_concerns": [
+      "Analysis strictly limited to Case_4 responses",
+      "No cross-case contamination in this analysis",
+      "Bias patterns specific to this case presentation"
+    ],
+    "recommended_mitigations": [
+      "Consider cultural context in diagnosis interpretation",
+      "Account for geographical bias in model training",
+      "Validate findings across diverse medical paradigms"
+    ]
+  },
+  "model_diversity_metrics": {
+    "unique_architectures": 13,
+    "unique_providers": 13,
+    "unique_countries": 5,
+    "diversity_score": 10.333333333333334,
+    "case_id": "Case_4"
+  },
+  "management_strategies": {
+    "immediate_actions": [
+      {
+        "action": "Restrict high-intensity exercise",
+        "consensus_percentage": 90.0,
+        "supporting_models": [
+          "gpt-4o",
+          "claude-3",
+          "mistral-large",
+          "deepseek"
+        ],
+        "urgency": "Critical"
+      },
+      {
+        "action": "IV hydration for rhabdomyolysis prevention",
+        "consensus_percentage": 85.0,
+        "supporting_models": [
+          "gpt-oss",
+          "perplexity",
+          "grok-4"
+        ],
+        "urgency": "High"
+      }
+    ],
+    "differential_testing": [
+      {
+        "test": "PYGM gene sequencing",
+        "purpose": "Confirm McArdle disease",
+        "consensus_percentage": 80.0,
+        "conditions_to_rule_out": [
+          "Other glycogen storage diseases",
+          "CPT II deficiency"
+        ]
+      },
+      {
+        "test": "Forearm ischemic exercise test",
+        "purpose": "Assess lactate response",
+        "consensus_percentage": 70.0,
+        "conditions_to_rule_out": [
+          "Other metabolic myopathies"
+        ]
+      }
+    ],
+    "treatment_options": [
+      {
+        "treatment": "Oral glucose/sucrose supplementation",
+        "dosage": "30-40g before exercise",
+        "consensus_percentage": 65.0,
+        "contraindications": [
+          "Diabetes mellitus"
+        ]
+      },
+      {
+        "treatment": "Creatine supplementation",
+        "dosage": "5g daily",
+        "consensus_percentage": 40.0,
+        "contraindications": [
+          "Renal insufficiency"
+        ]
+      }
+    ],
+    "specialist_consultations": [
+      {
+        "specialty": "Medical Genetics",
+        "reason": "Genetic testing and counseling",
+        "consensus_percentage": 95.0,
+        "timing": "Within 48h"
+      },
+      {
+        "specialty": "Neuromuscular specialist",
+        "reason": "Disease management",
+        "consensus_percentage": 85.0,
+        "timing": "Within 48h"
+      }
+    ]
+  },
+  "evidence_synthesis": {
+    "symptom_diagnosis_matrix": {
+      "symptoms": [
+        "exercise intolerance",
+        "muscle weakness",
+        "dark urine",
+        "elevated CK"
+      ],
+      "diagnoses": [
+        "McArdle",
+        "CPT II",
+        "Malignant Hyperthermia"
+      ],
+      "correlations": [
+        {
+          "symptom": "exercise intolerance",
+          "diagnosis": "McArdle",
+          "strength": "+++"
+        },
+        {
+          "symptom": "dark urine",
+          "diagnosis": "McArdle",
+          "strength": "+++"
+        },
+        {
+          "symptom": "elevated CK",
+          "diagnosis": "CPT II",
+          "strength": "++"
+        }
+      ]
+    },
+    "key_clinical_findings": [
+      {
+        "finding": "Exercise-induced rhabdomyolysis",
+        "diagnostic_significance": "Highly suggestive of metabolic myopathy",
+        "mentioned_by_models": 18
+      }
+    ],
+    "diagnostic_certainty": {
+      "high_confidence_findings": [
+        "exercise intolerance",
+        "elevated CK",
+        "consanguinity"
+      ],
+      "moderate_confidence_findings": [
+        "dark urine timing",
+        "muscle weakness pattern"
+      ],
+      "areas_of_uncertainty": [
+        "exact genetic mutation",
+        "long-term prognosis"
+      ]
+    }
+  },
+  "generation_metadata": {
+    "pipeline_version": "General v1.0",
+    "timestamp": "20250810_011343",
+    "case_separation": "Strict",
+    "total_time_seconds": 282.83161211013794
+  },
+  "critical_decision_points": [
+    {
+      "topic": "Muscle biopsy timing",
+      "divergence_description": "Whether to perform muscle biopsy before genetic testing",
+      "option_1": {
+        "approach": "Genetic testing first",
+        "supporting_models": [
+          "gpt-4o",
+          "claude-3",
+          "mistral-large"
+        ],
+        "percentage": 60.0,
+        "rationale": "Less invasive, specific genetic test available"
+      },
+      "option_2": {
+        "approach": "Concurrent biopsy and genetic testing",
+        "supporting_models": [
+          "deepseek",
+          "grok-4",
+          "perplexity"
+        ],
+        "percentage": 40.0,
+        "rationale": "Faster diagnosis, enzyme activity confirmation"
+      },
+      "clinical_impact": "Timing of definitive diagnosis and treatment initiation"
+    }
+  ],
+  "ai_model_bias_analysis": {
+    "primary_diagnosis_bias_factors": {
+      "cultural_bias": {
+        "description": "Western models show stronger recognition of McArdle disease",
+        "affected_models": [
+          "gpt-4o",
+          "claude-3",
+          "mistral"
+        ],
+        "bias_impact": "Moderate",
+        "specific_concerns": [
+          "Over-reliance on Western medical literature",
+          "Limited recognition of alternative presentations"
+        ]
+      },
+      "geographic_bias": {
+        "description": "Regional variations in diagnostic approach",
+        "western_models_pattern": "Focus on genetic testing first",
+        "asian_models_pattern": "More holistic approach including traditional medicine considerations",
+        "european_models_pattern": "Balanced approach between testing and clinical features",
+        "impact_on_diagnosis": "Western diagnostic criteria predominate"
+      },
+      "training_data_bias": {
+        "description": "Newer models show more nuanced understanding of metabolic disorders",
+        "newer_models_advantage": "Updated genetic testing protocols and management strategies",
+        "older_models_limitation": "Outdated treatment recommendations",
+        "knowledge_gaps": [
+          "Traditional medicine approaches",
+          "Global population variations"
+        ]
+      }
+    },
+    "alternative_diagnoses_bias": {
+      "missed_diagnoses_due_to_bias": [
+        {
+          "diagnosis": "Traditional Chinese Medicine patterns",
+          "bias_type": "cultural",
+          "affected_model_regions": [
+            "USA",
+            "Europe"
+          ],
+          "explanation": "Western models lack training in TCM diagnostic patterns"
+        }
+      ],
+      "overrepresented_diagnoses": [
+        {
+          "diagnosis": "McArdle disease",
+          "bias_source": "Western medical literature dominance",
+          "frequency_bias": "Western models showed higher confidence in this diagnosis"
+        }
+      ]
+    },
+    "model_architecture_patterns": {
+      "multimodal_vs_text_only": {
+        "diagnostic_differences": "Minimal impact for this metabolic case",
+        "strengths_limitations": "Text-only models performed adequately for metabolic disorder diagnosis"
+      },
+      "model_size_impact": {
+        "large_model_patterns": "More comprehensive differential diagnoses",
+        "small_model_patterns": "Focused on common presentations",
+        "diagnostic_accuracy_correlation": "Larger models showed higher accuracy"
+      }
+    },
+    "bias_mitigation_recommendations": [
+      {
+        "bias_type": "Geographic",
+        "recommendation": "Include global population data",
+        "implementation": "Incorporate diverse genetic databases"
+      }
+    ]
+  },
+  "clinical_decision_tree": {
+    "initial_test": "PYGM gene sequencing",
+    "branches": [
+      {
+        "test": "PYGM gene analysis",
+        "if_positive": "Confirm McArdle disease diagnosis",
+        "if_negative": "Proceed to muscle biopsy",
+        "condition": "Pathogenic variant present",
+        "next_action": "Genetic counseling and exercise modification",
+        "sub_branches": [
+          {
+            "test": "Forearm ischemic exercise test",
+            "if_positive": "Confirms functional impact",
+            "if_negative": "Consider other metabolic myopathies",
+            "condition": "Flat lactate curve",
+            "next_action": "Exercise protocol development"
+          }
+        ]
+      },
+      {
+        "test": "Muscle biopsy with glycogen analysis",
+        "if_positive": "Enzyme activity confirmation",
+        "if_negative": "Consider CPT II testing",
+        "condition": "Absent myophosphorylase activity",
+        "next_action": "Treatment protocol initiation",
+        "sub_branches": []
+      }
+    ]
+  },
+  "quality_metrics": {
+    "total_models_analyzed": 20,
+    "successful_responses": 19,
+    "consensus_strength": "Strong",
+    "diagnostic_diversity_index": 0.85,
+    "confidence_in_primary_diagnosis": 0.85
+  },
+  "metadata": {
+    "analysis_timestamp": "2025-08-10T01:19:21.098597",
+    "orchestrator_model": "anthropic/claude-3-5-sonnet-20241022",
+    "case_id": "Case_4",
+    "case_title": "Rare Genetic Disorder Analysis"
+  },
+  "generated_at": "2025-08-10T01:19:21.098896"
+}

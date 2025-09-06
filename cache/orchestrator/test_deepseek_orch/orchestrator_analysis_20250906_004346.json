@@ -1,0 +1,1587 @@
+{
+  "case_id": "test_deepseek_orch",
+  "case_title": "test_deepseek_orch",
+  "case_content": "TEST_DEEPSEEK: A 45-year-old presents with chest pain.\n",
+  "model_responses": [
+    {
+      "model_name": "openai/gpt-4o",
+      "response": "```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"Acute Myocardial Infarction\",\n        \"confidence\": 0.9,\n        \"icd_code\": \"I21.9\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Gastroesophageal Reflux Disease\",\n            \"confidence\": 0.3,\n            \"icd_code\": \"K21.9\"\n        },\n        {\n            \"name\": \"Costochondritis\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"M94.0\"\n        },\n        {\n            \"name\": \"Pulmonary Embolism\",\n            \"confidence\": 0.4,\n            \"icd_code\": \"I26.9\"\n        },\n        {\n            \"name\": \"Pneumothorax\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"J93.9\"\n        }\n    ],\n    \"key_findings\": [\"Chest pain\", \"Age 45\", \"Acute presentation\"],\n    \"tests\": [\n        {\n            \"test\": \"Electrocardiogram (ECG)\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Troponin levels\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Chest X-ray\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"D-dimer\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Echocardiogram\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management\": {\n        \"immediate\": [\"Administer oxygen\", \"Monitor vital signs\", \"Establish IV access\"],\n        \"medications\": [\"Aspirin: 325 mg, oral\", \"Nitroglycerin: 0.4 mg, sublingual\"],\n        \"consultations\": [\"Cardiology: urgent\"]\n    },\n    \"red_flags\": [\"Sudden onset of severe chest pain\", \"Radiating pain to arm or jaw\", \"Shortness of breath\", \"Diaphoresis\"]\n}\n```",
+      "response_time": 4.698062181472778,
+      "cached": false,
+      "case_id": "test_deepseek_orch",
+      "timestamp": "2025-09-06T00:38:21.665261",
+      "tokens_used": 706,
+      "input_tokens": 255,
+      "output_tokens": 451
+    },
+    {
+      "model_name": "openai/gpt-4o-mini",
+      "response": "{\n    \"primary_diagnosis\": {\n        \"name\": \"Acute Coronary Syndrome\",\n        \"confidence\": 0.85,\n        \"icd_code\": \"I20.9\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Pulmonary Embolism\",\n            \"confidence\": 0.75,\n            \"icd_code\": \"I26.9\"\n        },\n        {\n            \"name\": \"Aortic Dissection\",\n            \"confidence\": 0.70,\n            \"icd_code\": \"I71.0\"\n        },\n        {\n            \"name\": \"Pneumothorax\",\n            \"confidence\": 0.60,\n            \"icd_code\": \"J93.9\"\n        },\n        {\n            \"name\": \"Gastroesophageal Reflux Disease\",\n            \"confidence\": 0.50,\n            \"icd_code\": \"K21.9\"\n        },\n        {\n            \"name\": \"Costochondritis\",\n            \"confidence\": 0.40,\n            \"icd_code\": \"M54.81\"\n        }\n    ],\n    \"key_findings\": [\n        \"Severe chest pain\",\n        \"Radiating pain to left arm\",\n        \"Shortness of breath\",\n        \"Diaphoresis\"\n    ],\n    \"tests\": [\n        {\n            \"test\": \"ECG\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Cardiac Enzymes (Troponin)\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Chest X-ray\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"CT Angiography\",\n            \"priority\": \"urgent\"\n        }\n    ],\n    \"management\": {\n        \"immediate\": [\n            \"Administer oxygen\",\n            \"Establish IV access\",\n            \"Start monitoring vital signs\"\n        ],\n        \"medications\": [\n            \"Aspirin: 325 mg, oral\",\n            \"Nitroglycerin: 0.4 mg, sublingual\",\n            \"Morphine: 2-4 mg, IV as needed\"\n        ],\n        \"consultations\": [\n            \"Cardiology: urgent\"\n        ]\n    },\n    \"red_flags\": [\n        \"Severe, persistent chest pain\",\n        \"Acute onset of symptoms\",\n        \"Signs of hemodynamic instability\"\n    ]\n}",
+      "response_time": 9.79407286643982,
+      "cached": false,
+      "case_id": "test_deepseek_orch",
+      "timestamp": "2025-09-06T00:38:31.459635",
+      "tokens_used": 761,
+      "input_tokens": 255,
+      "output_tokens": 506
+    },
+    {
+      "model_name": "openai/gpt-oss-120b",
+      "response": "We need to analyze a brief case: 45-year-old with chest pain. Very limited info. We must produce primary diagnosis with confidence, ICD code. Provide differential 3-5. Include key findings (we have limited). We can infer typical possibilities: acute coronary syndrome (unstable angina/NSTEMI), pulmonary embolism, aortic dissection, pericarditis, gastroesophageal reflux disease, musculoskeletal.\n\nGiven age 45, chest pain, we need to consider life-threatening first.\n\nWe need to list tests: ECG (immediate), troponin (immediate), chest X-ray (urgent), D-dimer (if suspicion), CT angiography (if high suspicion), etc.\n\nManagement: immediate: MONA? Actually for ACS: aspirin, nitroglycerin, oxygen if needed, morphine. Provide medication doses.\n\nRed flags: radiation to arm/jaw, diaphoresis, hypotension, etc.\n\nWe need to output JSON only.\n\nWe must include confidence scores.\n\nPrimary diagnosis maybe \"Acute coronary syndrome (unstable angina/NSTEMI)\" with moderate confidence maybe 0.6 given limited info.\n\nDifferentials: Pulmonary embolism, Aortic dissection, Pericarditis, Gastroesophageal reflux disease.\n\nProvide ICD-10 codes:\n\n- I20.0 Unstable angina\n- I21.9 Acute myocardial infarction, unspecified\n- I26.99 Other pulmonary embolism without acute cor pulmonale\n- I71.0 Dissection of aorta\n- I30.1 Acute pericarditis\n- K21.9 Gastro-esophageal reflux disease without esophagitis\n\nKey findings: chest pain (characteristics unknown), age 45, etc.\n\nBut we need key findings list; we have scant info. Could list \"Chest pain\", \"Age 45\". Might also include \"No further info\".\n\nTests: \"12-lead ECG\" immediate, \"Cardiac troponin I/T\" immediate, \"Chest X-ray\" urgent, \"D-dimer\" urgent if suspicion, \"CT pulmonary angiography\" urgent if D-dimer high, \"CT angiography of chest\" urgent if suspicion of dissection.\n\nManagement: immediate: \"Obtain ECG\", \"Administer aspirin 325 mg PO\", \"Administer nitroglycerin 0.4 mg SL q5min PRN\", \"Oxygen if SpO2 <94%\". Medications: aspirin 325 mg PO once, nitroglycerin 0.4 mg SL q5 min up to 3 doses, heparin (e.g., enoxaparin 1 mg/kg SC q12h), beta-blocker (metoprolol 5 mg IV q5 min up to 15 mg). Consultations: Cardiology: urgent, Pulmonology: if PE, Vascular surgery: if dissection.\n\nRed flags: \"Pain radiating to left arm/jaw\", \"Diaphoresis\", \"Hypotension\", \"Syncope\", \"Sudden onset severe chest pain\".\n\nReturn only JSON. Ensure proper formatting.\n\nLet's craft JSON.\n\n\n\n---\n\n{\n    \"primary_diagnosis\": {\n        \"name\": \"Acute coronary syndrome (unstable angina/NSTEMI)\",\n        \"confidence\": 0.62,\n        \"icd_code\": \"I20.0\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Pulmonary embolism\",\n            \"confidence\": 0.18,\n            \"icd_code\": \"I26.99\"\n        },\n        {\n            \"name\": \"Aortic dissection\",\n            \"confidence\": 0.12,\n            \"icd_code\": \"I71.0\"\n        },\n        {\n            \"name\": \"Acute pericarditis\",\n            \"confidence\": 0.05,\n            \"icd_code\": \"I30.1\"\n        },\n        {\n            \"name\": \"Gastro\u2011esophageal reflux disease\",\n            \"confidence\": 0.03,\n            \"icd_code\": \"K21.9\"\n        }\n    ],\n    \"key_findings\": [\n        \"Chest pain\",\n        \"Age 45 years\"\n    ],\n    \"tests\": [\n        {\n            \"test\": \"12\u2011lead ECG\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Cardiac troponin I/T (serial)\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Chest X\u2011ray\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"D\u2011dimer (if PE suspected)\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"CT pulmonary angiography (if D\u2011dimer positive)\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"CT angiography of chest (if aortic dissection suspected)\",\n            \"priority\": \"urgent\"\n        }\n    ],\n    \"management\": {\n        \"immediate\": [\n            \"Place patient on cardiac monitor\",\n            \"Obtain 12\u2011lead ECG within 10 minutes\",\n            \"Administer aspirin 325\u202fmg PO chewed\",\n            \"Give nitroglycerin 0.4\u202fmg SL every 5\u202fmin PRN (max 3 doses)\",\n            \"Provide supplemental O\u2082 if SpO\u2082 <94%\"\n        ],\n        \"medications\": [\n            \"Aspirin: 325\u202fmg PO once\",\n            \"Nitroglycerin: 0.4\u202fmg SL q5\u202fmin PRN (max 3 doses)\",\n            \"Enoxaparin: 1\u202fmg/kg SC q12\u202fh (or unfractionated heparin bolus 60\u202fU/kg IV)\",\n            \"Metoprolol tartrate: 5\u202fmg IV over 2\u202fmin q5\u202fmin up to 15\u202fmg (if no contraindications)\"\n        ],\n        \"consultations\": [\n            \"Cardiology: urgent\",\n            \"Pulmonology: if PE becomes likely\",\n            \"Cardiothoracic surgery/Vascular surgery: if aortic dissection confirmed\"\n        ]\n    },\n    \"red_flags\": [\n        \"Pain radiating to left arm, neck, or jaw\",\n        \"Diaphoresis\",\n        \"Hypotension or shock\",\n        \"Syncope or near\u2011syncope\",\n        \"Sudden onset severe tearing chest pain\"\n    ]\n}",
+      "response_time": 13.887694120407104,
+      "cached": false,
+      "case_id": "test_deepseek_orch",
+      "timestamp": "2025-09-06T00:38:45.348219",
+      "tokens_used": 1666,
+      "input_tokens": 319,
+      "output_tokens": 1347
+    },
+    {
+      "model_name": "google/gemini-2.5-pro",
+      "response": "**Analyzing the Case's Core**\n\nI've started by taking apart the initial input, identifying the key elements. Patient details are down, 45 years old, and I'm focusing on the critical complaint - chest pain. Now the real work begins, I'm beginning to explore and define the complexities of the chest pain, looking for the underlying causes.\n\n\n**Pinpointing Potential Risks**\n\nI'm now classifying the potential diagnoses to separate the life-threatening risks. ACS, PE, and aortic dissection are at the forefront, given the patient's age and symptom. My focus will now be on how to begin ruling these in/out, considering this initial information. Tension pneumothorax, though possible, is a lower priority at this juncture.\n\n\n**Constructing a Diagnostic Framework**\n\nI've now formalized the diagnostic approach. ACS takes center stage given the potential severity, while I've fleshed out the differential diagnosis with a prioritized list. I'm also thinking about what kind of evidence would be most useful to rule the most dangerous possibilities in/out. Chest pain's an expansive field, but I'm narrowing the lens.\n\n\n**Mapping the Initial Framework**\n\nI've solidified my diagnostic approach, beginning with the recognition that ACS needs primary focus. I've created a specific ICD-10 code and a confidence rating. I've also begun listing out the differential diagnoses, like PE, GERD, and musculoskeletal concerns. My thought process is now firmly on how I'll assess the confidence of each diagnosis given the limitations.\n\n\n**Structuring the Next Steps**\n\nI'm now creating the framework for gathering clinical data, prioritizing the critical investigations. ECG and troponin are essential and immediate, while a chest X-ray provides rapid insight. BMP and CBC come next, to evaluate overall health. I'm going to consider these steps in detail, because I have no other data.\n\n\n**Constructing a Preliminary Approach**\n\nI've broken down the provided details, zeroing in on the key complaint and the patient's age to inform my initial differential. The age is significant, and I'm prioritizing potentially lethal causes like ACS, PE, and aortic dissection. I'm setting up a confidence scale and preparing to select a set of tests to gather the most relevant data.\n\n\n**Developing the Complete Picture**\n\nI'm now digging into the patient's clinical data to build a full picture. Age and chest pain inform my initial concerns about ACS, PE, and aortic dissection. I'm setting confidence ratings and making the choices of tests to gather a fuller picture of the information.\n\n\n**Formulating the Action Plan**\n\nI've consolidated my findings and am focusing on the necessary tests, prioritizing those that will immediately rule out the most dangerous conditions like ACS. I'm building the management plan around the assumption of ACS, including medication and consultation protocols. I've also listed critical red flags for prompt recognition. Finally, the structure of the JSON is ready.\n\n\n",
+      "response_time": 19.569530963897705,
+      "cached": false,
+      "case_id": "test_deepseek_orch",
+      "timestamp": "2025-09-06T00:39:05.596391",
+      "tokens_used": 2279,
+      "input_tokens": 280,
+      "output_tokens": 1999
+    },
+    {
+      "model_name": "google/gemini-2.5-flash",
+      "response": "```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"Unspecified chest pain\",\n        \"confidence\": 0.6,\n        \"icd_code\": \"R07.9\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Acute myocardial infarction\",\n            \"confidence\": 0.7,\n            \"icd_code\": \"I21.9\"\n        },\n        {\n            \"name\": \"Angina pectoris, unspecified\",\n            \"confidence\": 0.6,\n            \"icd_code\": \"I20.9\"\n        },\n        {\n            \"name\": \"Gastroesophageal reflux disease with esophagitis\",\n            \"confidence\": 0.4,\n            \"icd_code\": \"K21.0\"\n        },\n        {\n            \"name\": \"Pneumonia, unspecified organism\",\n            \"confidence\": 0.3,\n            \"icd_code\": \"J18.9\"\n        }\n    ],\n    \"key_findings\": [\n        \"45-year-old patient\",\n        \"Presents with chest pain\"\n    ],\n    \"tests\": [\n        {\n            \"test\": \"Electrocardiogram (ECG)\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Cardiac Troponin I/T\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Complete Blood Count (CBC)\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Basic Metabolic Panel (BMP)\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Chest X-ray (CXR)\",\n            \"priority\": \"urgent\"\n        }\n    ],\n    \"management\": {\n        \"immediate\": [\n            \"Oxygen supplementation if SpO2 < 94%\",\n            \"Establish IV access\",\n            \"Pain control\"\n        ],\n        \"medications\": [\n            \"Aspirin: 325 mg, PO (chewed)\",\n            \"Nitroglycerin: 0.4 mg, SL (if no contraindications and pain persists)\",\n            \"Morphine: 2-4 mg, IV (if pain severe and unresponsive to nitroglycerin)\"\n        ],\n        \"consultations\": [\n            \"Cardiology: urgent\"\n        ]\n    },\n    \"red_flags\": [\n        \"Chest pain in a 45-year-old\",\n        \"Potential for acute coronary syndrome\"\n    ]\n}\n```",
+      "response_time": 2.7165110111236572,
+      "cached": false,
+      "case_id": "test_deepseek_orch",
+      "timestamp": "2025-09-06T00:39:08.313338",
+      "tokens_used": 869,
+      "input_tokens": 280,
+      "output_tokens": 589
+    },
+    {
+      "model_name": "google/gemini-2.5-flash-lite",
+      "response": "```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"Unspecified chest pain\",\n        \"confidence\": 0.9,\n        \"icd_code\": \"R07.9\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Acute myocardial infarction\",\n            \"confidence\": 0.7,\n            \"icd_code\": \"I21.9\"\n        },\n        {\n            \"name\": \"Pulmonary embolism\",\n            \"confidence\": 0.6,\n            \"icd_code\": \"I26.99\"\n        },\n        {\n            \"name\": \"Aortic dissection\",\n            \"confidence\": 0.5,\n            \"icd_code\": \"I72.0\"\n        },\n        {\n            \"name\": \"Pericarditis\",\n            \"confidence\": 0.4,\n            \"icd_code\": \"I30.9\"\n        },\n        {\n            \"name\": \"Gastroesophageal reflux disease\",\n            \"confidence\": 0.3,\n            \"icd_code\": \"K21.9\"\n        }\n    ],\n    \"key_findings\": [\n        \"45-year-old male\",\n        \"Chest pain\"\n    ],\n    \"tests\": [\n        {\n            \"test\": \"Electrocardiogram (ECG)\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Cardiac enzymes (Troponin I or T)\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Chest X-ray\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Complete blood count (CBC)\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Basic metabolic panel (BMP)\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"D-dimer\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"CT angiography of the chest\",\n            \"priority\": \"urgent\"\n        }\n    ],\n    \"management\": {\n        \"immediate\": [\n            \"Vital signs monitoring\",\n            \"Establish intravenous access\",\n            \"Administer oxygen if hypoxic\"\n        ],\n        \"medications\": [\n            \"Aspirin: 325 mg, oral\",\n            \"Nitroglycerin: 0.4 mg, sublingual (if no contraindications)\",\n            \"Morphine: 2-4 mg, IV (if pain persists and no contraindications)\"\n        ],\n        \"consultations\": [\n            \"Cardiology: immediate\",\n            \"Emergency Medicine: immediate\"\n        ]\n    },\n    \"red_flags\": [\n        \"Chest pain (requires thorough evaluation for cardiac causes)\"\n    ]\n}\n```",
+      "response_time": 2.173682928085327,
+      "cached": false,
+      "case_id": "test_deepseek_orch",
+      "timestamp": "2025-09-06T00:39:10.488027",
+      "tokens_used": 935,
+      "input_tokens": 280,
+      "output_tokens": 655
+    },
+    {
+      "model_name": "google/gemma-2-9b-it",
+      "response": "{\n    \"primary_diagnosis\": {\n        \"name\": \"Acute Coronary Syndrome\",\n        \"confidence\": 0.3,\n        \"icd_code\": \"I21\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Pulmonary Embolism\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"I26\"\n        },\n        {\n            \"name\": \"Aortic Dissection\",\n            \"confidence\": 0.15,\n            \"icd_code\": \"I71\"\n        },\n        {\n            \"name\": \"Pericarditis\",\n            \"confidence\": 0.1,\n            \"icd_code\": \"I30\"\n        },\n        {\n            \"name\": \"Panic Attack\",\n            \"confidence\": 0.05,\n            \"icd_code\": \"F41.0\"\n        }\n    ],\n    \"key_findings\": [\n        \"Chest pain\",\n        \"Age 45\"\n    ],\n    \"tests\": [\n        {\n            \"test\": \"ECG\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Cardiac biomarkers (troponin)\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Chest X-ray\",\n            \"priority\": \"urgent\"\n        }\n    ],\n    \"management\": {\n        \"immediate\": [\n            \"Oxygen therapy\",\n            \"Nitroglycerin sublingual 0.4mg every 5 minutes to a maximum of three doses\"\n        ],\n        \"medications\": [\n            \"Aspirin 325mg chewable\"\n        ],\n        \"consultations\": [\n            \"Cardiology: urgent\"\n        ]\n    },\n    \"red_flags\": [\n        \"Pain radiating to the left arm\",\n        \"Shortness of breath\",\n        \"Nausea/vomiting\",\n        \"Diaphoresis\"\n    ]\n}\n",
+      "response_time": 1.2816898822784424,
+      "cached": false,
+      "case_id": "test_deepseek_orch",
+      "timestamp": "2025-09-06T00:39:12.158957",
+      "tokens_used": 758,
+      "input_tokens": 289,
+      "output_tokens": 469
+    },
+    {
+      "model_name": "google/gemma-3-12b-it",
+      "response": "```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"Chest Pain, Unspecified\",\n        \"confidence\": 0.6,\n        \"icd_code\": \"R07.9\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Acute Myocardial Infarction\",\n            \"confidence\": 0.4,\n            \"icd_code\": \"I21.9\"\n        },\n        {\n            \"name\": \"Angina Pectoris\",\n            \"confidence\": 0.3,\n            \"icd_code\": \"I20.9\"\n        },\n        {\n            \"name\": \"Gastroesophageal Reflux Disease (GERD)\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"K21.9\"\n        },\n        {\n            \"name\": \"Pericarditis\",\n            \"confidence\": 0.15,\n            \"icd_code\": \"I30.0\"\n        },\n        {\n            \"name\": \"Musculoskeletal Chest Pain\",\n            \"confidence\": 0.1,\n            \"icd_code\": \"M79.9\"\n        }\n    ],\n    \"key_findings\": [\n        \"Chest Pain\"\n    ],\n    \"tests\": [\n        {\n            \"test\": \"Electrocardiogram (ECG/EKG)\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Cardiac Enzymes (Troponin, CK-MB)\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Complete Blood Count (CBC)\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Basic Metabolic Panel (BMP)\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Chest X-ray\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"D-dimer\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management\": {\n        \"immediate\": [\n            \"Continuous Cardiac Monitoring\",\n            \"Oxygen if SpO2 < 90%\"\n        ],\n        \"medications\": [\n            \"Aspirin: 325 mg PO\",\n            \"Nitroglycerin: 0.4 mg sublingually, repeat every 5 minutes x 3 if no improvement and BP stable\",\n            \"Morphine: 2-4 mg IV PRN for pain\"\n        ],\n        \"consultations\": [\n            \"Cardiology: urgent\",\n            \"Emergency Medicine: routine\"\n        ]\n    },\n    \"red_flags\": [\n        \"Severe, crushing chest pain\",\n        \"Pain radiating to the left arm or jaw\",\n        \"Shortness of breath\",\n        \"Diaphoresis (excessive sweating)\",\n        \"Nausea or vomiting\",\n        \"Loss of consciousness\"\n    ]\n}\n```",
+      "response_time": 10.533974170684814,
+      "cached": false,
+      "case_id": "test_deepseek_orch",
+      "timestamp": "2025-09-06T00:39:22.694421",
+      "tokens_used": 971,
+      "input_tokens": 291,
+      "output_tokens": 680
+    },
+    {
+      "model_name": "meta-llama/llama-3.2-3b-instruct",
+      "response": "```json\n{\n  \"primary_diagnosis\": {\n    \"name\": \"Acute Coronary Syndrome\",\n    \"confidence\": 0.8,\n    \"icd_code\": \"I21.0\"\n  },\n  \"differential_diagnoses\": [\n    {\n      \"name\": \"Angina Pectoris\",\n      \"confidence\": 0.6,\n      \"icd_code\": \"I20.0\"\n    },\n    {\n      \"name\": \"Myocardial Infarction\",\n      \"confidence\": 0.9,\n      \"icd_code\": \"I21.0\"\n    },\n    {\n      \"name\": \"Pulmonary Embolism\",\n      \"confidence\": 0.4,\n      \"icd_code\": \"I33.0\"\n    },\n    {\n      \"name\": \"Atrial Fibrillation\",\n      \"confidence\": 0.7,\n      \"icd_code\": \"I48.0\"\n    },\n    {\n      \"name\": \"Hypertensive Heart Disease\",\n      \"confidence\": 0.5,\n      \"icd_code\": \"I10.0\"\n    }\n  ],\n  \"key_findings\": [\n    \"Chest pain radiating to the left arm\",\n    \"BP 140/90 mmHg\",\n    \"O2 saturation 92% on room air\"\n  ],\n  \"tests\": [\n    {\n      \"test\": \"ECG\",\n      \"priority\": \"immediate\"\n    },\n    {\n      \"test\": \"Echocardiogram\",\n      \"priority\": \"urgent\"\n    },\n    {\n      \"test\": \"Troponin level\",\n      \"priority\": \"routine\"\n    },\n    {\n      \"test\": \"Chest X-ray\",\n      \"priority\": \"routine\"\n    }\n  ],\n  \"management\": {\n    \"immediate\": [\"Aspirin 81mg PO qbid\"],\n    \"medications\": [\n      \"Aspirin 81mg PO qbid\",\n      \"Nitroglycerin 0.4mg sublingual q10min x 3d\",\n      \"Beta blockers (Metoprolol 50mg PO bid)\"\n    ],\n    \"consultations\": [\n      \"Cardiology: Urgent\"\n    ]\n  },\n  \"red_flags\": [\n    \"Family history of coronary artery disease\",\n    \"Previous myocardial infarction\",\n    \"Hypertension\"\n  ]\n}\n```",
+      "response_time": 8.223347902297974,
+      "cached": false,
+      "case_id": "test_deepseek_orch",
+      "timestamp": "2025-09-06T00:39:30.918621",
+      "tokens_used": 764,
+      "input_tokens": 258,
+      "output_tokens": 506
+    },
+    {
+      "model_name": "mistralai/mistral-large-2411",
+      "response": "```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"Acute Coronary Syndrome\",\n        \"confidence\": 0.8,\n        \"icd_code\": \"I20.0\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Gastroesophageal Reflux Disease (GERD)\",\n            \"confidence\": 0.6,\n            \"icd_code\": \"K21.0\"\n        },\n        {\n            \"name\": \"Pulmonary Embolism\",\n            \"confidence\": 0.5,\n            \"icd_code\": \"I26.9\"\n        },\n        {\n            \"name\": \"Pneumothorax\",\n            \"confidence\": 0.4,\n            \"icd_code\": \"J93.9\"\n        },\n        {\n            \"name\": \"Esophageal Spasm\",\n            \"confidence\": 0.3,\n            \"icd_code\": \"K22.2\"\n        }\n    ],\n    \"key_findings\": [\"Chest pain\"],\n    \"tests\": [\n        {\n            \"test\": \"Electrocardiogram (ECG)\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Blood tests (Troponin levels)\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Chest X-ray\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Echocardiogram\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"D-dimer test\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management\": {\n        \"immediate\": [\"Administer oxygen\", \"Monitor vital signs\"],\n        \"medications\": [\"Aspirin: 325mg, PO\", \"Nitroglycerin: 0.4mg, SL\"],\n        \"consultations\": [\"Cardiology: immediate\", \"Gastroenterology: routine\"]\n    },\n    \"red_flags\": [\"Severe chest pain\", \"Shortness of breath\", \"Nausea\", \"Sweating\", \"Dizziness\"]\n}\n```",
+      "response_time": 9.30454397201538,
+      "cached": false,
+      "case_id": "test_deepseek_orch",
+      "timestamp": "2025-09-06T00:39:40.223636",
+      "tokens_used": 864,
+      "input_tokens": 315,
+      "output_tokens": 549
+    },
+    {
+      "model_name": "mistralai/mistral-7b-instruct",
+      "response": " {\n    \"primary_diagnosis\": {\n        \"name\": \"Acute Coronary Syndrome (ACS)\",\n        \"confidence\": 0.7,\n        \"icd_code\": \"I20.x\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Angina Pectoris\",\n            \"confidence\": 0.6,\n            \"icd_code\": \"I20.9\"\n        },\n        {\n            \"name\": \"Myocardial Infarction\",\n            \"confidence\": 0.65,\n            \"icd_code\": \"I21.x\"\n        },\n        {\n            \"name\": \"Pneumonia\",\n            \"confidence\": 0.3,\n            \"icd_code\": \"J18.x\"\n        },\n        {\n            \"name\": \"Gastroesophageal Reflux Disease (GERD)\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"K21.0\"\n        },\n        {\n            \"name\": \"Anxiety\",\n            \"confidence\": 0.1,\n            \"icd_code\": \"F41.9\"\n        }\n    ],\n    \"key_findings\": [\"Chest pain\"],\n    \"tests\": [\n        {\n            \"test\": \"Electrocardiogram (ECG)\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Troponin level\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Chest X-ray\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management\": {\n        \"immediate\": [\"Oxygen therapy\", \"Nitroglycerin 0.4 mg sublingual\"],\n        \"medications\": [\n            {\n                \"drug\": \"Aspirin\",\n                \"dose\": \"325 mg\",\n                \"route\": \"Oral\"\n            },\n            {\n                \"drug\": \"Clopidogrel\",\n                \"dose\": \"600 mg loading dose, then 75 mg/day\",\n                \"route\": \"Oral\"\n            },\n            {\n                \"drug\": \"Statin\",\n                \"dose\": \"80 mg/day\",\n                \"route\": \"Oral\"\n            }\n        ],\n        \"consultations\": [\"Cardiology: Immediate\", \"Cardiology: Follow-up in 24 hours\"]\n    },\n    \"red_flags\": [\"Shortness of breath\", \"Syncope\", \"Pallor\", \"Cold sweat\", \"Pulse >100 bpm\"]\n}",
+      "response_time": 5.323324203491211,
+      "cached": false,
+      "case_id": "test_deepseek_orch",
+      "timestamp": "2025-09-06T00:39:45.770347",
+      "tokens_used": 977,
+      "input_tokens": 318,
+      "output_tokens": 659
+    },
+    {
+      "model_name": "deepseek/deepseek-chat",
+      "response": "{\n    \"primary_diagnosis\": {\n        \"name\": \"Acute Coronary Syndrome\",\n        \"confidence\": 0.7,\n        \"icd_code\": \"I20.0\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Pulmonary Embolism\",\n            \"confidence\": 0.5,\n            \"icd_code\": \"I26.99\"\n        },\n        {\n            \"name\": \"Pericarditis\",\n            \"confidence\": 0.4,\n            \"icd_code\": \"I30.9\"\n        },\n        {\n            \"name\": \"Gastroesophageal Reflux Disease\",\n            \"confidence\": 0.3,\n            \"icd_code\": \"K21.9\"\n        },\n        {\n            \"name\": \"Aortic Dissection\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"I71.01\"\n        }\n    ],\n    \"key_findings\": [\"Chest pain\", \"45-year-old patient\"],\n    \"tests\": [\n        {\n            \"test\": \"Electrocardiogram (ECG)\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Troponin level\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Chest X-ray\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"D-dimer\",\n            \"priority\": \"urgent\"\n        }\n    ],\n    \"management\": {\n        \"immediate\": [\"Administer oxygen\", \"Obtain IV access\"],\n        \"medications\": [\"Aspirin: 325 mg, oral\", \"Nitroglycerin: 0.4 mg, sublingual\"],\n        \"consultations\": [\"Cardiology: immediate\"]\n    },\n    \"red_flags\": [\"Severe, radiating pain\", \"Hypotension\", \"Syncope\"]\n}",
+      "response_time": 6.59424614906311,
+      "cached": false,
+      "case_id": "test_deepseek_orch",
+      "timestamp": "2025-09-06T00:39:52.364939",
+      "tokens_used": 656,
+      "input_tokens": 254,
+      "output_tokens": 402
+    },
+    {
+      "model_name": "deepseek/deepseek-r1",
+      "response": "Okay, let's tackle this medical case. The patient is a 45-year-old presenting with chest pain. First, I need to consider the most common and life-threatening causes. The primary diagnosis is probably something like acute coronary syndrome (ACS), which includes things like myocardial infarction. The confidence might be around 0.7 since there are other possibilities.\n\nFor differential diagnoses, I should list other possibilities. Gastroesophageal reflux disease (GERD) is common and can present with chest pain. Then there's stable angina, which is similar to ACS but less acute. Pulmonary embolism is another critical one, especially if there are risk factors like recent surgery or immobility. Maybe a musculoskeletal cause like costochondritis could be considered too, but with lower confidence.\n\nKey findings would be the chest pain itself. But since the case is brief, maybe I should note that details like pain character, duration, and associated symptoms are missing, but in a real scenario, those would be important. However, the user hasn't provided that info, so I can't include them.\n\nTests needed: ECG immediately to check for ST changes. Cardiac enzymes like troponin should be done urgently. Chest X-ray to rule out other issues. D-dimer if pulmonary embolism is suspected. Echo for heart function. These tests should be prioritized as immediate or urgent.\n\nManagement: Immediate actions like oxygen if hypoxic, aspirin, nitroglycerin. Medications would include aspirin 325 mg chewable, nitroglycerin sublingual, maybe morphine for pain. Consultations like cardiology immediately and GI if GERD is suspected later.\n\nRed flags would be signs of a heart attack, like pain radiating to the arm, diaphoresis, hypotension, or syncope. Need to watch for those.\n\nICD-10 codes: ACS is I20.9 for unstable angina, but if it's an MI, it's I21.9. GERD is K21.9. Pulmonary embolism I26.99. Stable angina I20.9, costochondritis M94.0. Wait, the primary might be ACS with code I20.9. But need to confirm if that's accurate. ACS can sometimes be under different codes, but I'll go with that for now.\n\nMeds: Nitro 0.4 mg sublingual every 5 minutes x3. Morphine 2-4 mg IV. For GERD, omeprazole 20 mg daily. Antacids as needed.\n\nConsult cardiology immediately. GI if GERD is suspected, but maybe that's routine.\n\nRed flags: chest pain with syncope, radiating pain, etc.\n\nI think that's it. Let me structure the JSON as per the requirements.\n\n\n---\n\n```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"Acute Coronary Syndrome (ACS)\",\n        \"confidence\": 0.7,\n        \"icd_code\": \"I20.9\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Gastroesophageal Reflux Disease (GERD)\",\n            \"confidence\": 0.3,\n            \"icd_code\": \"K21.9\"\n        },\n        {\n            \"name\": \"Stable Angina\",\n            \"confidence\": 0.4,\n            \"icd_code\": \"I20.9\"\n        },\n        {\n            \"name\": \"Pulmonary Embolism\",\n            \"confidence\": 0.3,\n            \"icd_code\": \"I26.99\"\n        },\n        {\n            \"name\": \"Musculoskeletal Chest Pain (e.g., Costochondritis)\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"M94.0\"\n        }\n    ],\n    \"key_findings\": [\n        \"Chest pain (location, character, duration not specified)\"\n    ],\n    \"tests\": [\n        {\n            \"test\": \"Electrocardiogram (ECG)\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Cardiac Troponin\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Chest X-ray\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"D-dimer (if PE suspected)\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Echocardiogram\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management\": {\n        \"immediate\": [\n            \"Oxygen (if hypoxic)\",\n            \"Aspirin 325 mg chewable\",\n            \"Nitroglycerin 0.4 mg sublingual every 5 minutes x3 (if BP permits)\"\n        ],\n        \"medications\": [\n            \"Aspirin: 325 mg, oral\",\n            \"Nitroglycerin: 0.4 mg, sublingual\",\n            \"Morphine: 2-4 mg, intravenous (for refractory pain)\",\n            \"Omeprazole: 20 mg, oral daily (if GERD suspected)\"\n        ],\n        \"consultations\": [\n            \"Cardiology: immediate\",\n            \"Gastroenterology: routine (if GERD suspected)\"\n        ]\n    },\n    \"red_flags\": [\n        \"Chest pain with syncope or hypotension\",\n        \"Pain radiating to jaw/left arm\",\n        \"Diaphoresis or dyspnea\",\n        \"Hemodynamic instability\"\n    ]\n}\n```",
+      "response_time": 79.40353584289551,
+      "cached": false,
+      "case_id": "test_deepseek_orch",
+      "timestamp": "2025-09-06T00:41:11.768896",
+      "tokens_used": 1379,
+      "input_tokens": 257,
+      "output_tokens": 1122
+    },
+    {
+      "model_name": "deepseek/deepseek-chat-v3.1",
+      "response": "```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"Acute Coronary Syndrome\",\n        \"confidence\": 0.7,\n        \"icd_code\": \"I20.9\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Gastroesophageal Reflux Disease\",\n            \"confidence\": 0.4,\n            \"icd_code\": \"K21.9\"\n        },\n        {\n            \"name\": \"Musculoskeletal Chest Pain\",\n            \"confidence\": 0.3,\n            \"icd_code\": \"M79.1\"\n        },\n        {\n            \"name\": \"Pulmonary Embolism\",\n            \"confidence\": 0.25,\n            \"icd_code\": \"I26.99\"\n        },\n        {\n            \"name\": \"Pericarditis\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"I30.9\"\n        }\n    ],\n    \"key_findings\": [\"45-year-old patient\", \"chest pain presentation\"],\n    \"tests\": [\n        {\n            \"test\": \"ECG\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Cardiac Troponin\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Chest X-ray\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Complete Blood Count\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"D-dimer\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Echocardiogram\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management\": {\n        \"immediate\": [\"Cardiac monitoring\", \"Oxygen therapy if hypoxic\", \"IV access\", \"Aspirin 325 mg chewed\"],\n        \"medications\": [\"Aspirin: 325 mg, oral\", \"Nitroglycerin: 0.4 mg sublingual every 5 minutes x3\", \"Morphine: 2-4 mg IV for pain if needed\", \"Clopidogrel: 300-600 mg loading dose, oral\"],\n        \"consultations\": [\"Cardiology: immediate\", \"Internal Medicine: urgent\"]\n    },\n    \"red_flags\": [\"Pain radiating to jaw/arm\", \"Diaphoresis\", \"Shortness of breath\", \"Nausea/vomiting\", \"Hypotension\", \"Tachycardia\", \"ECG changes suggestive of ischemia\"]\n}\n```",
+      "response_time": 21.239836931228638,
+      "cached": false,
+      "case_id": "test_deepseek_orch",
+      "timestamp": "2025-09-06T00:41:33.010145",
+      "tokens_used": 788,
+      "input_tokens": 255,
+      "output_tokens": 533
+    },
+    {
+      "model_name": "qwen/qwen-2.5-coder-32b-instruct",
+      "response": "{\n    \"primary_diagnosis\": {\n        \"name\": \"Acute Coronary Syndrome (ACS)\",\n        \"confidence\": 0.85,\n        \"icd_code\": \"I20-I25\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Gastroesophageal Reflux Disease (GERD)\",\n            \"confidence\": 0.20,\n            \"icd_code\": \"K21\"\n        },\n        {\n            \"name\": \"Pulmonary Embolism (PE)\",\n            \"confidence\": 0.25,\n            \"icd_code\": \"I26\"\n        },\n        {\n            \"name\": \"Pneumonia\",\n            \"confidence\": 0.15,\n            \"icd_code\": \"J18\"\n        },\n        {\n            \"name\": \"Anxiety Attack\",\n            \"confidence\": 0.10,\n            \"icd_code\": \"F41.9\"\n        }\n    ],\n    \"key_findings\": [\"Chest pain\", \"Age 45\", \"No other symptoms mentioned\"],\n    \"tests\": [\n        {\n            \"test\": \"Electrocardiogram (ECG)\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Troponin levels\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Complete blood count (CBC)\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Chest X-ray\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"D-dimer\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management\": {\n        \"immediate\": [\"Monitor vital signs\", \"Administer oxygen if needed\"],\n        \"medications\": [\"Aspirin 325 mg: PO\", \"Nitroglycerin 0.4 mg: SL\"],\n        \"consultations\": [\"Cardiology: urgent\", \"Pulmonology: if PE suspected\"]\n    },\n    \"red_flags\": [\"Unremitting chest pain\", \"Shortness of breath\", \"Nausea or vomiting\"]\n}",
+      "response_time": 9.504565954208374,
+      "cached": false,
+      "case_id": "test_deepseek_orch",
+      "timestamp": "2025-09-06T00:41:42.866224",
+      "tokens_used": 713,
+      "input_tokens": 259,
+      "output_tokens": 454
+    },
+    {
+      "model_name": "cohere/command-r",
+      "response": "{\n    \"primary_diagnosis\": {\n        \"name\": \"Acute Coronary Syndrome\",\n        \"confidence\": 0.85,\n        \"icd_code\": \"I21\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Angina\",\n            \"confidence\": 0.7,\n            \"icd_code\": \"I20\"\n        },\n        {\n            \"name\": \"Myocardial Infarction\",\n            \"confidence\": 0.65,\n            \"icd_code\": \"I22\"\n        },\n        {\n            \"name\": \"Pericarditis\",\n            \"confidence\": 0.4,\n            \"icd_code\": \"I30\"\n        },\n        {\n            \"name\": \"Pulmonary Embolism\",\n            \"confidence\": 0.35,\n            \"icd_code\": \"I26\"\n        },\n        {\n            \"name\": \"Gastroesophageal Reflux Disease\",\n            \"confidence\": 0.25,\n            \"icd_code\": \"K21\"\n        }\n    ],\n    \"key_findings\": [\n        \"Chest pain radiating to left arm\",\n        \"Elevated troponin levels\",\n        \"ST segment elevation on ECG\"\n    ],\n    \"tests\": [\n        {\n            \"test\": \"ECG\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Troponin I assay\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Chest X-ray\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Cardiac MRI\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management\": {\n        \"immediate\": [\n            \"Oxygen therapy: 2L nasal prongs, monitor SpO2\",\n            \"Aspirin 300mg chew, then 75mg daily\"\n        ],\n        \"medications\": [\n            \"Nitroglycerin: 0.4mg SL every 5 mins for relief, max 3 doses\",\n            \"Morphine sulfate: 2-4mg IV for pain, can repeat\",\n            \"Beta-blocker: Metoprolol 5mg IV, then switch to oral\"\n        ],\n        \"consultations\": [\n            \"Cardiology: Emergency\"\n        ]\n    },\n    \"red_flags\": [\n        \"Prolonged chest pain\",\n        \"Severe pain radiating to back/jaw\",\n        \"ECG changes - ST elevation\"\n    ]\n}",
+      "response_time": 6.576329946517944,
+      "cached": false,
+      "case_id": "test_deepseek_orch",
+      "timestamp": "2025-09-06T00:41:50.200382",
+      "tokens_used": 803,
+      "input_tokens": 263,
+      "output_tokens": 540
+    },
+    {
+      "model_name": "ai21/jamba-large-1.7",
+      "response": "```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"Acute Coronary Syndrome (ACS)\",\n        \"confidence\": 0.8,\n        \"icd_code\": \"I21.9\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Myocardial Infarction (MI)\",\n            \"confidence\": 0.6,\n            \"icd_code\": \"I21.01\"\n        },\n        {\n            \"name\": \"Pulmonary Embolism (PE)\",\n            \"confidence\": 0.5,\n            \"icd_code\": \"I26.90\"\n        },\n        {\n            \"name\": \"Pericarditis\",\n            \"confidence\": 0.4,\n            \"icd_code\": \"I31.9\"\n        },\n        {\n            \"name\": \"Gastroesophageal Reflux Disease (GERD)\",\n            \"confidence\": 0.3,\n            \"icd_code\": \"K21.9\"\n        }\n    ],\n    \"key_findings\": [\"Chest pain\", \"Possible shortness of breath\", \"Possible diaphoresis\"],\n    \"tests\": [\n        {\n            \"test\": \"Electrocardiogram (ECG)\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Cardiac biomarkers (troponin)\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Chest X-ray\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"D-dimer\",\n            \"priority\": \"urgent\"\n        }\n    ],\n    \"management\": {\n        \"immediate\": [\"Administer oxygen if hypoxic\", \"Monitor vital signs\"],\n        \"medications\": [\n            \"Aspirin: 162-325 mg, oral\",\n            \"Nitroglycerin: 0.4 mg sublingual, every 5 minutes for up to 3 doses\",\n            \"Morphine: 4-8 mg, IV, if pain persists\"\n        ],\n        \"consultations\": [\n            \"Cardiology: immediate\"\n        ]\n    },\n    \"red_flags\": [\"Severe chest pain not relieved by nitroglycerin\", \"Signs of hemodynamic instability\"]\n}\n```",
+      "response_time": 11.074952125549316,
+      "cached": false,
+      "case_id": "test_deepseek_orch",
+      "timestamp": "2025-09-06T00:42:01.603861",
+      "tokens_used": 899,
+      "input_tokens": 315,
+      "output_tokens": 584
+    },
+    {
+      "model_name": "perplexity/sonar-deep-research",
+      "response": "This is a medical case about a 45-year-old presenting with chest pain. The user is asking me to return ONLY valid JSON with a specific format. Let me analyze based on the search results provided.\n\nFrom the search results, I can see several important points about chest pain evaluation:\n\n1. Initial evaluation should include history, physical exam, and ECG\n2. Must rule out life-threatening causes first\n3. Key red flags include sudden onset, severe pain, radiation to arms/jaw, associated symptoms like diaphoresis, nausea, shortness of breath\n4. Major differential diagnoses include:\n   - Acute coronary syndrome (ACS) - including STEMI and NSTEMI\n   - Pulmonary embolism \n   - Aortic dissection\n   - Pneumothorax\n   - Pericarditis\n   - GERD\n   - Musculoskeletal pain\n\nHowever, the case is very limited - just \"45-year-old presents with chest pain\" with no other details about symptoms, vital signs, exam findings, etc. This makes it challenging to give a specific primary diagnosis.\n\nGiven the limited information and the fact that chest pain is a high-risk chief complaint, the approach should be to:\n1. Consider ACS as primary concern given age and presentation\n2. Include other life-threatening causes in differential\n3. Order immediate tests to rule out emergencies\n4. Provide appropriate immediate management\n\nLet me structure this according to the JSON format requested:\n\nPrimary diagnosis: Given the limited information and the need to assume worst-case scenario in chest pain, I should consider acute coronary syndrome as the primary concern, but with moderate confidence given lack of details.\n\nDifferential diagnoses should include the major life-threatening causes:\n- Acute coronary syndrome \n- Pulmonary embolism\n- Aortic dissection\n- Pericarditis\n- GERD\n\nTests should prioritize immediate life-threatening causes:\n- ECG (immediate)\n\n\n- Troponin and basic labs help quickly assess cardiac risk\n- Chest X-ray provides critical information about potential pulmonary issues\n- Immediate diagnostic workup crucial for ruling out serious conditions\n\nI'll focus on rapid assessment and management to ensure patient safety given the high-risk presentation.\n\n---\n\n```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"Acute coronary syndrome, unspecified\",\n        \"confidence\": 0.6,\n        \"icd_code\": \"I20.9\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Unstable angina\",\n            \"confidence\": 0.7,\n            \"icd_code\": \"I20.0\"\n        },\n        {\n            \"name\": \"Pulmonary embolism\",\n            \"confidence\": 0.4,\n            \"icd_code\": \"I26.9\"\n        },\n        {\n            \"name\": \"Aortic dissection\",\n            \"confidence\": 0.3,\n            \"icd_code\": \"I71.00\"\n        },\n        {\n            \"name\": \"Acute pericarditis\",\n            \"confidence\": 0.3,\n            \"icd_code\": \"I30.9\"\n        },\n        {\n            \"name\": \"Gastroesophageal reflux disease\",\n            \"confidence\": 0.5,\n            \"icd_code\": \"K21.9\"\n        }\n    ],\n    \"key_findings\": [\n        \"45-year-old with chest pain\",\n        \"High-risk age group for coronary artery disease\",\n        \"Limited clinical information available\"\n    ],\n    \"tests\": [\n        {\n            \"test\": \"12-lead ECG\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Cardiac troponin\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Chest X-ray\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Complete blood count\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Basic metabolic panel\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"D-dimer\",\n            \"priority\": \"urgent\"\n        }\n    ],\n    \"management\": {\n        \"immediate\": [\n            \"ABC assessment and vital signs\",\n            \"Establish IV access\",\n            \"Continuous cardiac monitoring\",\n            \"Oxygen saturation monitoring\"\n        ],\n        \"medications\": [\n            \"Aspirin: 325mg PO once if no contraindications\",\n            \"Nitroglycerin: 0.4mg SL PRN chest pain\",\n            \"Morphine: 2-4mg IV q15min PRN severe pain\"\n        ],\n        \"consultations\": [\n            \"Cardiology: urgent if ACS suspected\",\n            \"Emergency medicine: immediate\"\n        ]\n    },\n    \"red_flags\": [\n        \"Sudden onset severe pain\",\n        \"Radiation to arm, jaw, or back\",\n        \"Associated diaphoresis or nausea\",\n        \"Shortness of breath\",\n        \"Hemodynamic instability\",\n        \"New murmur or S3 gallop\"\n    ]\n}\n```",
+      "response_time": 45.59998297691345,
+      "cached": false,
+      "case_id": "test_deepseek_orch",
+      "timestamp": "2025-09-06T00:42:47.205267",
+      "tokens_used": 110452,
+      "input_tokens": 251,
+      "output_tokens": 110201
+    },
+    {
+      "model_name": "microsoft/wizardlm-2-8x22b",
+      "response": " ```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"Angina Pectoris\",\n        \"confidence\": 0.5,\n        \"icd_code\": \"I20.9\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Acute Myocardial Infarction\",\n            \"confidence\": 0.3,\n            \"icd_code\": \"I21.9\"\n        },\n        {\n            \"name\": \"Gastroesophageal Reflux Disease (GERD)\",\n            \"confidence\": 0.15,\n            \"icd_code\": \"K21.9\"\n        },\n        {\n            \"name\": \"Costochondritis\",\n            \"confidence\": 0.1,\n            \"icd_code\": \"M94.2\"\n        },\n        {\n            \"name\": \"Pulmonary Embolism\",\n            \"confidence\": 0.05,\n            \"icd_code\": \"I26.9\"\n        }\n    ],\n    \"key_findings\": [\n        \"Chest pain in a 45-year-old\",\n        \"Risk factors for cardiovascular disease not specified\"\n    ],\n    \"tests\": [\n        {\n            \"test\": \"Electrocardiogram (ECG)\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Troponin levels\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Chest X-ray\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Complete blood count (CBC)\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Lipid profile\",\n            \"priority\": \"routine\"\n        },\n        {\n            \"test\": \"Stress test\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management\": {\n        \"immediate\": [\n            \"Supplemental oxygen if hypoxic\",\n            \"Nitroglycerin sublingual if no contraindications\"\n        ],\n        \"medications\": [\n            \"Aspirin: 325 mg, oral immediately if no contraindications\",\n            \"Morphine: 2-4 mg IV, titrate to pain relief if necessary\"\n        ],\n        \"consultations\": [\n            \"Cardiology: immediate\",\n            \"Gastroenterology: routine if GERD is suspected\"\n        ]\n    },\n    \"red_flags\": [\n        \"Sudden onset of severe chest pain\",\n        \"Chest pain radiating to arms, neck, jaw, or back\",\n        \"Shortness of breath\",\n        \"Diaphoresis (sweating)\",\n        \"Nausea or vomiting\",\n        \"Hypotension\",\n        \"Syncope (fainting)\"\n    ]\n}\n```",
+      "response_time": 9.03977084159851,
+      "cached": false,
+      "case_id": "test_deepseek_orch",
+      "timestamp": "2025-09-06T00:42:56.246668",
+      "tokens_used": 1066,
+      "input_tokens": 350,
+      "output_tokens": 716
+    }
+  ],
+  "total_models_analyzed": 19,
+  "geographical_distribution": {
+    "USA": 20,
+    "France": 3,
+    "China": 5,
+    "Canada": 2,
+    "Japan/USA": 1,
+    "Israel": 1
+  },
+  "consensus_analysis": {
+    "primary_counts": {
+      "Acute Myocardial Infarction": 1,
+      "Acute Coronary Syndrome": 7,
+      "Unspecified Chest Pain": 2,
+      "Chest Pain, Unspecified": 1,
+      "Acute Coronary Syndrome (acs)": 4,
+      "Acute Coronary Syndrome, Unspecified": 1,
+      "Angina Pectoris": 1
+    },
+    "differential_counts": {
+      "Gastroesophageal Reflux Disease": 7,
+      "Costochondritis": 3,
+      "Pulmonary Embolism": 12,
+      "Pneumothorax": 3,
+      "Aortic Dissection": 5,
+      "Acute Myocardial Infarction": 4,
+      "Angina Pectoris, Unspecified": 1,
+      "Gastroesophageal Reflux Disease with Esophagitis": 1,
+      "Pneumonia, Unspecified Organism": 1,
+      "Pericarditis": 7,
+      "Panic Attack": 1,
+      "Angina Pectoris": 3,
+      "Gastroesophageal Reflux Disease (gerd)": 7,
+      "Musculoskeletal Chest Pain": 2,
+      "Myocardial Infarction": 3,
+      "Atrial Fibrillation": 1,
+      "Hypertensive Heart Disease": 1,
+      "Esophageal Spasm": 1,
+      "Pneumonia": 2,
+      "Anxiety": 1,
+      "Stable Angina": 1,
+      "Musculoskeletal Chest Pain (e.g., Costochondritis)": 1,
+      "Pulmonary Embolism (pe)": 2,
+      "Anxiety Attack": 1,
+      "Angina": 1,
+      "Myocardial Infarction (mi)": 1,
+      "Unstable Angina": 1,
+      "Peritonitis": 1
+    },
+    "total_counts": {
+      "Acute Myocardial Infarction": 5,
+      "Gastroesophageal Reflux Disease": 7,
+      "Costochondritis": 3,
+      "Pulmonary Embolism": 12,
+      "Pneumothorax": 3,
+      "Acute Coronary Syndrome": 7,
+      "Aortic Dissection": 5,
+      "Unspecified Chest Pain": 2,
+      "Angina Pectoris, Unspecified": 1,
+      "Gastroesophageal Reflux Disease with Esophagitis": 1,
+      "Pneumonia, Unspecified Organism": 1,
+      "Pericarditis": 7,
+      "Panic Attack": 1,
+      "Chest Pain, Unspecified": 1,
+      "Angina Pectoris": 4,
+      "Gastroesophageal Reflux Disease (gerd)": 7,
+      "Musculoskeletal Chest Pain": 2,
+      "Myocardial Infarction": 3,
+      "Atrial Fibrillation": 1,
+      "Hypertensive Heart Disease": 1,
+      "Esophageal Spasm": 1,
+      "Acute Coronary Syndrome (acs)": 4,
+      "Pneumonia": 2,
+      "Anxiety": 1,
+      "Stable Angina": 1,
+      "Musculoskeletal Chest Pain (e.g., Costochondritis)": 1,
+      "Pulmonary Embolism (pe)": 2,
+      "Anxiety Attack": 1,
+      "Angina": 1,
+      "Myocardial Infarction (mi)": 1,
+      "Acute Coronary Syndrome, Unspecified": 1,
+      "Unstable Angina": 1,
+      "Peritonitis": 1
+    },
+    "sorted_diagnoses": [
+      [
+        "Pulmonary Embolism",
+        12
+      ],
+      [
+        "Gastroesophageal Reflux Disease",
+        7
+      ],
+      [
+        "Acute Coronary Syndrome",
+        7
+      ],
+      [
+        "Pericarditis",
+        7
+      ],
+      [
+        "Gastroesophageal Reflux Disease (gerd)",
+        7
+      ],
+      [
+        "Acute Myocardial Infarction",
+        5
+      ],
+      [
+        "Aortic Dissection",
+        5
+      ],
+      [
+        "Angina Pectoris",
+        4
+      ],
+      [
+        "Acute Coronary Syndrome (acs)",
+        4
+      ],
+      [
+        "Costochondritis",
+        3
+      ],
+      [
+        "Pneumothorax",
+        3
+      ],
+      [
+        "Myocardial Infarction",
+        3
+      ],
+      [
+        "Unspecified Chest Pain",
+        2
+      ],
+      [
+        "Musculoskeletal Chest Pain",
+        2
+      ],
+      [
+        "Pneumonia",
+        2
+      ],
+      [
+        "Pulmonary Embolism (pe)",
+        2
+      ],
+      [
+        "Angina Pectoris, Unspecified",
+        1
+      ],
+      [
+        "Gastroesophageal Reflux Disease with Esophagitis",
+        1
+      ],
+      [
+        "Pneumonia, Unspecified Organism",
+        1
+      ],
+      [
+        "Panic Attack",
+        1
+      ],
+      [
+        "Chest Pain, Unspecified",
+        1
+      ],
+      [
+        "Atrial Fibrillation",
+        1
+      ],
+      [
+        "Hypertensive Heart Disease",
+        1
+      ],
+      [
+        "Esophageal Spasm",
+        1
+      ],
+      [
+        "Anxiety",
+        1
+      ],
+      [
+        "Stable Angina",
+        1
+      ],
+      [
+        "Musculoskeletal Chest Pain (e.g., Costochondritis)",
+        1
+      ],
+      [
+        "Anxiety Attack",
+        1
+      ],
+      [
+        "Angina",
+        1
+      ],
+      [
+        "Myocardial Infarction (mi)",
+        1
+      ],
+      [
+        "Acute Coronary Syndrome, Unspecified",
+        1
+      ],
+      [
+        "Unstable Angina",
+        1
+      ],
+      [
+        "Peritonitis",
+        1
+      ]
+    ],
+    "primary": [
+      "Acute Coronary Syndrome",
+      7
+    ],
+    "total_models": 19,
+    "icd_codes": {
+      "Acute Myocardial Infarction": [
+        "I21.9"
+      ],
+      "Gastroesophageal Reflux Disease": [
+        "K21.9",
+        "K21"
+      ],
+      "Costochondritis": [
+        "M94.0",
+        "M94.2",
+        "M54.81"
+      ],
+      "Pulmonary Embolism": [
+        "I33.0",
+        "I26.99",
+        "I26",
+        "I26.9"
+      ],
+      "Pneumothorax": [
+        "J93.9"
+      ],
+      "Acute Coronary Syndrome": [
+        "I20.0",
+        "I21.0",
+        "I20.9",
+        "I21"
+      ],
+      "Aortic Dissection": [
+        "I71.0",
+        "I71",
+        "I71.00",
+        "I72.0",
+        "I71.01"
+      ],
+      "Unspecified Chest Pain": [
+        "R07.9"
+      ],
+      "Angina Pectoris, Unspecified": [
+        "I20.9"
+      ],
+      "Gastroesophageal Reflux Disease with Esophagitis": [
+        "K21.0"
+      ],
+      "Pneumonia, Unspecified Organism": [
+        "J18.9"
+      ],
+      "Pericarditis": [
+        "I30.0",
+        "I31.9",
+        "I30.9",
+        "I30"
+      ],
+      "Panic Attack": [
+        "F41.0"
+      ],
+      "Chest Pain, Unspecified": [
+        "R07.9"
+      ],
+      "Angina Pectoris": [
+        "I20.0",
+        "I20.9"
+      ],
+      "Gastroesophageal Reflux Disease (gerd)": [
+        "K21.9",
+        "K21",
+        "K21.0"
+      ],
+      "Musculoskeletal Chest Pain": [
+        "M79.9",
+        "M79.1"
+      ],
+      "Myocardial Infarction": [
+        "I22",
+        "I21.0",
+        "I21.x"
+      ],
+      "Atrial Fibrillation": [
+        "I48.0"
+      ],
+      "Hypertensive Heart Disease": [
+        "I10.0"
+      ],
+      "Esophageal Spasm": [
+        "K22.2"
+      ],
+      "Acute Coronary Syndrome (acs)": [
+        "I20.x",
+        "I20.9",
+        "I20-I25",
+        "I21.9"
+      ],
+      "Pneumonia": [
+        "J18",
+        "J18.x"
+      ],
+      "Anxiety": [
+        "F41.9"
+      ],
+      "Stable Angina": [
+        "I20.9"
+      ],
+      "Musculoskeletal Chest Pain (e.g., Costochondritis)": [
+        "M94.0"
+      ],
+      "Pulmonary Embolism (pe)": [
+        "I26.90",
+        "I26"
+      ],
+      "Anxiety Attack": [
+        "F41.9"
+      ],
+      "Angina": [
+        "I20"
+      ],
+      "Myocardial Infarction (mi)": [
+        "I21.01"
+      ],
+      "Acute Coronary Syndrome, Unspecified": [
+        "I20.9"
+      ],
+      "Unstable Angina": [
+        "I20.0"
+      ],
+      "Peritonitis": [
+        "I30.9"
+      ]
+    },
+    "model_diagnoses": {
+      "Acute Myocardial Infarction": {
+        "primary": [
+          "openai/gpt-4o"
+        ],
+        "differential": [
+          "google/gemini-2.5-flash",
+          "google/gemini-2.5-flash-lite",
+          "google/gemma-3-12b-it",
+          "microsoft/wizardlm-2-8x22b"
+        ]
+      },
+      "Gastroesophageal Reflux Disease": {
+        "differential": [
+          "openai/gpt-4o",
+          "openai/gpt-4o-mini",
+          "google/gemini-2.5-flash-lite",
+          "deepseek/deepseek-chat",
+          "deepseek/deepseek-chat-v3.1",
+          "cohere/command-r",
+          "perplexity/sonar-deep-research"
+        ]
+      },
+      "Costochondritis": {
+        "differential": [
+          "openai/gpt-4o",
+          "openai/gpt-4o-mini",
+          "microsoft/wizardlm-2-8x22b"
+        ]
+      },
+      "Pulmonary Embolism": {
+        "differential": [
+          "openai/gpt-4o",
+          "openai/gpt-4o-mini",
+          "google/gemini-2.5-flash-lite",
+          "google/gemma-2-9b-it",
+          "meta-llama/llama-3.2-3b-instruct",
+          "mistralai/mistral-large-2411",
+          "deepseek/deepseek-chat",
+          "deepseek/deepseek-r1",
+          "deepseek/deepseek-chat-v3.1",
+          "cohere/command-r",
+          "perplexity/sonar-deep-research",
+          "microsoft/wizardlm-2-8x22b"
+        ]
+      },
+      "Pneumothorax": {
+        "differential": [
+          "openai/gpt-4o",
+          "openai/gpt-4o-mini",
+          "mistralai/mistral-large-2411"
+        ]
+      },
+      "Acute Coronary Syndrome": {
+        "primary": [
+          "openai/gpt-4o-mini",
+          "google/gemma-2-9b-it",
+          "meta-llama/llama-3.2-3b-instruct",
+          "mistralai/mistral-large-2411",
+          "deepseek/deepseek-chat",
+          "deepseek/deepseek-chat-v3.1",
+          "cohere/command-r"
+        ]
+      },
+      "Aortic Dissection": {
+        "differential": [
+          "openai/gpt-4o-mini",
+          "google/gemini-2.5-flash-lite",
+          "google/gemma-2-9b-it",
+          "deepseek/deepseek-chat",
+          "perplexity/sonar-deep-research"
+        ]
+      },
+      "Unspecified Chest Pain": {
+        "primary": [
+          "google/gemini-2.5-flash",
+          "google/gemini-2.5-flash-lite"
+        ]
+      },
+      "Angina Pectoris, Unspecified": {
+        "differential": [
+          "google/gemini-2.5-flash"
+        ]
+      },
+      "Gastroesophageal Reflux Disease with Esophagitis": {
+        "differential": [
+          "google/gemini-2.5-flash"
+        ]
+      },
+      "Pneumonia, Unspecified Organism": {
+        "differential": [
+          "google/gemini-2.5-flash"
+        ]
+      },
+      "Pericarditis": {
+        "differential": [
+          "google/gemini-2.5-flash-lite",
+          "google/gemma-2-9b-it",
+          "google/gemma-3-12b-it",
+          "deepseek/deepseek-chat",
+          "deepseek/deepseek-chat-v3.1",
+          "cohere/command-r",
+          "ai21/jamba-large-1.7"
+        ]
+      },
+      "Panic Attack": {
+        "differential": [
+          "google/gemma-2-9b-it"
+        ]
+      },
+      "Chest Pain, Unspecified": {
+        "primary": [
+          "google/gemma-3-12b-it"
+        ]
+      },
+      "Angina Pectoris": {
+        "differential": [
+          "google/gemma-3-12b-it",
+          "meta-llama/llama-3.2-3b-instruct",
+          "mistralai/mistral-7b-instruct"
+        ],
+        "primary": [
+          "microsoft/wizardlm-2-8x22b"
+        ]
+      },
+      "Gastroesophageal Reflux Disease (gerd)": {
+        "differential": [
+          "google/gemma-3-12b-it",
+          "mistralai/mistral-large-2411",
+          "mistralai/mistral-7b-instruct",
+          "deepseek/deepseek-r1",
+          "qwen/qwen-2.5-coder-32b-instruct",
+          "ai21/jamba-large-1.7",
+          "microsoft/wizardlm-2-8x22b"
+        ]
+      },
+      "Musculoskeletal Chest Pain": {
+        "differential": [
+          "google/gemma-3-12b-it",
+          "deepseek/deepseek-chat-v3.1"
+        ]
+      },
+      "Myocardial Infarction": {
+        "differential": [
+          "meta-llama/llama-3.2-3b-instruct",
+          "mistralai/mistral-7b-instruct",
+          "cohere/command-r"
+        ]
+      },
+      "Atrial Fibrillation": {
+        "differential": [
+          "meta-llama/llama-3.2-3b-instruct"
+        ]
+      },
+      "Hypertensive Heart Disease": {
+        "differential": [
+          "meta-llama/llama-3.2-3b-instruct"
+        ]
+      },
+      "Esophageal Spasm": {
+        "differential": [
+          "mistralai/mistral-large-2411"
+        ]
+      },
+      "Acute Coronary Syndrome (acs)": {
+        "primary": [
+          "mistralai/mistral-7b-instruct",
+          "deepseek/deepseek-r1",
+          "qwen/qwen-2.5-coder-32b-instruct",
+          "ai21/jamba-large-1.7"
+        ]
+      },
+      "Pneumonia": {
+        "differential": [
+          "mistralai/mistral-7b-instruct",
+          "qwen/qwen-2.5-coder-32b-instruct"
+        ]
+      },
+      "Anxiety": {
+        "differential": [
+          "mistralai/mistral-7b-instruct"
+        ]
+      },
+      "Stable Angina": {
+        "differential": [
+          "deepseek/deepseek-r1"
+        ]
+      },
+      "Musculoskeletal Chest Pain (e.g., Costochondritis)": {
+        "differential": [
+          "deepseek/deepseek-r1"
+        ]
+      },
+      "Pulmonary Embolism (pe)": {
+        "differential": [
+          "qwen/qwen-2.5-coder-32b-instruct",
+          "ai21/jamba-large-1.7"
+        ]
+      },
+      "Anxiety Attack": {
+        "differential": [
+          "qwen/qwen-2.5-coder-32b-instruct"
+        ]
+      },
+      "Angina": {
+        "differential": [
+          "cohere/command-r"
+        ]
+      },
+      "Myocardial Infarction (mi)": {
+        "differential": [
+          "ai21/jamba-large-1.7"
+        ]
+      },
+      "Acute Coronary Syndrome, Unspecified": {
+        "primary": [
+          "perplexity/sonar-deep-research"
+        ]
+      },
+      "Unstable Angina": {
+        "differential": [
+          "perplexity/sonar-deep-research"
+        ]
+      },
+      "Peritonitis": {
+        "differential": [
+          "perplexity/sonar-deep-research"
+        ]
+      }
+    },
+    "geographical_patterns": {
+      "USA": {
+        "Acute Myocardial Infarction": 1,
+        "Acute Coronary Syndrome": 3,
+        "Unspecified Chest Pain": 2,
+        "Chest Pain, Unspecified": 1,
+        "Acute Coronary Syndrome, Unspecified": 1,
+        "Angina Pectoris": 1
+      },
+      "France": {
+        "Acute Coronary Syndrome": 1,
+        "Acute Coronary Syndrome (acs)": 1
+      },
+      "China": {
+        "Acute Coronary Syndrome": 2,
+        "Acute Coronary Syndrome (acs)": 2
+      },
+      "Canada": {
+        "Acute Coronary Syndrome": 1
+      },
+      "Israel": {
+        "Acute Coronary Syndrome (acs)": 1
+      }
+    }
+  },
+  "free_models_used": true,
+  "diagnostic_landscape": {
+    "primary_diagnosis": {
+      "name": "Acute Coronary Syndrome",
+      "icd_code": "I20.9",
+      "confidence": "High",
+      "supporting_models": [
+        "Model 3",
+        "Model 9",
+        "Model 10",
+        "Model 14",
+        "Model 17"
+      ],
+      "percentage": 42,
+      "evidence": [
+        "Most frequently cited diagnosis across models",
+        "Age 45 with chest pain suggests cardiac etiology",
+        "Life-threatening condition requiring immediate evaluation",
+        "Multiple models recommend immediate ECG and troponin testing"
+      ]
+    },
+    "strong_alternatives": [],
+    "alternatives": [
+      {
+        "name": "Acute Myocardial Infarction",
+        "icd_code": "I21.9",
+        "frequency": 8,
+        "supporting_models": [
+          "Model 0",
+          "Model 4",
+          "Model 5",
+          "Model 8",
+          "Model 9",
+          "Model 17",
+          "Model 18"
+        ],
+        "evidence": [
+          "Life-threatening cardiac emergency",
+          "Requires immediate ECG and cardiac enzyme testing",
+          "Common in middle-aged patients with chest pain"
+        ],
+        "agreement_percentage": 25.9
+      },
+      {
+        "name": "Gastroesophageal Reflux Disease",
+        "icd_code": "K21.9",
+        "frequency": 8,
+        "supporting_models": [
+          "Model 0",
+          "Model 4",
+          "Model 8",
+          "Model 10",
+          "Model 14",
+          "Model 18"
+        ],
+        "evidence": [
+          "Common non-cardiac cause of chest pain",
+          "Often presents with burning retrosternal discomfort",
+          "Can mimic cardiac pain patterns"
+        ],
+        "agreement_percentage": 22.2
+      },
+      {
+        "name": "Pulmonary Embolism",
+        "icd_code": "I26.99",
+        "frequency": 7,
+        "supporting_models": [
+          "Model 0",
+          "Model 5",
+          "Model 9",
+          "Model 10",
+          "Model 14",
+          "Model 17"
+        ],
+        "evidence": [
+          "Life-threatening condition requiring exclusion",
+          "Can present with pleuritic chest pain",
+          "Risk increases with immobility or hypercoagulable states"
+        ],
+        "agreement_percentage": 22.2
+      },
+      {
+        "name": "Angina Pectoris",
+        "icd_code": "I20.9",
+        "frequency": 5,
+        "supporting_models": [
+          "Model 4",
+          "Model 8",
+          "Model 9",
+          "Model 18"
+        ],
+        "evidence": [
+          "Stable coronary artery disease presentation",
+          "Exertional chest pain that resolves with rest",
+          "Common in middle-aged population"
+        ],
+        "agreement_percentage": 14.8
+      },
+      {
+        "name": "Unspecified Chest Pain",
+        "icd_code": "R07.9",
+        "frequency": 3,
+        "supporting_models": [
+          "Model 4",
+          "Model 5",
+          "Model 8"
+        ],
+        "evidence": [
+          "Diagnosis of exclusion when no clear cause identified",
+          "Appropriate when limited clinical information available",
+          "Requires thorough workup to rule out serious causes"
+        ],
+        "agreement_percentage": 11.1
+      }
+    ],
+    "minority_opinions": [
+      {
+        "name": "Costochondritis",
+        "icd_code": "M94.0",
+        "frequency": 3,
+        "supporting_models": [
+          "Model 0",
+          "Model 18"
+        ],
+        "evidence": [
+          "Musculoskeletal chest pain source",
+          "Reproducible tenderness on palpation",
+          "Benign but painful condition"
+        ],
+        "agreement_percentage": 7.4
+      },
+      {
+        "name": "Aortic Dissection",
+        "icd_code": "I71.0",
+        "frequency": 2,
+        "supporting_models": [
+          "Model 5",
+          "Model 3"
+        ],
+        "evidence": [
+          "Life-threatening vascular emergency",
+          "Classic tearing chest pain radiating to back",
+          "Requires immediate imaging for diagnosis"
+        ],
+        "agreement_percentage": 7.4
+      },
+      {
+        "name": "Musculoskeletal Chest Pain",
+        "icd_code": "M79.1",
+        "frequency": 2,
+        "supporting_models": [
+          "Model 14",
+          "Model 3"
+        ],
+        "evidence": [
+          "Non-cardiac pain source",
+          "Often related to muscle strain or injury",
+          "Reproducible with movement or palpation"
+        ],
+        "agreement_percentage": 7.4
+      },
+      {
+        "name": "Pericarditis",
+        "icd_code": "I30.9",
+        "frequency": 2,
+        "supporting_models": [
+          "Model 17",
+          "Model 3"
+        ],
+        "evidence": [
+          "Inflammatory cardiac condition",
+          "Pleuritic chest pain that worsens with lying down",
+          "Pericardial friction rub may be present"
+        ],
+        "agreement_percentage": 7.4
+      },
+      {
+        "name": "Pneumothorax",
+        "icd_code": "J93.9",
+        "frequency": 1,
+        "supporting_models": [
+          "Model 10"
+        ],
+        "evidence": [
+          "Sudden onset pleuritic chest pain",
+          "May have decreased breath sounds on affected side",
+          "Can be spontaneous or traumatic"
+        ],
+        "agreement_percentage": 3.7
+      }
+    ],
+    "all_alternative_diagnoses": [
+      {
+        "name": "Acute Myocardial Infarction",
+        "icd_code": "I21.9",
+        "frequency": 8,
+        "supporting_models": [
+          "Model 0",
+          "Model 4",
+          "Model 5",
+          "Model 8",
+          "Model 9",
+          "Model 17",
+          "Model 18"
+        ],
+        "evidence": [
+          "Life-threatening cardiac emergency",
+          "Requires immediate ECG and cardiac enzyme testing",
+          "Common in middle-aged patients with chest pain"
+        ],
+        "agreement_percentage": 25.9
+      },
+      {
+        "name": "Gastroesophageal Reflux Disease",
+        "icd_code": "K21.9",
+        "frequency": 8,
+        "supporting_models": [
+          "Model 0",
+          "Model 4",
+          "Model 8",
+          "Model 10",
+          "Model 14",
+          "Model 18"
+        ],
+        "evidence": [
+          "Common non-cardiac cause of chest pain",
+          "Often presents with burning retrosternal discomfort",
+          "Can mimic cardiac pain patterns"
+        ],
+        "agreement_percentage": 22.2
+      },
+      {
+        "name": "Pulmonary Embolism",
+        "icd_code": "I26.99",
+        "frequency": 7,
+        "supporting_models": [
+          "Model 0",
+          "Model 5",
+          "Model 9",
+          "Model 10",
+          "Model 14",
+          "Model 17"
+        ],
+        "evidence": [
+          "Life-threatening condition requiring exclusion",
+          "Can present with pleuritic chest pain",
+          "Risk increases with immobility or hypercoagulable states"
+        ],
+        "agreement_percentage": 22.2
+      },
+      {
+        "name": "Angina Pectoris",
+        "icd_code": "I20.9",
+        "frequency": 5,
+        "supporting_models": [
+          "Model 4",
+          "Model 8",
+          "Model 9",
+          "Model 18"
+        ],
+        "evidence": [
+          "Stable coronary artery disease presentation",
+          "Exertional chest pain that resolves with rest",
+          "Common in middle-aged population"
+        ],
+        "agreement_percentage": 14.8
+      },
+      {
+        "name": "Unspecified Chest Pain",
+        "icd_code": "R07.9",
+        "frequency": 3,
+        "supporting_models": [
+          "Model 4",
+          "Model 5",
+          "Model 8"
+        ],
+        "evidence": [
+          "Diagnosis of exclusion when no clear cause identified",
+          "Appropriate when limited clinical information available",
+          "Requires thorough workup to rule out serious causes"
+        ],
+        "agreement_percentage": 11.1
+      },
+      {
+        "name": "Costochondritis",
+        "icd_code": "M94.0",
+        "frequency": 3,
+        "supporting_models": [
+          "Model 0",
+          "Model 18"
+        ],
+        "evidence": [
+          "Musculoskeletal chest pain source",
+          "Reproducible tenderness on palpation",
+          "Benign but painful condition"
+        ],
+        "agreement_percentage": 7.4
+      },
+      {
+        "name": "Aortic Dissection",
+        "icd_code": "I71.0",
+        "frequency": 2,
+        "supporting_models": [
+          "Model 5",
+          "Model 3"
+        ],
+        "evidence": [
+          "Life-threatening vascular emergency",
+          "Classic tearing chest pain radiating to back",
+          "Requires immediate imaging for diagnosis"
+        ],
+        "agreement_percentage": 7.4
+      },
+      {
+        "name": "Musculoskeletal Chest Pain",
+        "icd_code": "M79.1",
+        "frequency": 2,
+        "supporting_models": [
+          "Model 14",
+          "Model 3"
+        ],
+        "evidence": [
+          "Non-cardiac pain source",
+          "Often related to muscle strain or injury",
+          "Reproducible with movement or palpation"
+        ],
+        "agreement_percentage": 7.4
+      },
+      {
+        "name": "Pericarditis",
+        "icd_code": "I30.9",
+        "frequency": 2,
+        "supporting_models": [
+          "Model 17",
+          "Model 3"
+        ],
+        "evidence": [
+          "Inflammatory cardiac condition",
+          "Pleuritic chest pain that worsens with lying down",
+          "Pericardial friction rub may be present"
+        ],
+        "agreement_percentage": 7.4
+      },
+      {
+        "name": "Pneumothorax",
+        "icd_code": "J93.9",
+        "frequency": 1,
+        "supporting_models": [
+          "Model 10"
+        ],
+        "evidence": [
+          "Sudden onset pleuritic chest pain",
+          "May have decreased breath sounds on affected side",
+          "Can be spontaneous or traumatic"
+        ],
+        "agreement_percentage": 3.7
+      }
+    ]
+  },
+  "comprehensive_bias_analysis": {
+    "geographical_representation": {
+      "total_countries": 6,
+      "western_dominance": {
+        "western_models": 25,
+        "percentage": 131.57894736842107,
+        "impact": "High Western medical paradigm influence expected"
+      },
+      "chinese_representation": {
+        "chinese_models": 5,
+        "percentage": 26.31578947368421,
+        "impact": "Traditional Chinese Medicine integration possible"
+      }
+    },
+    "case_specific_concerns": [
+      "Analysis strictly limited to test_deepseek_orch responses",
+      "No cross-case contamination in this analysis",
+      "Bias patterns specific to this case presentation"
+    ],
+    "recommended_mitigations": [
+      "Consider cultural context in diagnosis interpretation",
+      "Account for geographical bias in model training",
+      "Validate findings across diverse medical paradigms"
+    ]
+  },
+  "model_diversity_metrics": {
+    "unique_architectures": 12,
+    "unique_providers": 10,
+    "unique_countries": 5,
+    "diversity_score": 9.0,
+    "case_id": "test_deepseek_orch"
+  },
+  "management_strategies": {
+    "immediate_actions": [
+      "ECG within 10 minutes",
+      "Obtain IV access",
+      "Administer supplemental oxygen if hypoxic",
+      "Start cardiac monitoring",
+      "Prepare for possible reperfusion therapy"
+    ],
+    "differential_testing": [
+      {
+        "test": "ECG",
+        "purpose": "Diagnostic confirmation"
+      },
+      {
+        "test": "Cardiac biomarkers (troponin)",
+        "purpose": "Diagnostic confirmation"
+      },
+      {
+        "test": "Chest X-ray",
+        "purpose": "Diagnostic confirmation"
+      },
+      {
+        "test": "Complete blood count",
+        "purpose": "Diagnostic confirmation"
+      },
+      {
+        "test": "Basic metabolic panel",
+        "purpose": "Diagnostic confirmation"
+      },
+      {
+        "test": "Coagulation studies",
+        "purpose": "Diagnostic confirmation"
+      }
+    ],
+    "medications": [
+      {
+        "medication_name": "Aspirin",
+        "dosage": "162-325 mg",
+        "route": "PO",
+        "frequency": "Once",
+        "duration": "Single dose",
+        "indication": "Antiplatelet therapy for ACS"
+      },
+      {
+        "medication_name": "Nitroglycerin",
+        "dosage": "0.3-0.4 mg",
+        "route": "SL",
+        "frequency": "Every 5 minutes as needed",
+        "duration": "Until pain relief or max 3 doses",
+        "indication": "Relief of ischemic chest pain"
+      },
+      {
+        "medication_name": "Morphine",
+        "dosage": "2-4 mg",
+        "route": "IV",
+        "frequency": "Every 5-15 minutes as needed",
+        "duration": "Until pain relief",
+        "indication": "Pain management if nitroglycerin ineffective"
+      },
+      {
+        "medication_name": "Heparin",
+        "dosage": "Weight-based bolus then infusion",
+        "route": "IV",
+        "frequency": "Continuous infusion",
+        "duration": "Until definitive management",
+        "indication": "Anticoagulation for ACS"
+      }
+    ]
+  },
+  "evidence_synthesis": {
+    "key_clinical_findings": [
+      {
+        "finding": "45-year-old patient",
+        "diagnostic_significance": "High"
+      },
+      {
+        "finding": "Chest pain presentation",
+        "diagnostic_significance": "High"
+      },
+      {
+        "finding": "Limited clinical information",
+        "diagnostic_significance": "High"
+      },
+      {
+        "finding": "Requires immediate life-threatening condition exclusion",
+        "diagnostic_significance": "High"
+      },
+      {
+        "finding": "Middle age increases cardiac risk",
+        "diagnostic_significance": "High"
+      }
+    ],
+    "symptom_diagnosis_matrix": {
+      "symptoms": [
+        "Chest Pain",
+        "Middle Age (45)",
+        "Limited Clinical Information"
+      ],
+      "diagnoses": [
+        "Acute Coronary Syndrome",
+        "Acute Myocardial Infarction",
+        "Gastroesophageal Reflux Disease",
+        "Pulmonary Embolism",
+        "Angina Pectoris"
+      ],
+      "correlations": [
+        {
+          "symptom": "Chest Pain",
+          "diagnosis": "Acute Coronary Syndrome",
+          "strength": "Strong"
+        },
+        {
+          "symptom": "Middle Age (45)",
+          "diagnosis": "Acute Coronary Syndrome",
+          "strength": "Medium"
+        },
+        {
+          "symptom": "Chest Pain",
+          "diagnosis": "Acute Myocardial Infarction",
+          "strength": "Strong"
+        },
+        {
+          "symptom": "Middle Age (45)",
+          "diagnosis": "Acute Myocardial Infarction",
+          "strength": "Medium"
+        },
+        {
+          "symptom": "Chest Pain",
+          "diagnosis": "Gastroesophageal Reflux Disease",
+          "strength": "Medium"
+        },
+        {
+          "symptom": "Limited Clinical Information",
+          "diagnosis": "Gastroesophageal Reflux Disease",
+          "strength": "Weak"
+        },
+        {
+          "symptom": "Chest Pain",
+          "diagnosis": "Pulmonary Embolism",
+          "strength": "Medium"
+        },
+        {
+          "symptom": "Limited Clinical Information",
+          "diagnosis": "Pulmonary Embolism",
+          "strength": "Weak"
+        },
+        {
+          "symptom": "Chest Pain",
+          "diagnosis": "Angina Pectoris",
+          "strength": "Medium"
+        },
+        {
+          "symptom": "Middle Age (45)",
+          "diagnosis": "Angina Pectoris",
+          "strength": "Medium"
+        }
+      ]
+    }
+  },
+  "generation_metadata": {
+    "pipeline_version": "General v1.0",
+    "timestamp": "20250906_003816",
+    "case_separation": "Strict",
+    "total_time_seconds": 280.12458395957947
+  },
+  "critical_decision_points": [
+    "STEMI vs NSTEMI/UA based on ECG and troponin",
+    "Need for reperfusion therapy (PCI vs thrombolytics)",
+    "Response to initial medical therapy",
+    "Risk stratification results",
+    "Need for coronary angiography",
+    "Disposition decision (CCU vs step-down)"
+  ],
+  "ai_model_bias_analysis": {
+    "geographic_bias": {
+      "detected": true,
+      "description": "All models are US-based with Western medical training data, potentially underrepresenting diagnostic patterns from non-Western populations where ACS presentation may differ (e.g., different risk factor prevalence, atypical symptoms in certain ethnic groups)",
+      "mitigation": "Incorporate diverse international medical datasets and validate diagnostic criteria across different geographic populations"
+    },
+    "training_bias": {
+      "detected": true,
+      "description": "Western medicine focus across all models may overlook cultural variations in symptom reporting and alternative diagnostic considerations. Tech industry perspectives may prioritize technological solutions over clinical judgment nuances",
+      "mitigation": "Include training data from diverse healthcare systems, incorporate traditional medicine knowledge where relevant, and balance tech-focused perspectives with clinical experience"
+    },
+    "consensus_strength": "Moderate"
+  },
+  "clinical_decision_tree": {
+    "initial_assessment": "Evaluate presenting symptoms",
+    "diagnostic_tests": [
+      "ECG",
+      "Cardiac biomarkers (troponin)",
+      "Chest X-ray",
+      "Complete blood count",
+      "Basic metabolic panel",
+      "Coagulation studies"
+    ],
+    "decision_points": [
+      "STEMI vs NSTEMI/UA based on ECG and troponin",
+      "Need for reperfusion therapy (PCI vs thrombolytics)",
+      "Response to initial medical therapy",
+      "Risk stratification results",
+      "Need for coronary angiography",
+      "Disposition decision (CCU vs step-down)"
+    ]
+  },
+  "primary_diagnosis_summaries": {
+    "key_clinical_findings": [
+      {
+        "finding": "45-year-old patient",
+        "supporting_evidence": "Clinical presentation",
+        "model_support": 5,
+        "reasoning": "Key diagnostic indicator"
+      },
+      {
+        "finding": "Chest pain presentation",
+        "supporting_evidence": "Clinical presentation",
+        "model_support": 5,
+        "reasoning": "Key diagnostic indicator"
+      },
+      {
+        "finding": "Limited clinical information",
+        "supporting_evidence": "Clinical presentation",
+        "model_support": 5,
+        "reasoning": "Key diagnostic indicator"
+      },
+      {
+        "finding": "Requires immediate life-threatening condition exclusion",
+        "supporting_evidence": "Clinical presentation",
+        "model_support": 5,
+        "reasoning": "Key diagnostic indicator"
+      },
+      {
+        "finding": "Middle age increases cardiac risk",
+        "supporting_evidence": "Clinical presentation",
+        "model_support": 5,
+        "reasoning": "Key diagnostic indicator"
+      }
+    ],
+    "recommended_tests": [
+      {
+        "test_name": "ECG",
+        "test_type": "Laboratory",
+        "rationale": "Diagnostic confirmation",
+        "priority": "Urgent",
+        "model_support": 9,
+        "reasoning": "Essential for diagnosis"
+      },
+      {
+        "test_name": "Cardiac biomarkers (troponin)",
+        "test_type": "Laboratory",
+        "rationale": "Diagnostic confirmation",
+        "priority": "Urgent",
+        "model_support": 9,
+        "reasoning": "Essential for diagnosis"
+      },
+      {
+        "test_name": "Chest X-ray",
+        "test_type": "Laboratory",
+        "rationale": "Diagnostic confirmation",
+        "priority": "Urgent",
+        "model_support": 9,
+        "reasoning": "Essential for diagnosis"
+      },
+      {
+        "test_name": "Complete blood count",
+        "test_type": "Laboratory",
+        "rationale": "Diagnostic confirmation",
+        "priority": "Urgent",
+        "model_support": 9,
+        "reasoning": "Essential for diagnosis"
+      },
+      {
+        "test_name": "Basic metabolic panel",
+        "test_type": "Laboratory",
+        "rationale": "Diagnostic confirmation",
+        "priority": "Urgent",
+        "model_support": 9,
+        "reasoning": "Essential for diagnosis"
+      }
+    ],
+    "immediate_management": [
+      {
+        "intervention": "ECG within 10 minutes",
+        "category": "Medical",
+        "urgency": "Immediate",
+        "model_support": 9,
+        "reasoning": "Critical intervention"
+      },
+      {
+        "intervention": "Obtain IV access",
+        "category": "Medical",
+        "urgency": "Immediate",
+        "model_support": 9,
+        "reasoning": "Critical intervention"
+      },
+      {
+        "intervention": "Administer supplemental oxygen if hypoxic",
+        "category": "Medical",
+        "urgency": "Immediate",
+        "model_support": 9,
+        "reasoning": "Critical intervention"
+      },
+      {
+        "intervention": "Start cardiac monitoring",
+        "category": "Medical",
+        "urgency": "Immediate",
+        "model_support": 9,
+        "reasoning": "Critical intervention"
+      },
+      {
+        "intervention": "Prepare for possible reperfusion therapy",
+        "category": "Medical",
+        "urgency": "Immediate",
+        "model_support": 9,
+        "reasoning": "Critical intervention"
+      }
+    ],
+    "medications": [
+      {
+        "medication_name": "Aspirin",
+        "dosage": "162-325 mg",
+        "route": "PO",
+        "frequency": "Once",
+        "duration": "Single dose",
+        "indication": "Antiplatelet therapy for ACS",
+        "model_support": 6,
+        "reasoning": "Antiplatelet therapy for ACS"
+      },
+      {
+        "medication_name": "Nitroglycerin",
+        "dosage": "0.3-0.4 mg",
+        "route": "SL",
+        "frequency": "Every 5 minutes as needed",
+        "duration": "Until pain relief or max 3 doses",
+        "indication": "Relief of ischemic chest pain",
+        "model_support": 6,
+        "reasoning": "Relief of ischemic chest pain"
+      },
+      {
+        "medication_name": "Morphine",
+        "dosage": "2-4 mg",
+        "route": "IV",
+        "frequency": "Every 5-15 minutes as needed",
+        "duration": "Until pain relief",
+        "indication": "Pain management if nitroglycerin ineffective",
+        "model_support": 6,
+        "reasoning": "Pain management if nitroglycerin ineffective"
+      },
+      {
+        "medication_name": "Heparin",
+        "dosage": "Weight-based bolus then infusion",
+        "route": "IV",
+        "frequency": "Continuous infusion",
+        "duration": "Until definitive management",
+        "indication": "Anticoagulation for ACS",
+        "model_support": 6,
+        "reasoning": "Anticoagulation for ACS"
+      }
+    ]
+  },
+  "quality_metrics": {
+    "total_models_analyzed": 19,
+    "consensus_strength": "Moderate",
+    "successful_responses": 19
+  },
+  "metadata": {
+    "analysis_timestamp": "2025-09-06T00:43:46.421221",
+    "orchestrator_model": "deepseek/deepseek-chat-v3.1:free",
+    "case_id": "test_deepseek_orch",
+    "case_title": "test_deepseek_orch",
+    "orchestrator_quality": "free_models",
+    "quality_disclaimer": "\u26a0\ufe0f This analysis uses free orchestrator models which may provide suboptimal quality compared to premium models. For clinical applications, consider using premium orchestrator models for enhanced accuracy and comprehensive analysis."
+  },
+  "generated_at": "2025-09-06T00:43:46.421430"
+}

@@ -27,13 +27,13 @@ class ModelConfig:
 class Config:
     """Central configuration manager for Medley"""
     
-    def __init__(self, config_dir: Optional[Path] = None):
+    def __init__(self, config_dir: Optional[Path] = None, api_key: Optional[str] = None):
         self.config_dir = config_dir or Path.cwd() / "config"
         self.models_config_path = self.config_dir / "models.yaml"
         self.prompts_config_path = self.config_dir / "prompts.yaml"
         
-        # Load environment variables
-        self.api_key = os.getenv("OPENROUTER_API_KEY", "")
+        # Load environment variables, with parameter override
+        self.api_key = api_key or os.getenv("OPENROUTER_API_KEY", "")
         self.cache_dir = Path(os.getenv("MEDLEY_CACHE_DIR", "./cache"))
         self.reports_dir = Path(os.getenv("MEDLEY_REPORTS_DIR", "./reports"))
         

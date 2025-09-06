@@ -45,7 +45,7 @@ def categorize_diagnoses(diagnosis_counts: Dict[str, int], total_models: int) ->
     
     # Primary diagnosis is the one with highest count
     primary_name, primary_count = sorted_diagnoses[0]
-    primary_percentage = (primary_count / total_models) * 100
+    primary_percentage = round((primary_count / total_models) * 100, 1)
     
     primary_diagnosis = {
         "name": primary_name,
@@ -60,7 +60,7 @@ def categorize_diagnoses(diagnosis_counts: Dict[str, int], total_models: int) ->
     minority_opinions = []
     
     for diag_name, count in sorted_diagnoses[1:]:
-        percentage = (count / total_models) * 100
+        percentage = round((count / total_models) * 100, 1)
         
         diag_data = {
             "name": diag_name,
@@ -323,9 +323,9 @@ def apply_web_interface_categorization_rules(diagnostic_landscape: Dict) -> Dict
                 models = alt.get('supporting_models', [])
                 if count > 0:
                     # Estimate percentage based on count (assuming ~27 total models)
-                    alt['agreement_percentage'] = (count / 27) * 100
+                    alt['agreement_percentage'] = round((count / 27) * 100, 1)
                 elif models:
-                    alt['agreement_percentage'] = (len(models) / 27) * 100
+                    alt['agreement_percentage'] = round((len(models) / 27) * 100, 1)
                 else:
                     alt['agreement_percentage'] = 0
             safe_alternatives.append(alt)

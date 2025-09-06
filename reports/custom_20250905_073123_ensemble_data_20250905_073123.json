@@ -1,0 +1,1606 @@
+{
+  "case_id": "custom_20250905_073123",
+  "case_title": "Custom Case",
+  "case_content": "A 45-year-old male presents to the emergency department with sudden onset chest pain that started 2 hours ago. The pain is described as crushing, substernal, and radiates to the left arm. He has been sweating profusely and feels nauseous. \n\nPast Medical History:\n- Hypertension (diagnosed 5 years ago, on amlodipine)\n- Type 2 Diabetes Mellitus (diagnosed 3 years ago, on metformin)\n- Hyperlipidemia (on atorvastatin)\n- 20 pack-year smoking history, quit 2 years ago\n- Family history of coronary artery disease (father had MI at age 55)\n\nPhysical Examination:\n- BP: 150/90 mmHg\n- HR: 95 bpm, regular\n- RR: 22/min\n- O2 Sat: 94% on room air\n- Temperature: 37.2\u00b0C\n- Diaphoretic, appears anxious\n- Cardiovascular: Normal S1/S2, no murmurs or gallops\n- Lungs: Clear bilaterally\n- Abdomen: Soft, non-tender\n\nInitial Tests:\n- ECG: ST elevation in leads II, III, and aVF\n- Troponin I: 0.8 ng/mL (elevated)\n- CK-MB: 25 ng/mL (elevated)",
+  "model_responses": [
+    {
+      "model_name": "openai/gpt-4o",
+      "response": "```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"Inferior ST-Elevation Myocardial Infarction (STEMI)\",\n        \"confidence\": 0.95,\n        \"icd_code\": \"I21.19\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Unstable Angina\",\n            \"confidence\": 0.6,\n            \"icd_code\": \"I20.0\"\n        },\n        {\n            \"name\": \"Non-ST-Elevation Myocardial Infarction (NSTEMI)\",\n            \"confidence\": 0.5,\n            \"icd_code\": \"I21.4\"\n        },\n        {\n            \"name\": \"Aortic Dissection\",\n            \"confidence\": 0.4,\n            \"icd_code\": \"I71.01\"\n        },\n        {\n            \"name\": \"Pericarditis\",\n            \"confidence\": 0.3,\n            \"icd_code\": \"I30.9\"\n        }\n    ],\n    \"key_findings\": [\n        \"Sudden onset crushing chest pain\",\n        \"Radiating pain to left arm\",\n        \"Profuse sweating\",\n        \"ST elevation in leads II, III, and aVF\",\n        \"Elevated Troponin I and CK-MB\"\n    ],\n    \"tests\": [\n        {\n            \"test\": \"Coronary Angiography\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Chest X-ray\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Echocardiogram\",\n            \"priority\": \"urgent\"\n        }\n    ],\n    \"management\": {\n        \"immediate\": [\n            \"Administer aspirin 325 mg orally\",\n            \"Administer nitroglycerin sublingually\",\n            \"Administer oxygen therapy\",\n            \"Prepare for possible percutaneous coronary intervention (PCI)\"\n        ],\n        \"medications\": [\n            \"Aspirin: 325 mg, oral\",\n            \"Nitroglycerin: 0.4 mg, sublingual\",\n            \"Atorvastatin: 80 mg, oral\",\n            \"Heparin: IV bolus\"\n        ],\n        \"consultations\": [\n            \"Cardiology: immediate\"\n        ]\n    },\n    \"red_flags\": [\n        \"ST elevation on ECG\",\n        \"Elevated cardiac biomarkers\",\n        \"Family history of early coronary artery disease\"\n    ]\n}\n```",
+      "response_time": 5.292976140975952,
+      "cached": false,
+      "case_id": "custom_20250905_073123",
+      "timestamp": "2025-09-05T07:31:29.210568",
+      "tokens_used": 1036,
+      "input_tokens": 520,
+      "output_tokens": 516
+    },
+    {
+      "model_name": "openai/gpt-4o-mini",
+      "response": "{\n    \"primary_diagnosis\": {\n        \"name\": \"Acute Myocardial Infarction (ST-Elevation)\",\n        \"confidence\": 0.95,\n        \"icd_code\": \"I21.01\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Unstable Angina\",\n            \"confidence\": 0.75,\n            \"icd_code\": \"I20.0\"\n        },\n        {\n            \"name\": \"Aortic Dissection\",\n            \"confidence\": 0.50,\n            \"icd_code\": \"I71.0\"\n        },\n        {\n            \"name\": \"Pulmonary Embolism\",\n            \"confidence\": 0.40,\n            \"icd_code\": \"I26.99\"\n        },\n        {\n            \"name\": \"Pericarditis\",\n            \"confidence\": 0.30,\n            \"icd_code\": \"I30.9\"\n        },\n        {\n            \"name\": \"Gastroesophageal Reflux Disease (GERD)\",\n            \"confidence\": 0.25,\n            \"icd_code\": \"K21.9\"\n        }\n    ],\n    \"key_findings\": [\n        \"Crushing substernal chest pain\",\n        \"Radiation to left arm\",\n        \"ST elevation in leads II, III, and aVF\",\n        \"Elevated Troponin I and CK-MB levels\",\n        \"Diaphoresis and nausea\"\n    ],\n    \"tests\": [\n        {\n            \"test\": \"ECG\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Troponin I\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"CK-MB\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Chest X-ray\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Cardiac Catheterization\",\n            \"priority\": \"urgent\"\n        }\n    ],\n    \"management\": {\n        \"immediate\": [\n            \"Administer aspirin 325 mg orally\",\n            \"Administer nitroglycerin sublingually as needed\",\n            \"Prepare for possible PCI\"\n        ],\n        \"medications\": [\n            \"Aspirin: 325 mg, oral\",\n            \"Nitroglycerin: 0.4 mg, sublingual as needed\",\n            \"Atorvastatin: 80 mg, oral\"\n        ],\n        \"consultations\": [\n            \"Cardiology: urgent\"\n        ]\n    },\n    \"red_flags\": [\n        \"ST elevation on ECG\",\n        \"Elevated troponin levels\",\n        \"Family history of coronary artery disease\"\n    ]\n}",
+      "response_time": 8.812246084213257,
+      "cached": false,
+      "case_id": "custom_20250905_073123",
+      "timestamp": "2025-09-05T07:31:38.024704",
+      "tokens_used": 1086,
+      "input_tokens": 520,
+      "output_tokens": 566
+    },
+    {
+      "model_name": "openai/gpt-oss-120b",
+      "response": "We need to produce JSON with fields.\n\nCase: 45yo male, crushing chest pain, ST elevation in II, III, aVF => inferior MI. Elevated troponin, CK-MB. So primary diagnosis: Acute inferior ST-elevation myocardial infarction (STEMI). ICD-10: I21.19 (STEMI, other acute subtypes?). Actually I21.19 is \"ST elevation (STEMI) myocardial infarction involving other coronary artery\". For inferior, could be I21.11 (STEMI of other sites?). Let's check: I21.0 = STEMI of anterior wall; I21.1 = STEMI of inferior wall; I21.2 = STEMI of other sites. So I21.1 is appropriate: \"ST elevation (STEMI) myocardial infarction of inferior wall\". Use I21.1.\n\nDifferential: Unstable angina, Non-ST elevation MI (NSTEMI), Aortic dissection, Pulmonary embolism, Pericarditis (though less likely). Provide 3-5. We'll include 4: Unstable angina (I20.0), NSTEMI (I21.4), Aortic dissection (I71.0), Pulmonary embolism (I26.99). Provide confidence levels.\n\nKey findings: crushing substernal chest pain radiating to left arm, diaphoresis, nausea, ST elevation II,III,aVF, elevated troponin, risk factors (HTN, DM, hyperlipidemia, smoking, family hx).\n\nTests: immediate: 12-lead ECG (already done), cardiac biomarkers (troponin, CK-MB) (urgent), chest X-ray (routine?), bedside echocardiography (urgent), coronary angiography (immediate), CBC, BMP (routine), coagulation panel (urgent). But list tests with priority.\n\nManagement: immediate: MONA-B (morphine, oxygen if needed, nitrates, aspirin, beta-blocker, anticoagulation) plus reperfusion via primary PCI. So immediate actions: Activate cath lab, give aspirin 325 mg chew, clopidogrel 600 mg loading, give unfractionated heparin (bolus 70 U/kg), give sublingual nitroglycerin 0.4 mg q5 min x3, give high-intensity statin (atorvastatin 80 mg), consider morphine 4 mg IV if pain persists, consider beta-blocker (metoprolol 5 mg IV q5 min up to 15 mg). Also give oxygen if sat <94% (but sat 94). So not needed.\n\nMedications: aspirin 325 mg PO chew, clopidogrel 600 mg PO loading, unfractionated heparin 70 U/kg IV bolus, nitroglycerin SL 0.4 mg q5 min PRN, metoprolol 5 mg IV bolus, high-intensity statin: atorvastatin 80 mg PO daily, possibly analgesic morphine 4 mg IV.\n\nConsultations: Interventional cardiology: emergent, Cardiology: urgent, possibly cardiothoracic surgery if PCI fails.\n\nRed flags: Ongoing chest pain >30 min, hypotension, arrhythmias, heart failure signs, cardiogenic shock, recurrent ischemia, contraindications to anticoagulation.\n\nNow produce JSON.\n\nNeed confidence values: primary diagnosis high 0.96. Differentials: Unstable angina 0.6, NSTEMI 0.55, Aortic dissection 0.2, Pulmonary embolism 0.15.\n\nMake sure format matches.\n\nReturn only JSON.\n\n---\n\n{\n    \"primary_diagnosis\": {\n        \"name\": \"Acute inferior ST-elevation myocardial infarction (STEMI)\",\n        \"confidence\": 0.96,\n        \"icd_code\": \"I21.1\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Unstable angina\",\n            \"confidence\": 0.60,\n            \"icd_code\": \"I20.0\"\n        },\n        {\n            \"name\": \"Non-ST elevation myocardial infarction (NSTEMI)\",\n            \"confidence\": 0.55,\n            \"icd_code\": \"I21.4\"\n        },\n        {\n            \"name\": \"Aortic dissection (proximal)\",\n            \"confidence\": 0.20,\n            \"icd_code\": \"I71.0\"\n        },\n        {\n            \"name\": \"Pulmonary embolism\",\n            \"confidence\": 0.15,\n            \"icd_code\": \"I26.99\"\n        }\n    ],\n    \"key_findings\": [\n        \"Sudden crushing substernal chest pain radiating to left arm\",\n        \"Diaphoresis, nausea, anxiety\",\n        \"ST elevation in leads II, III, aVF\",\n        \"Elevated troponin I (0.8 ng/mL) and CK-MB (25 ng/mL)\",\n        \"Risk factors: hypertension, diabetes, hyperlipidemia, former smoker, family history of CAD\"\n    ],\n    \"tests\": [\n        {\n            \"test\": \"12-lead ECG (repeat)\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Cardiac biomarkers (troponin, CK-MB) serial\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Coronary angiography (primary PCI)\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Bedside transthoracic echocardiography\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Chest X-ray\",\n            \"priority\": \"routine\"\n        },\n        {\n            \"test\": \"CBC, BMP, coagulation panel\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management\": {\n        \"immediate\": [\n            \"Activate cath lab for primary PCI\",\n            \"Place patient on cardiac monitor and obtain IV access\",\n            \"Administer aspirin 325 mg chewable immediately\",\n            \"Give clopidogrel 600 mg PO loading\",\n            \"Start unfractionated heparin 70 U/kg IV bolus (adjust for weight)\",\n            \"Sublingual nitroglycerin 0.4 mg every 5 min PRN (max 3 doses) if systolic BP > 100 mmHg\",\n            \"Consider IV morphine 4 mg for refractory pain\"\n        ],\n        \"medications\": [\n            \"Aspirin: 325 mg PO chew, once\",\n            \"Clopidogrel: 600 mg PO loading, then 75 mg daily\",\n            \"Unfractionated heparin: 70 U/kg IV bolus, then infusion per ACT\",\n            \"Nitroglycerin: 0.4 mg SL q5 min PRN, max 3 doses\",\n            \"Metoprolol: 5 mg IV bolus over 2 min, repeat q5 min up to 15 mg if no contraindication\",\n            \"Atorvastatin: 80 mg PO daily, high\u2011intensity statin\"\n        ],\n        \"consultations\": [\n            \"Interventional Cardiology: emergent\",\n            \"Cardiology: urgent for ongoing management\",\n            \"Cardiothoracic Surgery: consult if PCI not feasible\"\n        ]\n    },\n    \"red_flags\": [\n        \"Persistent chest pain >30 minutes despite therapy\",\n        \"Hemodynamic instability (SBP < 90 mmHg, signs of shock)\",\n        \"Life\u2011threatening arrhythmias (ventricular tachycardia/fibrillation)\",\n        \"New onset heart failure or pulmonary edema\",\n        \"Recurrent ischemia after reperfusion\"\n    ]\n}",
+      "response_time": 3.6871440410614014,
+      "cached": false,
+      "case_id": "custom_20250905_073123",
+      "timestamp": "2025-09-05T07:31:41.712835",
+      "tokens_used": 2211,
+      "input_tokens": 584,
+      "output_tokens": 1627
+    },
+    {
+      "model_name": "anthropic/claude-3-opus-20240229",
+      "response": "{\n    \"primary_diagnosis\": {\n        \"name\": \"Acute ST-elevation myocardial infarction (STEMI)\",\n        \"confidence\": 0.95,\n        \"icd_code\": \"I21.3\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Unstable angina\",\n            \"confidence\": 0.4,\n            \"icd_code\": \"I20.0\"\n        },\n        {\n            \"name\": \"Acute pericarditis\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"I30.0\"\n        },\n        {\n            \"name\": \"Aortic dissection\",\n            \"confidence\": 0.1,\n            \"icd_code\": \"I71.0\"\n        },\n        {\n            \"name\": \"Pulmonary embolism\",\n            \"confidence\": 0.05,\n            \"icd_code\": \"I26.9\"\n        }\n    ],\n    \"key_findings\": [\n        \"Sudden onset chest pain (crushing, substernal, radiating to left arm)\",\n        \"Diaphoresis and nausea\",\n        \"ST elevation on ECG in leads II, III, and aVF\",\n        \"Elevated troponin I and CK-MB\"\n    ],\n    \"tests\": [\n        {\n            \"test\": \"Coronary angiography\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Chest X-ray\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Complete blood count\",\n            \"priority\": \"routine\"\n        },\n        {\n            \"test\": \"Comprehensive metabolic panel\",\n            \"priority\": \"routine\"\n        },\n        {\n            \"test\": \"Lipid profile\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management\": {\n        \"immediate\": [\n            \"Administer aspirin 325 mg orally\",\n            \"Administer nitroglycerin 0.4 mg sublingual (if systolic BP > 90 mmHg)\",\n            \"Administer morphine 2-4 mg IV for pain relief (if needed)\",\n            \"Prepare for urgent percutaneous coronary intervention (PCI)\"\n        ],\n        \"medications\": [\n            \"Clopidogrel: 600 mg loading dose, then 75 mg daily\",\n            \"Enoxaparin: 1 mg/kg subcutaneous every 12 hours\",\n            \"Atorvastatin: 80 mg daily\",\n            \"Metoprolol: 25 mg oral twice daily (if no contraindications)\"\n        ],\n        \"consultations\": [\n            \"Cardiology: immediate\"\n        ]\n    },\n    \"red_flags\": [\n        \"Hemodynamic instability\",\n        \"Ventricular arrhythmias\",\n        \"Signs of cardiogenic shock\"\n    ]\n}",
+      "response_time": 26.084635734558105,
+      "cached": false,
+      "case_id": "custom_20250905_073123",
+      "timestamp": "2025-09-05T07:32:07.800831",
+      "tokens_used": 1334,
+      "input_tokens": 608,
+      "output_tokens": 726
+    },
+    {
+      "model_name": "google/gemini-2.5-pro",
+      "response": "**1. Dissecting the Objective**\n\nI'm starting to really break down the problem. The core is a medical case, with the JSON output being paramount. I'm carefully reviewing the request, highlighting the need for accuracy and a strict JSON format. My focus is firmly on structuring the case data effectively.\n\n\n**2. Structuring the Information**\n\nI've just finished extracting the key details from the medical case and organizing them according to the desired JSON structure. I am now populating the `primary_diagnosis` section and will begin on the `differential_diagnoses` array next, ensuring each diagnosis includes the required attributes. Accuracy is critical.\n\n\n**3. Formulating the Primary Diagnosis**\n\nI'm now finalizing the `primary_diagnosis` entry. Based on the extensive evidence, the name is clear. The confidence level is set at 0.99. Finally, I'll consult the ICD-10 guidelines to get the precise code for an acute STEMI of the inferior wall. I'm aiming for precision to meet the output requirements.\n\n\n**4. Refining the Output**\n\nI'm now generating the JSON for the `differential_diagnoses`. Aortic Dissection, Pulmonary Embolism, and Pericarditis are my top three. After reviewing, I am working on lower confidence scores and the ICD-10 codes. Now, I'm turning my focus on `key_findings` and `tests`, aiming to be comprehensive and compliant with the provided structure.\n\n\n**5. Compiling the JSON**\n\nI'm deep in the creation of the `tests` array now, focusing on their priority. The structure necessitates a test and priority for each entry, so I'll make certain that each test is appropriately categorized. I'm currently structuring the tests with a test and priority (`immediate`, `urgent`, `routine`), and then I'll address `management`.\n\n\n**6. Structuring the Tests**\n\nI'm concentrating on organizing the \"tests\" array, listing all tests and assigning their priorities. The focus is on the most critical ones, such as the coronary angiography, categorized under `immediate`. I will ensure all tests are correctly structured according to the output's requirements.\n\n\\n\\n\n\nI'm now finalizing the `management` section of the JSON. This section must contain appropriate immediate actions, required medications in the specified format, and specialist consultations. I am paying close attention to the order and clarity of instructions, following output format requirements.\n\n\n**7. Detailing the Management**\n\nI'm formulating the `management` section. This includes an action to activate the cath lab, set up IV access and continuous cardiac monitoring. I have also created the section for medications, with aspirin, sublingual nitroglycerin, and ticagrelor, with dosages and routes. Next, I'm structuring the consultations.\n\n\n**8. Assembling the Final JSON**\n\nI am nearing the conclusion and am now consolidating all the sections, ensuring the JSON adheres to the required structure. I am carefully organizing and formatting the information from the medical case to be in an easily readable, correctly formatted JSON. I'll now double-check the key findings and test priorities.\n\n\n",
+      "response_time": 19.883756160736084,
+      "cached": false,
+      "case_id": "custom_20250905_073123",
+      "timestamp": "2025-09-05T07:32:27.912825",
+      "tokens_used": 2557,
+      "input_tokens": 558,
+      "output_tokens": 1999
+    },
+    {
+      "model_name": "google/gemini-2.5-flash",
+      "response": "```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"ST-Elevation Myocardial Infarction (STEMI)\",\n        \"confidence\": 0.98,\n        \"icd_code\": \"I21.0\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Unstable Angina\",\n            \"confidence\": 0.7,\n            \"icd_code\": \"I20.0\"\n        },\n        {\n            \"name\": \"Acute Pericarditis\",\n            \"confidence\": 0.4,\n            \"icd_code\": \"I30.9\"\n        },\n        {\n            \"name\": \"Aortic Dissection\",\n            \"confidence\": 0.3,\n            \"icd_code\": \"I71.0\"\n        },\n        {\n            \"name\": \"Pulmonary Embolism\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"I26.99\"\n        }\n    ],\n    \"key_findings\": [\n        \"Sudden onset crushing substernal chest pain radiating to left arm\",\n        \"Profuse sweating and nausea\",\n        \"Hypertension, Type 2 Diabetes Mellitus, Hyperlipidemia\",\n        \"20 pack-year smoking history, family history of CAD\",\n        \"BP 150/90 mmHg, HR 95 bpm\",\n        \"Diaphoretic, anxious appearance\",\n        \"ECG: ST elevation in leads II, III, and aVF\",\n        \"Elevated Troponin I (0.8 ng/mL)\",\n        \"Elevated CK-MB (25 ng/mL)\"\n    ],\n    \"tests\": [\n        {\n            \"test\": \"Repeat ECG\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Cardiac Catheterization\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Complete Blood Count (CBC)\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Basic Metabolic Panel (BMP)\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Lipid Panel\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management\": {\n        \"immediate\": [\n            \"Oxygen supplementation to maintain O2 Sat > 90%\",\n            \"Establish IV access (2 large bore IVs)\",\n            \"Continuous cardiac monitoring\",\n            \"Prepare for percutaneous coronary intervention (PCI)\"\n        ],\n        \"medications\": [\n            \"Aspirin: 325 mg, oral (chewed)\",\n            \"Nitroglycerin: 0.4 mg, sublingual (repeat every 5 minutes for up to 3 doses if pain persists and SBP > 90 mmHg)\",\n            \"Morphine Sulfate: 2-4 mg, IV (repeat every 5-15 minutes as needed for pain if nitroglycerin ineffective)\",\n            \"Clopidogrel: 600 mg, oral (loading dose)\",\n            \"Heparin: 60 units/kg IV bolus (max 4000 units), then 12 units/kg/hr IV infusion (max 1000 units/hr)\"\n        ],\n        \"consultations\": [\n            \"Cardiology: immediate\",\n            \"Interventional Cardiology: immediate\"\n        ]\n    },\n    \"red_flags\": [\n        \"Crushing substernal chest pain radiating to left arm\",\n        \"Diaphoresis and nausea\",\n        \"ST elevation on ECG\",\n        \"Elevated cardiac biomarkers (Troponin I, CK-MB)\",\n        \"Multiple cardiac risk factors (hypertension, diabetes, hyperlipidemia, smoking history, family history of CAD)\"\n    ]\n}\n```",
+      "response_time": 3.94173002243042,
+      "cached": false,
+      "case_id": "custom_20250905_073123",
+      "timestamp": "2025-09-05T07:32:31.856808",
+      "tokens_used": 1422,
+      "input_tokens": 558,
+      "output_tokens": 864
+    },
+    {
+      "model_name": "google/gemini-2.5-flash-lite",
+      "response": "```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"ST-Elevation Myocardial Infarction (STEMI)\",\n        \"confidence\": 0.95,\n        \"icd_code\": \"I21.19\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Unstable Angina\",\n            \"confidence\": 0.05,\n            \"icd_code\": \"I20.0\"\n        },\n        {\n            \"name\": \"Pulmonary Embolism\",\n            \"confidence\": 0.02,\n            \"icd_code\": \"I26.99\"\n        },\n        {\n            \"name\": \"Aortic Dissection\",\n            \"confidence\": 0.01,\n            \"icd_code\": \"I71.00\"\n        },\n        {\n            \"name\": \"Pericarditis\",\n            \"confidence\": 0.01,\n            \"icd_code\": \"I30.9\"\n        }\n    ],\n    \"key_findings\": [\n        \"Sudden onset crushing substernal chest pain radiating to left arm\",\n        \"Diaphoresis and nausea\",\n        \"ST elevation in leads II, III, and aVF on ECG\",\n        \"Elevated Troponin I\",\n        \"Elevated CK-MB\",\n        \"History of hypertension, type 2 diabetes, hyperlipidemia, and smoking\",\n        \"Family history of coronary artery disease\"\n    ],\n    \"tests\": [\n        {\n            \"test\": \"ECG\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Troponin I\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"CK-MB\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Complete Blood Count (CBC)\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Basic Metabolic Panel (BMP)\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Coagulation Studies (PT/INR, PTT)\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Chest X-ray\",\n            \"priority\": \"urgent\"\n        }\n    ],\n    \"management\": {\n        \"immediate\": [\n            \"Administer oxygen to maintain SpO2 > 90%\",\n            \"Initiate reperfusion therapy (PCI or thrombolysis)\",\n            \"Continuous cardiac monitoring\",\n            \"Establish IV access\"\n        ],\n        \"medications\": [\n            \"Aspirin: 325 mg, PO\",\n            \"Clopidogrel: 600 mg, PO (loading dose)\",\n            \"Nitroglycerin: 0.4 mg, SL (as needed for pain, if BP permits)\",\n            \"Morphine: 2-4 mg, IV (as needed for pain)\",\n            \"Metoprolol: 25 mg, PO (if no contraindications)\",\n            \"Heparin: 60 units/kg IV bolus, then 12 units/kg/hr infusion\"\n        ],\n        \"consultations\": [\n            \"Cardiology: immediate\",\n            \"Interventional Cardiology: immediate\"\n        ]\n    },\n    \"red_flags\": [\n        \"Crushing substernal chest pain\",\n        \"Radiation of pain to left arm\",\n        \"Diaphoresis\",\n        \"ST elevation on ECG\",\n        \"Elevated cardiac biomarkers\"\n    ]\n}\n```",
+      "response_time": 3.1865479946136475,
+      "cached": false,
+      "case_id": "custom_20250905_073123",
+      "timestamp": "2025-09-05T07:32:35.044855",
+      "tokens_used": 1374,
+      "input_tokens": 558,
+      "output_tokens": 816
+    },
+    {
+      "model_name": "google/gemma-2-9b-it",
+      "response": "{\n    \"primary_diagnosis\": {\n        \"name\": \"Acute Myocardial Infarction (STEMI)\",\n        \"confidence\": 0.95,\n        \"icd_code\": \"I21.0\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Aortic Dissection\",\n            \"confidence\": 0.05,\n            \"icd_code\": \"I71.0\"\n        },\n        {\n            \"name\": \"Pericarditis\",\n            \"confidence\": 0.05,\n            \"icd_code\": \"I30.0\"\n        },\n        {\n            \"name\": \"Severe Angina\",\n            \"confidence\": 0.03,\n            \"icd_code\": \"I20.9\"\n        }\n    ],\n    \"key_findings\": [\n        \"Crushing substernal chest pain radiating to left arm\",\n        \"Diaphoresis and nausea\",\n        \"ST elevation in leads II, III, and aVF on ECG\",\n        \"Elevated Troponin I and CK-MB levels\"\n    ],\n    \"tests\": [\n        {\n            \"test\": \"Repeat ECG\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Cardiac Biomarkers (Troponin I, CK-MB)\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Complete Blood Count (CBC)\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Renal Function Tests (Creatinine, BUN)\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Electrolytes Panel\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Chest X-ray\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management\": {\n        \"immediate\": [\n            \"Oxygen therapy\",\n            \"Nitroglycerin 0.4 mg SL every 5 minutes for a maximum of 3 doses\",\n            \"Aspirin 325 mg chewable tablet immediately\",\n            \"Morphine sulfate 2-4 mg IV push for pain control\"\n        ],\n        \"medications\": [\n            \"Heparin 60 units/kg IV bolus followed by 12 units/kg/hr infusion\",\n            \"Ticagrelor 180 mg loading dose followed by 90 mg every 12 hours\",\n            \"Metoprolol 5 mg IV push followed by 5 mg every 15 minutes to a maximum dose of 15 mg\"\n        ],\n        \"consultations\": [\n            \"Cardiology: emergent\"\n        ]\n    },\n    \"red_flags\": [\n        \"ST elevation on ECG\",\n        \"Elevated cardiac biomarkers (Troponin I and CK-MB)\",\n        \"History of smoking\"\n    ]\n}\n",
+      "response_time": 1.5967621803283691,
+      "cached": false,
+      "case_id": "custom_20250905_073123",
+      "timestamp": "2025-09-05T07:32:36.748463",
+      "tokens_used": 1235,
+      "input_tokens": 567,
+      "output_tokens": 668
+    },
+    {
+      "model_name": "google/gemma-3-12b-it",
+      "response": "\n\n```json\n{\n  \"primary_diagnosis\": {\n    \"name\": \"Acute ST-Elevation Myocardial Infarction (STEMI)\",\n    \"confidence\": 0.95,\n    \"icd_code\": \"I21.0\"\n  },\n  \"differential_diagnoses\": [\n    {\n      \"name\": \"Unstable Angina\",\n      \"confidence\": 0.2,\n      \"icd_code\": \"I20.0\"\n    },\n    {\n      \"name\": \"Esophageal Spasm\",\n      \"confidence\": 0.1,\n      \"icd_code\": \"K22.8\"\n    },\n    {\n      \"name\": \"Pericarditis\",\n      \"confidence\": 0.05,\n      \"icd_code\": \"I30.0\"\n    },\n    {\n      \"name\": \"Aortic Dissection\",\n      \"confidence\": 0.03,\n      \"icd_code\": \"I68.2\"\n    }\n  ],\n  \"key_findings\": [\n    \"Crushing substernal chest pain radiating to the left arm\",\n    \"Profuse sweating (diaphoresis)\",\n    \"Nausea\",\n    \"ST elevation in leads II, III, and aVF on ECG\",\n    \"Elevated Troponin I (0.8 ng/mL)\",\n    \"Elevated CK-MB (25 ng/mL)\",\n    \"History of hypertension, diabetes, hyperlipidemia, and smoking\",\n    \"Family history of coronary artery disease\"\n  ],\n  \"tests\": [\n    {\n      \"test\": \"Cardiac Catheterization\",\n      \"priority\": \"immediate\"\n    },\n    {\n      \"test\": \"Complete Blood Count (CBC)\",\n      \"priority\": \"urgent\"\n    },\n    {\n      \"test\": \"Basic Metabolic Panel (BMP)\",\n      \"priority\": \"urgent\"\n    },\n    {\n      \"test\": \"Coagulation Studies (PT/INR, PTT)\",\n      \"priority\": \"urgent\"\n    },\n    {\n      \"test\": \"Lipid Panel\",\n      \"priority\": \"routine\"\n    },\n    {\n      \"test\": \"Echocardiogram\",\n      \"priority\": \"routine\"\n    }\n  ],\n  \"management\": {\n    \"immediate\": [\n      \"Oxygen administration (2-4 L/min via nasal cannula)\",\n      \"Continuous cardiac monitoring\",\n      \"Establish IV access\",\n      \"Aspirin 325 mg PO (chewed and swallowed)\",\n      \"Nitroglycerin 0.4 mg sublingual (if BP allows, repeat q5min x3)\",\n      \"Morphine 2-4 mg IV for pain relief (as needed)\"\n    ],\n    \"medications\": [\n      \"Aspirin: 325 mg PO\",\n      \"Nitroglycerin: 0.4 mg sublingual (PRN)\",\n      \"Morphine: 2-4 mg IV (PRN)\",\n      \"Amlodipine: Continue home dose\",\n      \"Metformin: Continue home dose\",\n      \"Atorvastatin: Continue home dose\",\n      \"Heparin: 60 units/kg IV bolus followed by 12 units/kg/hr infusion (adjust based on aPTT)\"\n    ],\n    \"consultations\": [\n      \"Cardiology: Immediate\",\n      \"Interventional Radiology: Immediate (for possible PCI)\"\n    ]\n  },\n  \"red_flags\": [\n    \"Sudden onset chest pain\",\n    \"ST elevation on ECG\",\n    \"Elevated cardiac biomarkers\",\n    \"Diaphoresis\",\n    \"Nausea\"\n  ]\n}\n```",
+      "response_time": 17.966130018234253,
+      "cached": false,
+      "case_id": "custom_20250905_073123",
+      "timestamp": "2025-09-05T07:32:54.715394",
+      "tokens_used": 1411,
+      "input_tokens": 563,
+      "output_tokens": 848
+    },
+    {
+      "model_name": "meta-llama/llama-3.2-3b-instruct",
+      "response": "```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"Acute Coronary Syndrome\",\n        \"confidence\": 0.9,\n        \"icd_code\": \"I21.0\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Myocardial Infarction\",\n            \"confidence\": 0.8,\n            \"icd_code\": \"I21.0\"\n        },\n        {\n            \"name\": \"Angina Pectoris\",\n            \"confidence\": 0.7,\n            \"icd_code\": \"I20.0\"\n        },\n        {\n            \"name\": \"Pericarditis\",\n            \"confidence\": 0.6,\n            \"icd_code\": \"K89.0\"\n        },\n        {\n            \"name\": \"Acute Coronary Insufficiency\",\n            \"confidence\": 0.5,\n            \"icd_code\": \"I24.0\"\n        }\n    ],\n    \"key_findings\": [\n        \"Sudden onset chest pain radiating to the left arm\",\n        \"Elevated troponin and CK-MB\",\n        \"ECG changes (ST elevation in leads II, III, and aVF)\",\n        \"Hypertension\",\n        \"Family history of coronary artery disease\"\n    ],\n    \"tests\": [\n        {\n            \"test\": \"ECG\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Troponin I\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"CK-MB\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Echocardiogram\",\n            \"priority\": \"urgent\"\n        }\n    ],\n    \"management\": {\n        \"immediate\": [\n            \"Aspirin 325mg PO\",\n            \"Oxygen therapy\",\n            \"Nitrates (nitroglycerin, 0.3mg sublingual)\",\n            \"Beta blockers (metoprolol, 50mg IV)\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Aspirin\",\n                \"dose\": \"325mg\"\n            },\n            {\n                \"drug\": \"Metoprolol\",\n                \"dose\": \"50mg\"\n            },\n            {\n                \"drug\": \"Nitrates\",\n                \"dose\": \"nitroglycerin, 0.3mg sublingual\"\n            }\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Cardiology\",\n                \"urgency\": \"urgent\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Sudden onset chest pain\",\n        \"Family history of coronary artery disease\",\n        \"Elevated troponin and CK-MB\",\n        \"ECG changes (ST elevation)\"\n    ]\n}\n```",
+      "response_time": 6.006402015686035,
+      "cached": false,
+      "case_id": "custom_20250905_073123",
+      "timestamp": "2025-09-05T07:33:00.722189",
+      "tokens_used": 1127,
+      "input_tokens": 532,
+      "output_tokens": 595
+    },
+    {
+      "model_name": "mistralai/mistral-large-2411",
+      "response": "```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"ST-Elevation Myocardial Infarction (STEMI)\",\n        \"confidence\": 0.9,\n        \"icd_code\": \"I21.02\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Unstable Angina\",\n            \"confidence\": 0.7,\n            \"icd_code\": \"I20.0\"\n        },\n        {\n            \"name\": \"Aortic Dissection\",\n            \"confidence\": 0.3,\n            \"icd_code\": \"I71.0\"\n        },\n        {\n            \"name\": \"Pulmonary Embolism\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"I26.9\"\n        },\n        {\n            \"name\": \"Gastroesophageal Reflux Disease (GERD)\",\n            \"confidence\": 0.1,\n            \"icd_code\": \"K21.9\"\n        }\n    ],\n    \"key_findings\": [\n        \"Crushing substernal chest pain radiating to the left arm\",\n        \"Diaphoresis and nausea\",\n        \"ST elevation in leads II, III, and aVF\",\n        \"Elevated Troponin I and CK-MB\",\n        \"History of hypertension, diabetes, hyperlipidemia, and smoking\"\n    ],\n    \"tests\": [\n        {\n            \"test\": \"Complete Blood Count (CBC)\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Comprehensive Metabolic Panel (CMP)\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Chest X-ray\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Echocardiogram\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Cardiac Catheterization\",\n            \"priority\": \"immediate\"\n        }\n    ],\n    \"management\": {\n        \"immediate\": [\n            \"Administer oxygen\",\n            \"Establish IV access\",\n            \"Administer aspirin 325 mg PO\",\n            \"Administer nitroglycerin 0.4 mg sublingual\",\n            \"Administer morphine 2-4 mg IV for pain relief\"\n        ],\n        \"medications\": [\n            \"aspirin: 325 mg, PO\",\n            \"nitroglycerin: 0.4 mg, sublingual\",\n            \"morphine: 2-4 mg, IV\",\n            \"heparin: 60 units/kg IV bolus (max 4000 units), then 12 units/kg/hr IV infusion (max 1000 units/hr)\"\n        ],\n        \"consultations\": [\n            \"cardiology: immediate\"\n        ]\n    },\n    \"red_flags\": [\n        \"Sudden onset chest pain\",\n        \"ST elevation on ECG\",\n        \"Elevated cardiac biomarkers\",\n        \"Family history of coronary artery disease\"\n    ]\n}\n```",
+      "response_time": 15.479971647262573,
+      "cached": false,
+      "case_id": "custom_20250905_073123",
+      "timestamp": "2025-09-05T07:33:16.203838",
+      "tokens_used": 1430,
+      "input_tokens": 641,
+      "output_tokens": 789
+    },
+    {
+      "model_name": "mistralai/mistral-7b-instruct",
+      "response": " {\n    \"primary_diagnosis\": {\n        \"name\": \"Acute Myocardial Infarction\",\n        \"confidence\": 0.95,\n        \"icd_code\": \"I21.9 (Acute coronary heart disease, unspecified, without mention of acute MI, not in acute stage)\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Atypical Angina Pectoris\",\n            \"confidence\": 0.05,\n            \"icd_code\": \"I20.0 (Angina pectoris, stable angina pectoris)\"\n        },\n        {\n            \"name\": \"Pericarditis\",\n            \"confidence\": 0.03,\n            \"icd_code\": \"I30.0 (Acute pericarditis)\"\n        },\n        {\n            \"name\": \"Esophageal Spasm\",\n            \"confidence\": 0.02,\n            \"icd_code\": \"K21.3 (Esophageal spasm without obstruction)\"\n        },\n        {\n            \"name\": \"Pulmonary Embolism\",\n            \"confidence\": 0.01,\n            \"icd_code\": \"I26.0 (Pulmonary thromboembolism)\"\n        },\n        {\n            \"name\": \"Gastroesophageal Reflux Disease\",\n            \"confidence\": 0.01,\n            \"icd_code\": \"K21.9 (Other diseases of esophagus, not elsewhere classified)\"\n        }\n    ],\n    \"key_findings\": [\"Sudden onset chest pain, crushing, substernal, radiating to the left arm, diaphoresis, nausea\"],\n    \"tests\": [\n        {\n            \"test\": \"Chest X-ray\",\n            \"priority\": \"routine\"\n        },\n        {\n            \"test\": \"Echocardiogram\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Cardiac Enzymes (e.g., Troponin I, CK-MB)\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"D-dimer\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management\": {\n        \"immediate\": [\n            \"Oxygen therapy: 2 L/min via nasal cannula\",\n            \"Aspirin: 325 mg chewable tablet, stat\"\n        ],\n        \"medications\": [\n            \"Morphine sulfate: 2-4 mg IV every 5-10 minutes, as needed for pain\",\n            \"Nitroglycerin: Sublingual 0.4mg tablet every 5 minutes for 3 doses, if no relief\",\n            \"Clopidogrel: 300 mg loading dose, followed by 75 mg daily\",\n            \"Metoprolol: 5 mg IV over 2-3 minutes, then 50 mg orally every 6 hours\"\n        ],\n        \"consultations\": [\"Cardiology: urgent\"]\n    },\n    \"red_flags\": [\"Persistent chest pain despite treatment, hemodynamic instability, new-onset atrial fibrillation, cardiogenic shock\"]\n}",
+      "response_time": 8.409721851348877,
+      "cached": false,
+      "case_id": "custom_20250905_073123",
+      "timestamp": "2025-09-05T07:33:24.707160",
+      "tokens_used": 1437,
+      "input_tokens": 643,
+      "output_tokens": 794
+    },
+    {
+      "model_name": "deepseek/deepseek-chat",
+      "response": "```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"Acute Inferior Wall Myocardial Infarction\",\n        \"confidence\": 0.95,\n        \"icd_code\": \"I21.1\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Aortic Dissection\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"I71.00\"\n        },\n        {\n            \"name\": \"Pulmonary Embolism\",\n            \"confidence\": 0.15,\n            \"icd_code\": \"I26.99\"\n        },\n        {\n            \"name\": \"Pericarditis\",\n            \"confidence\": 0.1,\n            \"icd_code\": \"I30.9\"\n        },\n        {\n            \"name\": \"Gastroesophageal Reflux Disease\",\n            \"confidence\": 0.05,\n            \"icd_code\": \"K21.9\"\n        }\n    ],\n    \"key_findings\": [\n        \"Sudden onset crushing substernal chest pain radiating to the left arm\",\n        \"ST elevation in leads II, III, and aVF on ECG\",\n        \"Elevated Troponin I and CK-MB\",\n        \"Hypertension, diabetes, hyperlipidemia, and smoking history\",\n        \"Diaphoresis and nausea\"\n    ],\n    \"tests\": [\n        {\n            \"test\": \"Repeat ECG\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Serial Troponin levels\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Chest X-ray\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Echocardiogram\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Lipid profile\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management\": {\n        \"immediate\": [\n            \"Oxygen therapy\",\n            \"Aspirin 325 mg PO\",\n            \"Nitroglycerin SL or IV\",\n            \"Morphine IV for pain relief\"\n        ],\n        \"medications\": [\n            \"Aspirin: 325 mg, PO\",\n            \"Nitroglycerin: 0.4 mg, SL or IV\",\n            \"Morphine: 2-4 mg, IV\",\n            \"Heparin: 60 units/kg, IV bolus (max 4000 units), followed by 12 units/kg/hr infusion\",\n            \"Metoprolol: 25-50 mg, PO\",\n            \"Atorvastatin: 80 mg, PO\"\n        ],\n        \"consultations\": [\n            \"Cardiology: immediate\",\n            \"Cardiothoracic Surgery: urgent (if PCI not available)\"\n        ]\n    },\n    \"red_flags\": [\n        \"ST elevation on ECG\",\n        \"Elevated cardiac enzymes\",\n        \"Crushing chest pain with radiation\",\n        \"Diaphoresis and nausea\",\n        \"History of CAD risk factors\"\n    ]\n}\n```",
+      "response_time": 20.732848167419434,
+      "cached": false,
+      "case_id": "custom_20250905_073123",
+      "timestamp": "2025-09-05T07:33:45.441563",
+      "tokens_used": 1154,
+      "input_tokens": 515,
+      "output_tokens": 639
+    },
+    {
+      "model_name": "deepseek/deepseek-r1",
+      "response": "Okay, let's tackle this medical case. So, the patient is a 45-year-old male with sudden onset chest pain. The pain is crushing, substernal, and radiates to the left arm. He's been sweating and nauseous for the past two hours. Let's break this down step by step.\n\nFirst, the primary symptoms point towards a cardiac issue. The nature of the pain\u2014crushing, substernal, radiating\u2014is classic for a heart attack. The sweating (diaphoresis) and nausea are also common in myocardial infarction (MI). His medical history includes hypertension, diabetes, hyperlipidemia, and a significant smoking history. All of these are major risk factors for coronary artery disease. Family history of MI at a young age adds to the risk.\n\nLooking at the physical exam: BP is elevated at 150/90, which is a bit high. Heart rate is 95, regular. Respiratory rate is slightly increased. O2 saturation is okay. Diaphoretic and anxious\u2014again, consistent with MI. The cardiovascular exam notes normal heart sounds, no murmurs, which might be surprising in an MI, but sometimes the physical exam can be unremarkable. Lungs are clear, so probably not a pulmonary issue like PE or pneumothorax.\n\nThe initial tests are key here. ECG shows ST elevation in II, III, and aVF. That's the inferior leads, so this is pointing towards an inferior wall MI. Troponin I and CK-MB are both elevated, which confirms myocardial injury. So putting this all together, the primary diagnosis is likely an ST-elevation myocardial infarction (STEMI) of the inferior wall.\n\nDifferential diagnoses need to be considered. Aortic dissection could present with chest pain, but the pain is usually tearing and radiates to the back. However, without unequal BP or other signs, it's less likely. Pulmonary embolism might cause chest pain and tachycardia, but the ECG here shows ST elevation, which isn't typical. Unstable angina is possible, but the elevated troponin indicates actual infarction. Pericarditis could have ST elevation, but it's usually diffuse and may have PR depression. The ST elevation here is localized, making pericarditis less likely.\n\nFor tests, immediate ECG is already done. Need to monitor cardiac enzymes serially, maybe a chest X-ray to rule out other issues, echocardiogram to check for wall motion abnormalities, and a lipid profile given his history. The priority would be immediate for ECG and troponin, urgent for others.\n\nManagement: Immediate actions should be aspirin, nitroglycerin if BP allows, oxygen if needed (though his O2 is okay), and morphine for pain. Medications would include aspirin 325 mg chewable, clopidogrel loading dose, nitroglycerin sublingual, and statin. He needs a cardiology consult immediately for possible PCI. Also, blood pressure management given his hypertension.\n\nRed flags include the STEMI itself, elevated cardiac enzymes, and his risk factors. Need to act fast to reperfuse the myocardium.\n\nWait, but the ECG leads II, III, aVF are inferior. So the ICD-10 code for STEMI would be I21.29. For differentials, aortic dissection is I71.00, PE I26.99, Unstable angina I20.0, and pericarditis I01.0. Also, medications: beta-blocker like metoprolol if BP allows, but maybe hold off if there's heart failure. But the immediate meds would focus on antiplatelets, anticoagulants, statins.\n\nNeed to check if the patient has contraindications to any meds. Since he's on amlodipine, but no mention of contraindications. Heparin or another anticoagulant might be added. Also, considering his diabetes, but that's more for long-term management.\n\nSo putting it all into the JSON structure as specified. The confidence for STEMI is high, maybe 0.95. Differentials with lower confidence. Tests prioritized. Management steps as per guidelines for STEMI.\n\n\n---\n\n```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"ST-Elevation Myocardial Infarction (Inferior Wall)\",\n        \"confidence\": 0.95,\n        \"icd_code\": \"I21.29\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Aortic Dissection\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"I71.00\"\n        },\n        {\n            \"name\": \"Pulmonary Embolism\",\n            \"confidence\": 0.15,\n            \"icd_code\": \"I26.99\"\n        },\n        {\n            \"name\": \"Unstable Angina\",\n            \"confidence\": 0.1,\n            \"icd_code\": \"I20.0\"\n        },\n        {\n            \"name\": \"Acute Pericarditis\",\n            \"confidence\": 0.05,\n            \"icd_code\": \"I01.0\"\n        }\n    ],\n    \"key_findings\": [\n        \"ST elevation in leads II, III, aVF\",\n        \"Elevated Troponin I and CK-MB\",\n        \"Crushing substernal chest pain with left arm radiation\",\n        \"Hypertension, diabetes, hyperlipidemia, and smoking history\"\n    ],\n    \"tests\": [\n        {\n            \"test\": \"Serial Troponin I\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Repeat ECG\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Echocardiogram\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Chest X-ray\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Lipid Profile\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management\": {\n        \"immediate\": [\n            \"Aspirin 325 mg chewable\",\n            \"Nitroglycerin sublingual (if BP >90 mmHg systolic)\",\n            \"Oxygen therapy if O2 saturation <90%\",\n            \"Morphine IV for pain relief\"\n        ],\n        \"medications\": [\n            \"Aspirin: 162-325 mg chewable, oral\",\n            \"Clopidogrel: 600 mg loading dose, oral\",\n            \"Nitroglycerin: 0.4 mg every 5 minutes (max 3 doses), sublingual\",\n            \"Atorvastatin: 80 mg, oral\"\n        ],\n        \"consultations\": [\n            \"Cardiology: immediate (for cardiac catheterization)\",\n            \"Cardiothoracic Surgery: standby (if PCI unavailable)\"\n        ]\n    },\n    \"red_flags\": [\n        \"ST elevation on ECG\",\n        \"Elevated cardiac enzymes\",\n        \"High-risk history (diabetes, hypertension, smoking)\",\n        \"Diaphoresis and nausea\"\n    ]\n}\n```",
+      "response_time": 28.30314064025879,
+      "cached": false,
+      "case_id": "custom_20250905_073123",
+      "timestamp": "2025-09-05T07:34:13.745438",
+      "tokens_used": 1967,
+      "input_tokens": 518,
+      "output_tokens": 1449
+    },
+    {
+      "model_name": "deepseek/deepseek-chat-v3.1",
+      "response": "```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"Acute Inferior Wall Myocardial Infarction\",\n        \"confidence\": 0.98,\n        \"icd_code\": \"I21.4\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Aortic Dissection\",\n            \"confidence\": 0.15,\n            \"icd_code\": \"I71.01\"\n        },\n        {\n            \"name\": \"Pericarditis\",\n            \"confidence\": 0.10,\n            \"icd_code\": \"I30.9\"\n        },\n        {\n            \"name\": \"Pulmonary Embolism\",\n            \"confidence\": 0.08,\n            \"icd_code\": \"I26.99\"\n        },\n        {\n            \"name\": \"Gastroesophageal Reflux Disease with Atypical Presentation\",\n            \"confidence\": 0.05,\n            \"icd_code\": \"K21.9\"\n        }\n    ],\n    \"key_findings\": [\"ST elevation in leads II, III, aVF (inferior wall pattern)\", \"Elevated troponin I (0.8 ng/mL)\", \"Elevated CK-MB (25 ng/mL)\", \"Crushing substernal chest pain radiating to left arm\", \"Diaphoresis and nausea\", \"Hypertension history\", \"Diabetes mellitus history\", \"Hyperlipidemia history\", \"Smoking history\", \"Family history of premature CAD\"],\n    \"tests\": [\n        {\n            \"test\": \"Repeat ECG\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Serial cardiac enzymes (troponin, CK-MB)\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Emergency coronary angiography\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Chest X-ray\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Echocardiogram\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Complete blood count\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Basic metabolic panel\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Lipid profile\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management\": {\n        \"immediate\": [\"Activate cardiac catheterization lab\", \"Administer aspirin 324 mg PO chewable\", \"Apply oxygen to maintain SpO2 >90%\", \"Establish IV access\", \"Continuous cardiac monitoring\"],\n        \"medications\": [\"aspirin: 324 mg, PO chewable\", \"nitroglycerin: 0.4 mg SL every 5 minutes x3 as needed for pain (if BP >100 systolic)\", \"morphine: 2-4 mg, IV push for pain unrelieved by nitroglycerin\", \"atorvastatin: 80 mg, PO (if not already on high dose)\", \"metoprolol: 5 mg, IV push x3 then 25-50 mg PO Q6H (if no contraindications)\", \"heparin: bolus 60 units/kg (max 4000 units) then infusion 12 units/kg/hr (max 1000 units/hr)\"],\n        \"consultations\": [\"Cardiology: immediate\", \"Interventional Cardiology: immediate\", \"Cardiac Surgery: urgent (standby)\"]\n    },\n    \"red_flags\": [\"ST elevation on ECG\", \"Elevated cardiac enzymes\", \"Hemodynamic instability risk\", \"Risk of arrhythmias (especially inferior MI with possible RV involvement)\", \"High risk patient profile (diabetes, hypertension, hyperlipidemia, smoking history)\"]\n}\n```",
+      "response_time": 15.769068241119385,
+      "cached": false,
+      "case_id": "custom_20250905_073123",
+      "timestamp": "2025-09-05T07:34:29.515594",
+      "tokens_used": 1304,
+      "input_tokens": 517,
+      "output_tokens": 787
+    },
+    {
+      "model_name": "qwen/qwen-2.5-coder-32b-instruct",
+      "response": "{\n    \"primary_diagnosis\": {\n        \"name\": \"Acute Myocardial Infarction (STEMI)\",\n        \"confidence\": 0.95,\n        \"icd_code\": \"I21.0\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Unstable Angina\",\n            \"confidence\": 0.03,\n            \"icd_code\": \"I20.1\"\n        },\n        {\n            \"name\": \"Pulmonary Embolism\",\n            \"confidence\": 0.01,\n            \"icd_code\": \"I26.9\"\n        },\n        {\n            \"name\": \"Pneumothorax\",\n            \"confidence\": 0.005,\n            \"icd_code\": \"J93.0\"\n        },\n        {\n            \"name\": \"Gastroesophageal Reflux Disease (GERD)\",\n            \"confidence\": 0.005,\n            \"icd_code\": \"K21.0\"\n        }\n    ],\n    \"key_findings\": [\n        \"Sudden onset chest pain, crushing, substernal, radiating to left arm\",\n        \"Profuse sweating, nausea\",\n        \"ST elevation in leads II, III, and aVF on ECG\",\n        \"Elevated Troponin I (0.8 ng/mL)\",\n        \"Elevated CK-MB (25 ng/mL)\"\n    ],\n    \"tests\": [\n        {\n            \"test\": \"12-lead ECG\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Serial troponin levels\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Complete blood count (CBC)\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Basic metabolic panel (BMP)\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Electrolytes\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"D-Dimer\",\n            \"priority\": \"routine\"\n        },\n        {\n            \"test\": \"Cardiac enzymes (CK-MB, LDH)\",\n            \"priority\": \"routine\"\n        },\n        {\n            \"test\": \"Cardiac biomarkers (Troponin T)\",\n            \"priority\": \"routine\"\n        },\n        {\n            \"test\": \"Chest X-ray\",\n            \"priority\": \"routine\"\n        },\n        {\n            \"test\": \"Echocardiogram\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management\": {\n        \"immediate\": [\n            \"Administer aspirin 325 mg orally or via\u56bc\",\n            \"Initiate sublingual nitroglycerin 0.4 mg every 5 minutes, up to three doses\",\n            \"Place on continuous cardiac monitoring\",\n            \"Prepare for possible thrombolysis or PCI\"\n        ],\n        \"medications\": [\n            \"Aspirin 325 mg orally or via\u56bc: continuous\",\n            \"Nitroglycerin 0.4 mg sublingual every 5 minutes, up to three doses: continuous\",\n            \"Morphine 4-8 mg IV for pain: PRN\",\n            \"Clopidogrel 300 mg orally: as soon as possible\"\n        ],\n        \"consultations\": [\n            \"Cardiology: immediate\",\n            \"Cardiac Surgery: if PCI is not available\"\n        ]\n    },\n    \"red_flags\": [\n        \"ST-segment elevation on ECG\",\n        \"Elevated troponin\",\n        \"Elevated CK-MB\",\n        \"Patient's age and risk factors\"\n    ]\n}",
+      "response_time": 15.325129985809326,
+      "cached": false,
+      "case_id": "custom_20250905_073123",
+      "timestamp": "2025-09-05T07:34:44.965358",
+      "tokens_used": 1319,
+      "input_tokens": 542,
+      "output_tokens": 777
+    },
+    {
+      "model_name": "cohere/command-r-plus",
+      "response": "{\n    \"primary_diagnosis\": {\n        \"name\": \"Acute Myocardial Infarction (Heart Attack)\",\n        \"confidence\": 0.9,\n        \"icd_code\": \"I21.0\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Unstable Angina\",\n            \"confidence\": 0.7,\n            \"icd_code\": \"I20.0\"\n        },\n        {\n            \"name\": \"Aortic Dissection\",\n            \"confidence\": 0.4,\n            \"icd_code\": \"I71.0\"\n        },\n        {\n            \"name\": \"Pulmonary Embolism\",\n            \"confidence\": 0.3,\n            \"icd_code\": \"I26.9\"\n        },\n        {\n            \"name\": \"Pericarditis\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"I30.9\"\n        }\n    ],\n    \"key_findings\": [\n        \"Chest pain with radiation to left arm\",\n        \"Diaphoresis and nausea\",\n        \"Elevated troponin and CK-MB levels\",\n        \"ST elevation on ECG\",\n        \"Cardiovascular risk factors: Hypertension, Diabetes, Hyperlipidemia, Smoking history, Family history of CAD\"\n    ],\n    \"tests\": [\n        {\n            \"test\": \"Repeat Troponin Test (for confirmation)\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Complete Blood Count (CBC)\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Comprehensive Metabolic Panel\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Chest X-ray\",\n            \"priority\": \"routine\"\n        },\n        {\n            \"test\": \"Cardiac Ultrasound\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management\": {\n        \"immediate\": [\n            \"Administer supplemental oxygen\",\n            \"Start IV access and fluids\",\n            \"Consider aspirin 325 mg chewable (orally if not nauseous, otherwise IV)\",\n            \"Consider nitroglycerin for chest pain relief: 0.4 mg sublingually, may repeat every 5 minutes up to 3 doses\"\n        ],\n        \"medications\": [\n            \"Aspirin: 81 mg orally once daily (long-term anti-platelet therapy)\",\n            \"Beta-blocker: Metoprolol Tartrate 25 mg orally every 6 hours (or IV if necessary) for at least 48 hours\",\n            \"Statin: Increase Atorvastatin dose to 80 mg orally once daily\",\n            \"ACE Inhibitor: Consider starting an ACE inhibitor, such as Lisinopril 5 mg orally once daily\"\n        ],\n        \"consultations\": [\n            \"Cardiology: urgent\"\n        ]\n    },\n    \"red_flags\": [\n        \"Family history of premature coronary artery disease\",\n        \"Smoking history\",\n        \"Diabetes and hypertension poorly controlled (based on BP reading)\"\n    ]\n}",
+      "response_time": 28.568519115447998,
+      "cached": false,
+      "case_id": "custom_20250905_073123",
+      "timestamp": "2025-09-05T07:35:13.534852",
+      "tokens_used": 1213,
+      "input_tokens": 554,
+      "output_tokens": 659
+    },
+    {
+      "model_name": "cohere/command-r",
+      "response": "{\n    \"primary_diagnosis\": {\n        \"name\": \"Acute Myocardial Infarction (STEMI)\",\n        \"confidence\": 0.95,\n        \"icd_code\": \"I21.1\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Anginal Syndrome\",\n            \"confidence\": 0.08,\n            \"icd_code\": \"I20.9\"\n        },\n        {\n            \"name\": \"Non-ST Elevation Myocardial Infarction (NSTEMI)\",\n            \"confidence\": 0.05,\n            \"icd_code\": \"I21.2\"\n        },\n        {\n            \"name\": \"Acute Coronary Syndrome (ACS)\",\n            \"confidence\": 0.05,\n            \"icd_code\": \"I25.1\"\n        },\n        {\n            \"name\": \"Cardiac Contusion\",\n            \"confidence\": 0.03,\n            \"icd_code\": \"R96.0\"\n        }\n    ],\n    \"key_findings\": [\n        \"Chest pain: Crushing, substernal, radiates to left arm\",\n        \"Elevated cardiac enzymes: Troponin I - 0.8 ng/mL, CK-MB - 25 ng/mL\",\n        \"ST elevation on ECG in leads II, III, and aVF\",\n        \"History of cardiovascular risk factors: Hypertension, Diabetes, Hyperlipidemia, Smoking, Family Hx of CAD\"\n    ],\n    \"tests\": [\n        {\n            \"test\": \"Repeat cardiac biomarkers (Troponin and CK-MB)\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"ECG monitoring\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Cardiac ultrasound (Echo) to rule out structural abnormalities\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Cardiac catheterization for definitive diagnosis and intervention\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Blood tests: Lipid profile, renal function, complete blood count\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management\": {\n        \"immediate\": [\n            \"Oxygen therapy: Initiate O2 via face mask\",\n            \"Aspirin 300 mg chew and swallow, then daily 75-162 mg\",\n            \"Nitroglycerin spray: Sublingual, as needed for chest pain\",\n            \"Morphine sulfate: IV, for pain relief and possible myocardial vasodilation\"\n        ],\n        \"medications\": [\n            \"Aspirin: 75-162 mg daily, continued long-term\",\n            \"PPI (e.g., Omeprazole): 40 mg daily for gastric protection\",\n            \"Statin (e.g., Atorvastatin): 80 mg daily\",\n            \"Beta-blocker: Start with metoprolol 50 mg twice daily\"\n        ],\n        \"consultations\": [\n            \"Cardiology: Emergent for PCI/stenting\"\n        ]\n    },\n    \"red_flags\": [\n        \"High risk of acute coronary events due to significant cardiac enzymes elevation and persistent symptoms\",\n        \"History of multiple cardiovascular risk factors and positive family history\",\n        \"Potential for cardiovascular instability, monitor closely\"\n    ]\n}",
+      "response_time": 9.081342935562134,
+      "cached": false,
+      "case_id": "custom_20250905_073123",
+      "timestamp": "2025-09-05T07:35:22.617051",
+      "tokens_used": 1275,
+      "input_tokens": 554,
+      "output_tokens": 721
+    },
+    {
+      "model_name": "ai21/jamba-large-1.7",
+      "response": "```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"Acute Myocardial Infarction (AMI)\",\n        \"confidence\": 0.95,\n        \"icd_code\": \"I21.9\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Acute Coronary Syndrome\",\n            \"confidence\": 0.85,\n            \"icd_code\": \"I20.1\"\n        },\n        {\n            \"name\": \"Pulmonary Embolism\",\n            \"confidence\": 0.70,\n            \"icd_code\": \"I26.90\"\n        },\n        {\n            \"name\": \"Aortic Dissection\",\n            \"confidence\": 0.65,\n            \"icd_code\": \"I71.00\"\n        },\n        {\n            \"name\": \"Esophageal Spasm\",\n            \"confidence\": 0.60,\n            \"icd_code\": \"K22.8\"\n        }\n    ],\n    \"key_findings\": [\n        \"Substernal chest pain radiating to left arm\",\n        \"ST elevation in leads II, III, and aVF on ECG\",\n        \"Elevated troponin I and CK-MB\",\n        \"Hypertension and diabetes mellitus as risk factors\"\n    ],\n    \"tests\": [\n        {\n            \"test\": \"ECG\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Cardiac biomarkers (troponin I, CK-MB)\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Chest X-ray\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Echocardiogram\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"CT angiography (if PE suspected)\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management\": {\n        \"immediate\": [\n            \"Administer aspirin 325 mg PO\",\n            \"Initiate IV nitroglycerin if BP >100 mmHg systolic\",\n            \"Consider morphine 2-4 mg IV if pain persists\"\n        ],\n        \"medications\": [\n            \"Aspirin: 325 mg, PO\",\n            \"Nitroglycerin: 0.4 mg, SL q5min max 3 doses\",\n            \"Morphine: 2-4 mg, IV\"\n        ],\n        \"consultations\": [\n            \"Cardiology: immediate\",\n            \"Interventional Radiology: urgent if PCI indicated\"\n        ]\n    },\n    \"red_flags\": [\n        \"ST elevation on ECG\",\n        \"Elevated troponin I and CK-MB\",\n        \"Chest pain radiating to left arm\"\n    ]\n}\n```",
+      "response_time": 14.233205080032349,
+      "cached": false,
+      "case_id": "custom_20250905_073123",
+      "timestamp": "2025-09-05T07:35:36.954706",
+      "tokens_used": 1333,
+      "input_tokens": 611,
+      "output_tokens": 722
+    },
+    {
+      "model_name": "perplexity/sonar-deep-research",
+      "response": "Let me analyze this medical case systematically based on the provided search results.\n\nThis is a 45-year-old male with:\n- Sudden onset chest pain 2 hours ago\n- Crushing, substernal pain radiating to left arm\n- Profuse sweating and nausea\n- Multiple cardiovascular risk factors (HTN, DM, hyperlipidemia, smoking history, family history)\n- Physical exam: hypertensive (150/90), tachycardic (95), diaphoretic, anxious\n- ECG: ST elevation in leads II, III, aVF\n- Elevated cardiac enzymes: Troponin I 0.8 ng/mL, CK-MB 25 ng/mL\n\nKey findings from search results:\n1. ST elevation in leads II, III, aVF indicates inferior STEMI [1][4]\n2. Inferior STEMI accounts for 40-50% of all MIs and generally has more favorable prognosis than anterior MI [4]\n3. Reciprocal changes should be seen in aVL [1][4]\n4. Inferior STEMI typically results from RCA occlusion (70%) or left circumflex [1]\n5. Troponin threshold for MI is 0.1 ng/mL [5]\n6. This patient meets criteria for STEMI requiring immediate reperfusion therapy\n\nPrimary diagnosis: ST elevation myocardial infarction of inferior wall\n- ICD-10 code: I21.1 [7][16]\n- Very high confidence given classic presentation + ECG + biomarkers\n\nDifferential diagnoses to consider:\n1. Pericarditis - but less likely given focal ST elevation pattern\n2. Unstable angina - ruled out by elevated troponin\n3. Aortic dissection - less likely but should consider given chest pain\n4. Pulmonary embolism - less likely given ECG findings\n\n\n5. Esophageal rupture/GERD - ruled out by cardiac biomarkers and classic MI presentation\n\nImmediate management priorities focus on rapid intervention and stabilization. Primary percutaneous coronary intervention remains the gold standard treatment. Pharmacological management includes immediate antiplatelet therapy, pain control, and potential beta-blocker administration to reduce myocardial oxygen demand and limit infarct size.\n\nCritical time-sensitive interventions require urgent cath lab activation within 20 minutes, with heightened awareness of potential life-threatening complications like heart block or cardiogenic shock.\n\n---\n\n```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"ST elevation myocardial infarction of inferior wall\",\n        \"confidence\": 0.95,\n        \"icd_code\": \"I21.1\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Acute pericarditis\",\n            \"confidence\": 0.15,\n            \"icd_code\": \"I30.9\"\n        },\n        {\n            \"name\": \"Aortic dissection\",\n            \"confidence\": 0.10,\n            \"icd_code\": \"I71.00\"\n        },\n        {\n            \"name\": \"Pulmonary embolism\",\n            \"confidence\": 0.08,\n            \"icd_code\": \"I26.9\"\n        },\n        {\n            \"name\": \"Unstable angina\",\n            \"confidence\": 0.05,\n            \"icd_code\": \"I20.0\"\n        }\n    ],\n    \"key_findings\": [\n        \"ST elevation in inferior leads (II, III, aVF)\",\n        \"Elevated cardiac biomarkers (Troponin I 0.8 ng/mL, CK-MB 25 ng/mL)\",\n        \"Classic anginal chest pain with radiation to left arm\",\n        \"Multiple cardiovascular risk factors\",\n        \"Time window of 2 hours from symptom onset\"\n    ],\n    \"tests\": [\n        {\n            \"test\": \"12-lead ECG with posterior leads (V7-V9)\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Chest X-ray\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Complete metabolic panel\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Lipid panel\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"PT/PTT/INR\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Echocardiogram\",\n            \"priority\": \"urgent\"\n        }\n    ],\n    \"management\": {\n        \"immediate\": [\n            \"Activate cardiac catheterization laboratory\",\n            \"Prepare for primary percutaneous coronary intervention\",\n            \"Continuous cardiac monitoring\",\n            \"IV access with normal saline\",\n            \"Oxygen therapy if O2 saturation <93%\"\n        ],\n        \"medications\": [\n            \"Aspirin: 325 mg chewed, then 81 mg daily\",\n            \"Clopidogrel: 600 mg loading dose, then 75 mg daily\",\n            \"Morphine: 2-4 mg IV, repeat q5-15min PRN pain\",\n            \"Metoprolol: 25 mg PO BID (start low due to hypertension)\",\n            \"Atorvastatin: 80 mg daily\",\n            \"Heparin: per catheterization protocol\"\n        ],\n        \"consultations\": [\n            \"Interventional cardiology: emergent\",\n            \"Cardiology: urgent\"\n        ]\n    },\n    \"red_flags\": [\n        \"Door-to-balloon time goal <90 minutes\",\n        \"Risk of complete heart block with inferior STEMI\",\n        \"Potential for cardiogenic shock\",\n        \"Risk of mechanical complications\",\n        \"Time-sensitive reperfusion window\"\n    ]\n}\n```",
+      "response_time": 44.99939823150635,
+      "cached": false,
+      "case_id": "custom_20250905_073123",
+      "timestamp": "2025-09-05T07:36:21.954938",
+      "tokens_used": 1816,
+      "input_tokens": 512,
+      "output_tokens": 1304
+    },
+    {
+      "model_name": "microsoft/wizardlm-2-8x22b",
+      "response": " ```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"ST-Elevation Myocardial Infarction (STEMI)\",\n        \"confidence\": 0.9,\n        \"icd_code\": \"I21.3\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Unstable Angina\",\n            \"confidence\": 0.6,\n            \"icd_code\": \"I20.0\"\n        },\n        {\n            \"name\": \"Acute Pericarditis\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"I30.9\"\n        },\n        {\n            \"name\": \"Pulmonary Embolism\",\n            \"confidence\": 0.1,\n            \"icd_code\": \"I26.99\"\n        },\n        {\n            \"name\": \"Esophageal Spasm\",\n            \"confidence\": 0.05,\n            \"icd_code\": \"K21.9\"\n        }\n    ],\n    \"key_findings\": [\n        \"Sudden onset crushing substernal chest pain\",\n        \"Chest pain radiating to the left arm\",\n        \"Diaphoresis and nausea\",\n        \"ST elevation in leads II, III, and aVF on ECG\",\n        \"Elevated troponin I and CK-MB levels\",\n        \"Hypertension, Type 2 Diabetes Mellitus, Hyperlipidemia, and significant smoking history\",\n        \"Family history of coronary artery disease\"\n    ],\n    \"tests\": [\n        {\n            \"test\": \"Immediate cardiac catheterization\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Chest X-ray\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Echocardiogram\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"D-dimer (if PE is still a concern after catheterization)\",\n            \"priority\": \"urgent\"\n        }\n    ],\n    \"management\": {\n        \"immediate\": [\n            \"Oxygen therapy\",\n            \"Aspirin 325 mg chewable\",\n            \"Nitroglycerin sublingual (0.4 mg every 5 minutes up to 3 doses, if BP allows)\",\n            \"Morphine sulfate for pain control (2-4 mg IV every 5-15 minutes as needed)\"\n        ],\n        \"medications\": [\n            \"Aspirin: 325 mg PO once\",\n            \"Clopidogrel: 600 mg PO once (loading dose)\",\n            \"Enoxaparin: 1 mg/kg SC every 12 hours or unfractionated heparin IV bolus followed by infusion\",\n            \"Beta-blocker (e.g., Metoprolol): 5 mg IV every 5 minutes for three doses, then 25-50 mg PO every 6 hours (if no contraindications)\",\n            \"Statin (e.g., Atorvastatin): 80 mg PO once daily\"\n        ],\n        \"consultations\": [\n            \"Cardiology: immediate for potential PCI\",\n            \"Critical Care: for admission to ICU/CCU\"\n        ]\n    },\n    \"red_flags\": [\n        \"Sudden onset chest pain with ECG changes consistent with STEMI\",\n        \"Elevated cardiac biomarkers\",\n        \"High-risk profile for coronary artery disease with multiple risk factors and family history\",\n        \"Hemodynamic instability with hypertension and tachycardia\"\n    ]\n}\n```",
+      "response_time": 23.1996648311615,
+      "cached": false,
+      "case_id": "custom_20250905_073123",
+      "timestamp": "2025-09-05T07:36:45.156048",
+      "tokens_used": 1587,
+      "input_tokens": 675,
+      "output_tokens": 912
+    },
+    {
+      "model_name": "x-ai/grok-2-1212",
+      "response": "```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"Acute Myocardial Infarction\",\n        \"confidence\": 0.95,\n        \"icd_code\": \"I21.1\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Unstable Angina\",\n            \"confidence\": 0.7,\n            \"icd_code\": \"I20.0\"\n        },\n        {\n            \"name\": \"Pulmonary Embolism\",\n            \"confidence\": 0.5,\n            \"icd_code\": \"I26.99\"\n        },\n        {\n            \"name\": \"Aortic Dissection\",\n            \"confidence\": 0.4,\n            \"icd_code\": \"I71.0\"\n        },\n        {\n            \"name\": \"Pericarditis\",\n            \"confidence\": 0.3,\n            \"icd_code\": \"I30.9\"\n        }\n    ],\n    \"key_findings\": [\n        \"Sudden onset crushing chest pain\",\n        \"Pain radiates to left arm\",\n        \"Profuse sweating and nausea\",\n        \"ST elevation in leads II, III, and aVF\",\n        \"Elevated Troponin I and CK-MB\"\n    ],\n    \"tests\": [\n        {\n            \"test\": \"ECG\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Troponin I\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"CK-MB\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Chest X-ray\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Echocardiogram\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Coronary Angiography\",\n            \"priority\": \"urgent\"\n        }\n    ],\n    \"management\": {\n        \"immediate\": [\n            \"Activate cardiac catheterization lab\",\n            \"Administer oxygen if O2 saturation <90%\",\n            \"Continuous cardiac monitoring\"\n        ],\n        \"medications\": [\n            \"Aspirin: 325 mg, chewed\",\n            \"Nitroglycerin: 0.4 mg sublingual, every 5 minutes up to 3 doses\",\n            \"Morphine: 2-4 mg IV, as needed for pain\",\n            \"Heparin: 60 units/kg IV bolus, then 12 units/kg/h infusion\"\n        ],\n        \"consultations\": [\n            \"Cardiology: immediate\",\n            \"Interventional Cardiology: immediate\"\n        ]\n    },\n    \"red_flags\": [\n        \"Ongoing chest pain\",\n        \"Signs of heart failure\",\n        \"Arrhythmias\",\n        \"Hypotension\"\n    ]\n}\n```",
+      "response_time": 6.702510118484497,
+      "cached": false,
+      "case_id": "custom_20250905_073123",
+      "timestamp": "2025-09-05T07:36:51.860652",
+      "tokens_used": 1110,
+      "input_tokens": 519,
+      "output_tokens": 591
+    },
+    {
+      "model_name": "x-ai/grok-4",
+      "response": "{\n    \"primary_diagnosis\": {\n        \"name\": \"ST-Elevation Myocardial Infarction (STEMI)\",\n        \"confidence\": 0.95,\n        \"icd_code\": \"I21.19\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Aortic Dissection\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"I71.00\"\n        },\n        {\n            \"name\": \"Pulmonary Embolism\",\n            \"confidence\": 0.15,\n            \"icd_code\": \"I26.99\"\n        },\n        {\n            \"name\": \"Pericarditis\",\n            \"confidence\": 0.1,\n            \"icd_code\": \"I30.9\"\n        },\n        {\n            \"name\": \"Gastroesophageal Reflux Disease\",\n            \"confidence\": 0.05,\n            \"icd_code\": \"K21.9\"\n        },\n        {\n            \"name\": \"Panic Attack\",\n            \"confidence\": 0.05,\n            \"icd_code\": \"F41.0\"\n        }\n    ],\n    \"key_findings\": [\n        \"Sudden onset crushing substernal chest pain radiating to left arm\",\n        \"Profuse sweating and nausea\",\n        \"ST elevation in leads II, III, aVF on ECG\",\n        \"Elevated troponin I (0.8 ng/mL) and CK-MB (25 ng/mL)\",\n        \"Risk factors: hypertension, diabetes, hyperlipidemia, smoking history, family history of CAD\"\n    ],\n    \"tests\": [\n        {\n            \"test\": \"Coronary Angiography\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Repeat ECG\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Echocardiogram\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Repeat Troponin\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Complete Blood Count\",\n            \"priority\": \"routine\"\n        },\n        {\n            \"test\": \"Basic Metabolic Panel\",\n            \"priority\": \"routine\"\n        },\n        {\n            \"test\": \"Coagulation Profile\",\n            \"priority\": \"urgent\"\n        }\n    ],\n    \"management\": {\n        \"immediate\": [\n            \"Administer supplemental oxygen to maintain O2 sat >94%\",\n            \"Establish IV access\",\n            \"Administer aspirin and prepare for PCI\",\n            \"Monitor vital signs continuously\",\n            \"Transfer to cardiac catheterization lab\"\n        ],\n        \"medications\": [\n            \"Aspirin: 325mg, oral\",\n            \"Clopidogrel: 600mg, oral\",\n            \"Heparin: 60 units/kg IV bolus, followed by 12 units/kg/hr infusion\",\n            \"Nitroglycerin: 0.4mg sublingual as needed\",\n            \"Morphine: 2-4mg IV for pain relief\",\n            \"Metoprolol: 5mg IV if no contraindications\"\n        ],\n        \"consultations\": [\n            \"Cardiology: immediate\",\n            \"Interventional Cardiology: immediate\"\n        ]\n    },\n    \"red_flags\": [\n        \"Sudden onset severe chest pain with radiation\",\n        \"ST-segment elevation on ECG\",\n        \"Elevated cardiac biomarkers\",\n        \"Diaphoresis and nausea\",\n        \"History of cardiovascular risk factors\"\n    ]\n}",
+      "response_time": 27.296003818511963,
+      "cached": false,
+      "case_id": "custom_20250905_073123",
+      "timestamp": "2025-09-05T07:37:19.158426",
+      "tokens_used": 2278,
+      "input_tokens": 1178,
+      "output_tokens": 1100
+    }
+  ],
+  "total_models_analyzed": 23,
+  "geographical_distribution": {
+    "USA": 20,
+    "France": 3,
+    "China": 5,
+    "Canada": 2,
+    "Japan/USA": 1,
+    "Israel": 1
+  },
+  "consensus_analysis": {
+    "primary_counts": {
+      "Inferior St-elevation Myocardial Infarction (stemi)": 1,
+      "Acute Myocardial Infarction (st-elevation)": 1,
+      "Acute St-elevation Myocardial Infarction (stemi)": 2,
+      "St-elevation Myocardial Infarction (stemi)": 5,
+      "Acute Myocardial Infarction (stemi)": 3,
+      "Acute Coronary Syndrome": 1,
+      "Acute Myocardial Infarction": 2,
+      "Acute Inferior Wall Myocardial Infarction": 2,
+      "St-elevation Myocardial Infarction (inferior Wall)": 1,
+      "Acute Myocardial Infarction (heart Attack)": 1,
+      "Acute Myocardial Infarction (ami)": 1,
+      "St Elevation Myocardial Infarction of Inferior Wall": 1
+    },
+    "differential_counts": {
+      "Unstable Angina": 13,
+      "Non-st-elevation Myocardial Infarction (nstemi)": 1,
+      "Aortic Dissection": 16,
+      "Pericarditis": 12,
+      "Pulmonary Embolism": 16,
+      "Gastroesophageal Reflux Disease (gerd)": 3,
+      "Peritonitis": 5,
+      "Severe Angina": 1,
+      "Esophageal Spasm": 4,
+      "Myocardial Infarction": 1,
+      "Angina Pectoris": 1,
+      "Acute Coronary Insufficiency": 1,
+      "Atypical Angina Pectoris": 1,
+      "Gastroesophageal Reflux Disease": 3,
+      "Gastroesophageal Reflux Disease with Atypical Presentation": 1,
+      "Pneumothorax": 1,
+      "Anginal Syndrome": 1,
+      "Non-st Elevation Myocardial Infarction (nstemi)": 1,
+      "Acute Coronary Syndrome (acs)": 1,
+      "Cardiac Contusion": 1,
+      "Acute Coronary Syndrome": 1,
+      "Panic Attack": 1
+    },
+    "total_counts": {
+      "Inferior St-elevation Myocardial Infarction (stemi)": 1,
+      "Unstable Angina": 13,
+      "Non-st-elevation Myocardial Infarction (nstemi)": 1,
+      "Aortic Dissection": 16,
+      "Pericarditis": 12,
+      "Acute Myocardial Infarction (st-elevation)": 1,
+      "Pulmonary Embolism": 16,
+      "Gastroesophageal Reflux Disease (gerd)": 3,
+      "Acute St-elevation Myocardial Infarction (stemi)": 2,
+      "Peritonitis": 5,
+      "St-elevation Myocardial Infarction (stemi)": 5,
+      "Acute Myocardial Infarction (stemi)": 3,
+      "Severe Angina": 1,
+      "Esophageal Spasm": 4,
+      "Acute Coronary Syndrome": 2,
+      "Myocardial Infarction": 1,
+      "Angina Pectoris": 1,
+      "Acute Coronary Insufficiency": 1,
+      "Acute Myocardial Infarction": 2,
+      "Atypical Angina Pectoris": 1,
+      "Gastroesophageal Reflux Disease": 3,
+      "Acute Inferior Wall Myocardial Infarction": 2,
+      "St-elevation Myocardial Infarction (inferior Wall)": 1,
+      "Gastroesophageal Reflux Disease with Atypical Presentation": 1,
+      "Pneumothorax": 1,
+      "Acute Myocardial Infarction (heart Attack)": 1,
+      "Anginal Syndrome": 1,
+      "Non-st Elevation Myocardial Infarction (nstemi)": 1,
+      "Acute Coronary Syndrome (acs)": 1,
+      "Cardiac Contusion": 1,
+      "Acute Myocardial Infarction (ami)": 1,
+      "St Elevation Myocardial Infarction of Inferior Wall": 1,
+      "Panic Attack": 1
+    },
+    "sorted_diagnoses": [
+      [
+        "Aortic Dissection",
+        16
+      ],
+      [
+        "Pulmonary Embolism",
+        16
+      ],
+      [
+        "Unstable Angina",
+        13
+      ],
+      [
+        "Pericarditis",
+        12
+      ],
+      [
+        "Peritonitis",
+        5
+      ],
+      [
+        "St-elevation Myocardial Infarction (stemi)",
+        5
+      ],
+      [
+        "Esophageal Spasm",
+        4
+      ],
+      [
+        "Gastroesophageal Reflux Disease (gerd)",
+        3
+      ],
+      [
+        "Acute Myocardial Infarction (stemi)",
+        3
+      ],
+      [
+        "Gastroesophageal Reflux Disease",
+        3
+      ],
+      [
+        "Acute St-elevation Myocardial Infarction (stemi)",
+        2
+      ],
+      [
+        "Acute Coronary Syndrome",
+        2
+      ],
+      [
+        "Acute Myocardial Infarction",
+        2
+      ],
+      [
+        "Acute Inferior Wall Myocardial Infarction",
+        2
+      ],
+      [
+        "Inferior St-elevation Myocardial Infarction (stemi)",
+        1
+      ],
+      [
+        "Non-st-elevation Myocardial Infarction (nstemi)",
+        1
+      ],
+      [
+        "Acute Myocardial Infarction (st-elevation)",
+        1
+      ],
+      [
+        "Severe Angina",
+        1
+      ],
+      [
+        "Myocardial Infarction",
+        1
+      ],
+      [
+        "Angina Pectoris",
+        1
+      ],
+      [
+        "Acute Coronary Insufficiency",
+        1
+      ],
+      [
+        "Atypical Angina Pectoris",
+        1
+      ],
+      [
+        "St-elevation Myocardial Infarction (inferior Wall)",
+        1
+      ],
+      [
+        "Gastroesophageal Reflux Disease with Atypical Presentation",
+        1
+      ],
+      [
+        "Pneumothorax",
+        1
+      ],
+      [
+        "Acute Myocardial Infarction (heart Attack)",
+        1
+      ],
+      [
+        "Anginal Syndrome",
+        1
+      ],
+      [
+        "Non-st Elevation Myocardial Infarction (nstemi)",
+        1
+      ],
+      [
+        "Acute Coronary Syndrome (acs)",
+        1
+      ],
+      [
+        "Cardiac Contusion",
+        1
+      ],
+      [
+        "Acute Myocardial Infarction (ami)",
+        1
+      ],
+      [
+        "St Elevation Myocardial Infarction of Inferior Wall",
+        1
+      ],
+      [
+        "Panic Attack",
+        1
+      ]
+    ],
+    "primary": [
+      "Aortic Dissection",
+      16
+    ],
+    "total_models": 23,
+    "icd_codes": {
+      "Inferior St-elevation Myocardial Infarction (stemi)": [
+        "I21.19"
+      ],
+      "Unstable Angina": [
+        "I20.1",
+        "I20.0"
+      ],
+      "Non-st-elevation Myocardial Infarction (nstemi)": [
+        "I21.4"
+      ],
+      "Aortic Dissection": [
+        "I68.2",
+        "I71.00",
+        "I71.01",
+        "I71.0"
+      ],
+      "Pericarditis": [
+        "I30.0",
+        "I30.0 (Acute pericarditis)",
+        "I30.9",
+        "K89.0"
+      ],
+      "Acute Myocardial Infarction (st-elevation)": [
+        "I21.01"
+      ],
+      "Pulmonary Embolism": [
+        "I26.9",
+        "I26.99",
+        "I26.90",
+        "I26.0 (Pulmonary thromboembolism)"
+      ],
+      "Gastroesophageal Reflux Disease (gerd)": [
+        "K21.0",
+        "K21.9"
+      ],
+      "Acute St-elevation Myocardial Infarction (stemi)": [
+        "I21.3",
+        "I21.0"
+      ],
+      "Peritonitis": [
+        "I30.0",
+        "I01.0",
+        "I30.9"
+      ],
+      "St-elevation Myocardial Infarction (stemi)": [
+        "I21.19",
+        "I21.0",
+        "I21.3",
+        "I21.02"
+      ],
+      "Acute Myocardial Infarction (stemi)": [
+        "I21.1",
+        "I21.0"
+      ],
+      "Severe Angina": [
+        "I20.9"
+      ],
+      "Esophageal Spasm": [
+        "K21.3 (Esophageal spasm without obstruction)",
+        "K22.8",
+        "K21.9"
+      ],
+      "Acute Coronary Syndrome": [
+        "I21.0",
+        "I20.1"
+      ],
+      "Myocardial Infarction": [
+        "I21.0"
+      ],
+      "Angina Pectoris": [
+        "I20.0"
+      ],
+      "Acute Coronary Insufficiency": [
+        "I24.0"
+      ],
+      "Acute Myocardial Infarction": [
+        "I21.1",
+        "I21.9 (Acute coronary heart disease, unspecified, without mention of acute MI, not in acute stage)"
+      ],
+      "Atypical Angina Pectoris": [
+        "I20.0 (Angina pectoris, stable angina pectoris)"
+      ],
+      "Gastroesophageal Reflux Disease": [
+        "K21.9 (Other diseases of esophagus, not elsewhere classified)",
+        "K21.9"
+      ],
+      "Acute Inferior Wall Myocardial Infarction": [
+        "I21.1",
+        "I21.4"
+      ],
+      "St-elevation Myocardial Infarction (inferior Wall)": [
+        "I21.29"
+      ],
+      "Gastroesophageal Reflux Disease with Atypical Presentation": [
+        "K21.9"
+      ],
+      "Pneumothorax": [
+        "J93.0"
+      ],
+      "Acute Myocardial Infarction (heart Attack)": [
+        "I21.0"
+      ],
+      "Anginal Syndrome": [
+        "I20.9"
+      ],
+      "Non-st Elevation Myocardial Infarction (nstemi)": [
+        "I21.2"
+      ],
+      "Acute Coronary Syndrome (acs)": [
+        "I25.1"
+      ],
+      "Cardiac Contusion": [
+        "R96.0"
+      ],
+      "Acute Myocardial Infarction (ami)": [
+        "I21.9"
+      ],
+      "St Elevation Myocardial Infarction of Inferior Wall": [
+        "I21.1"
+      ],
+      "Panic Attack": [
+        "F41.0"
+      ]
+    },
+    "model_diagnoses": {
+      "Inferior St-elevation Myocardial Infarction (stemi)": {
+        "primary": [
+          "openai/gpt-4o"
+        ]
+      },
+      "Unstable Angina": {
+        "differential": [
+          "openai/gpt-4o",
+          "openai/gpt-4o-mini",
+          "anthropic/claude-3-opus-20240229",
+          "google/gemini-2.5-flash",
+          "google/gemini-2.5-flash-lite",
+          "google/gemma-3-12b-it",
+          "mistralai/mistral-large-2411",
+          "deepseek/deepseek-r1",
+          "qwen/qwen-2.5-coder-32b-instruct",
+          "cohere/command-r-plus",
+          "perplexity/sonar-deep-research",
+          "microsoft/wizardlm-2-8x22b",
+          "x-ai/grok-2-1212"
+        ]
+      },
+      "Non-st-elevation Myocardial Infarction (nstemi)": {
+        "differential": [
+          "openai/gpt-4o"
+        ]
+      },
+      "Aortic Dissection": {
+        "differential": [
+          "openai/gpt-4o",
+          "openai/gpt-4o-mini",
+          "anthropic/claude-3-opus-20240229",
+          "google/gemini-2.5-flash",
+          "google/gemini-2.5-flash-lite",
+          "google/gemma-2-9b-it",
+          "google/gemma-3-12b-it",
+          "mistralai/mistral-large-2411",
+          "deepseek/deepseek-chat",
+          "deepseek/deepseek-r1",
+          "deepseek/deepseek-chat-v3.1",
+          "cohere/command-r-plus",
+          "ai21/jamba-large-1.7",
+          "perplexity/sonar-deep-research",
+          "x-ai/grok-2-1212",
+          "x-ai/grok-4"
+        ]
+      },
+      "Pericarditis": {
+        "differential": [
+          "openai/gpt-4o",
+          "openai/gpt-4o-mini",
+          "google/gemini-2.5-flash-lite",
+          "google/gemma-2-9b-it",
+          "google/gemma-3-12b-it",
+          "meta-llama/llama-3.2-3b-instruct",
+          "mistralai/mistral-7b-instruct",
+          "deepseek/deepseek-chat",
+          "deepseek/deepseek-chat-v3.1",
+          "cohere/command-r-plus",
+          "x-ai/grok-2-1212",
+          "x-ai/grok-4"
+        ]
+      },
+      "Acute Myocardial Infarction (st-elevation)": {
+        "primary": [
+          "openai/gpt-4o-mini"
+        ]
+      },
+      "Pulmonary Embolism": {
+        "differential": [
+          "openai/gpt-4o-mini",
+          "anthropic/claude-3-opus-20240229",
+          "google/gemini-2.5-flash",
+          "google/gemini-2.5-flash-lite",
+          "mistralai/mistral-large-2411",
+          "mistralai/mistral-7b-instruct",
+          "deepseek/deepseek-chat",
+          "deepseek/deepseek-r1",
+          "deepseek/deepseek-chat-v3.1",
+          "qwen/qwen-2.5-coder-32b-instruct",
+          "cohere/command-r-plus",
+          "ai21/jamba-large-1.7",
+          "perplexity/sonar-deep-research",
+          "microsoft/wizardlm-2-8x22b",
+          "x-ai/grok-2-1212",
+          "x-ai/grok-4"
+        ]
+      },
+      "Gastroesophageal Reflux Disease (gerd)": {
+        "differential": [
+          "openai/gpt-4o-mini",
+          "mistralai/mistral-large-2411",
+          "qwen/qwen-2.5-coder-32b-instruct"
+        ]
+      },
+      "Acute St-elevation Myocardial Infarction (stemi)": {
+        "primary": [
+          "anthropic/claude-3-opus-20240229",
+          "google/gemma-3-12b-it"
+        ]
+      },
+      "Peritonitis": {
+        "differential": [
+          "anthropic/claude-3-opus-20240229",
+          "google/gemini-2.5-flash",
+          "deepseek/deepseek-r1",
+          "perplexity/sonar-deep-research",
+          "microsoft/wizardlm-2-8x22b"
+        ]
+      },
+      "St-elevation Myocardial Infarction (stemi)": {
+        "primary": [
+          "google/gemini-2.5-flash",
+          "google/gemini-2.5-flash-lite",
+          "mistralai/mistral-large-2411",
+          "microsoft/wizardlm-2-8x22b",
+          "x-ai/grok-4"
+        ]
+      },
+      "Acute Myocardial Infarction (stemi)": {
+        "primary": [
+          "google/gemma-2-9b-it",
+          "qwen/qwen-2.5-coder-32b-instruct",
+          "cohere/command-r"
+        ]
+      },
+      "Severe Angina": {
+        "differential": [
+          "google/gemma-2-9b-it"
+        ]
+      },
+      "Esophageal Spasm": {
+        "differential": [
+          "google/gemma-3-12b-it",
+          "mistralai/mistral-7b-instruct",
+          "ai21/jamba-large-1.7",
+          "microsoft/wizardlm-2-8x22b"
+        ]
+      },
+      "Acute Coronary Syndrome": {
+        "primary": [
+          "meta-llama/llama-3.2-3b-instruct"
+        ],
+        "differential": [
+          "ai21/jamba-large-1.7"
+        ]
+      },
+      "Myocardial Infarction": {
+        "differential": [
+          "meta-llama/llama-3.2-3b-instruct"
+        ]
+      },
+      "Angina Pectoris": {
+        "differential": [
+          "meta-llama/llama-3.2-3b-instruct"
+        ]
+      },
+      "Acute Coronary Insufficiency": {
+        "differential": [
+          "meta-llama/llama-3.2-3b-instruct"
+        ]
+      },
+      "Acute Myocardial Infarction": {
+        "primary": [
+          "mistralai/mistral-7b-instruct",
+          "x-ai/grok-2-1212"
+        ]
+      },
+      "Atypical Angina Pectoris": {
+        "differential": [
+          "mistralai/mistral-7b-instruct"
+        ]
+      },
+      "Gastroesophageal Reflux Disease": {
+        "differential": [
+          "mistralai/mistral-7b-instruct",
+          "deepseek/deepseek-chat",
+          "x-ai/grok-4"
+        ]
+      },
+      "Acute Inferior Wall Myocardial Infarction": {
+        "primary": [
+          "deepseek/deepseek-chat",
+          "deepseek/deepseek-chat-v3.1"
+        ]
+      },
+      "St-elevation Myocardial Infarction (inferior Wall)": {
+        "primary": [
+          "deepseek/deepseek-r1"
+        ]
+      },
+      "Gastroesophageal Reflux Disease with Atypical Presentation": {
+        "differential": [
+          "deepseek/deepseek-chat-v3.1"
+        ]
+      },
+      "Pneumothorax": {
+        "differential": [
+          "qwen/qwen-2.5-coder-32b-instruct"
+        ]
+      },
+      "Acute Myocardial Infarction (heart Attack)": {
+        "primary": [
+          "cohere/command-r-plus"
+        ]
+      },
+      "Anginal Syndrome": {
+        "differential": [
+          "cohere/command-r"
+        ]
+      },
+      "Non-st Elevation Myocardial Infarction (nstemi)": {
+        "differential": [
+          "cohere/command-r"
+        ]
+      },
+      "Acute Coronary Syndrome (acs)": {
+        "differential": [
+          "cohere/command-r"
+        ]
+      },
+      "Cardiac Contusion": {
+        "differential": [
+          "cohere/command-r"
+        ]
+      },
+      "Acute Myocardial Infarction (ami)": {
+        "primary": [
+          "ai21/jamba-large-1.7"
+        ]
+      },
+      "St Elevation Myocardial Infarction of Inferior Wall": {
+        "primary": [
+          "perplexity/sonar-deep-research"
+        ]
+      },
+      "Panic Attack": {
+        "differential": [
+          "x-ai/grok-4"
+        ]
+      }
+    },
+    "geographical_patterns": {
+      "USA": {
+        "Inferior St-elevation Myocardial Infarction (stemi)": 1,
+        "Acute Myocardial Infarction (st-elevation)": 1,
+        "Acute St-elevation Myocardial Infarction (stemi)": 2,
+        "St-elevation Myocardial Infarction (stemi)": 4,
+        "Acute Myocardial Infarction (stemi)": 1,
+        "Acute Coronary Syndrome": 1,
+        "St Elevation Myocardial Infarction of Inferior Wall": 1,
+        "Acute Myocardial Infarction": 1
+      },
+      "France": {
+        "St-elevation Myocardial Infarction (stemi)": 1,
+        "Acute Myocardial Infarction": 1
+      },
+      "China": {
+        "Acute Inferior Wall Myocardial Infarction": 2,
+        "St-elevation Myocardial Infarction (inferior Wall)": 1,
+        "Acute Myocardial Infarction (stemi)": 1
+      },
+      "Canada": {
+        "Acute Myocardial Infarction (heart Attack)": 1,
+        "Acute Myocardial Infarction (stemi)": 1
+      },
+      "Israel": {
+        "Acute Myocardial Infarction (ami)": 1
+      }
+    }
+  },
+  "diagnostic_landscape": {
+    "primary_diagnosis": {
+      "name": "ST-Elevation Myocardial Infarction (STEMI)",
+      "icd_code": "I21.1",
+      "confidence": "High",
+      "supporting_models": [
+        "Model1",
+        "Model3",
+        "Model5",
+        "Model6",
+        "Model7",
+        "Model9",
+        "Model11",
+        "Model13",
+        "Model15",
+        "Model21",
+        "Model22"
+      ],
+      "percentage": 95,
+      "evidence": [
+        "ST elevation in leads II, III, aVF indicating inferior wall MI",
+        "Elevated troponin I (0.8)",
+        "Elevated CK-MB",
+        "Classic crushing substernal chest pain",
+        "Pain radiating to left arm"
+      ]
+    },
+    "strong_alternatives": [],
+    "alternatives": [
+      {
+        "name": "Unstable Angina",
+        "icd_code": "I20.0",
+        "frequency": 8,
+        "supporting_models": [
+          "Model1",
+          "Model5",
+          "Model6",
+          "Model9",
+          "Model11",
+          "Model21",
+          "Model22"
+        ],
+        "evidence": [
+          "Chest pain pattern",
+          "Cardiovascular risk factors"
+        ],
+        "agreement_percentage": 25.9
+      },
+      {
+        "name": "Aortic Dissection",
+        "icd_code": "I71.0",
+        "frequency": 5,
+        "supporting_models": [
+          "Model6",
+          "Model11",
+          "Model13",
+          "Model15",
+          "Model19",
+          "Model22"
+        ],
+        "evidence": [
+          "Severe chest pain",
+          "Hypertension",
+          "Sudden onset"
+        ],
+        "agreement_percentage": 22.2
+      },
+      {
+        "name": "Pulmonary Embolism",
+        "icd_code": "I26.99",
+        "frequency": 5,
+        "supporting_models": [
+          "Model6",
+          "Model11",
+          "Model13",
+          "Model19",
+          "Model22"
+        ],
+        "evidence": [
+          "Chest pain",
+          "Shortness of breath",
+          "Cardiovascular risk factors"
+        ],
+        "agreement_percentage": 18.5
+      },
+      {
+        "name": "Acute Pericarditis",
+        "icd_code": "I30.9",
+        "frequency": 4,
+        "supporting_models": [
+          "Model5",
+          "Model9",
+          "Model13",
+          "Model21"
+        ],
+        "evidence": [
+          "Chest pain",
+          "ECG changes"
+        ],
+        "agreement_percentage": 14.8
+      }
+    ],
+    "minority_opinions": [
+      {
+        "name": "Non-ST-Elevation Myocardial Infarction (NSTEMI)",
+        "icd_code": "I21.4",
+        "frequency": 2,
+        "supporting_models": [
+          "Model1",
+          "Model15"
+        ],
+        "evidence": [
+          "Elevated cardiac enzymes",
+          "Chest pain"
+        ],
+        "agreement_percentage": 7.4
+      },
+      {
+        "name": "Acute Coronary Syndrome",
+        "icd_code": "I20.1",
+        "frequency": 2,
+        "supporting_models": [
+          "Model10",
+          "Model19"
+        ],
+        "evidence": [
+          "Chest pain",
+          "Elevated cardiac markers"
+        ],
+        "agreement_percentage": 7.4
+      },
+      {
+        "name": "Esophageal Spasm",
+        "icd_code": "K22.8",
+        "frequency": 1,
+        "supporting_models": [
+          "Model9"
+        ],
+        "evidence": [
+          "Chest pain mimicking cardiac pain"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "Angina Pectoris",
+        "icd_code": "I20.0",
+        "frequency": 1,
+        "supporting_models": [
+          "Model10"
+        ],
+        "evidence": [
+          "Chest pain",
+          "Cardiovascular risk factors"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "Acute Inferior Wall Myocardial Infarction",
+        "icd_code": "I21.1",
+        "frequency": 2,
+        "supporting_models": [
+          "Model13",
+          "Model15"
+        ],
+        "evidence": [
+          "ST elevation in inferior leads",
+          "Elevated cardiac enzymes"
+        ],
+        "agreement_percentage": 7.4
+      },
+      {
+        "name": "Acute Myocardial Infarction",
+        "icd_code": "I21.9",
+        "frequency": 2,
+        "supporting_models": [
+          "Model19",
+          "Model22"
+        ],
+        "evidence": [
+          "Elevated cardiac enzymes",
+          "Classic presentation"
+        ],
+        "agreement_percentage": 7.4
+      }
+    ],
+    "all_alternative_diagnoses": [
+      {
+        "name": "Unstable Angina",
+        "icd_code": "I20.0",
+        "frequency": 8,
+        "supporting_models": [
+          "Model1",
+          "Model5",
+          "Model6",
+          "Model9",
+          "Model11",
+          "Model21",
+          "Model22"
+        ],
+        "evidence": [
+          "Chest pain pattern",
+          "Cardiovascular risk factors"
+        ],
+        "agreement_percentage": 25.9
+      },
+      {
+        "name": "Aortic Dissection",
+        "icd_code": "I71.0",
+        "frequency": 5,
+        "supporting_models": [
+          "Model6",
+          "Model11",
+          "Model13",
+          "Model15",
+          "Model19",
+          "Model22"
+        ],
+        "evidence": [
+          "Severe chest pain",
+          "Hypertension",
+          "Sudden onset"
+        ],
+        "agreement_percentage": 22.2
+      },
+      {
+        "name": "Pulmonary Embolism",
+        "icd_code": "I26.99",
+        "frequency": 5,
+        "supporting_models": [
+          "Model6",
+          "Model11",
+          "Model13",
+          "Model19",
+          "Model22"
+        ],
+        "evidence": [
+          "Chest pain",
+          "Shortness of breath",
+          "Cardiovascular risk factors"
+        ],
+        "agreement_percentage": 18.5
+      },
+      {
+        "name": "Acute Pericarditis",
+        "icd_code": "I30.9",
+        "frequency": 4,
+        "supporting_models": [
+          "Model5",
+          "Model9",
+          "Model13",
+          "Model21"
+        ],
+        "evidence": [
+          "Chest pain",
+          "ECG changes"
+        ],
+        "agreement_percentage": 14.8
+      },
+      {
+        "name": "Non-ST-Elevation Myocardial Infarction (NSTEMI)",
+        "icd_code": "I21.4",
+        "frequency": 2,
+        "supporting_models": [
+          "Model1",
+          "Model15"
+        ],
+        "evidence": [
+          "Elevated cardiac enzymes",
+          "Chest pain"
+        ],
+        "agreement_percentage": 7.4
+      },
+      {
+        "name": "Acute Coronary Syndrome",
+        "icd_code": "I20.1",
+        "frequency": 2,
+        "supporting_models": [
+          "Model10",
+          "Model19"
+        ],
+        "evidence": [
+          "Chest pain",
+          "Elevated cardiac markers"
+        ],
+        "agreement_percentage": 7.4
+      },
+      {
+        "name": "Esophageal Spasm",
+        "icd_code": "K22.8",
+        "frequency": 1,
+        "supporting_models": [
+          "Model9"
+        ],
+        "evidence": [
+          "Chest pain mimicking cardiac pain"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "Angina Pectoris",
+        "icd_code": "I20.0",
+        "frequency": 1,
+        "supporting_models": [
+          "Model10"
+        ],
+        "evidence": [
+          "Chest pain",
+          "Cardiovascular risk factors"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "Acute Inferior Wall Myocardial Infarction",
+        "icd_code": "I21.1",
+        "frequency": 2,
+        "supporting_models": [
+          "Model13",
+          "Model15"
+        ],
+        "evidence": [
+          "ST elevation in inferior leads",
+          "Elevated cardiac enzymes"
+        ],
+        "agreement_percentage": 7.4
+      },
+      {
+        "name": "Acute Myocardial Infarction",
+        "icd_code": "I21.9",
+        "frequency": 2,
+        "supporting_models": [
+          "Model19",
+          "Model22"
+        ],
+        "evidence": [
+          "Elevated cardiac enzymes",
+          "Classic presentation"
+        ],
+        "agreement_percentage": 7.4
+      }
+    ]
+  },
+  "comprehensive_bias_analysis": {
+    "geographical_representation": {
+      "total_countries": 6,
+      "western_dominance": {
+        "western_models": 25,
+        "percentage": 108.69565217391303,
+        "impact": "High Western medical paradigm influence expected"
+      },
+      "chinese_representation": {
+        "chinese_models": 5,
+        "percentage": 21.73913043478261,
+        "impact": "Traditional Chinese Medicine integration possible"
+      }
+    },
+    "case_specific_concerns": [
+      "Analysis strictly limited to custom_20250905_073123 responses",
+      "No cross-case contamination in this analysis",
+      "Bias patterns specific to this case presentation"
+    ],
+    "recommended_mitigations": [
+      "Consider cultural context in diagnosis interpretation",
+      "Account for geographical bias in model training",
+      "Validate findings across diverse medical paradigms"
+    ]
+  },
+  "model_diversity_metrics": {
+    "unique_architectures": 14,
+    "unique_providers": 12,
+    "unique_countries": 5,
+    "diversity_score": 10.333333333333334,
+    "case_id": "custom_20250905_073123"
+  },
+  "management_strategies": {
+    "immediate_actions": [
+      {
+        "action": "Activate cardiac catheterization lab for primary PCI",
+        "consensus_percentage": 0,
+        "urgency": "High"
+      },
+      {
+        "action": "Administer dual antiplatelet therapy (aspirin + P2Y12 inhibitor)",
+        "consensus_percentage": 0,
+        "urgency": "High"
+      },
+      {
+        "action": "Obtain IV access and continuous cardiac monitoring",
+        "consensus_percentage": 0,
+        "urgency": "High"
+      },
+      {
+        "action": "Administer oxygen if SpO2 < 90%",
+        "consensus_percentage": 0,
+        "urgency": "High"
+      },
+      {
+        "action": "Pain management with morphine if needed",
+        "consensus_percentage": 0,
+        "urgency": "High"
+      }
+    ],
+    "differential_testing": [
+      {
+        "test": "12-lead ECG",
+        "purpose": "Diagnostic confirmation"
+      },
+      {
+        "test": "Cardiac troponin levels",
+        "purpose": "Diagnostic confirmation"
+      },
+      {
+        "test": "Complete blood count with platelets",
+        "purpose": "Diagnostic confirmation"
+      },
+      {
+        "test": "Basic metabolic panel",
+        "purpose": "Diagnostic confirmation"
+      },
+      {
+        "test": "PT/PTT/INR",
+        "purpose": "Diagnostic confirmation"
+      },
+      {
+        "test": "Chest X-ray",
+        "purpose": "Diagnostic confirmation"
+      }
+    ],
+    "medications": [
+      {
+        "medication_name": "Aspirin",
+        "dosage": "325mg",
+        "route": "PO",
+        "frequency": "once",
+        "duration": "loading dose",
+        "indication": "antiplatelet therapy for STEMI"
+      },
+      {
+        "medication_name": "Clopidogrel",
+        "dosage": "600mg",
+        "route": "PO",
+        "frequency": "once",
+        "duration": "loading dose",
+        "indication": "P2Y12 inhibition for STEMI"
+      },
+      {
+        "medication_name": "Atorvastatin",
+        "dosage": "80mg",
+        "route": "PO",
+        "frequency": "daily",
+        "duration": "ongoing",
+        "indication": "high-intensity statin therapy"
+      },
+      {
+        "medication_name": "Metoprolol",
+        "dosage": "25mg",
+        "route": "PO",
+        "frequency": "twice daily",
+        "duration": "ongoing",
+        "indication": "beta-blocker for cardioprotection"
+      }
+    ]
+  },
+  "evidence_synthesis": {
+    "key_clinical_findings": [
+      {
+        "finding": "ST elevation in leads II, III, aVF",
+        "diagnostic_significance": "High"
+      },
+      {
+        "finding": "Elevated troponin I (0.8 ng/mL)",
+        "diagnostic_significance": "High"
+      },
+      {
+        "finding": "Elevated CK-MB",
+        "diagnostic_significance": "High"
+      },
+      {
+        "finding": "Crushing substernal chest pain",
+        "diagnostic_significance": "High"
+      },
+      {
+        "finding": "Pain radiating to left arm",
+        "diagnostic_significance": "High"
+      }
+    ],
+    "symptom_diagnosis_matrix": {
+      "symptoms": [
+        "crushing chest pain",
+        "ST elevation",
+        "elevated troponin"
+      ],
+      "diagnoses": [
+        "STEMI",
+        "Unstable Angina",
+        "Aortic Dissection"
+      ],
+      "correlations": [
+        {
+          "symptom": "crushing chest pain",
+          "diagnosis": "STEMI",
+          "strength": "Strong"
+        },
+        {
+          "symptom": "ST elevation",
+          "diagnosis": "STEMI",
+          "strength": "Strong"
+        },
+        {
+          "symptom": "elevated troponin",
+          "diagnosis": "STEMI",
+          "strength": "Strong"
+        }
+      ]
+    }
+  },
+  "generation_metadata": {
+    "pipeline_version": "General v1.0",
+    "timestamp": "20250905_073123",
+    "case_separation": "Strict",
+    "total_time_seconds": 355.6404311656952
+  },
+  "critical_decision_points": [
+    "Primary PCI vs thrombolytic therapy based on door-to-balloon time",
+    "Need for mechanical circulatory support if cardiogenic shock",
+    "Timing of ACE inhibitor initiation based on blood pressure",
+    "Duration of dual antiplatelet therapy based on bleeding risk",
+    "Cardiac rehabilitation referral timing"
+  ],
+  "ai_model_bias_analysis": {
+    "geographic_bias": {
+      "detected": true,
+      "description": "All models originate from USA-based providers (OpenAI, Anthropic, Google) and are trained primarily on Western medical literature and guidelines, potentially missing regional variations in STEMI presentation, treatment protocols, and resource availability in non-Western healthcare systems",
+      "mitigation": "Include models trained on diverse global medical datasets, incorporate international clinical guidelines, and validate consensus against non-Western medical literature and practice patterns"
+    },
+    "training_bias": {
+      "detected": true,
+      "description": "Models show Western medicine paradigm bias with focus on high-resource healthcare settings, potentially underrepresenting alternative diagnostic approaches, resource-limited scenarios, and demographic variations in STEMI presentation across different populations",
+      "mitigation": "Incorporate training data from diverse healthcare systems, include resource-limited diagnostic protocols, and ensure representation of demographic-specific presentation patterns in training datasets"
+    },
+    "consensus_strength": "Strong"
+  },
+  "clinical_decision_tree": {
+    "initial_assessment": "Evaluate presenting symptoms",
+    "diagnostic_tests": [
+      "12-lead ECG",
+      "Cardiac troponin levels",
+      "Complete blood count with platelets",
+      "Basic metabolic panel",
+      "PT/PTT/INR",
+      "Chest X-ray"
+    ],
+    "decision_points": [
+      "Primary PCI vs thrombolytic therapy based on door-to-balloon time",
+      "Need for mechanical circulatory support if cardiogenic shock",
+      "Timing of ACE inhibitor initiation based on blood pressure",
+      "Duration of dual antiplatelet therapy based on bleeding risk",
+      "Cardiac rehabilitation referral timing"
+    ]
+  },
+  "primary_diagnosis_summaries": {
+    "key_clinical_findings": [
+      {
+        "finding": "ST elevation in leads II, III, aVF",
+        "supporting_evidence": "Clinical presentation",
+        "model_support": 11,
+        "reasoning": "Key diagnostic indicator"
+      },
+      {
+        "finding": "Elevated troponin I (0.8 ng/mL)",
+        "supporting_evidence": "Clinical presentation",
+        "model_support": 11,
+        "reasoning": "Key diagnostic indicator"
+      },
+      {
+        "finding": "Elevated CK-MB",
+        "supporting_evidence": "Clinical presentation",
+        "model_support": 11,
+        "reasoning": "Key diagnostic indicator"
+      },
+      {
+        "finding": "Crushing substernal chest pain",
+        "supporting_evidence": "Clinical presentation",
+        "model_support": 11,
+        "reasoning": "Key diagnostic indicator"
+      },
+      {
+        "finding": "Pain radiating to left arm",
+        "supporting_evidence": "Clinical presentation",
+        "model_support": 11,
+        "reasoning": "Key diagnostic indicator"
+      }
+    ],
+    "recommended_tests": [
+      {
+        "test_name": "12-lead ECG",
+        "test_type": "Laboratory",
+        "rationale": "Diagnostic confirmation",
+        "priority": "Urgent",
+        "model_support": 11,
+        "reasoning": "Essential for diagnosis"
+      },
+      {
+        "test_name": "Cardiac troponin levels",
+        "test_type": "Laboratory",
+        "rationale": "Diagnostic confirmation",
+        "priority": "Urgent",
+        "model_support": 11,
+        "reasoning": "Essential for diagnosis"
+      },
+      {
+        "test_name": "Complete blood count with platelets",
+        "test_type": "Laboratory",
+        "rationale": "Diagnostic confirmation",
+        "priority": "Urgent",
+        "model_support": 11,
+        "reasoning": "Essential for diagnosis"
+      },
+      {
+        "test_name": "Basic metabolic panel",
+        "test_type": "Laboratory",
+        "rationale": "Diagnostic confirmation",
+        "priority": "Urgent",
+        "model_support": 11,
+        "reasoning": "Essential for diagnosis"
+      },
+      {
+        "test_name": "PT/PTT/INR",
+        "test_type": "Laboratory",
+        "rationale": "Diagnostic confirmation",
+        "priority": "Urgent",
+        "model_support": 11,
+        "reasoning": "Essential for diagnosis"
+      }
+    ],
+    "immediate_management": [
+      {
+        "intervention": "Activate cardiac catheterization lab for primary PCI",
+        "category": "Medical",
+        "urgency": "Immediate",
+        "model_support": 11,
+        "reasoning": "Critical intervention"
+      },
+      {
+        "intervention": "Administer dual antiplatelet therapy (aspirin + P2Y12 inhibitor)",
+        "category": "Medical",
+        "urgency": "Immediate",
+        "model_support": 11,
+        "reasoning": "Critical intervention"
+      },
+      {
+        "intervention": "Obtain IV access and continuous cardiac monitoring",
+        "category": "Medical",
+        "urgency": "Immediate",
+        "model_support": 11,
+        "reasoning": "Critical intervention"
+      },
+      {
+        "intervention": "Administer oxygen if SpO2 < 90%",
+        "category": "Medical",
+        "urgency": "Immediate",
+        "model_support": 11,
+        "reasoning": "Critical intervention"
+      },
+      {
+        "intervention": "Pain management with morphine if needed",
+        "category": "Medical",
+        "urgency": "Immediate",
+        "model_support": 11,
+        "reasoning": "Critical intervention"
+      }
+    ],
+    "medications": [
+      {
+        "medication_name": "Aspirin",
+        "dosage": "325mg",
+        "route": "PO",
+        "frequency": "once",
+        "duration": "loading dose",
+        "indication": "antiplatelet therapy for STEMI",
+        "model_support": 7,
+        "reasoning": "antiplatelet therapy for STEMI"
+      },
+      {
+        "medication_name": "Clopidogrel",
+        "dosage": "600mg",
+        "route": "PO",
+        "frequency": "once",
+        "duration": "loading dose",
+        "indication": "P2Y12 inhibition for STEMI",
+        "model_support": 7,
+        "reasoning": "P2Y12 inhibition for STEMI"
+      },
+      {
+        "medication_name": "Atorvastatin",
+        "dosage": "80mg",
+        "route": "PO",
+        "frequency": "daily",
+        "duration": "ongoing",
+        "indication": "high-intensity statin therapy",
+        "model_support": 7,
+        "reasoning": "high-intensity statin therapy"
+      },
+      {
+        "medication_name": "Metoprolol",
+        "dosage": "25mg",
+        "route": "PO",
+        "frequency": "twice daily",
+        "duration": "ongoing",
+        "indication": "beta-blocker for cardioprotection",
+        "model_support": 7,
+        "reasoning": "beta-blocker for cardioprotection"
+      }
+    ]
+  },
+  "quality_metrics": {
+    "total_models_analyzed": 23,
+    "consensus_strength": "Strong",
+    "successful_responses": 23
+  },
+  "metadata": {
+    "analysis_timestamp": "2025-09-05T07:37:54.511709",
+    "orchestrator_model": "anthropic/claude-sonnet-4",
+    "case_id": "custom_20250905_073123",
+    "case_title": "Custom Case",
+    "orchestrator_quality": "premium"
+  },
+  "generated_at": "2025-09-05T07:37:54.511927"
+}

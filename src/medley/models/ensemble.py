@@ -405,14 +405,14 @@ class EnsembleOrchestrator:
                 ]
                 print("  💎 Attempting to use premium orchestrator models...")
             else:
-                # Priority order for free orchestrator models
-                # Note: Free models provide suboptimal orchestration compared to premium models
+                # Priority order for free orchestrator models (based on testing results)
+                # Ranked by cost-effectiveness, reliability, and output quality
                 orchestrator_models = [
-                    "openai/gpt-oss-20b:free",             # Best free orchestrator - most accurate
-                    "qwen/qwen-2.5-coder-32b-instruct",    # Backup option - cleaner output
-                    "google/gemma-3-27b-it:free",          # Third choice - good insights
+                    "qwen/qwen-2.5-coder-32b-instruct",    # #1 RECOMMENDED - Best cost ($0.0075), reliable output
+                    "openai/gpt-oss-20b:free",             # #2 Very good - Low cost ($0.0076), comprehensive analysis  
+                    "deepseek/deepseek-chat-v3.1:free",    # #3 Good option - Free model with decent quality
+                    "google/gemma-3-27b-it:free",          # #4 Fallback - Basic orchestration capability
                     # Avoid using these for orchestration due to poor output quality:
-                    # "deepseek/deepseek-chat-v3-0324:free", # Has formatting issues
                     # "mistralai/mistral-7b-instruct:free",  # Often wrong diagnosis
                     # "google/gemini-2.0-flash-exp:free"     # Malformed output
                 ]
