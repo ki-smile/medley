@@ -57,7 +57,7 @@ class GeneralMedicalPipeline:
         print(f"   📄 Reports: {self.reports_dir}")
     
     def _emit_progress(self, stage, progress, message, models_status=None):
-        """Emit real-time progress via SocketIO"""
+        """Emit real-time progress via SocketIO with thread-safe handling"""
         if self.socketio:
             # Extract current model from message if it contains "Analyzing with"
             current_model = None
@@ -71,18 +71,43 @@ class GeneralMedicalPipeline:
                     current_model = match.group(1).strip()
                     model_status = 'processing'
             
+            # Use thread-safe emission with gevent/eventlet support
+            event_data = {
+                'analysis_id': self.display_case_id,
+                'stage': stage,
+                'progress': progress,
+                'status': message,
+                'message': message,
+                'current_model': current_model,
+                'model_status': model_status,
+                'models_status': models_status or {}
+            }
+            
+            # Try to import and use safe emission from web_app
             try:
-                self.socketio.emit('model_progress', {
-                    'analysis_id': self.display_case_id,
-                    'stage': stage,
-                    'progress': progress,
-                    'status': message,
-                    'message': message,
-                    'current_model': current_model,
-                    'model_status': model_status,
-                    'models_status': models_status or {}
-                })
-                print(f"🔄 Progress: {stage} - {progress}% - {message} [SocketIO: {self.display_case_id}]")
+                # Import the safe emission function from web_app module
+                import sys
+                import os
+                sys.path.append(os.path.dirname(__file__))
+                
+                # Try to get the safe_socketio_emit function
+                if 'web_app' in sys.modules:
+                    web_app = sys.modules['web_app']
+                    if hasattr(web_app, 'safe_socketio_emit'):
+                        success = web_app.safe_socketio_emit('model_progress', event_data)
+                        if success:
+                            print(f"✅ Progress emitted: {stage} - {progress}% - {message} [{self.display_case_id}]")
+                        else:
+                            print(f"⚠️ Progress: {stage} - {progress}% - {message} [No clients connected]")
+                        return
+                    elif hasattr(web_app, 'connected_clients'):
+                        connected_count = len(web_app.connected_clients)
+                        print(f"🔄 Progress: {stage} - {progress}% - {message} [Clients: {connected_count}]")
+                
+                # Fallback to direct emission
+                self.socketio.emit('model_progress', event_data)
+                print(f"🔄 Progress (fallback): {stage} - {progress}% - {message} [{self.display_case_id}]")
+                
             except (BrokenPipeError, ConnectionResetError, OSError) as socket_error:
                 print(f"🔄 Progress: {stage} - {progress}% - {message} [WebSocket disconnected: {socket_error}]")
             except Exception as emit_error:
@@ -792,14 +817,32 @@ class GeneralMedicalPipeline:
         # Step 5: Analyze consensus
         self._emit_progress(2, 75, "Analyzing diagnostic consensus...")
         print(f"\\n🧠 STEP 5: Diagnostic Analysis for {self.case_id}")
-        consensus_results = self.analyze_consensus(all_responses)
+        
+        try:
+            consensus_results = self.analyze_consensus(all_responses)
+        except Exception as e:
+            print(f"❌ Error in analyze_consensus: {e}")
+            import traceback
+            traceback.print_exc()
+            # Create fallback consensus results
+            consensus_results = {
+                'primary': ('Unknown Condition', 0),
+                'total_models': len(all_responses),
+                'sorted_diagnoses': [],
+                'primary_counts': {},
+                'differential_counts': {},
+                'total_counts': {},
+                'icd_codes': {},
+                'model_diagnoses': {},
+                'geographical_patterns': {}
+            }
         
         # Step 6: Build comprehensive ensemble data
         self._emit_progress(3, 85, "Building comprehensive report...")
         print(f"\\n🏗️  STEP 6: Building {self.case_id} Report Data")
         
-        primary = consensus_results['primary']
-        total = consensus_results['total_models']
+        primary = consensus_results.get('primary', ('Unknown Condition', 0))
+        total = consensus_results.get('total_models', len(all_responses))
         
         # Ensure os is available in local scope
         import os as os_module
@@ -815,12 +858,12 @@ class GeneralMedicalPipeline:
             "free_models_used": os_module.environ.get('USE_FREE_MODELS', 'false').lower() == 'true',
             "diagnostic_landscape": {
                 "primary_diagnosis": {
-                    "name": primary[0],
-                    "icd_code": self._get_icd_code(primary[0]),
-                    "agreement_percentage": (primary[1] / total * 100),
-                    "supporting_models": list(set([m.split('/')[-1] for m in consensus_results.get('model_diagnoses', {}).get(primary[0], {}).get('primary', []) + consensus_results.get('model_diagnoses', {}).get(primary[0], {}).get('differential', [])])),
+                    "name": primary[0] if primary and len(primary) > 0 else "Unknown Condition",
+                    "icd_code": self._get_icd_code(primary[0]) if primary and len(primary) > 0 else "N/A",
+                    "agreement_percentage": (primary[1] / total * 100) if (primary and len(primary) > 1 and total > 0) else 0,
+                    "supporting_models": list(set([m.split('/')[-1] for m in consensus_results.get('model_diagnoses', {}).get(primary[0] if primary and len(primary) > 0 else '', {}).get('primary', []) + consensus_results.get('model_diagnoses', {}).get(primary[0] if primary and len(primary) > 0 else '', {}).get('differential', [])])),
                     "evidence": self._extract_evidence(case_description),
-                    "confidence": "High" if primary[1]/total > 0.6 else "Moderate"
+                    "confidence": "High" if (primary and len(primary) > 1 and total > 0 and primary[1]/total > 0.6) else "Moderate"
                 },
                 "strong_alternatives": [],
                 "alternatives": [],
@@ -829,7 +872,7 @@ class GeneralMedicalPipeline:
             },
             "comprehensive_bias_analysis": self._generate_bias_analysis(all_responses, geo_dist),
             "model_diversity_metrics": self._calculate_diversity_metrics(all_responses),
-            "management_strategies": self._generate_management_strategies(primary[0]),
+            "management_strategies": self._generate_management_strategies(primary[0] if primary and len(primary) > 0 else "Unknown Condition"),
             "evidence_synthesis": self._generate_evidence_synthesis(all_responses, case_description),
             "generation_metadata": {
                 "pipeline_version": "General v1.0",

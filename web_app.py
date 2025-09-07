@@ -10,6 +10,10 @@ import hashlib
 import csv
 import io
 import requests
+import fcntl
+import atexit
+import signal
+import sys
 from pathlib import Path
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional
@@ -36,6 +40,98 @@ orchestrator = None
 
 # Load environment variables
 load_dotenv()
+
+# Process lock to prevent multiple instances
+LOCK_FILE = '/tmp/medley_web_app.lock'
+lock_file = None
+
+def is_process_running(pid):
+    """Check if a process with given PID is still running"""
+    try:
+        # Send signal 0 to check if process exists (doesn't kill the process)
+        os.kill(int(pid), 0)
+        return True
+    except (OSError, ValueError):
+        return False
+
+def acquire_lock():
+    """Acquire an exclusive lock to prevent multiple instances with PID validation"""
+    global lock_file
+    
+    # Check if lock file exists and validate the PID
+    if os.path.exists(LOCK_FILE):
+        try:
+            with open(LOCK_FILE, 'r') as f:
+                existing_pid = f.read().strip()
+            
+            if existing_pid and is_process_running(existing_pid):
+                print(f"❌ Another MEDLEY instance is already running (PID: {existing_pid})")
+                return False
+            else:
+                print(f"🧹 Removing stale lock file (PID {existing_pid} no longer running)")
+                os.unlink(LOCK_FILE)
+        except (IOError, ValueError) as e:
+            print(f"⚠️ Error reading lock file, removing it: {e}")
+            try:
+                os.unlink(LOCK_FILE)
+            except OSError:
+                pass
+    
+    # Create new lock file
+    try:
+        lock_file = open(LOCK_FILE, 'w')
+        fcntl.flock(lock_file.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
+        lock_file.write(str(os.getpid()))
+        lock_file.flush()
+        print(f"🔒 Acquired process lock (PID: {os.getpid()})")
+        return True
+    except (IOError, OSError) as e:
+        print(f"❌ Failed to acquire lock: {e}")
+        if lock_file:
+            lock_file.close()
+        return False
+
+def release_lock():
+    """Release the process lock"""
+    global lock_file
+    if lock_file:
+        try:
+            fcntl.flock(lock_file.fileno(), fcntl.LOCK_UN)
+            lock_file.close()
+            os.unlink(LOCK_FILE)
+            print(f"🔓 Released process lock")
+        except (IOError, OSError):
+            pass
+    lock_file = None
+
+def signal_handler(signum, frame):
+    """Handle termination signals gracefully"""
+    print(f"\n⚠️ Received signal {signum}, cleaning up...")
+    release_lock()
+    sys.exit(0)
+
+def setup_error_handling():
+    """Set up comprehensive error handling and cleanup"""
+    # Register cleanup on normal exit
+    atexit.register(release_lock)
+    
+    # Register signal handlers for graceful shutdown
+    signal.signal(signal.SIGTERM, signal_handler)  # Termination signal
+    signal.signal(signal.SIGINT, signal_handler)   # Ctrl+C
+    
+    # Handle SIGUSR1 and SIGUSR2 if available (Unix systems)
+    if hasattr(signal, 'SIGUSR1'):
+        signal.signal(signal.SIGUSR1, signal_handler)
+    if hasattr(signal, 'SIGUSR2'):
+        signal.signal(signal.SIGUSR2, signal_handler)
+
+# Acquire lock or exit
+if not acquire_lock():
+    print("⚠️ Exiting to prevent conflicts with running instance")
+    exit(1)
+
+# Set up comprehensive error handling and cleanup
+setup_error_handling()
 
 # Import security utilities
 from utils.security import InputValidator, RateLimiter, SecurityHeaders, SessionSecurity
@@ -80,13 +176,68 @@ Session(app)
 compress = Compress(app)
 cache = Cache(app)
 CORS(app)
-socketio = SocketIO(app, cors_allowed_origins="*", async_mode='gevent')
 
-# Helper function for safe WebSocket emission
-def safe_socketio_emit(event, data):
-    """Safely emit SocketIO events with error handling for broken connections."""
+# Environment detection
+IS_PRODUCTION = os.path.exists('/.dockerenv') or os.getenv('FLASK_ENV') == 'production'
+
+# SocketIO Configuration: Separate production vs development
+if IS_PRODUCTION:
+    print("🐳 Production/Docker environment detected")
+    # Production configuration with gevent
     try:
-        socketio.emit(event, data)
+        import gevent
+        socketio = SocketIO(
+            app, 
+            cors_allowed_origins="*", 
+            async_mode='gevent',
+            ping_timeout=300,  # 5 minutes for long analyses
+            ping_interval=60,
+            max_http_buffer_size=10000000,
+            logger=False,        # Disable verbose logging in production
+            engineio_logger=False
+        )
+        print("✅ Production SocketIO configured with gevent")
+    except ImportError:
+        print("⚠️ gevent not available, falling back to threading")
+        socketio = SocketIO(app, cors_allowed_origins="*", async_mode='threading')
+else:
+    print("💻 Local development environment detected")
+    # Simple development configuration
+    socketio = SocketIO(
+        app, 
+        cors_allowed_origins="*", 
+        async_mode='threading',  # Most stable for Flask dev server
+        ping_timeout=60,   # Standard timeout for development
+        ping_interval=25,  # Standard interval
+        logger=True,       # Enable logging for debugging
+        engineio_logger=True
+    )
+    print("✅ Development SocketIO configured with threading")
+
+# Global variables for SocketIO management
+connected_clients = set()
+global_socketio = socketio  # Global reference for pipeline access
+
+# Enhanced helper function for thread-safe WebSocket emission
+def safe_socketio_emit(event, data, room=None):
+    """Simplified SocketIO emission for production vs development."""
+    if not connected_clients:
+        print(f"⚠️ No clients connected - skipping {event} emission")
+        return False
+        
+    try:
+        if IS_PRODUCTION:
+            # Production: Use gevent spawn for non-blocking emission
+            try:
+                import gevent
+                gevent.spawn(lambda: socketio.emit(event, data, room=room))
+            except ImportError:
+                socketio.emit(event, data, room=room)
+        else:
+            # Development: Direct emission with threading
+            socketio.emit(event, data, room=room)
+            
+        print(f"✅ Emitted {event} to {len(connected_clients)} clients")
         return True
     except (BrokenPipeError, ConnectionResetError, OSError) as socket_error:
         print(f"⚠️ WebSocket connection lost during {event} emission: {socket_error}")
@@ -243,61 +394,110 @@ PREDEFINED_CASES = {
 model_performance = {}
 
 @app.route('/')
-@cache.cached(timeout=300)  # Cache for 5 minutes
 def index():
     """Landing page with system explanation"""
-    # Always use Material Design 3 template
-    return render_template('index_material3.html', cases=PREDEFINED_CASES)
+    # Use updated template with all changes
+    return render_template('index.html', cases=PREDEFINED_CASES)
 
 @app.route('/test')
 def test():
     """Test page to verify server is working"""
     return render_template('test.html')
 
+@app.route('/testcase/<case_key>')
+def test_case(case_key):
+    """Test case route to debug routing issues"""
+    print(f"TEST CASE ROUTE: case_key = {case_key}")
+    return f"Test case route works! Case key: {case_key}"
+
 @app.route('/case/<case_key>')
 def view_case(case_key):
     """View individual case report"""
-    # Check if it's a custom case (starts with custom_ or Case_)
-    if case_key.startswith('custom_') or case_key.startswith('Case_'):
+    app.logger.info(f"🔍 view_case called with case_key: {case_key}")
+    print(f"🔍 view_case called with case_key: {case_key}", flush=True)
+    
+    # Check predefined cases first (to avoid conflicts with case_ prefix)
+    if case_key in PREDEFINED_CASES:
+        print(f"DEBUG: Found predefined case: {case_key}")
+        return render_template('case_viewer.html', case_id=case_key)
+    
+    # Check if it's a custom case (starts with custom_, Case_, or case_)
+    if case_key.startswith('custom_') or case_key.startswith('Case_') or case_key.startswith('case_'):
+        app.logger.info(f"🎯 Custom case detected: {case_key}")
+        print(f"🎯 Custom case detected: {case_key}", flush=True)
+        
         # Check if custom case exists in active analyses or reports
         if orchestrator:
-            analysis_status = orchestrator.get_analysis_status(case_key)
-            if 'error' not in analysis_status:
-                # Custom case exists
+            app.logger.info(f"🤖 Orchestrator exists, checking analysis status")
+            print(f"🤖 Orchestrator exists, checking analysis status", flush=True)
+            try:
+                analysis_status = orchestrator.get_analysis_status(case_key)
+                app.logger.info(f"📊 Analysis status: {analysis_status}")
+                print(f"📊 Analysis status: {analysis_status}", flush=True)
+                if 'error' not in analysis_status:
+                    # Custom case exists
+                    app.logger.info(f"✅ Returning orchestrator-based case viewer")
+                    print(f"✅ Returning orchestrator-based case viewer", flush=True)
+                    return render_template('case_viewer.html', 
+                        case_id=case_key, 
+                        is_custom=True,
+                        analysis_status=analysis_status)
+            except Exception as e:
+                app.logger.error(f"❌ Orchestrator error: {e}")
+                print(f"❌ Orchestrator error: {e}", flush=True)
+        else:
+            app.logger.info(f"📁 No orchestrator, falling back to JSON files")
+            print(f"📁 No orchestrator, falling back to JSON files", flush=True)
+        
+        # Check if report exists - look for exact match or with _ensemble_data suffix
+        app.logger.info(f"🔍 Looking for JSON files with pattern: {case_key}_ensemble_data.json")
+        print(f"🔍 Looking for JSON files with pattern: {case_key}_ensemble_data.json", flush=True)
+        json_files = list(REPORTS_DIR.glob(f"{case_key}_ensemble_data.json"))
+        app.logger.info(f"📂 Found JSON files: {json_files}")
+        print(f"📂 Found JSON files: {json_files}", flush=True)
+        
+        if not json_files:
+            # Also check for older format
+            app.logger.info(f"🔍 Checking older format: {case_key}_ensemble_data_*.json")
+            print(f"🔍 Checking older format: {case_key}_ensemble_data_*.json", flush=True)
+            json_files = list(REPORTS_DIR.glob(f"{case_key}_ensemble_data_*.json"))
+            app.logger.info(f"📂 Found older format files: {json_files}")
+            print(f"📂 Found older format files: {json_files}", flush=True)
+        
+        if json_files:
+            app.logger.info(f"📄 Loading JSON data from {len(json_files)} files")
+            print(f"📄 Loading JSON data from {len(json_files)} files", flush=True)
+            try:
+                # Load the JSON data to pass to template
+                latest_json = max(json_files, key=lambda p: p.stat().st_mtime) if len(json_files) > 1 else json_files[0]
+                print(f"DEBUG: Loading JSON from: {latest_json}")
+                
+                with open(latest_json, 'r') as f:
+                    ensemble_data = json.load(f)
+                print(f"DEBUG: JSON loaded successfully, keys: {list(ensemble_data.keys()) if isinstance(ensemble_data, dict) else 'Not a dict'}")
+                
+                # Check for PDF
+                pdf_files = list(REPORTS_DIR.glob(f"FINAL_{case_key}_*.pdf"))
+                has_pdf = len(pdf_files) > 0
+                print(f"DEBUG: PDF files found: {has_pdf}")
+                
+                print(f"DEBUG: Returning JSON-based case viewer")
                 return render_template('case_viewer.html', 
                     case_id=case_key, 
                     is_custom=True,
-                    analysis_status=analysis_status)
+                    has_report=True,
+                    ensemble_data=ensemble_data,
+                    has_pdf=has_pdf)
+            except Exception as e:
+                print(f"DEBUG: Error loading JSON: {e}")
+                return f"Error loading case data: {e}", 500
         
-        # Check if report exists - look for exact match or with _ensemble_data suffix
-        json_files = list(REPORTS_DIR.glob(f"{case_key}_ensemble_data.json"))
-        if not json_files:
-            # Also check for older format
-            json_files = list(REPORTS_DIR.glob(f"{case_key}_ensemble_data_*.json"))
-        
-        if json_files:
-            # Load the JSON data to pass to template
-            latest_json = max(json_files, key=lambda p: p.stat().st_mtime) if len(json_files) > 1 else json_files[0]
-            with open(latest_json, 'r') as f:
-                ensemble_data = json.load(f)
-            
-            # Check for PDF
-            pdf_files = list(REPORTS_DIR.glob(f"FINAL_{case_key}_*.pdf"))
-            has_pdf = len(pdf_files) > 0
-            
-            return render_template('case_viewer.html', 
-                case_id=case_key, 
-                is_custom=True,
-                has_report=True,
-                ensemble_data=ensemble_data,
-                has_pdf=has_pdf)
-        
+        print(f"DEBUG: No JSON files found, returning 404")
         return "Custom case not found", 404
     
-    # Regular predefined case
-    if case_key not in PREDEFINED_CASES:
-        return "Case not found", 404
-    return render_template('case_viewer.html', case_id=case_key)
+    # Case not found
+    print(f"DEBUG: Case not found: {case_key}")
+    return "Case not found", 404
 
 @app.route('/share/<share_id>')
 def view_shared_analysis(share_id):
@@ -357,8 +557,12 @@ def get_cases():
 def get_case_report(case_key):
     """Get HTML version of case report"""
     
-    # Check if it's a custom case
-    if case_key.startswith('custom_') or case_key.startswith('Case_'):
+    # Check predefined cases first 
+    if case_key in PREDEFINED_CASES:
+        # Predefined case
+        case_info = PREDEFINED_CASES[case_key].copy()  # Make a copy to preserve all fields including title
+        case_id = case_info['id']
+    elif case_key.startswith('custom_') or case_key.startswith('Case_') or case_key.startswith('case_'):
         # Custom case handling
         case_info = {
             'id': case_key,
@@ -368,10 +572,6 @@ def get_case_report(case_key):
             'description': 'User-submitted case analysis'
         }
         case_id = case_key
-    elif case_key in PREDEFINED_CASES:
-        # Predefined case
-        case_info = PREDEFINED_CASES[case_key].copy()  # Make a copy to preserve all fields including title
-        case_id = case_info['id']
     else:
         return jsonify({"error": "Case not found"}), 404
     
@@ -1109,12 +1309,12 @@ def download_case_pdf(case_key):
 def get_model_responses(case_key):
     """Get individual model responses for a case"""
     
-    # Check if it's a custom case
-    if case_key.startswith('custom_') or case_key.startswith('Case_'):
-        case_id = case_key
-    elif case_key in PREDEFINED_CASES:
+    # Check predefined cases first (to avoid conflicts with case_ prefix)
+    if case_key in PREDEFINED_CASES:
         case_info = PREDEFINED_CASES[case_key]
         case_id = case_info['id']
+    elif case_key.startswith('custom_') or case_key.startswith('Case_') or case_key.startswith('case_'):
+        case_id = case_key
     else:
         return jsonify({"error": "Case not found"}), 404
     
@@ -2082,7 +2282,19 @@ def handle_cancel_analysis(data):
 @socketio.on('connect')
 def handle_connect():
     """Handle client connection"""
+    from flask import request
+    client_id = request.sid
+    connected_clients.add(client_id)
+    print(f"🟢 Client connected: {client_id} (Total: {len(connected_clients)})")
     emit('connected', {'message': 'Connected to MEDLEY server'})
+
+@socketio.on('disconnect')
+def handle_disconnect():
+    """Handle client disconnection"""
+    from flask import request
+    client_id = request.sid
+    connected_clients.discard(client_id)
+    print(f"🔴 Client disconnected: {client_id} (Total: {len(connected_clients)})")
 
 @socketio.on('join_analysis')
 def handle_join_analysis(data):
@@ -2288,7 +2500,9 @@ def handle_analyze_case(data):
         import subprocess
         import re
         
-        analysis_id = 'Case_' + datetime.now().strftime('%Y%m%d_%H%M%S')
+        # Use frontend's analysis_id if provided, otherwise generate one
+        analysis_id = data.get('analysis_id') or ('Case_' + datetime.now().strftime('%Y%m%d_%H%M%S'))
+        print(f"DEBUG: Using analysis_id: {analysis_id} (from frontend: {data.get('analysis_id')})")
         
         # Store analysis metadata in session for persistence
         if 'analyses' not in session:
@@ -2823,4 +3037,15 @@ def handle_analyze_case(data):
 if __name__ == '__main__':
     # Use socketio.run for WebSocket support
     port = int(os.environ.get('FLASK_PORT', 5003))
-    socketio.run(app, debug=True, host='0.0.0.0', port=port, allow_unsafe_werkzeug=True)
+    
+    # Environment-specific configuration
+    is_docker = os.path.exists('/.dockerenv') or os.getenv('FLASK_ENV') == 'production'
+    is_debug = not is_docker and os.getenv('FLASK_DEBUG', '0') == '1'
+    
+    if is_docker:
+        print(f"🐳 Starting MEDLEY in Docker/Production mode on port {port}")
+        socketio.run(app, debug=False, host='0.0.0.0', port=port)
+    else:
+        print(f"💻 Starting MEDLEY in Local Development mode on port {port}")
+        # Disable debug mode to prevent Flask watchdog conflicts with our singleton lock
+        socketio.run(app, debug=is_debug, host='0.0.0.0', port=port, allow_unsafe_werkzeug=True)

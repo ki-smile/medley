@@ -94,7 +94,7 @@
     }
     
     .progress-container {
-        display: none;
+        display: none !important;
         background: var(--md-sys-color-primary-container);
         border-radius: 16px;
         padding: 24px;
@@ -103,6 +103,10 @@
         z-index: 1;
         width: 100%;
         box-sizing: border-box;
+    }
+    
+    .progress-container.show {
+        display: block !important;
     }
     
     .progress-bar {
@@ -653,8 +657,39 @@ function setupEventListeners() {
     });
 }
 
+// Track if we've already set up listeners
+let socketListenersSetup = false;
+
 // WebSocket connection
 function connectWebSocket() {
+    // Check if socket exists and is connected
+    if (typeof window.socket === 'undefined' || !window.socket || !window.socket.connected) {
+        console.log('⚠️ Socket not connected, waiting for connection...');
+        // Wait for socket to be available from base.html
+        setTimeout(connectWebSocket, 500);
+        return;
+    }
+    
+    // Use the global socket
+    const socket = window.socket;
+    
+    // Prevent duplicate listeners
+    if (socketListenersSetup) {
+        console.log('ℹ️ Socket listeners already set up');
+        return;
+    }
+    
+    console.log('✅ Socket is connected, setting up event listeners');
+    socketListenersSetup = true;
+    
+    // Remove any existing listeners first (in case of reconnection)
+    socket.off('analysis_started');
+    socket.off('model_progress');
+    socket.off('analysis_complete');
+    socket.off('analysis_error');
+    socket.off('analysis_cancelled');
+    socket.off('cost_update');
+    
     socket.on('analysis_started', function(data) {
         console.log('✅ Analysis started event received:', data);
         currentAnalysisId = data.analysis_id;
@@ -665,8 +700,10 @@ function connectWebSocket() {
     socket.on('model_progress', function(data) {
         console.log('📊 Model progress event:', data);
         console.log('📊 Model field in data:', data.model, 'Status:', data.status);
+        console.log('🔍 Analysis ID check - Current:', currentAnalysisId, 'Received:', data.analysis_id);
         
         if (!currentAnalysisId || data.analysis_id === currentAnalysisId) {
+            console.log('✅ Analysis ID matches, updating progress...');
             updateProgress(data.progress, data.status, data.model, data.stage);
             
             // Parse backend log messages for individual model completion
@@ -734,6 +771,8 @@ function connectWebSocket() {
             if (data.error) {
                 showError(data.error);
             }
+        } else {
+            console.log('❌ Analysis ID mismatch - ignoring progress update');
         }
     });
     
@@ -978,16 +1017,10 @@ function showProgress() {
     console.log('📦 progressContainer element:', progressContainer);
     
     if (progressContainer) {
-        // Force display with important to override any CSS
-        progressContainer.style.setProperty('display', 'block', 'important');
-        progressContainer.style.setProperty('visibility', 'visible', 'important');
-        progressContainer.style.setProperty('opacity', '1', 'important');
-        console.log('✅ Set progressContainer display to block');
-        console.log('Container styles:', {
-            display: progressContainer.style.display,
-            visibility: progressContainer.style.visibility,
-            opacity: progressContainer.style.opacity
-        });
+        // Use CSS class to show progress container
+        progressContainer.classList.add('show');
+        console.log('✅ Added "show" class to progressContainer');
+        console.log('Container classes:', progressContainer.className);
         
         // Initialize stage indicator to Stage 1
         updateStageIndicator(1);
@@ -1021,7 +1054,7 @@ function hideProgress() {
     console.trace('Hide progress call stack');
     const progressContainer = document.getElementById('progressContainer');
     if (progressContainer) {
-        progressContainer.style.display = 'none';
+        progressContainer.classList.remove('show');
     }
     analysisInProgress = false;
 }

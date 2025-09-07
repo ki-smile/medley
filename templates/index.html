@@ -24,7 +24,7 @@
                     Medical AI Ensemble System
                 </p>
                 <p style="font-size: var(--md-sys-typescale-body-large); margin-bottom: 32px; opacity: 0.9;">
-                    Orchestrating 31 diverse AI models to provide comprehensive, bias-aware medical diagnostic insights through consensus-based analysis.
+                    Orchestrating 30+ diverse AI models to provide comprehensive, bias-aware medical diagnostic insights through consensus-based analysis.
                 </p>
                 <div style="display: flex; gap: 16px; flex-wrap: wrap;">
                     <button class="btn btn-filled" onclick="scrollToSection('cases')">
@@ -38,6 +38,18 @@
                     <button class="btn btn-outlined" onclick="scrollToSection('models')">
                         <span class="material-symbols-rounded">psychology</span>
                         View Models
+                    </button>
+                </div>
+                
+                <!-- Research Links -->
+                <div style="margin-top: 32px; display: flex; gap: 16px; flex-wrap: wrap; align-items: center;">
+                    <a href="https://arxiv.org/abs/2508.21648" target="_blank" class="btn btn-text" style="color: var(--md-sys-color-on-primary-container);">
+                        <span class="material-symbols-rounded">article</span>
+                        Research Paper (arXiv)
+                    </a>
+                    <button class="btn btn-text" onclick="playAudioOverview()" style="color: var(--md-sys-color-on-primary-container);">
+                        <span class="material-symbols-rounded">play_circle</span>
+                        Audio Overview
                     </button>
                 </div>
             </div>
@@ -307,7 +319,7 @@
 <section id="models" style="padding: 80px 24px; background: var(--md-sys-color-surface-variant);">
     <div class="container" style="max-width: 1200px; margin: 0 auto;">
         <h2 style="font-size: var(--md-sys-typescale-display-small); text-align: center; margin-bottom: 16px;">
-            31 AI Models from Around the World
+            30+ AI Models from Around the World
         </h2>
         <p style="text-align: center; color: var(--md-sys-color-on-surface-variant); margin-bottom: 48px;">
             Geographic and cultural diversity reduces diagnostic blind spots
@@ -316,20 +328,20 @@
         <!-- Model Statistics -->
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; margin-bottom: 48px;">
             <div class="card" style="text-align: center; padding: 16px;">
-                <div style="font-size: 32px; font-weight: bold; color: var(--md-sys-color-primary);">31</div>
+                <div style="font-size: 32px; font-weight: bold; color: var(--md-sys-color-primary);">30+</div>
                 <div style="font-size: 12px; color: var(--md-sys-color-on-surface-variant);">Total Models</div>
             </div>
             <div class="card" style="text-align: center; padding: 16px;">
-                <div style="font-size: 32px; font-weight: bold; color: var(--md-sys-color-secondary);">6</div>
+                <div style="font-size: 32px; font-weight: bold; color: var(--md-sys-color-secondary);">7</div>
                 <div style="font-size: 12px; color: var(--md-sys-color-on-surface-variant);">Countries</div>
             </div>
             <div class="card" style="text-align: center; padding: 16px;">
-                <div style="font-size: 32px; font-weight: bold; color: var(--md-sys-color-tertiary);">8</div>
+                <div style="font-size: 32px; font-weight: bold; color: var(--md-sys-color-tertiary);">13</div>
                 <div style="font-size: 12px; color: var(--md-sys-color-on-surface-variant);">Organizations</div>
             </div>
             <div class="card" style="text-align: center; padding: 16px;">
-                <div style="font-size: 32px; font-weight: bold; color: var(--md-sys-color-error);">4</div>
-                <div style="font-size: 12px; color: var(--md-sys-color-on-surface-variant);">Open Source</div>
+                <div style="font-size: 32px; font-weight: bold; color: var(--md-sys-color-error);">5</div>
+                <div style="font-size: 12px; color: var(--md-sys-color-on-surface-variant);">Free Models</div>
             </div>
         </div>
         
@@ -344,9 +356,9 @@
                 <div style="font-size: 13px; line-height: 1.8;">
                     <div>• GPT-4o</div>
                     <div>• GPT-4o-mini</div>
-                    <div>• o1-preview</div>
-                    <div>• o1-mini</div>
                     <div>• GPT-4 Turbo</div>
+                    <div>• GPT-OSS 120B</div>
+                    <div>• GPT-OSS 20B <span style="opacity: 0.6;">(Free)</span></div>
                 </div>
             </div>
             
@@ -466,48 +478,6 @@
     </div>
 </section>
 
-<!-- Features Section -->
-<section style="padding: 80px 24px; background: var(--md-sys-color-surface);">
-    <div class="container" style="max-width: 1200px; margin: 0 auto;">
-        <h2 style="font-size: var(--md-sys-typescale-display-small); text-align: center; margin-bottom: 48px;">
-            Key Features
-        </h2>
-        
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 24px;">
-            <div class="card-outlined">
-                <span class="material-symbols-rounded" style="font-size: 32px; color: var(--md-sys-color-primary); margin-bottom: 16px; display: block;">diversity_3</span>
-                <h3 style="margin-bottom: 8px;">Diverse Perspectives</h3>
-                <p style="font-size: var(--md-sys-typescale-body-medium); color: var(--md-sys-color-on-surface-variant);">
-                    Models from USA, Europe, China, and more provide global diagnostic viewpoints.
-                </p>
-            </div>
-            
-            <div class="card-outlined">
-                <span class="material-symbols-rounded" style="font-size: 32px; color: var(--md-sys-color-secondary); margin-bottom: 16px; display: block;">balance</span>
-                <h3 style="margin-bottom: 8px;">Bias Detection</h3>
-                <p style="font-size: var(--md-sys-typescale-body-medium); color: var(--md-sys-color-on-surface-variant);">
-                    Identifies and attributes potential biases based on model origin and training.
-                </p>
-            </div>
-            
-            <div class="card-outlined">
-                <span class="material-symbols-rounded" style="font-size: 32px; color: var(--md-sys-color-tertiary); margin-bottom: 16px; display: block;">hub</span>
-                <h3 style="margin-bottom: 8px;">Consensus Building</h3>
-                <p style="font-size: var(--md-sys-typescale-body-medium); color: var(--md-sys-color-on-surface-variant);">
-                    Sophisticated orchestration identifies agreement while preserving minority opinions.
-                </p>
-            </div>
-            
-            <div class="card-outlined">
-                <span class="material-symbols-rounded" style="font-size: 32px; color: var(--md-sys-color-error); margin-bottom: 16px; display: block;">description</span>
-                <h3 style="margin-bottom: 8px;">Comprehensive Reports</h3>
-                <p style="font-size: var(--md-sys-typescale-body-medium); color: var(--md-sys-color-on-surface-variant);">
-                    Detailed PDF and interactive HTML reports with evidence and reasoning.
-                </p>
-            </div>
-        </div>
-    </div>
-</section>
 
 <!-- Floating Action Button -->
 <button class="fab extended" onclick="window.location.href='/analyze'">
@@ -621,5 +591,65 @@
     function scrollToSection(sectionId) {
         document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
     }
+    
+    function playAudioOverview() {
+        // Create audio element if it doesn't exist
+        let audio = document.getElementById('medley-audio-overview');
+        if (!audio) {
+            audio = document.createElement('audio');
+            audio.id = 'medley-audio-overview';
+            audio.controls = true;
+            audio.style.display = 'none';
+            audio.src = '{{ url_for('static', filename='Medley NotebookLM AudioOverview.mp3') }}';
+            document.body.appendChild(audio);
+        }
+        
+        // Create modal if it doesn't exist
+        let modal = document.getElementById('audio-modal');
+        if (!modal) {
+            modal = document.createElement('div');
+            modal.id = 'audio-modal';
+            modal.innerHTML = `
+                <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; display: flex; align-items: center; justify-content: center;">
+                    <div class="card" style="max-width: 500px; width: 90%; padding: 32px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                            <h3 style="margin: 0;">MEDLEY Audio Overview</h3>
+                            <button onclick="closeAudioModal()" style="background: none; border: none; font-size: 24px; cursor: pointer;">×</button>
+                        </div>
+                        <p style="margin-bottom: 16px; color: var(--md-sys-color-on-surface-variant);">
+                            AI-generated audio overview by NotebookLM explaining the MEDLEY system and research.
+                        </p>
+                        <audio controls style="width: 100%;" id="modal-audio">
+                            <source src="{{ url_for('static', filename='Medley NotebookLM AudioOverview.mp3') }}" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+        
+        modal.style.display = 'block';
+    }
+    
+    function closeAudioModal() {
+        const modal = document.getElementById('audio-modal');
+        const modalAudio = document.getElementById('modal-audio');
+        if (modalAudio) {
+            modalAudio.pause();
+            modalAudio.currentTime = 0;
+        }
+        if (modal) {
+            modal.style.display = 'none';
+        }
+    }
+    
+    // Close modal when clicking outside
+    document.addEventListener('click', function(e) {
+        const modal = document.getElementById('audio-modal');
+        if (modal && e.target === modal) {
+            closeAudioModal();
+        }
+    });
 </script>
 {% endblock %}

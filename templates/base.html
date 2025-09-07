@@ -371,15 +371,34 @@
             }
         });
         
-        // Socket.IO connection
-        const socket = io();
+        // Socket.IO connection with extended timeout for long analyses
+        // Make socket globally available for all pages
+        window.socket = io('/', {
+            transports: ['websocket', 'polling'],  // Try WebSocket first, fall back to polling
+            reconnection: true,    // Enable auto-reconnection
+            reconnectionAttempts: 10,  // Try 10 times to reconnect
+            reconnectionDelay: 1000,   // Start with 1 second delay
+            reconnectionDelayMax: 5000 // Max 5 seconds between attempts
+        });
         
         socket.on('connect', function() {
-            console.log('Connected to MEDLEY server');
+            console.log('✅ Connected to MEDLEY server');
         });
         
         socket.on('disconnect', function() {
-            console.log('Disconnected from server');
+            console.log('⚠️ Disconnected from server - will attempt to reconnect...');
+        });
+        
+        socket.on('reconnect', function(attemptNumber) {
+            console.log('✅ Reconnected to server after', attemptNumber, 'attempts');
+        });
+        
+        socket.on('reconnect_attempt', function(attemptNumber) {
+            console.log('🔄 Attempting to reconnect... (attempt', attemptNumber, ')');
+        });
+        
+        socket.on('reconnect_failed', function() {
+            console.log('❌ Failed to reconnect after all attempts');
         });
     </script>
     
