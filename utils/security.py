@@ -264,15 +264,15 @@ class SecurityHeaders:
         """Add security and performance headers to response"""
         from flask import request
         
-        # Content Security Policy - Production ready with full compatibility
-        response.headers['Content-Security-Policy'] = (
-            "default-src * 'unsafe-inline' 'unsafe-eval' data: blob:; "
-            "connect-src * ws: wss: http: https:; "
-            "font-src * data: moz-extension:; "
-            "img-src * data: blob:; "
-            "script-src * 'unsafe-inline' 'unsafe-eval'; "
-            "style-src * 'unsafe-inline';"
-        )
+        # Content Security Policy - DISABLED for troubleshooting
+        # response.headers['Content-Security-Policy'] = (
+        #     "default-src * 'unsafe-inline' 'unsafe-eval' data: blob:; "
+        #     "connect-src * ws: wss: http: https:; "
+        #     "font-src * data: moz-extension:; "
+        #     "img-src * data: blob:; "
+        #     "script-src * 'unsafe-inline' 'unsafe-eval'; "
+        #     "style-src * 'unsafe-inline';"
+        # )
         
         # Security headers
         response.headers['X-Content-Type-Options'] = 'nosniff'
