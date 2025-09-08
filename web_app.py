@@ -183,39 +183,29 @@ CORS(app)
 # Environment detection
 IS_PRODUCTION = os.path.exists('/.dockerenv') or os.getenv('FLASK_ENV') == 'production'
 
-# SocketIO Configuration: Separate production vs development
+# SocketIO Configuration: Dummy implementation for long polling mode
+# SocketIO removed - using long polling instead via progress_manager
+class DummySocketIO:
+    """Dummy SocketIO class for compatibility with existing code"""
+    def __init__(self, app, **kwargs):
+        self.app = app
+        
+    def emit(self, event, data, room=None):
+        """Dummy emit method - does nothing since we use long polling"""
+        pass
+        
+    def run(self, app, **kwargs):
+        """Run the Flask app normally without SocketIO"""
+        app.run(**kwargs)
+
 if IS_PRODUCTION:
     print("🐳 Production/Docker environment detected")
-    # Production configuration with gevent
-    try:
-        import gevent
-        socketio = SocketIO(
-            app, 
-            cors_allowed_origins="*", 
-            async_mode='gevent',
-            ping_timeout=300,  # 5 minutes for long analyses
-            ping_interval=60,
-            max_http_buffer_size=10000000,
-            logger=False,        # Disable verbose logging in production
-            engineio_logger=False
-        )
-        print("✅ Production SocketIO configured with gevent")
-    except ImportError:
-        print("⚠️ gevent not available, falling back to threading")
-        socketio = SocketIO(app, cors_allowed_origins="*", async_mode='threading')
+    print("📡 Using long polling instead of SocketIO for production")
+    socketio = DummySocketIO(app)
 else:
-    print("💻 Local development environment detected")
-    # Simple development configuration
-    socketio = SocketIO(
-        app, 
-        cors_allowed_origins="*", 
-        async_mode='threading',  # Most stable for Flask dev server
-        ping_timeout=60,   # Standard timeout for development
-        ping_interval=25,  # Standard interval
-        logger=True,       # Enable logging for debugging
-        engineio_logger=True
-    )
-    print("✅ Development SocketIO configured with threading")
+    print("💻 Local development environment detected")  
+    print("📡 Using long polling instead of SocketIO for development")
+    socketio = DummySocketIO(app)
 
 # Global variables for SocketIO management
 connected_clients = set()
