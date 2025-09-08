@@ -16,6 +16,7 @@ from queue import Queue
 
 from flask import current_app
 from flask_socketio import SocketIO, emit
+from utils.progress_manager import progress_manager, emit_progress, emit_model_started, emit_model_completed, emit_analysis_completed
 
 # Import the actual orchestrator
 import sys
@@ -68,7 +69,8 @@ class WebOrchestrator:
         use_free_models: bool = True,  # Default to free models per user instruction
         selected_models: List[str] = None,
         session_id: str = None,
-        api_key: str = None
+        api_key: str = None,
+        progress_session_id: str = None
     ) -> Dict:
         """
         Start analysis of a custom case
@@ -95,6 +97,7 @@ class WebOrchestrator:
             'failed_models': 0,
             'start_time': datetime.now().isoformat(),
             'session_id': session_id,
+            'progress_session_id': progress_session_id,  # Add progress session
             'case_file': str(case_file),
             'use_free_models': use_free_models,
             'selected_models': selected_models,
@@ -356,7 +359,7 @@ class WebOrchestrator:
             })
     
     def _emit_progress(self, case_id: str, event: str, data: Dict):
-        """Emit progress update via WebSocket"""
+        """Emit progress update via Long Polling Progress Manager"""
         # Include cost information in progress updates
         analysis_info = self.active_analyses.get(case_id, {})
         cost_data = {
@@ -365,7 +368,18 @@ class WebOrchestrator:
             'use_free_models': analysis_info.get('use_free_models', True)
         }
         
-        # Emit directly without context manager if in thread
+        # Get progress session ID
+        progress_session_id = analysis_info.get('progress_session_id')
+        
+        # Emit to progress manager if we have a progress session
+        if progress_session_id:
+            emit_progress(progress_session_id, event, {
+                'analysis_id': case_id,
+                **data,
+                **cost_data
+            })
+        
+        # Also emit via Socket.IO for backward compatibility during transition
         self.socketio.emit(event, {
             'analysis_id': case_id,
             **data,

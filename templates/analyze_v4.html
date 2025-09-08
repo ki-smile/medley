@@ -413,8 +413,8 @@
 let currentAnalysisId = null;
 let analysisInProgress = false;
 let lastProcessingModel = null;  // Track the current model being processed
-// Socket is already initialized in base.html, reuse it
-// const socket = io();
+let progressSessionId = null;    // Progress session ID for long polling
+let longPollingActive = false;   // Flag to control long polling
 
 // Models will be populated on page load
 
@@ -470,9 +470,6 @@ function initializeModels() {
     if (!modelsLoaded || !domReady) return;
     
     console.log('🚀 Initializing analyze page with models and DOM ready');
-    
-    // Initialize WebSocket first
-    connectWebSocket();
     
     const progressContainer = document.getElementById('progressContainer');
     console.log('🔍 Progress container exists:', !!progressContainer);
@@ -657,236 +654,173 @@ function setupEventListeners() {
     });
 }
 
-// Track if we've already set up listeners
-let socketListenersSetup = false;
+// Long polling implementation to replace WebSocket
+async function startLongPolling() {
+    if (!progressSessionId || !longPollingActive) {
+        console.log('⚠️ Progress session not available or long polling not active');
+        return;
+    }
+    
+    console.log('🔄 Starting long polling for session:', progressSessionId);
+    
+    let lastEventId = null;
+    
+    while (longPollingActive && progressSessionId) {
+        try {
+            const timeout = 30000; // 30 seconds timeout
+            const url = `/api/progress/${progressSessionId}/events?timeout=${timeout / 1000}${lastEventId ? `&since_id=${lastEventId}` : ''}`;
+            
+            console.log('📡 Long polling request:', url);
+            const response = await fetch(url);
+            
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            }
+            
+            const data = await response.json();
+            console.log('📨 Long polling response:', data);
+            
+            if (data.success && data.events && data.events.length > 0) {
+                // Process each event
+                for (const event of data.events) {
+                    console.log('🎯 Processing event:', event);
+                    lastEventId = event.id;
+                    processProgressEvent(event);
+                }
+            }
+            
+            // Small delay before next request to prevent tight loops
+            await new Promise(resolve => setTimeout(resolve, 100));
+            
+        } catch (error) {
+            console.error('❌ Long polling error:', error);
+            
+            // If we get a network error, wait longer before retrying
+            if (longPollingActive) {
+                console.log('⏳ Waiting 2 seconds before retry...');
+                await new Promise(resolve => setTimeout(resolve, 2000));
+            }
+        }
+    }
+    
+    console.log('🔻 Long polling stopped');
+}
 
-// WebSocket connection
-function connectWebSocket() {
-    // Check if socket exists and is connected
-    if (typeof window.socket === 'undefined' || !window.socket || !window.socket.connected) {
-        console.log('⚠️ Socket not connected, waiting for connection...');
-        // Wait for socket to be available from base.html
-        setTimeout(connectWebSocket, 500);
-        return;
+function processProgressEvent(event) {
+    console.log('🔄 Processing event:', event.type, event.data);
+    
+    switch (event.type) {
+        case 'analysis_started':
+            console.log('✅ Analysis started event received:', event.data);
+            currentAnalysisId = event.data.analysis_id || progressSessionId;
+            showProgress();
+            if (event.data.models) {
+                initializeModelStatus(event.data.models);
+            }
+            break;
+            
+        case 'model_started':
+            console.log('🚀 Model started:', event.data);
+            if (event.data.message) {
+                document.getElementById('progressText').textContent = event.data.message;
+                document.getElementById('currentModel').innerHTML = `<strong>Current Model:</strong> ${event.data.model_name}`;
+            }
+            updateModelStatus(event.data.model_name, 'processing');
+            break;
+            
+        case 'model_completed':
+            console.log('✅ Model completed:', event.data);
+            if (event.data.message) {
+                document.getElementById('progressText').textContent = event.data.message;
+            }
+            updateModelStatus(event.data.model_name, event.data.status === 'completed' ? 'completed' : 'failed');
+            break;
+            
+        case 'progress_update':
+            console.log('📊 Progress update:', event.data);
+            if (event.data.progress_percent !== undefined) {
+                updateProgress(event.data.progress_percent, event.data.message);
+            }
+            if (event.data.message) {
+                document.getElementById('progressText').textContent = event.data.message;
+            }
+            break;
+            
+        case 'analysis_completed':
+            console.log('🎉 Analysis completed:', event.data);
+            handleAnalysisComplete(event.data);
+            break;
+            
+        case 'analysis_error':
+            console.log('❌ Analysis error:', event.data);
+            showError(event.data.error || 'Analysis failed');
+            longPollingActive = false;
+            break;
+            
+        case 'cost_update':
+            console.log('💰 Cost update:', event.data);
+            if (event.data.current_cost !== undefined) {
+                updateCostDisplay(event.data.current_cost, event.data.use_free_models, event.data.model_name, event.data.model_cost);
+            }
+            break;
+            
+        default:
+            console.log('❓ Unknown event type:', event.type, event.data);
+            break;
+    }
+}
+
+function handleAnalysisComplete(data) {
+    // Update progress to show completion
+    document.getElementById('progressBar').style.width = '100%';
+    document.getElementById('progressPercent').textContent = '100%';
+    document.getElementById('progressText').textContent = 'Analysis Complete';
+    document.getElementById('currentModel').innerHTML = '<strong>✅ All models processed</strong>';
+    
+    // Hide the cancel button since analysis is complete
+    const cancelBtn = document.getElementById('cancelButton');
+    if (cancelBtn) {
+        cancelBtn.style.display = 'none';
     }
     
-    // Use the global socket
-    const socket = window.socket;
-    
-    // Prevent duplicate listeners
-    if (socketListenersSetup) {
-        console.log('ℹ️ Socket listeners already set up');
-        return;
-    }
-    
-    console.log('✅ Socket is connected, setting up event listeners');
-    socketListenersSetup = true;
-    
-    // Remove any existing listeners first (in case of reconnection)
-    socket.off('analysis_started');
-    socket.off('model_progress');
-    socket.off('analysis_complete');
-    socket.off('analysis_error');
-    socket.off('analysis_cancelled');
-    socket.off('cost_update');
-    
-    socket.on('analysis_started', function(data) {
-        console.log('✅ Analysis started event received:', data);
-        currentAnalysisId = data.analysis_id;
-        showProgress();
-        initializeModelStatus(data.models || []);
+    // Mark all model status cards as completed
+    const modelDivs = document.querySelectorAll('[id^="model-"]');
+    modelDivs.forEach((modelDiv) => {
+        const statusIcon = modelDiv.querySelector('.status-icon');
+        if (statusIcon && statusIcon.textContent !== '❌') {
+            modelDiv.style.background = 'var(--md-sys-color-primary-container)';
+            statusIcon.textContent = '✅';
+        }
     });
     
-    socket.on('model_progress', function(data) {
-        console.log('📊 Model progress event:', data);
-        console.log('📊 Model field in data:', data.model, 'Status:', data.status);
-        console.log('🔍 Analysis ID check - Current:', currentAnalysisId, 'Received:', data.analysis_id);
+    // Store report URLs if available
+    if (data.report_url || data.pdf_url) {
+        currentReportUrl = data.report_url;
+        currentPdfUrl = data.pdf_url;
         
-        if (!currentAnalysisId || data.analysis_id === currentAnalysisId) {
-            console.log('✅ Analysis ID matches, updating progress...');
-            updateProgress(data.progress, data.status, data.model, data.stage);
-            
-            // Parse backend log messages for individual model completion
-            if (data.status || data.message) {
-                const message = data.status || data.message;
-                console.log('📝 Parsing progress message:', message);
-                
-                // Track current model for completion detection
-                let currentModel = data.model;
-                
-                // Extract model name from "Analyzing with X..." pattern
-                if (message.includes('Analyzing with')) {
-                    const match = message.match(/Analyzing with ([^\.]+)\.{3}/);
-                    if (match) {
-                        currentModel = match[1].trim();
-                        lastProcessingModel = currentModel;  // Remember this model
-                        console.log('🔍 Extracted model from "Analyzing with" message:', currentModel);
-                        updateModelStatus(currentModel, 'processing');
-                    }
-                }
-                
-                // Also look for backend log patterns like "[1/7] deepseek/deepseek-chat-v3.1:free"
-                if (message.includes('[') && message.includes('/') && message.includes(']')) {
-                    const backendMatch = message.match(/\[(\d+)\/\d+\]\s+([^\n\r\s]+)/);
-                    if (backendMatch) {
-                        currentModel = backendMatch[2].trim();
-                        lastProcessingModel = currentModel;  // Remember this model
-                        console.log('🔍 Extracted model from backend log pattern:', currentModel);
-                        updateModelStatus(currentModel, 'processing');
-                    }
-                }
-                
-                // Success pattern: "✅ Success: X chars in Y.Zs"
-                if (message.includes('✅ Success:')) {
-                    // Use the last model we were processing
-                    if (lastProcessingModel) {
-                        console.log('✅ Model completed:', lastProcessingModel);
-                        updateModelStatus(lastProcessingModel, '✅ Success: Model completed');
-                    }
-                }
-                
-                // Failure patterns: "❌ Error:" or API errors  
-                if (message.includes('❌ Error:') || message.includes('API Error')) {
-                    const modelMatch = message.match(/\[(\d+)\/\d+\]\s+([^\n\r]+)/);
-                    if (modelMatch) {
-                        currentModel = modelMatch[2].trim();
-                        console.log('❌ Model failed from backend log:', currentModel);
-                        updateModelStatus(currentModel, 'failed');
-                    } else if (currentModel) {
-                        console.log('❌ Model failed:', currentModel);
-                        updateModelStatus(currentModel, 'failed');
-                    }
-                }
-            }
-            
-            // Always try to update model status, even if data.model is undefined
-            updateModelStatus(data.model, data.status);
-            
-            // Update stage indicators if stage is provided
-            if (data.stage) {
-                updateStageIndicator(data.stage);
-            }
-            
-            // Check for errors
-            if (data.error) {
-                showError(data.error);
-            }
-        } else {
-            console.log('❌ Analysis ID mismatch - ignoring progress update');
-        }
-    });
+        // Show the results section
+        document.getElementById('resultsSection').style.display = 'block';
+        
+        // Save to history
+        const caseText = document.getElementById('caseText').value;
+        const analysisData = {
+            report_url: data.report_url,
+            pdf_url: data.pdf_url,
+            successful_models: data.successful_models,
+            total_models: data.total_models
+        };
+        saveAnalysisToHistory(currentAnalysisId, caseText, analysisData);
+    }
     
-    socket.on('model_error', function(data) {
-        console.log('❌ Model error event:', data);
-        if (!currentAnalysisId || data.analysis_id === currentAnalysisId) {
-            const modelName = data.model || 'Unknown Model';
-            showError(`Model ${modelName} failed: ${data.error}`);
-            if (data.model) {
-                updateModelStatus(data.model, 'failed');
-            }
-        }
-    });
+    // Update stage indicators to completed
+    updateStageIndicator(4);
     
-    socket.on('analysis_complete', function(data) {
-        console.log('🎉 Analysis complete event:', data);
-        console.log('Has results?', !!data.results);
-        if (!currentAnalysisId || data.analysis_id === currentAnalysisId) {
-            // Update progress to show completion
-            document.getElementById('progressBar').style.width = '100%';
-            document.getElementById('progressPercent').textContent = '100%';
-            document.getElementById('progressText').textContent = 'Analysis Complete';
-            document.getElementById('currentModel').innerHTML = '<strong>✅ All models processed</strong>';
-            
-            // Hide the cancel button since analysis is complete
-            const cancelBtn = document.getElementById('cancelButton');
-            if (cancelBtn) {
-                cancelBtn.style.display = 'none';
-            }
-            
-            // Mark all model status cards as completed
-            console.log('🔍 Looking for model divs...');
-            const modelDivs = document.querySelectorAll('[id^="model-"]');
-            console.log('🏁 Found', modelDivs.length, 'model divs, marking as completed');
-            
-            modelDivs.forEach((modelDiv, index) => {
-                console.log(`🔄 Processing model div ${index + 1}:`, modelDiv.id);
-                const statusIcon = modelDiv.querySelector('.status-icon');
-                if (statusIcon) {
-                    modelDiv.style.background = 'var(--md-sys-color-primary-container)';
-                    statusIcon.textContent = '✅';
-                    console.log(`✅ Updated model ${modelDiv.id} to completed`);
-                } else {
-                    console.log(`❌ No status icon found in model div ${modelDiv.id}`);
-                }
-            });
-            
-            // Store report URLs for the new simplified interface
-            if (data.results) {
-                console.log('Analysis completed with results:', data.results);
-                
-                // Store report URLs globally
-                currentReportUrl = data.report_url;
-                currentPdfUrl = data.pdf_url;
-                
-                // Save to recent analyses history (store report URLs too)
-                const caseText = document.getElementById('caseText').value;
-                const analysisData = {
-                    ...data.results,
-                    report_url: data.report_url,
-                    pdf_url: data.pdf_url
-                };
-                saveAnalysisToHistory(data.analysis_id, caseText, analysisData);
-                
-                // Show the results section (it's ready with the buttons)
-                document.getElementById('resultsSection').style.display = 'block';
-                
-                console.log('✅ Results section displayed with report URLs:', {
-                    report_url: data.report_url,
-                    pdf_url: data.pdf_url
-                });
-            } else {
-                console.error('No results in analysis_complete event!');
-            }
-            
-            // Mark all stages as complete
-            updateStageIndicator(4);  // This will mark all 3 stages as completed
-            
-            // Add summary to progress container
-            addAnalysisSummary();
-            
-            // Hide progress after a short delay to let user see 100%
-            // TEMPORARILY DISABLED: Auto-hide to debug display issues
-            // setTimeout(() => {
-            //     hideProgress();
-            // }, 2000);
-            console.log('📌 NOT auto-hiding progress to debug display');
-            
-            analysisInProgress = false;
-        }
-    });
+    // Add analysis summary
+    addAnalysisSummary();
     
-    socket.on('analysis_error', function(data) {
-        console.log('❌ analysis_error event received:', data);
-        console.log('Error details:', data.error);
-        if (data.analysis_id === currentAnalysisId) {
-            console.log('🚨 NOT hiding progress to debug - error was:', data.error);
-            // TEMPORARILY DISABLED: hideProgress();
-            showError(data.error || 'Analysis failed');
-        }
-    });
-    
-    socket.on('analysis_cancelled', function(data) {
-        console.log('✅ Analysis cancellation confirmed:', data);
-        hideProgress();
-        showError('Analysis was cancelled');
-    });
-    
-    socket.on('cost_update', function(data) {
-        console.log('💰 Cost update event received:', data);
-        if (!currentAnalysisId || data.analysis_id === currentAnalysisId) {
-            updateCostDisplay(data.current_cost, data.use_free_models, data.model_name, data.model_cost);
-        }
-    });
+    // Stop long polling
+    longPollingActive = false;
+    analysisInProgress = false;
 }
 
 // Start analysis
@@ -908,105 +842,102 @@ async function startAnalysis() {
         return;
     }
     
-    analysisInProgress = true;
-    console.log('🚀 Starting analysis, calling showProgress()');
-    showProgress();
-    
-    // Always use real analysis (no simulation mode)
-    const useRealAnalysis = true;
-    const useSimulation = false;
-    
-    // Get model selection preferences
-    const useFreeModels = document.getElementById('useFreeModels').checked;
-    const modelLimit = 'all'; // Always use all available models
-    const orchestratorModel = document.getElementById('orchestratorModel').value;
-    
-    // Get selected models from checkboxes
-    let selectedModels = [];
-    const checkedBoxes = document.querySelectorAll('.model-check:checked');
-    checkedBoxes.forEach(checkbox => {
-        selectedModels.push(checkbox.value);
-    });
-    
-    // If no models selected, show error
-    if (selectedModels.length === 0) {
-        alert('Please select at least one model');
-        analysisInProgress = false;
-        return;
-    }
-    
-    console.log(`Selected ${selectedModels.length} models from checkboxes`);
-    
-    if (useSimulation) {
-        // Trigger WebSocket simulation
-        currentAnalysisId = 'demo_' + Date.now();
-        socket.emit('analyze_case', {
-            case_text: caseText,
-            case_title: 'Custom Case',
-            use_free_models: useFreeModels,
-            use_simulation: true,
-            selected_models: selectedModels,
-            model_limit: modelLimit,
-            orchestrator_model: orchestratorModel,
-            analysis_id: currentAnalysisId
+    try {
+        analysisInProgress = true;
+        console.log('🚀 Starting analysis with long polling');
+        showProgress();
+        
+        // Create progress session first
+        console.log('📋 Creating progress session...');
+        const progressResponse = await fetch('/api/progress/session', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
         });
         
-        // Initialize model status with selected models
+        if (!progressResponse.ok) {
+            throw new Error(`Failed to create progress session: ${progressResponse.status}`);
+        }
+        
+        const progressData = await progressResponse.json();
+        if (!progressData.success) {
+            throw new Error('Failed to create progress session');
+        }
+        
+        progressSessionId = progressData.session_id;
+        console.log('✅ Progress session created:', progressSessionId);
+        
+        // Start long polling
+        longPollingActive = true;
+        startLongPolling(); // Don't await - let it run in parallel
+        
+        // Get model selection preferences
+        const useFreeModels = document.getElementById('useFreeModels').checked;
+        const orchestratorModel = document.getElementById('orchestratorModel').value;
+        
+        // Get selected models from checkboxes
+        let selectedModels = [];
+        const checkedBoxes = document.querySelectorAll('.model-check:checked');
+        checkedBoxes.forEach(checkbox => {
+            selectedModels.push(checkbox.value);
+        });
+        
+        // If no models selected, show error
+        if (selectedModels.length === 0) {
+            alert('Please select at least one model');
+            analysisInProgress = false;
+            longPollingActive = false;
+            return;
+        }
+        
+        console.log(`Selected ${selectedModels.length} models from checkboxes`);
+        
+        // Initialize model status display
         const modelNames = selectedModels.map(id => {
             const model = [...window.models.free, ...window.models.paid].find(m => m.id === id);
             return model ? model.name : id;
         });
         initializeModelStatus(modelNames);
         
-        console.log('WebSocket simulation started:', currentAnalysisId);
-    } else {
-        // Use real CLI analysis
+        // Start the analysis
         currentAnalysisId = 'case_' + Date.now();
-        socket.emit('analyze_case', {
-            case_text: caseText,
-            case_title: 'Custom Case',
-            use_free_models: useFreeModels,
-            use_simulation: false,  // Use real analysis
-            selected_models: selectedModels,
-            model_limit: modelLimit,
-            orchestrator_model: orchestratorModel,
-            api_key: apiKey,
-            analysis_id: currentAnalysisId
+        console.log('🚀 Starting analysis via API...');
+        
+        const analysisResponse = await fetch('/api/analyze', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                case_text: caseText,
+                case_title: 'Custom Case',
+                api_key: apiKey,
+                use_free_models: useFreeModels,
+                selected_models: selectedModels,
+                orchestrator_model: orchestratorModel,
+                progress_session_id: progressSessionId
+            })
         });
         
-        // Don't override the progress text here - let the socket events handle it
-        // document.getElementById('progressText').textContent = 'Running full ensemble analysis (this may take 2-5 minutes)...';
+        const analysisData = await analysisResponse.json();
         
-        console.log('Real CLI analysis started:', currentAnalysisId);
-    }
-    
-    // Old API code (no longer used)
-    if (false) {
-        // Use real API
-        try {
-            const response = await fetch('/api/analyze', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    case_text: caseText,
-                    api_key: apiKey,
-                    use_free_models: document.getElementById('useFreeModels').checked
-                })
-            });
-            
-            const data = await response.json();
-            
-            if (response.ok) {
-                currentAnalysisId = data.analysis_id;
-                socket.emit('join_analysis', { analysis_id: currentAnalysisId });
-            } else {
-                throw new Error(data.error || 'Analysis failed');
-            }
-        } catch (error) {
-            hideProgress();
-            showError('Error: ' + error.message);
-            analysisInProgress = false;
+        if (!analysisResponse.ok) {
+            throw new Error(analysisData.error || 'Analysis failed to start');
         }
+        
+        console.log('✅ Analysis started successfully:', analysisData);
+        
+        // Store the analysis ID from response if available
+        if (analysisData.analysis_id) {
+            currentAnalysisId = analysisData.analysis_id;
+        }
+        
+        // The long polling will handle all progress updates from here
+        
+    } catch (error) {
+        console.error('❌ Error starting analysis:', error);
+        hideProgress();
+        showError('Error: ' + error.message);
+        analysisInProgress = false;
+        longPollingActive = false;
+        progressSessionId = null;
     }
 }
 
@@ -1093,20 +1024,19 @@ function updateCostDisplay(currentCost, useFreeModels, modelName, modelCost) {
 }
 
 function cancelAnalysis() {
-    if (analysisInProgress && currentAnalysisId) {
+    if (analysisInProgress && (currentAnalysisId || progressSessionId)) {
         console.log('🚫 Cancelling analysis:', currentAnalysisId);
+        
+        // Stop long polling
+        longPollingActive = false;
         
         // Reset state
         analysisInProgress = false;
         currentAnalysisId = null;
+        progressSessionId = null;
         
         // Hide progress and show form
         hideProgress();
-        
-        // Emit cancel event to server
-        socket.emit('cancel_analysis', {
-            analysis_id: currentAnalysisId
-        });
         
         // Show cancellation message
         showError('Analysis cancelled by user');

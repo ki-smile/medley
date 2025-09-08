@@ -1,0 +1,790 @@
+{
+  "case_id": "tmpxqe8gimf",
+  "case_title": "Custom Case Analysis",
+  "case_content": "A 64-year-old woman with a history of poorly controlled type 2 diabetes mellitus, long-standing hypertension, and diabetic retinopathy presents with gradually worsening fatigue, generalized pruritus, anorexia, and bilateral lower-extremity edema over the past month. She also reports nocturia and frothy urine for several years, but denies gross hematuria or flank pain.\n\nOn examination, her blood pressure is 168/92 mmHg, pulse 88/min, and she has periorbital puffiness with bilateral pitting pedal edema. Cardiovascular exam reveals a nondisplaced apex beat and no murmurs, while pulmonary exam is notable for bibasilar crackles. There is evidence of scratch marks on the skin consistent with pruritus.\n\nLaboratory studies demonstrate a serum creatinine of 3.1 mg/dL (baseline 1.6 mg/dL one year prior), eGFR 22 mL/min/1.73 m\u00b2, BUN 58 mg/dL, potassium 5.6 mmol/L, and bicarbonate 17 mmol/L. Urinalysis reveals 3+ proteinuria, bland sediment, and a urine protein-to-creatinine ratio of 5.2 g/g. HbA1c is 9.2%, and hemoglobin is 9.5 g/dL with normocytic indices. Renal ultrasound shows bilaterally small, echogenic kidneys without hydronephrosis.",
+  "model_responses": [
+    {
+      "model_name": "deepseek/deepseek-chat-v3.1:free",
+      "response": "```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"Diabetic Nephropathy\",\n        \"confidence\": 0.95,\n        \"icd_code\": \"N08.3\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Hypertensive Nephrosclerosis\",\n            \"confidence\": 0.6,\n            \"icd_code\": \"I12.9\"\n        },\n        {\n            \"name\": \"Chronic Glomerulonephritis\",\n            \"confidence\": 0.4,\n            \"icd_code\": \"N03.9\"\n        },\n        {\n            \"name\": \"Ischemic Nephropathy\",\n            \"confidence\": 0.3,\n            \"icd_code\": \"N28.0\"\n        },\n        {\n            \"name\": \"Analgesic Nephropathy\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"N14.0\"\n        }\n    ],\n    \"key_findings\": [\"Poorly controlled diabetes (HbA1c 9.2%)\", \"Nephrotic-range proteinuria (UPCR 5.2 g/g)\", \"Rapidly worsening renal function (Cr 3.1 mg/dL from baseline 1.6)\", \"Metabolic acidosis (bicarbonate 17 mmol/L)\", \"Hyperkalemia (K+ 5.6 mmol/L)\", \"Bilateral small echogenic kidneys on ultrasound\", \"Hypertensive emergency (BP 168/92 mmHg)\", \"Anemia (Hb 9.5 g/dL)\", \"Lower extremity and periorbital edema\"],\n    \"tests\": [\n        {\n            \"test\": \"Serum electrolytes, BUN, creatinine\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"ECG for hyperkalemia\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Urine microscopy for dysmorphic RBCs/casts\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Serum albumin, total protein\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"ANA, ANCA, anti-GBM antibodies\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Renal biopsy (if indicated)\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Echocardiogram\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management\": {\n        \"immediate\": [\"IV access and cardiac monitoring\", \"Treat hyperkalemia with calcium gluconate 1g IV\", \"Insulin/dextrose for hyperkalemia if ECG changes present\", \"Diuresis with furosemide 40-80mg IV\", \"BP control with labetalol 10-20mg IV or hydralazine 10-20mg IM/IV\"],\n        \"medications\": [\"ACE inhibitor: lisinopril 2.5-5mg PO daily (if potassium <5.0)\", \"ARB: losartan 25mg PO daily (if ACE contraindicated)\", \"Loop diuretic: furosemide 40-80mg PO BID\", \"Sodium bicarbonate: 650mg PO TID\", \"Erythropoietin: 50 units/kg SC weekly\", \"Iron supplementation: ferrous sulfate 325mg PO TID\", \"Statin: atorvastatin 20mg PO daily\", \"Insulin regimen for diabetes management\"],\n        \"consultations\": [\"Nephrology: immediate\", \"Cardiology: urgent\", \"Endocrinology: routine\", \"Dietitian: routine\"]\n    },\n    \"red_flags\": [\"Severe hyperkalemia with potential cardiac toxicity\", \"Hypertensive emergency\", \"Rapidly progressive renal failure\", \"Metabolic acidosis\", \"Pulmonary crackles suggesting fluid overload\", \"Uremic symptoms (pruritus, anorexia, fatigue)\"]\n}\n```",
+      "response_time": 23.967530012130737,
+      "cached": false,
+      "case_id": "tmpxqe8gimf",
+      "timestamp": "2025-09-07T18:44:00.936543",
+      "tokens_used": 1349,
+      "input_tokens": 520,
+      "output_tokens": 829
+    }
+  ],
+  "total_models_analyzed": 1,
+  "geographical_distribution": {
+    "USA": 20,
+    "France": 3,
+    "China": 5,
+    "Canada": 2,
+    "Japan/USA": 1,
+    "Israel": 1
+  },
+  "consensus_analysis": {
+    "primary_counts": {
+      "Diabetic Nephropathy": 1
+    },
+    "differential_counts": {
+      "Hypertensive Nephrosclerosis": 1,
+      "Chronic Glomerulonephritis": 1,
+      "Ischemic Nephropathy": 1,
+      "Analgesic Nephropathy": 1
+    },
+    "total_counts": {
+      "Diabetic Nephropathy": 1,
+      "Hypertensive Nephrosclerosis": 1,
+      "Chronic Glomerulonephritis": 1,
+      "Ischemic Nephropathy": 1,
+      "Analgesic Nephropathy": 1
+    },
+    "sorted_diagnoses": [
+      [
+        "Diabetic Nephropathy",
+        1
+      ],
+      [
+        "Hypertensive Nephrosclerosis",
+        1
+      ],
+      [
+        "Chronic Glomerulonephritis",
+        1
+      ],
+      [
+        "Ischemic Nephropathy",
+        1
+      ],
+      [
+        "Analgesic Nephropathy",
+        1
+      ]
+    ],
+    "primary": [
+      "Diabetic Nephropathy",
+      1
+    ],
+    "total_models": 1,
+    "icd_codes": {
+      "Diabetic Nephropathy": [
+        "N08.3"
+      ],
+      "Hypertensive Nephrosclerosis": [
+        "I12.9"
+      ],
+      "Chronic Glomerulonephritis": [
+        "N03.9"
+      ],
+      "Ischemic Nephropathy": [
+        "N28.0"
+      ],
+      "Analgesic Nephropathy": [
+        "N14.0"
+      ]
+    },
+    "model_diagnoses": {
+      "Diabetic Nephropathy": {
+        "primary": [
+          "deepseek/deepseek-chat-v3.1:free"
+        ]
+      },
+      "Hypertensive Nephrosclerosis": {
+        "differential": [
+          "deepseek/deepseek-chat-v3.1:free"
+        ]
+      },
+      "Chronic Glomerulonephritis": {
+        "differential": [
+          "deepseek/deepseek-chat-v3.1:free"
+        ]
+      },
+      "Ischemic Nephropathy": {
+        "differential": [
+          "deepseek/deepseek-chat-v3.1:free"
+        ]
+      },
+      "Analgesic Nephropathy": {
+        "differential": [
+          "deepseek/deepseek-chat-v3.1:free"
+        ]
+      }
+    },
+    "geographical_patterns": {
+      "Unknown": {
+        "Diabetic Nephropathy": 1
+      }
+    }
+  },
+  "free_models_used": true,
+  "diagnostic_landscape": {
+    "primary_diagnosis": {
+      "name": "Diabetic Nephropathy",
+      "icd_code": "N08.3",
+      "confidence": "High",
+      "supporting_models": [
+        "Unknown"
+      ],
+      "percentage": 95,
+      "evidence": [
+        "High confidence level (0.95)",
+        "Specific ICD-10 code N08.3 provided",
+        "Consistent with diabetic kidney disease presentation"
+      ]
+    },
+    "strong_alternatives": [],
+    "alternatives": [],
+    "minority_opinions": [
+      {
+        "name": "Hypertensive Nephrosclerosis",
+        "icd_code": "I12.9",
+        "frequency": 60,
+        "supporting_models": [
+          "Unknown"
+        ],
+        "evidence": [
+          "Moderate confidence level (0.6)",
+          "ICD-10 code I12.9 provided"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "Chronic Glomerulonephritis",
+        "icd_code": "N03.9",
+        "frequency": 40,
+        "supporting_models": [
+          "Unknown"
+        ],
+        "evidence": [
+          "Lower confidence level (0.4)",
+          "ICD-10 code N03.9 provided"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "Ischemic Nephropathy",
+        "icd_code": "N28.0",
+        "frequency": 30,
+        "supporting_models": [
+          "Unknown"
+        ],
+        "evidence": [
+          "Incomplete confidence data",
+          "Common differential for renal impairment"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "Analgesic Nephropathy",
+        "icd_code": "N14.0",
+        "frequency": 20,
+        "supporting_models": [
+          "Unknown"
+        ],
+        "evidence": [
+          "Common drug-induced nephropathy",
+          "Often considered in differential diagnosis"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "Lupus Nephritis",
+        "icd_code": "M32.14",
+        "frequency": 15,
+        "supporting_models": [
+          "Unknown"
+        ],
+        "evidence": [
+          "Autoimmune cause of nephropathy",
+          "Considered in younger patients"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "Membranous Nephropathy",
+        "icd_code": "N05.2",
+        "frequency": 25,
+        "supporting_models": [
+          "Unknown"
+        ],
+        "evidence": [
+          "Primary glomerular disease",
+          "Common cause of nephrotic syndrome"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "IgA Nephropathy",
+        "icd_code": "N02.8",
+        "frequency": 30,
+        "supporting_models": [
+          "Unknown"
+        ],
+        "evidence": [
+          "Most common glomerulonephritis worldwide",
+          "Often presents with hematuria"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "Acute Tubular Necrosis",
+        "icd_code": "N17.0",
+        "frequency": 35,
+        "supporting_models": [
+          "Unknown"
+        ],
+        "evidence": [
+          "Common cause of acute kidney injury",
+          "Often ischemic or toxic etiology"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "Obstructive Uropathy",
+        "icd_code": "N13.8",
+        "frequency": 20,
+        "supporting_models": [
+          "Unknown"
+        ],
+        "evidence": [
+          "Structural cause of renal impairment",
+          "Considered in differential diagnosis"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "Amyloidosis",
+        "icd_code": "E85.9",
+        "frequency": 10,
+        "supporting_models": [
+          "Unknown"
+        ],
+        "evidence": [
+          "Systemic disease affecting kidneys",
+          "Rare but important differential"
+        ],
+        "agreement_percentage": 3.7
+      }
+    ],
+    "all_alternative_diagnoses": [
+      {
+        "name": "Hypertensive Nephrosclerosis",
+        "icd_code": "I12.9",
+        "frequency": 60,
+        "supporting_models": [
+          "Unknown"
+        ],
+        "evidence": [
+          "Moderate confidence level (0.6)",
+          "ICD-10 code I12.9 provided"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "Chronic Glomerulonephritis",
+        "icd_code": "N03.9",
+        "frequency": 40,
+        "supporting_models": [
+          "Unknown"
+        ],
+        "evidence": [
+          "Lower confidence level (0.4)",
+          "ICD-10 code N03.9 provided"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "Ischemic Nephropathy",
+        "icd_code": "N28.0",
+        "frequency": 30,
+        "supporting_models": [
+          "Unknown"
+        ],
+        "evidence": [
+          "Incomplete confidence data",
+          "Common differential for renal impairment"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "Analgesic Nephropathy",
+        "icd_code": "N14.0",
+        "frequency": 20,
+        "supporting_models": [
+          "Unknown"
+        ],
+        "evidence": [
+          "Common drug-induced nephropathy",
+          "Often considered in differential diagnosis"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "Lupus Nephritis",
+        "icd_code": "M32.14",
+        "frequency": 15,
+        "supporting_models": [
+          "Unknown"
+        ],
+        "evidence": [
+          "Autoimmune cause of nephropathy",
+          "Considered in younger patients"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "Membranous Nephropathy",
+        "icd_code": "N05.2",
+        "frequency": 25,
+        "supporting_models": [
+          "Unknown"
+        ],
+        "evidence": [
+          "Primary glomerular disease",
+          "Common cause of nephrotic syndrome"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "IgA Nephropathy",
+        "icd_code": "N02.8",
+        "frequency": 30,
+        "supporting_models": [
+          "Unknown"
+        ],
+        "evidence": [
+          "Most common glomerulonephritis worldwide",
+          "Often presents with hematuria"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "Acute Tubular Necrosis",
+        "icd_code": "N17.0",
+        "frequency": 35,
+        "supporting_models": [
+          "Unknown"
+        ],
+        "evidence": [
+          "Common cause of acute kidney injury",
+          "Often ischemic or toxic etiology"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "Obstructive Uropathy",
+        "icd_code": "N13.8",
+        "frequency": 20,
+        "supporting_models": [
+          "Unknown"
+        ],
+        "evidence": [
+          "Structural cause of renal impairment",
+          "Considered in differential diagnosis"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "Amyloidosis",
+        "icd_code": "E85.9",
+        "frequency": 10,
+        "supporting_models": [
+          "Unknown"
+        ],
+        "evidence": [
+          "Systemic disease affecting kidneys",
+          "Rare but important differential"
+        ],
+        "agreement_percentage": 3.7
+      }
+    ]
+  },
+  "comprehensive_bias_analysis": {
+    "geographical_representation": {
+      "total_countries": 6,
+      "western_dominance": {
+        "western_models": 25,
+        "percentage": 2500.0,
+        "impact": "High Western medical paradigm influence expected"
+      },
+      "chinese_representation": {
+        "chinese_models": 5,
+        "percentage": 500.0,
+        "impact": "Traditional Chinese Medicine integration possible"
+      }
+    },
+    "case_specific_concerns": [
+      "Analysis strictly limited to tmpxqe8gimf responses",
+      "No cross-case contamination in this analysis",
+      "Bias patterns specific to this case presentation"
+    ],
+    "recommended_mitigations": [
+      "Consider cultural context in diagnosis interpretation",
+      "Account for geographical bias in model training",
+      "Validate findings across diverse medical paradigms"
+    ]
+  },
+  "model_diversity_metrics": {
+    "unique_architectures": 0,
+    "unique_providers": 0,
+    "unique_countries": 0,
+    "diversity_score": 0.0,
+    "case_id": "tmpxqe8gimf"
+  },
+  "management_strategies": {
+    "immediate_actions": [
+      "Initiate ACE inhibitor or ARB therapy",
+      "Refer to nephrologist",
+      "Implement strict glycemic control",
+      "Initiate blood pressure management",
+      "Implement dietary protein restriction"
+    ],
+    "differential_testing": [
+      {
+        "test": "Serum creatinine and eGFR",
+        "purpose": "Diagnostic confirmation"
+      },
+      {
+        "test": "Urine albumin-to-creatinine ratio",
+        "purpose": "Diagnostic confirmation"
+      },
+      {
+        "test": "HbA1c",
+        "purpose": "Diagnostic confirmation"
+      },
+      {
+        "test": "Complete blood count",
+        "purpose": "Diagnostic confirmation"
+      },
+      {
+        "test": "Electrolytes including potassium",
+        "purpose": "Diagnostic confirmation"
+      },
+      {
+        "test": "Renal ultrasound",
+        "purpose": "Diagnostic confirmation"
+      },
+      {
+        "test": "Fundoscopic exam for diabetic retinopathy",
+        "purpose": "Diagnostic confirmation"
+      }
+    ],
+    "medications": [
+      {
+        "medication_name": "Lisinopril",
+        "dosage": "5-40 mg daily",
+        "route": "Oral",
+        "frequency": "Once daily",
+        "duration": "Long-term",
+        "indication": "Renoprotection and blood pressure control"
+      },
+      {
+        "medication_name": "Losartan",
+        "dosage": "25-100 mg daily",
+        "route": "Oral",
+        "frequency": "Once daily",
+        "duration": "Long-term",
+        "indication": "Alternative renoprotection if ACE inhibitor not tolerated"
+      },
+      {
+        "medication_name": "Metformin",
+        "dosage": "500-1000 mg",
+        "route": "Oral",
+        "frequency": "Twice daily",
+        "duration": "Long-term",
+        "indication": "Glycemic control (adjust dose based on eGFR)"
+      },
+      {
+        "medication_name": "SGLT2 inhibitor (e.g., Empagliflozin)",
+        "dosage": "10-25 mg daily",
+        "route": "Oral",
+        "frequency": "Once daily",
+        "duration": "Long-term",
+        "indication": "Renoprotection and glycemic control"
+      }
+    ]
+  },
+  "evidence_synthesis": {
+    "key_clinical_findings": [
+      {
+        "finding": "Proteinuria",
+        "diagnostic_significance": "High"
+      },
+      {
+        "finding": "Elevated creatinine",
+        "diagnostic_significance": "High"
+      },
+      {
+        "finding": "Hypertension",
+        "diagnostic_significance": "High"
+      },
+      {
+        "finding": "Diabetes history",
+        "diagnostic_significance": "High"
+      },
+      {
+        "finding": "Reduced GFR",
+        "diagnostic_significance": "High"
+      }
+    ],
+    "symptom_diagnosis_matrix": {
+      "symptoms": [
+        "Proteinuria",
+        "Elevated creatinine",
+        "Hypertension",
+        "Diabetes history",
+        "Reduced GFR"
+      ],
+      "diagnoses": [
+        "Diabetic Nephropathy",
+        "Hypertensive Nephrosclerosis",
+        "Chronic Glomerulonephritis",
+        "Ischemic Nephropathy",
+        "Analgesic Nephropathy"
+      ],
+      "correlations": [
+        {
+          "symptom": "Proteinuria",
+          "diagnosis": "Diabetic Nephropathy",
+          "strength": "Strong"
+        },
+        {
+          "symptom": "Diabetes history",
+          "diagnosis": "Diabetic Nephropathy",
+          "strength": "Strong"
+        },
+        {
+          "symptom": "Hypertension",
+          "diagnosis": "Hypertensive Nephrosclerosis",
+          "strength": "Strong"
+        },
+        {
+          "symptom": "Elevated creatinine",
+          "diagnosis": "Chronic Glomerulonephritis",
+          "strength": "Medium"
+        },
+        {
+          "symptom": "Reduced GFR",
+          "diagnosis": "Ischemic Nephropathy",
+          "strength": "Medium"
+        }
+      ]
+    }
+  },
+  "generation_metadata": {
+    "pipeline_version": "General v1.0",
+    "timestamp": "20250907_184336",
+    "case_separation": "Strict",
+    "total_time_seconds": 24.326260805130005
+  },
+  "critical_decision_points": [
+    "eGFR < 30 mL/min/1.73m\u00b2 - consider nephrology referral for dialysis planning",
+    "Rapidly declining renal function - evaluate for alternative causes",
+    "Hyperkalemia on ACE/ARB therapy - consider dose reduction or alternative",
+    "Proteinuria > 1g/day - consider dual RAAS blockade cautiously",
+    "Progressive anemia - evaluate for erythropoietin deficiency"
+  ],
+  "ai_model_bias_analysis": {
+    "geographic_bias": {
+      "detected": true,
+      "description": "All models are US-based with Western medical training data, potentially underrepresenting diagnostic patterns from Asian, African, and Latin American populations where diabetic nephropathy prevalence and presentation may differ",
+      "mitigation": "Incorporate diverse international clinical guidelines and region-specific epidemiological data on renal diseases"
+    },
+    "training_bias": {
+      "detected": true,
+      "description": "Models trained primarily on Western medical literature and guidelines, potentially overemphasizing hypertensive nephrosclerosis in differential diagnosis while underweighting tropical or region-specific renal diseases",
+      "mitigation": "Balance training with global nephrology sources and include diverse patient population data from multiple healthcare systems"
+    },
+    "consensus_strength": "Moderate"
+  },
+  "clinical_decision_tree": {
+    "initial_assessment": "Evaluate presenting symptoms",
+    "diagnostic_tests": [
+      "Serum creatinine and eGFR",
+      "Urine albumin-to-creatinine ratio",
+      "HbA1c",
+      "Complete blood count",
+      "Electrolytes including potassium",
+      "Renal ultrasound",
+      "Fundoscopic exam for diabetic retinopathy"
+    ],
+    "decision_points": [
+      "eGFR < 30 mL/min/1.73m\u00b2 - consider nephrology referral for dialysis planning",
+      "Rapidly declining renal function - evaluate for alternative causes",
+      "Hyperkalemia on ACE/ARB therapy - consider dose reduction or alternative",
+      "Proteinuria > 1g/day - consider dual RAAS blockade cautiously",
+      "Progressive anemia - evaluate for erythropoietin deficiency"
+    ]
+  },
+  "primary_diagnosis_summaries": {
+    "key_clinical_findings": [
+      {
+        "finding": "Proteinuria",
+        "supporting_evidence": "Clinical presentation",
+        "model_support": 1,
+        "reasoning": "Key diagnostic indicator"
+      },
+      {
+        "finding": "Elevated creatinine",
+        "supporting_evidence": "Clinical presentation",
+        "model_support": 1,
+        "reasoning": "Key diagnostic indicator"
+      },
+      {
+        "finding": "Hypertension",
+        "supporting_evidence": "Clinical presentation",
+        "model_support": 1,
+        "reasoning": "Key diagnostic indicator"
+      },
+      {
+        "finding": "Diabetes history",
+        "supporting_evidence": "Clinical presentation",
+        "model_support": 1,
+        "reasoning": "Key diagnostic indicator"
+      },
+      {
+        "finding": "Reduced GFR",
+        "supporting_evidence": "Clinical presentation",
+        "model_support": 1,
+        "reasoning": "Key diagnostic indicator"
+      }
+    ],
+    "recommended_tests": [
+      {
+        "test_name": "Serum creatinine and eGFR",
+        "test_type": "Laboratory",
+        "rationale": "Diagnostic confirmation",
+        "priority": "Urgent",
+        "model_support": 0,
+        "reasoning": "Essential for diagnosis"
+      },
+      {
+        "test_name": "Urine albumin-to-creatinine ratio",
+        "test_type": "Laboratory",
+        "rationale": "Diagnostic confirmation",
+        "priority": "Urgent",
+        "model_support": 0,
+        "reasoning": "Essential for diagnosis"
+      },
+      {
+        "test_name": "HbA1c",
+        "test_type": "Laboratory",
+        "rationale": "Diagnostic confirmation",
+        "priority": "Urgent",
+        "model_support": 0,
+        "reasoning": "Essential for diagnosis"
+      },
+      {
+        "test_name": "Complete blood count",
+        "test_type": "Laboratory",
+        "rationale": "Diagnostic confirmation",
+        "priority": "Urgent",
+        "model_support": 0,
+        "reasoning": "Essential for diagnosis"
+      },
+      {
+        "test_name": "Electrolytes including potassium",
+        "test_type": "Laboratory",
+        "rationale": "Diagnostic confirmation",
+        "priority": "Urgent",
+        "model_support": 0,
+        "reasoning": "Essential for diagnosis"
+      }
+    ],
+    "immediate_management": [
+      {
+        "intervention": "Initiate ACE inhibitor or ARB therapy",
+        "category": "Medical",
+        "urgency": "Immediate",
+        "model_support": 0,
+        "reasoning": "Critical intervention"
+      },
+      {
+        "intervention": "Refer to nephrologist",
+        "category": "Medical",
+        "urgency": "Immediate",
+        "model_support": 0,
+        "reasoning": "Critical intervention"
+      },
+      {
+        "intervention": "Implement strict glycemic control",
+        "category": "Medical",
+        "urgency": "Immediate",
+        "model_support": 0,
+        "reasoning": "Critical intervention"
+      },
+      {
+        "intervention": "Initiate blood pressure management",
+        "category": "Medical",
+        "urgency": "Immediate",
+        "model_support": 0,
+        "reasoning": "Critical intervention"
+      },
+      {
+        "intervention": "Implement dietary protein restriction",
+        "category": "Medical",
+        "urgency": "Immediate",
+        "model_support": 0,
+        "reasoning": "Critical intervention"
+      }
+    ],
+    "medications": [
+      {
+        "medication_name": "Lisinopril",
+        "dosage": "5-40 mg daily",
+        "route": "Oral",
+        "frequency": "Once daily",
+        "duration": "Long-term",
+        "indication": "Renoprotection and blood pressure control",
+        "model_support": 0,
+        "reasoning": "Renoprotection and blood pressure control"
+      },
+      {
+        "medication_name": "Losartan",
+        "dosage": "25-100 mg daily",
+        "route": "Oral",
+        "frequency": "Once daily",
+        "duration": "Long-term",
+        "indication": "Alternative renoprotection if ACE inhibitor not tolerated",
+        "model_support": 0,
+        "reasoning": "Alternative renoprotection if ACE inhibitor not tolerated"
+      },
+      {
+        "medication_name": "Metformin",
+        "dosage": "500-1000 mg",
+        "route": "Oral",
+        "frequency": "Twice daily",
+        "duration": "Long-term",
+        "indication": "Glycemic control (adjust dose based on eGFR)",
+        "model_support": 0,
+        "reasoning": "Glycemic control (adjust dose based on eGFR)"
+      },
+      {
+        "medication_name": "SGLT2 inhibitor (e.g., Empagliflozin)",
+        "dosage": "10-25 mg daily",
+        "route": "Oral",
+        "frequency": "Once daily",
+        "duration": "Long-term",
+        "indication": "Renoprotection and glycemic control",
+        "model_support": 0,
+        "reasoning": "Renoprotection and glycemic control"
+      }
+    ]
+  },
+  "quality_metrics": {
+    "total_models_analyzed": 1,
+    "consensus_strength": "Moderate",
+    "successful_responses": 1
+  },
+  "metadata": {
+    "analysis_timestamp": "2025-09-07T18:44:57.336231",
+    "orchestrator_model": "deepseek/deepseek-chat-v3.1:free",
+    "case_id": "tmpxqe8gimf",
+    "case_title": "Custom Case Analysis",
+    "orchestrator_quality": "free_models",
+    "quality_disclaimer": "\u26a0\ufe0f This analysis uses free orchestrator models which may provide suboptimal quality compared to premium models. For clinical applications, consider using premium orchestrator models for enhanced accuracy and comprehensive analysis."
+  },
+  "generated_at": "2025-09-07T18:44:57.336312"
+}

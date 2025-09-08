@@ -19,7 +19,7 @@ from datetime import datetime, timedelta
 from typing import Dict, List, Optional
 
 from flask import Flask, render_template, request, jsonify, send_file, session, Response
-from flask_socketio import SocketIO, emit, join_room, leave_room
+# Socket.IO removed - using long polling instead
 from flask_cors import CORS
 from flask_session import Session
 from src.medley.utils.validators import ResponseValidator
@@ -27,6 +27,9 @@ from flask_compress import Compress
 from flask_caching import Cache
 from dotenv import load_dotenv
 from model_metadata_2025 import get_comprehensive_model_metadata
+
+# Import progress manager for long polling
+from utils.progress_manager import progress_manager
 
 # Import the web orchestrator
 try:
@@ -1960,15 +1963,23 @@ def api_analyze_case():
     if api_key and not InputValidator.validate_api_key(api_key):
         return jsonify({'error': 'Invalid API key format'}), 400
     
-    # Start analysis
+    # Create progress session for long polling
+    progress_session_id = progress_manager.create_session()
+    
+    # Start analysis with progress session
     result = orchestrator.analyze_custom_case(
         case_text=case_text,
         case_title=case_title,
         use_free_models=use_free_models,
         selected_models=selected_models,
         session_id=session.get('session_id'),
-        api_key=api_key
+        api_key=api_key,
+        progress_session_id=progress_session_id  # Add progress session
     )
+    
+    # Add progress session ID to result
+    if isinstance(result, dict):
+        result['progress_session_id'] = progress_session_id
     
     return jsonify(result)
 
@@ -2257,6 +2268,80 @@ def api_download_analysis(analysis_id):
             
             return jsonify({'error': 'Analysis not found'}), 404
             
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+# ============== LONG POLLING API ENDPOINTS ==============
+
+@app.route('/api/progress/session', methods=['POST'])
+def api_create_progress_session():
+    """Create a new progress session for long polling"""
+    try:
+        session_id = progress_manager.create_session()
+        return jsonify({
+            'success': True,
+            'session_id': session_id
+        })
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/progress/<session_id>/events', methods=['GET'])
+def api_get_progress_events(session_id):
+    """Get progress events for a session (long polling endpoint)"""
+    try:
+        # Get query parameters
+        since_id = request.args.get('since_id')
+        timeout = float(request.args.get('timeout', 30.0))
+        timeout = min(timeout, 60.0)  # Cap at 60 seconds
+        
+        # Get events with long polling
+        events = progress_manager.get_events(session_id, since_id, timeout)
+        
+        # Auto-cleanup old sessions periodically
+        progress_manager.cleanup_old_sessions()
+        
+        return jsonify({
+            'success': True,
+            'events': events,
+            'session_id': session_id
+        })
+        
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/progress/<session_id>/status', methods=['GET'])
+def api_get_progress_status(session_id):
+    """Get current status of a progress session"""
+    try:
+        status = progress_manager.get_session_status(session_id)
+        
+        if status:
+            return jsonify({
+                'success': True,
+                'status': status,
+                'session_id': session_id
+            })
+        else:
+            return jsonify({
+                'success': False,
+                'error': 'Session not found',
+                'session_id': session_id
+            }), 404
+            
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/progress/stats', methods=['GET'])
+def api_get_progress_stats():
+    """Get progress manager statistics"""
+    try:
+        return jsonify({
+            'success': True,
+            'stats': {
+                'active_sessions': progress_manager.get_session_count(),
+                'server_time': datetime.utcnow().isoformat()
+            }
+        })
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
@@ -3034,18 +3119,48 @@ def handle_analyze_case(data):
         thread.daemon = True
         thread.start()
 
+def check_ssl_certificates():
+    """Check for SSL certificates and return SSL context if available"""
+    ssl_cert = os.getenv('SSL_CERT_PATH', '/etc/letsencrypt/live/medley.smile.ki.se/fullchain.pem')
+    ssl_key = os.getenv('SSL_KEY_PATH', '/etc/letsencrypt/live/medley.smile.ki.se/privkey.pem')
+    
+    if os.path.exists(ssl_cert) and os.path.exists(ssl_key):
+        print(f"🔒 SSL certificates found - enabling HTTPS")
+        print(f"   Certificate: {ssl_cert}")
+        print(f"   Private Key: {ssl_key}")
+        return (ssl_cert, ssl_key)
+    else:
+        print(f"🔓 SSL certificates not found - running HTTP only")
+        print(f"   Looked for cert: {ssl_cert}")
+        print(f"   Looked for key: {ssl_key}")
+        return None
+
 if __name__ == '__main__':
-    # Use socketio.run for WebSocket support
     port = int(os.environ.get('FLASK_PORT', 5003))
     
-    # Environment-specific configuration
+    # Environment detection
     is_docker = os.path.exists('/.dockerenv') or os.getenv('FLASK_ENV') == 'production'
     is_debug = not is_docker and os.getenv('FLASK_DEBUG', '0') == '1'
     
-    if is_docker:
-        print(f"🐳 Starting MEDLEY in Docker/Production mode on port {port}")
-        socketio.run(app, debug=False, host='0.0.0.0', port=port)
+    # SSL configuration
+    ssl_context = check_ssl_certificates()
+    
+    # Choose appropriate server based on SSL availability and Socket.IO compatibility
+    if 'socketio' in globals() and socketio:
+        # Use Socket.IO server (current implementation)
+        if is_docker:
+            print(f"🐳 Starting MEDLEY with Socket.IO in Docker/Production mode on port {port}")
+            if ssl_context:
+                print("⚠️  Note: SSL with Socket.IO - consider using nginx reverse proxy for production")
+            socketio.run(app, debug=False, host='0.0.0.0', port=port, ssl_context=ssl_context)
+        else:
+            print(f"💻 Starting MEDLEY with Socket.IO in Local Development mode on port {port}")
+            socketio.run(app, debug=is_debug, host='0.0.0.0', port=port, ssl_context=ssl_context, allow_unsafe_werkzeug=True)
     else:
-        print(f"💻 Starting MEDLEY in Local Development mode on port {port}")
-        # Disable debug mode to prevent Flask watchdog conflicts with our singleton lock
-        socketio.run(app, debug=is_debug, host='0.0.0.0', port=port, allow_unsafe_werkzeug=True)
+        # Fallback to regular Flask server (for long polling only)
+        if is_docker:
+            print(f"🐳 Starting MEDLEY with Flask server in Docker/Production mode on port {port}")
+            app.run(debug=False, host='0.0.0.0', port=port, ssl_context=ssl_context)
+        else:
+            print(f"💻 Starting MEDLEY with Flask server in Local Development mode on port {port}")
+            app.run(debug=is_debug, host='0.0.0.0', port=port, ssl_context=ssl_context)
