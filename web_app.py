@@ -194,9 +194,18 @@ class DummySocketIO:
         """Dummy emit method - does nothing since we use long polling"""
         pass
         
+    def on(self, event):
+        """Dummy decorator - returns the function unchanged"""
+        def decorator(f):
+            return f
+        return decorator
+        
     def run(self, app, **kwargs):
         """Run the Flask app normally without SocketIO"""
-        app.run(**kwargs)
+        # Filter out SocketIO-specific parameters
+        flask_kwargs = {k: v for k, v in kwargs.items() 
+                       if k not in ['allow_unsafe_werkzeug']}
+        app.run(**flask_kwargs)
 
 if IS_PRODUCTION:
     print("🐳 Production/Docker environment detected")
