@@ -628,7 +628,12 @@ def get_case_report(case_key):
         ).strftime("%Y-%m-%d %H:%M:%S")
     }
     
-    return jsonify(report_data)
+    # Create response with cache-busting headers
+    response = jsonify(report_data)
+    response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+    response.headers['Pragma'] = 'no-cache'
+    response.headers['Expires'] = '0'
+    return response
 
 def normalize_diagnosis_name(diagnosis):
     """Normalize diagnosis names to handle variations"""
@@ -1313,12 +1318,17 @@ def download_case_pdf(case_key):
     
     latest_pdf = max(pdf_files, key=lambda p: p.stat().st_mtime)
     
-    return send_file(
+    # Create response with cache-busting headers
+    response = send_file(
         latest_pdf,
         as_attachment=True,
         download_name=f"MEDLEY_{case_info['title'].replace(' ', '_')}_Report.pdf",
         mimetype='application/pdf'
     )
+    response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+    response.headers['Pragma'] = 'no-cache'
+    response.headers['Expires'] = '0'
+    return response
 
 @app.route('/api/case/<case_key>/models')
 def get_model_responses(case_key):
@@ -1379,7 +1389,12 @@ def get_model_responses(case_key):
             "error": response.get('error', None)
         })
     
-    return jsonify(formatted_responses)
+    # Create response with cache-busting headers
+    response = jsonify(formatted_responses)
+    response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+    response.headers['Pragma'] = 'no-cache'
+    response.headers['Expires'] = '0'
+    return response
 
 @app.route('/api/performance')
 @cache.cached(timeout=300)  # Cache for 5 minutes  
