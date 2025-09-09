@@ -280,10 +280,12 @@ db_manager = None
 if db_available:
     db_manager = init_database()
 
-# Constants
-CACHE_DIR = Path("cache/responses")
-REPORTS_DIR = Path("reports")
-USECASES_DIR = Path("usecases")
+# Constants - Environment-aware paths
+import os
+BASE_DIR = Path(os.getenv('APP_BASE_DIR', '.'))  # Default to current dir for local, /app for Docker
+CACHE_DIR = BASE_DIR / "cache" / "responses"
+REPORTS_DIR = BASE_DIR / "reports"
+USECASES_DIR = BASE_DIR / "usecases"
 
 # Initialize the web orchestrator if available
 if web_orchestrator_available:
@@ -602,7 +604,7 @@ def get_case_report(case_key):
     
     # If still not found, try orchestrator cache directory
     if not json_files:
-        orchestrator_cache_dir = Path("cache") / "orchestrator" / case_id
+        orchestrator_cache_dir = BASE_DIR / "cache" / "orchestrator" / case_id
         if orchestrator_cache_dir.exists():
             json_files = list(orchestrator_cache_dir.glob("orchestrator_analysis_*.json"))
     
@@ -1345,7 +1347,7 @@ def get_model_responses(case_key):
     
     # If still not found, try orchestrator cache directory
     if not json_files:
-        orchestrator_cache_dir = Path("cache") / "orchestrator" / case_id
+        orchestrator_cache_dir = BASE_DIR / "cache" / "orchestrator" / case_id
         if orchestrator_cache_dir.exists():
             json_files = list(orchestrator_cache_dir.glob("orchestrator_analysis_*.json"))
     
