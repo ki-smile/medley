@@ -25,25 +25,31 @@ class ReportOrchestrator:
     medical ensemble results and produce structured report data
     """
     
-    def __init__(self, llm_manager, use_free_only=False):
+    def __init__(self, llm_manager, use_free_only=False, orchestrator_model=None):
         """
         Initialize the orchestrator
         
         Args:
             llm_manager: LLM manager for querying models
             use_free_only: If True, only use free orchestrator models
+            orchestrator_model: Specific orchestrator model to use (overrides auto selection)
         """
         self.llm_manager = llm_manager
         self.use_free_only = use_free_only
         
-        if use_free_only:
-            # Free orchestrator models - use reliable free models from our metadata  
-            self.orchestrator_model = "deepseek/deepseek-chat-v3.1:free"  # DeepSeek is reliable for orchestration
+        # Use specific orchestrator model if provided, otherwise use defaults
+        if orchestrator_model and orchestrator_model != 'auto':
+            self.orchestrator_model = orchestrator_model
+            print(f"🎯 Report Orchestrator using specified model: {orchestrator_model}")
+        elif use_free_only:
+            # Free orchestrator models - use Qwen as first priority free model
+            self.orchestrator_model = "qwen/qwen-2.5-72b-instruct:free"  # First priority free model
             self.fallback_models = [
-                "google/gemma-2-9b-it:free",           # Backup option
-                "meta-llama/llama-3.2-3b-instruct:free", # Third choice
+                "deepseek/deepseek-chat-v3.1:free",      # Backup option
+                "google/gemma-2-9b-it:free",             # Third choice
+                "meta-llama/llama-3.2-3b-instruct:free", # Fourth choice
             ]
-            print("🆓 Report Orchestrator using free models")
+            print(f"🆓 Report Orchestrator using free model: {self.orchestrator_model}")
         else:
             # Premium orchestrator models
             self.orchestrator_model = "anthropic/claude-sonnet-4"  # Claude Sonnet 4.0 primary orchestrator
@@ -855,6 +861,72 @@ Return a JSON object with detailed bias analysis:
             logger.error(error_msg)
             return False, "", error_msg
         
+    def orchestrate_analysis_with_progress(self, ensemble_results: Dict, progress_callback=None) -> Dict:
+        """
+        Orchestrate comprehensive analysis with progress callback support
+        
+        Args:
+            ensemble_results: The ensemble analysis results
+            progress_callback: Optional callback function for progress updates
+            
+        Returns:
+            Structured analysis results
+        """
+        def emit_progress(step, progress, message):
+            """Helper to emit progress if callback provided"""
+            if progress_callback:
+                try:
+                    progress_callback(step, progress, message)
+                except Exception as e:
+                    print(f"⚠️ Progress callback error: {e}")
+        
+        emit_progress(1, 0, "Starting orchestrator analysis...")
+        
+        try:
+            # Phase 1: Data preparation (0-20%)
+            emit_progress(1, 10, "Preparing ensemble data for analysis...")
+            print(f"🔍 Orchestrator received ensemble data with {len(ensemble_results.get('model_responses', []))} model responses")
+            
+            # Phase 2: Orchestrator query (20-80%)
+            emit_progress(2, 20, "Querying orchestrator model...")
+            
+            # First try the split orchestrator approach
+            emit_progress(2, 30, "Attempting split orchestrator approach...")
+            split_result = self._run_split_orchestrator_with_progress(ensemble_results, emit_progress)
+            if split_result:
+                emit_progress(3, 90, "Split orchestrator completed successfully")
+                emit_progress(3, 100, "Orchestrator analysis complete")
+                return split_result
+            
+            # Fall back to simplified single query
+            emit_progress(2, 50, "Split orchestrator failed, using simplified approach...")
+            print("\n🔄 Split orchestrator failed, trying simplified single query...")
+            
+            # Phase 3: Single query fallback (50-90%)
+            analysis_result = self._run_single_orchestrator_with_progress(ensemble_results, emit_progress)
+            
+            if analysis_result:
+                emit_progress(3, 90, "Single orchestrator completed successfully")
+                emit_progress(3, 100, "Orchestrator analysis complete")
+                return analysis_result
+            
+            # Phase 4: Final fallback (90-100%)
+            emit_progress(3, 90, "All orchestrator methods failed, using basic extraction...")
+            fallback_result = self._fallback_extraction(ensemble_results)
+            emit_progress(3, 100, "Basic extraction complete")
+            return fallback_result
+                
+        except Exception as e:
+            emit_progress(3, 90, f"Orchestration failed: {str(e)}")
+            logger.error(f"Orchestration completely failed: {e}")
+            print(f"💥 Orchestration completely failed: {e}")
+            import traceback
+            print(f"Full traceback:")
+            traceback.print_exc()
+            fallback_result = self._fallback_extraction(ensemble_results)
+            emit_progress(3, 100, "Fallback extraction complete")
+            return fallback_result
+
     def orchestrate_analysis(self, ensemble_results: Dict) -> Dict:
         """
         Orchestrate comprehensive analysis using LLM as an intelligent agent with retry mechanism
@@ -992,6 +1064,269 @@ Return a JSON object with detailed bias analysis:
             traceback.print_exc()
             return self._fallback_extraction(ensemble_results)
             
+    def _run_split_orchestrator_with_progress(self, ensemble_results: Dict, emit_progress_func) -> Dict:
+        """
+        Run orchestrator in 3 focused queries with progress tracking
+        
+        Args:
+            ensemble_results: The ensemble analysis results
+            emit_progress_func: Progress callback function
+            
+        Returns:
+            Combined analysis results from all queries
+        """
+        try:
+            print("🔄 Starting split orchestrator approach (3 focused queries)...")
+            emit_progress_func(2, 30, "Starting split orchestrator approach...")
+            
+            # Query 1: Diagnostic Analysis (30-50%)
+            print("\n📊 Query 1: Diagnostic Analysis...")
+            emit_progress_func(2, 35, "Running diagnostic analysis query...")
+            diagnostic_prompt = self._create_diagnostic_focused_prompt(ensemble_results)
+            success1, diag_response, _ = self._query_orchestrator_with_retry(
+                diagnostic_prompt, attempt=1, use_fallback=False
+            )
+            
+            diagnostic_data = {}
+            if success1:
+                try:
+                    clean_response = diag_response.strip()
+                    if clean_response.startswith("```json"):
+                        clean_response = clean_response[7:]
+                    if clean_response.startswith("```"):
+                        clean_response = clean_response[3:]
+                    if clean_response.endswith("```"):
+                        clean_response = clean_response[:-3]
+                    diagnostic_data = json.loads(clean_response)
+                    print("  ✅ Diagnostic analysis successful")
+                    emit_progress_func(2, 50, "Diagnostic analysis completed")
+                except json.JSONDecodeError as e:
+                    print(f"  ❌ Failed to parse diagnostic response: {e}")
+                    emit_progress_func(2, 40, "Diagnostic analysis failed - JSON parse error")
+                    return None
+            else:
+                print("  ❌ Diagnostic query failed")
+                emit_progress_func(2, 40, "Diagnostic query failed")
+                return None
+            
+            # Query 2: Management Strategies (50-70%)
+            print("\n💊 Query 2: Management Strategies...")
+            emit_progress_func(2, 55, "Running management strategies query...")
+            management_prompt = self._create_management_focused_prompt(ensemble_results, diagnostic_data)
+            success2, mgmt_response, _ = self._query_orchestrator_with_retry(
+                management_prompt, attempt=1, use_fallback=False
+            )
+            
+            management_data = {}
+            if success2:
+                try:
+                    clean_response = mgmt_response.strip()
+                    if clean_response.startswith("```json"):
+                        clean_response = clean_response[7:]
+                    if clean_response.startswith("```"):
+                        clean_response = clean_response[3:]
+                    if clean_response.endswith("```"):
+                        clean_response = clean_response[:-3]
+                    management_data = json.loads(clean_response)
+                    print("  ✅ Management analysis successful")
+                    emit_progress_func(2, 70, "Management strategies analysis completed")
+                except json.JSONDecodeError as e:
+                    print(f"  ❌ Failed to parse management response: {e}")
+                    emit_progress_func(2, 60, "Management analysis failed - continuing with partial data")
+                    # Continue with partial data
+            else:
+                print("  ⚠️ Management query failed, continuing with partial data")
+                emit_progress_func(2, 60, "Management query failed - continuing with partial data")
+            
+            # Query 3: Bias Analysis (70-85%)
+            print("\n🔍 Query 3: Bias Analysis...")
+            emit_progress_func(2, 75, "Running bias analysis query...")
+            bias_prompt = self._create_bias_focused_prompt(ensemble_results, diagnostic_data)
+            success3, bias_response, _ = self._query_orchestrator_with_retry(
+                bias_prompt, attempt=1, use_fallback=False
+            )
+            
+            bias_data = {}
+            if success3:
+                try:
+                    clean_response = bias_response.strip()
+                    if clean_response.startswith("```json"):
+                        clean_response = clean_response[7:]
+                    if clean_response.startswith("```"):
+                        clean_response = clean_response[3:]
+                    if clean_response.endswith("```"):
+                        clean_response = clean_response[:-3]
+                    bias_data = json.loads(clean_response)
+                    print("  ✅ Bias analysis successful")
+                    emit_progress_func(2, 85, "Bias analysis completed")
+                except json.JSONDecodeError as e:
+                    print(f"  ⚠️ Failed to parse bias response: {e}")
+                    emit_progress_func(2, 80, "Bias analysis failed - continuing with partial data")
+                    # Continue with partial data
+            else:
+                print("  ⚠️ Bias query failed, continuing with partial data")
+                emit_progress_func(2, 80, "Bias query failed - continuing with partial data")
+            
+            # Combine all responses into full structure (85-90%)
+            print("\n🔗 Combining split query results...")
+            emit_progress_func(2, 87, "Combining split query results...")
+            combined_analysis = self._combine_split_responses(
+                diagnostic_data, 
+                management_data, 
+                bias_data,
+                ensemble_results
+            )
+            
+            # Validate and enhance
+            emit_progress_func(2, 89, "Validating and enhancing results...")
+            combined_analysis = self._validate_and_enhance(combined_analysis, ensemble_results)
+            
+            print("✅ Split orchestrator completed successfully")
+            return combined_analysis
+            
+        except Exception as e:
+            logger.error(f"Split orchestrator failed: {e}")
+            print(f"❌ Split orchestrator failed: {e}")
+            emit_progress_func(2, 45, f"Split orchestrator failed: {str(e)}")
+            return None
+
+    def _run_single_orchestrator_with_progress(self, ensemble_results: Dict, emit_progress_func) -> Dict:
+        """
+        Run single orchestrator query with progress tracking
+        
+        Args:
+            ensemble_results: The ensemble analysis results
+            emit_progress_func: Progress callback function
+            
+        Returns:
+            Analysis results from single query
+        """
+        try:
+            # Create the orchestrator prompt
+            emit_progress_func(2, 55, "Creating orchestrator prompt...")
+            prompt = self.create_orchestrator_prompt(
+                ensemble_results, 
+                "simplified_analysis"
+            )
+            
+            logger.info(f"🧠 Starting simplified orchestrator analysis with {self.max_retries} max retries")
+            emit_progress_func(2, 60, "Starting orchestrator query...")
+            
+            # Try primary model with retries
+            for attempt in range(1, self.max_retries + 1):
+                print(f"\n🔄 Orchestrator attempt {attempt}/{self.max_retries} using {self.orchestrator_model}...")
+                emit_progress_func(2, 60 + (attempt-1)*10, f"Orchestrator attempt {attempt}/{self.max_retries}...")
+                
+                success, response_text, error = self._query_orchestrator_with_retry(
+                    prompt, attempt, use_fallback=False
+                )
+                
+                if success:
+                    # Try to parse the JSON response
+                    try:
+                        emit_progress_func(2, 75, "Parsing orchestrator response...")
+                        # Clean the response (remove markdown if present)
+                        clean_response = response_text.strip()
+                        if clean_response.startswith("```json"):
+                            clean_response = clean_response[7:]
+                        if clean_response.startswith("```"):
+                            clean_response = clean_response[3:]
+                        if clean_response.endswith("```"):
+                            clean_response = clean_response[:-3]
+                            
+                        analysis_result = json.loads(clean_response)
+                        
+                        # Validate and enhance the result
+                        emit_progress_func(2, 80, "Validating and enhancing results...")
+                        analysis_result = self._validate_and_enhance(analysis_result, ensemble_results)
+                        
+                        # Add orchestrator cost and free model information to the result
+                        analysis_result['orchestrator_cost'] = self.total_orchestrator_cost
+                        analysis_result['orchestrator_used_free_models'] = self.use_free_only
+                        print(f"💰 Total orchestrator cost: ${self.total_orchestrator_cost:.4f}")
+                        print(f"🆓 Used free orchestrator: {'Yes' if self.use_free_only else 'No'}")
+                        
+                        print(f"✅ Orchestrator analysis completed successfully on attempt {attempt}")
+                        return analysis_result
+                        
+                    except json.JSONDecodeError as e:
+                        logger.warning(f"Attempt {attempt}: Failed to parse JSON response: {e}")
+                        emit_progress_func(2, 65, f"Attempt {attempt}: JSON parse failed")
+                        if attempt < self.max_retries:
+                            print(f"⏳ Waiting {self.retry_delay} seconds before retry...")
+                            time.sleep(self.retry_delay)
+                            continue
+                else:
+                    logger.warning(f"Attempt {attempt} failed: {error}")
+                    emit_progress_func(2, 65, f"Attempt {attempt} failed: {error}")
+                    if attempt < self.max_retries:
+                        print(f"⏳ Waiting {self.retry_delay} seconds before retry...")
+                        time.sleep(self.retry_delay)
+            
+            # Try fallback models: GPT-4o and Gemini 2.5 Pro
+            logger.warning(f"🔄 All {self.orchestrator_model} attempts failed, trying backup orchestrators...")
+            emit_progress_func(2, 70, "Trying backup orchestrator models...")
+            
+            # Only use GPT-4o and Gemini 2.5 Pro as backups
+            backup_models = ["openai/gpt-4o", "google/gemini-2.5-pro"]
+            
+            for fallback_model in backup_models:
+                print(f"\n🔄 Trying backup orchestrator: {fallback_model}...")
+                emit_progress_func(2, 75, f"Trying backup: {fallback_model}...")
+                self.fallback_model = fallback_model  # Update current fallback
+                
+                success, response_text, error = self._query_orchestrator_with_retry(
+                    prompt, attempt=1, use_fallback=True
+                )
+                
+                if success:
+                    try:
+                        emit_progress_func(2, 80, f"Parsing {fallback_model} response...")
+                        # Clean the response (remove markdown if present)
+                        clean_response = response_text.strip()
+                        if clean_response.startswith("```json"):
+                            clean_response = clean_response[7:]
+                        if clean_response.startswith("```"):
+                            clean_response = clean_response[3:]
+                        if clean_response.endswith("```"):
+                            clean_response = clean_response[:-3]
+                        
+                        analysis_result = json.loads(clean_response)
+                        
+                        # Validate and enhance the result
+                        emit_progress_func(2, 85, "Validating backup orchestrator results...")
+                        analysis_result = self._validate_and_enhance(analysis_result, ensemble_results)
+                        
+                        # Add orchestrator cost and free model information to the result
+                        analysis_result['orchestrator_cost'] = self.total_orchestrator_cost
+                        analysis_result['orchestrator_used_free_models'] = self.use_free_only
+                        print(f"💰 Total orchestrator cost: ${self.total_orchestrator_cost:.4f}")
+                        print(f"🆓 Used free orchestrator: {'Yes' if self.use_free_only else 'No'}")
+                        
+                        print(f"✅ Orchestrator analysis completed successfully using {fallback_model}")
+                        return analysis_result
+                        
+                    except json.JSONDecodeError as e:
+                        logger.error(f"Backup {fallback_model} failed to parse JSON: {e}")
+                        print(f"❌ {fallback_model} failed JSON parsing")
+                        emit_progress_func(2, 75, f"{fallback_model} JSON parse failed")
+                        continue  # Try next backup
+                else:
+                    logger.error(f"Backup {fallback_model} failed: {error}")
+                    print(f"❌ {fallback_model} failed: {error}")
+                    emit_progress_func(2, 75, f"{fallback_model} query failed")
+                    continue  # Try next backup
+            
+            # If all models failed
+            print(f"⚠️  All orchestrator models failed")
+            return None
+                
+        except Exception as e:
+            logger.error(f"Single orchestrator completely failed: {e}")
+            print(f"💥 Single orchestrator completely failed: {e}")
+            emit_progress_func(2, 60, f"Single orchestrator failed: {str(e)}")
+            return None
+
     def _run_split_orchestrator(self, ensemble_results: Dict) -> Dict:
         """
         Run orchestrator in 3 focused queries for better reliability

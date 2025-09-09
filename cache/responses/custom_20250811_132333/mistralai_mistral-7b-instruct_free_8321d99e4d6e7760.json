@@ -1,0 +1,38 @@
+{
+  "model_name": "mistralai/mistral-7b-instruct:free",
+  "model_id": "mistralai/mistral-7b-instruct:free",
+  "content": " {\n    \"primary_diagnosis\": {\n        \"name\": \"Influenza\",\n        \"confidence\": 0.75,\n        \"icd_code\": \"J10\",\n        \"reasoning\": \"Fever and pain are common symptoms of influenza, especially during flu season.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Urinary Tract Infection\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"N30\",\n            \"reasoning\": \"Fever can be a symptom of UTI, and it's a common infection in adults.\"\n        },\n        {\n            \"name\": \"Pneumonia\",\n            \"confidence\": 0.15,\n            \"icd_code\": \"J12\",\n            \"reasoning\": \"Pain can be a symptom of pneumonia, and fever is also common.\"\n        },\n        {\n            \"name\": \"Gastroenteritis\",\n            \"confidence\": 0.1,\n            \"icd_code\": \"A08.9\",\n            \"reasoning\": \"Fever and abdominal pain can be symptoms of gastroenteritis.\"\n        }\n    ],\n    \"key_findings\": [\n        \"Fever\",\n        \"Pain\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Influenza A & B PCR\",\n            \"purpose\": \"Ruling out influenza\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Complete blood count\",\n            \"purpose\": \"Evaluating leukocytosis\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Urinalysis\",\n            \"purpose\": \"Ruling out urinary tract infection\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Administer acetaminophen or ibuprofen for fever and pain relief.\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Oseltamivir\",\n                \"dose\": \"75mg twice daily for 5 days\",\n                \"route\": \"PO\",\n                \"duration\": \"5 days\",\n                \"rationale\": \"To treat influenza\"\n            }\n        ],\n        \"monitoring\": [\n            \"Fever, respiratory rate, oxygen saturation\",\n            \"Twice daily\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Internal Medicine\",\n                \"urgency\": \"routine\",\n                \"reason\": \"For follow-up and adjustment of treatment\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Persistent high fever\",\n        \"Shortness of breath\",\n        \"Vomiting blood\"\n    ],\n    \"patient_education\": [\n        \"Take prescribed medications as directed.\",\n        \"Rest and drink plenty of fluids.\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"3-5 days after symptoms improve\",\n        \"conditions\": \"Return if fever persists or worsens, or if new symptoms appear.\"\n    },\n    \"confidence_in_assessment\": 0.85,\n    \"uncertainties\": [\n        \"Possibility of UTI or pneumonia due to overlapping symptoms.\",\n        \"Patient's age or underlying conditions may influence diagnosis.\"\n    ]\n}",
+  "timestamp": "2025-08-11T13:23:42.023388",
+  "latency": 8.045735359191895,
+  "tokens_used": 1779,
+  "input_tokens": 930,
+  "output_tokens": 849,
+  "error": null,
+  "raw_response": {
+    "id": "gen-1754911414-SRiCjSpTmCdGApstkNua",
+    "provider": "DeepInfra",
+    "model": "mistralai/mistral-7b-instruct:free",
+    "object": "chat.completion",
+    "created": 1754911414,
+    "choices": [
+      {
+        "logprobs": null,
+        "finish_reason": "stop",
+        "native_finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": " {\n    \"primary_diagnosis\": {\n        \"name\": \"Influenza\",\n        \"confidence\": 0.75,\n        \"icd_code\": \"J10\",\n        \"reasoning\": \"Fever and pain are common symptoms of influenza, especially during flu season.\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Urinary Tract Infection\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"N30\",\n            \"reasoning\": \"Fever can be a symptom of UTI, and it's a common infection in adults.\"\n        },\n        {\n            \"name\": \"Pneumonia\",\n            \"confidence\": 0.15,\n            \"icd_code\": \"J12\",\n            \"reasoning\": \"Pain can be a symptom of pneumonia, and fever is also common.\"\n        },\n        {\n            \"name\": \"Gastroenteritis\",\n            \"confidence\": 0.1,\n            \"icd_code\": \"A08.9\",\n            \"reasoning\": \"Fever and abdominal pain can be symptoms of gastroenteritis.\"\n        }\n    ],\n    \"key_findings\": [\n        \"Fever\",\n        \"Pain\"\n    ],\n    \"diagnostic_tests\": [\n        {\n            \"test\": \"Influenza A & B PCR\",\n            \"purpose\": \"Ruling out influenza\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Complete blood count\",\n            \"purpose\": \"Evaluating leukocytosis\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Urinalysis\",\n            \"purpose\": \"Ruling out urinary tract infection\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management_plan\": {\n        \"immediate_actions\": [\n            \"Administer acetaminophen or ibuprofen for fever and pain relief.\"\n        ],\n        \"medications\": [\n            {\n                \"drug\": \"Oseltamivir\",\n                \"dose\": \"75mg twice daily for 5 days\",\n                \"route\": \"PO\",\n                \"duration\": \"5 days\",\n                \"rationale\": \"To treat influenza\"\n            }\n        ],\n        \"monitoring\": [\n            \"Fever, respiratory rate, oxygen saturation\",\n            \"Twice daily\"\n        ],\n        \"consultations\": [\n            {\n                \"specialty\": \"Internal Medicine\",\n                \"urgency\": \"routine\",\n                \"reason\": \"For follow-up and adjustment of treatment\"\n            }\n        ]\n    },\n    \"red_flags\": [\n        \"Persistent high fever\",\n        \"Shortness of breath\",\n        \"Vomiting blood\"\n    ],\n    \"patient_education\": [\n        \"Take prescribed medications as directed.\",\n        \"Rest and drink plenty of fluids.\"\n    ],\n    \"follow_up\": {\n        \"timing\": \"3-5 days after symptoms improve\",\n        \"conditions\": \"Return if fever persists or worsens, or if new symptoms appear.\"\n    },\n    \"confidence_in_assessment\": 0.85,\n    \"uncertainties\": [\n        \"Possibility of UTI or pneumonia due to overlapping symptoms.\",\n        \"Patient's age or underlying conditions may influence diagnosis.\"\n    ]\n}",
+          "refusal": null,
+          "reasoning": null
+        }
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 930,
+      "completion_tokens": 849,
+      "total_tokens": 1779,
+      "prompt_tokens_details": null
+    }
+  }
+}
