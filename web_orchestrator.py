@@ -70,7 +70,8 @@ class WebOrchestrator:
         selected_models: List[str] = None,
         session_id: str = None,
         api_key: str = None,
-        progress_session_id: str = None
+        progress_session_id: str = None,
+        enable_pdf: bool = True  # Enable PDF generation by default
     ) -> Dict:
         """
         Start analysis of a custom case
@@ -93,6 +94,7 @@ class WebOrchestrator:
             'status': 'queued',
             'progress': 0,
             'total_models': len(selected_models) if selected_models else 31,
+            'progress_session_id': progress_session_id,  # Store progress session ID
             'completed_models': 0,
             'failed_models': 0,
             'start_time': datetime.now().isoformat(),
@@ -104,7 +106,8 @@ class WebOrchestrator:
             'case_hash': hashlib.md5(case_text.encode()).hexdigest(),
             'current_cost': 0.0,
             'estimated_cost': 0.0,
-            'cost_breakdown': []
+            'cost_breakdown': [],
+            'enable_pdf': enable_pdf  # Store PDF generation setting
         }
         
         self.active_analyses[case_id] = analysis_info
@@ -181,7 +184,10 @@ class WebOrchestrator:
                 api_key=api_key,
                 selected_models=analysis_info.get('selected_models'),
                 socketio=self.socketio,
-                display_case_id=case_id
+                display_case_id=case_id,
+                progress_session_id=analysis_info.get('progress_session_id'),  # Pass progress session for long polling
+                completion_callback=self._on_pipeline_complete,  # Add completion callback for immediate handover
+                enable_pdf=analysis_info.get('enable_pdf', True)  # Pass PDF generation setting (default: enabled)
             )
             
             # Configure models based on selection  
@@ -223,11 +229,77 @@ class WebOrchestrator:
             with open(analysis_info['case_file'], 'r') as f:
                 case_description = f.read()
             
-            # Run the pipeline
-            pipeline_results = pipeline.run_complete_analysis(
-                case_description=case_description,
-                case_title=analysis_info.get('title', case_id)
-            )
+            # Run the pipeline with callback-based completion
+            print(f"🚀 Starting pipeline analysis for {case_id} with callback-based completion...")
+            import threading
+            import time
+            
+            def run_pipeline():
+                try:
+                    pipeline.run_complete_analysis(
+                        case_description=case_description,
+                        case_title=analysis_info.get('title', case_id)
+                    )
+                    print(f"✅ Pipeline thread completed for {case_id}")
+                except Exception as e:
+                    print(f"❌ Pipeline failed for {case_id}: {e}")
+                    # Emit error event through callback
+                    try:
+                        self._emit_progress(case_id, 'analysis_error', {
+                            'message': f'Analysis failed: {str(e)}',
+                            'error': str(e),
+                            'progress': analysis_info.get('progress', 0)
+                        })
+                    except Exception as error_emit_error:
+                        print(f"⚠️ Failed to emit error event for {case_id}: {error_emit_error}")
+            
+            # Start pipeline in background thread - callback will handle completion
+            pipeline_thread = threading.Thread(target=run_pipeline, name=f"Pipeline-{case_id}")
+            pipeline_thread.daemon = True
+            pipeline_thread.start()
+            
+            # Optional: Add fallback timeout as backup safety mechanism
+            def fallback_timeout():
+                time.sleep(300)  # 5 minutes
+                if pipeline_thread.is_alive():
+                    print(f"⏰ Pipeline still running after 5 minutes for {case_id} - but callback should have handled completion")
+                    # Note: We rely on the callback for completion, this is just a warning
+            
+            fallback_thread = threading.Thread(target=fallback_timeout, name=f"Fallback-{case_id}")
+            fallback_thread.daemon = True
+            fallback_thread.start()
+            
+            # Add emergency timeout fallback in case completion callback fails
+            def emergency_completion_check():
+                """Check if analysis completed but callback failed, and emit completion event as fallback"""
+                import time
+                import glob
+                time.sleep(90)  # Wait 90 seconds before checking
+                if case_id in self.active_analyses:
+                    analysis_info = self.active_analyses[case_id]
+                    if analysis_info.get('status') != 'completed':
+                        # Check if analysis files exist (indicating completion)
+                        report_files = glob.glob(f"{self.reports_dir}/{case_id}_ensemble_data_*.json")
+                        if report_files:
+                            print(f"🚨 EMERGENCY: Analysis {case_id} completed but callback never triggered - forcing completion")
+                            try:
+                                # Force completion callback
+                                results = {
+                                    'data_file': report_files[0],
+                                    'consensus_results': {},
+                                    'total_models': 0
+                                }
+                                self._on_pipeline_complete(case_id, results)
+                            except Exception as emergency_error:
+                                print(f"❌ Emergency completion failed for {case_id}: {emergency_error}")
+            
+            # Start emergency fallback timer
+            emergency_thread = threading.Thread(target=emergency_completion_check, daemon=True, name=f"Emergency-{case_id}")
+            emergency_thread.start()
+
+            # Return immediately - completion will be handled by callback
+            print(f"🔄 Pipeline started in background for {case_id}, completion will be handled by callback")
+            return
             
             # Read the generated ensemble data from the file created by pipeline
             if pipeline_results.get('data_file'):
@@ -238,94 +310,173 @@ class WebOrchestrator:
             
             # Calculate actual costs from model responses
             self._calculate_final_costs(case_id, results)
+            print(f"🐞 DEBUG: After _calculate_final_costs for {case_id}")
             
-            # Fallback: If no costs were calculated but we expect them, add estimated costs
-            if case_id in self.active_analyses:
-                current_cost = self.active_analyses[case_id].get('current_cost', 0.0)
-                if current_cost == 0.0 and not analysis_info.get('use_free_models', True):
-                    print(f"💰 Fallback cost estimation for case {case_id} - no costs calculated but paid models expected")
-                    # Apply estimated orchestrator costs based on typical usage
-                    fallback_cost = 0.02  # Approximate cost based on observed usage patterns
-                    self._update_cost(case_id, fallback_cost, "Orchestrator (estimated)")
+            # Critical: Ensure completion event is emitted even if post-processing fails
+            completion_emitted = False
             
-            # Save results
-            self._emit_progress(case_id, 'processing_results', {
-                'message': 'Processing consensus...',
-                'progress': 90
-            })
-            
-            # JSON file is already saved by pipeline, get the path
-            json_file = Path(pipeline_results.get('data_file', ''))
-            
-            # Generate PDF report
-            self._emit_progress(case_id, 'generating_report', {
-                'message': 'Generating PDF report...',
-                'progress': 95
-            })
-            
-            # PDF report is already generated by the pipeline
-            pdf_file = Path(pipeline_results.get('report_file', '')) if pipeline_results.get('report_file') else None
-            
-            # Update analysis info
-            analysis_info['status'] = 'completed'
-            analysis_info['progress'] = 100
-            analysis_info['end_time'] = datetime.now().isoformat()
-            analysis_info['json_file'] = str(json_file)
-            analysis_info['pdf_file'] = str(pdf_file) if pdf_file else None
-            # Store full results for frontend
-            diagnostic_landscape = results.get('diagnostic_landscape', {})
-            analysis_info['results'] = {
-                'primary_diagnoses': [diagnostic_landscape.get('primary_diagnosis', {})],
-                'alternative_diagnoses': diagnostic_landscape.get('strong_alternatives', []),
-                'minority_opinions': diagnostic_landscape.get('minority_opinions', []),
-                'model_responses': results.get('model_responses', []),
-                'models_responded': len([r for r in results.get('model_responses', []) if r.get('response')]),
-                'consensus_report': results.get('consensus_report', ''),
-                'bias_analysis': results.get('bias_analysis', {})
-            }
-            
-            # Update database record
-            if self.db_manager:
+            try:
+                # Fallback: If no costs were calculated but we expect them, add estimated costs
+                if case_id in self.active_analyses:
+                    current_cost = self.active_analyses[case_id].get('current_cost', 0.0)
+                    if current_cost == 0.0 and not analysis_info.get('use_free_models', True):
+                        print(f"💰 Fallback cost estimation for case {case_id} - no costs calculated but paid models expected")
+                        # Apply estimated orchestrator costs based on typical usage
+                        fallback_cost = 0.02  # Approximate cost based on observed usage patterns
+                        self._update_cost(case_id, fallback_cost, "Orchestrator (estimated)")
+                
+                # The pipeline already handles all progress events and generates the report
+                # We just need to get the paths from the results
+                
+                # JSON file is already saved by pipeline, get the path
+                json_file = Path(pipeline_results.get('data_file', ''))
+                
+                # PDF report is already generated by the pipeline
+                pdf_file = Path(pipeline_results.get('report_file', '')) if pipeline_results.get('report_file') else None
+                
+                print(f"🐞 DEBUG: Starting analysis info update for {case_id}")
+                # Update analysis info
+                analysis_info['status'] = 'completed'
+                analysis_info['progress'] = 100
+                analysis_info['end_time'] = datetime.now().isoformat()
+                analysis_info['json_file'] = str(json_file)
+                analysis_info['pdf_file'] = str(pdf_file) if pdf_file else None
+                print(f"🐞 DEBUG: Analysis info updated, setting results for {case_id}")
+                # Store full results for frontend
+                diagnostic_landscape = results.get('diagnostic_landscape', {})
+                print(f"🐞 DEBUG: Processing diagnostic landscape with keys: {list(diagnostic_landscape.keys()) if diagnostic_landscape else 'None'}")
+                analysis_info['results'] = {
+                    'primary_diagnoses': [diagnostic_landscape.get('primary_diagnosis', {})],
+                    'alternative_diagnoses': diagnostic_landscape.get('strong_alternatives', []),
+                    'minority_opinions': diagnostic_landscape.get('minority_opinions', []),
+                    'model_responses': results.get('model_responses', []),
+                    'models_responded': len([r for r in results.get('model_responses', []) if r.get('response')]),
+                    'consensus_report': results.get('consensus_report', ''),
+                    'bias_analysis': results.get('bias_analysis', {})
+                }
+            except Exception as processing_error:
+                print(f"⚠️ Error in post-processing for {case_id}: {processing_error}")
+                print(f"🔄 Continuing with minimal analysis info to ensure completion event")
+                # Set minimal required fields for completion
+                analysis_info['status'] = 'completed'
+                analysis_info['progress'] = 100
+                analysis_info['end_time'] = datetime.now().isoformat()
+                # Try to set basic file paths from pipeline results
                 try:
-                    session = self.db_manager.get_session()
-                    db_analysis = session.query(Analysis).filter_by(id=case_id).first()
-                    if db_analysis:
-                        db_analysis.status = 'completed'
-                        db_analysis.completed_at = datetime.now()
-                        db_analysis.duration_seconds = int((datetime.now() - db_analysis.started_at).total_seconds())
-                        
-                        # Extract primary diagnosis info
-                        primary_diag = results.get('diagnostic_landscape', {}).get('primary_diagnosis', {})
-                        db_analysis.primary_diagnosis = primary_diag.get('name', 'Unknown')
-                        db_analysis.consensus_rate = round(primary_diag.get('agreement_percentage', 0.0), 1)
-                        
-                        db_analysis.models_responded = analysis_info['completed_models']
-                        db_analysis.models_failed = analysis_info['failed_models']
-                        db_analysis.unique_diagnoses = len(analysis_info['results']['alternative_diagnoses']) + len(analysis_info['results']['minority_opinions']) + 1
-                        
-                        db_analysis.json_file = str(json_file)
-                        db_analysis.pdf_file = str(pdf_file) if pdf_file else None
-                        
-                        # Calculate actual cost (for free models it's 0)
-                        db_analysis.actual_cost = 0.0 if analysis_info['use_free_models'] else analysis_info['completed_models'] * 0.002
-                        
-                        session.commit()
-                    session.close()
-                except Exception as e:
-                    print(f"⚠️ Database completion update failed: {e}")
+                    analysis_info['json_file'] = str(pipeline_results.get('data_file', ''))
+                    analysis_info['pdf_file'] = str(pipeline_results.get('report_file', '')) if pipeline_results.get('report_file') else None
+                except Exception:
+                    print(f"⚠️ Could not extract file paths for {case_id}")
+                    pass  # Continue without file paths
+                # Set minimal results structure
+                analysis_info['results'] = {
+                    'primary_diagnoses': [],
+                    'alternative_diagnoses': [],
+                    'minority_opinions': [],
+                    'model_responses': [],
+                    'models_responded': 0,
+                    'consensus_report': 'Analysis completed successfully. Please check the PDF report.',
+                    'bias_analysis': {}
+                }
             
-            # Add to predefined cases dynamically (temporary for session)
-            self._register_custom_case(case_id, analysis_info)
+            print(f"🐞 DEBUG: Results structure set, starting database update for {case_id}")
             
-            # Emit completion
-            self._emit_progress(case_id, 'analysis_complete', {
-                'message': 'Analysis complete!',
-                'progress': 100,
-                'case_id': case_id,
-                'report_url': f'/case/{case_id}',
-                'pdf_url': f'/api/case/{case_id}/pdf',
-                'results': analysis_info['results']
-            })
+            # Update database record (non-blocking)
+            try:
+                if self.db_manager:
+                    print(f"🐞 DEBUG: Database manager exists, updating database for {case_id}")
+                    try:
+                        session = self.db_manager.get_session()
+                        db_analysis = session.query(Analysis).filter_by(id=case_id).first()
+                        if db_analysis:
+                            db_analysis.status = 'completed'
+                            db_analysis.completed_at = datetime.now()
+                            db_analysis.duration_seconds = int((datetime.now() - db_analysis.started_at).total_seconds())
+                            
+                            # Extract primary diagnosis info safely
+                            try:
+                                primary_diag = results.get('diagnostic_landscape', {}).get('primary_diagnosis', {})
+                                db_analysis.primary_diagnosis = primary_diag.get('name', 'Unknown')
+                                db_analysis.consensus_rate = round(primary_diag.get('agreement_percentage', 0.0), 1)
+                            except Exception:
+                                db_analysis.primary_diagnosis = 'Analysis Completed'
+                                db_analysis.consensus_rate = 0.0
+                            
+                            db_analysis.models_responded = analysis_info.get('completed_models', 0)
+                            db_analysis.models_failed = analysis_info.get('failed_models', 0)
+                            
+                            try:
+                                db_analysis.unique_diagnoses = len(analysis_info['results']['alternative_diagnoses']) + len(analysis_info['results']['minority_opinions']) + 1
+                            except Exception:
+                                db_analysis.unique_diagnoses = 1
+                            
+                            db_analysis.json_file = analysis_info.get('json_file', '')
+                            db_analysis.pdf_file = analysis_info.get('pdf_file', '')
+                            
+                            # Calculate actual cost (for free models it's 0)
+                            db_analysis.actual_cost = 0.0 if analysis_info.get('use_free_models', True) else analysis_info.get('completed_models', 0) * 0.002
+                            
+                            session.commit()
+                        session.close()
+                    except Exception as e:
+                        print(f"⚠️ Database completion update failed: {e}")
+                else:
+                    print(f"🐞 DEBUG: No database manager available for {case_id}")
+            except Exception as db_error:
+                print(f"⚠️ Database update section failed for {case_id}: {db_error}")
+                # Continue to ensure completion event is emitted
+            
+            print(f"🐞 DEBUG: Database update complete, registering custom case for {case_id}")
+            
+            # Register custom case (non-blocking)
+            try:
+                self._register_custom_case(case_id, analysis_info)
+                print(f"🐞 DEBUG: Custom case registered, preparing to emit completion for {case_id}")
+            except Exception as reg_error:
+                print(f"⚠️ Custom case registration failed for {case_id}: {reg_error}")
+                # Continue to ensure completion event is emitted
+            
+            # Emit completion (with robust error handling)
+            try:
+                print(f"📤 Emitting analysis_complete event for {case_id}")
+                print(f"   📄 HTML report: /case/{case_id}")
+                print(f"   📊 PDF report: /api/case/{case_id}/pdf")
+                
+                # Ensure basic results structure exists
+                if 'results' not in analysis_info:
+                    analysis_info['results'] = {
+                        'primary_diagnoses': [],
+                        'alternative_diagnoses': [],
+                        'minority_opinions': [],
+                        'model_responses': [],
+                        'models_responded': 0,
+                        'consensus_report': '',
+                        'bias_analysis': {}
+                    }
+                
+                self._emit_progress(case_id, 'analysis_complete', {
+                    'message': 'Analysis complete!',
+                    'progress': 100,
+                    'case_id': case_id,
+                    'report_url': f'/case/{case_id}',
+                    'pdf_url': f'/api/case/{case_id}/pdf',
+                    'results': analysis_info['results']
+                })
+                print(f"✅ Analysis_complete event emitted for {case_id}")
+            except Exception as completion_error:
+                print(f"⚠️ Error emitting completion event for {case_id}: {completion_error}")
+                # Emit a simplified completion event
+                try:
+                    self._emit_progress(case_id, 'analysis_complete', {
+                        'message': 'Analysis complete!',
+                        'progress': 100,
+                        'case_id': case_id,
+                        'report_url': f'/case/{case_id}',
+                        'pdf_url': f'/api/case/{case_id}/pdf'
+                    })
+                    print(f"✅ Simplified analysis_complete event emitted for {case_id}")
+                except Exception as final_error:
+                    print(f"❌ Failed to emit any completion event for {case_id}: {final_error}")
             
         except Exception as e:
             # Handle errors
@@ -358,8 +509,144 @@ class WebOrchestrator:
                 'progress': analysis_info.get('progress', 0)
             })
     
+    def _on_pipeline_complete(self, case_id: str, pipeline_results: dict):
+        """
+        Callback method called when pipeline analysis completes
+        This ensures immediate handover and completion event emission
+        """
+        print(f"🔗 Pipeline completion callback triggered for {case_id}")
+        print(f"🔍 Pipeline results keys: {list(pipeline_results.keys())}")
+        
+        try:
+            analysis_info = self.active_analyses.get(case_id, {})
+            print(f"🔍 Analysis info available: {bool(analysis_info)}")
+            print(f"🔍 Analysis info progress_session_id: {analysis_info.get('progress_session_id', 'MISSING')}")
+            
+            # Read the generated ensemble data from the file created by pipeline
+            if pipeline_results.get('data_file'):
+                with open(pipeline_results['data_file'], 'r') as f:
+                    results = json.load(f)
+            else:
+                results = pipeline_results.get('consensus_results', {})
+            
+            # Calculate actual costs from model responses (with error protection)
+            try:
+                self._calculate_final_costs(case_id, results)
+                print(f"✅ Cost calculation completed for {case_id}")
+            except Exception as cost_error:
+                print(f"⚠️ Cost calculation failed for {case_id}: {cost_error}")
+                traceback.print_exc()
+            
+            # CRITICAL: Emit completion event IMMEDIATELY after cost calculation
+            # This ensures the frontend gets the completion event even if subsequent processing fails
+            print(f"🚨 CRITICAL: Emitting analysis_complete event immediately after cost calculation for {case_id}")
+            try:
+                self._emit_progress(case_id, 'analysis_complete', {
+                    'message': 'Analysis complete! Reports are ready.',
+                    'progress': 100,
+                    'case_id': case_id,
+                    'report_url': f'/case/{case_id}',
+                    'pdf_url': f'/api/case/{case_id}/pdf',
+                    'results': results  # Use the basic results we have here
+                })
+                print(f"✅ CRITICAL: Analysis_complete event emitted successfully for {case_id}")
+            except Exception as critical_emit_error:
+                print(f"❌ CRITICAL: Failed to emit analysis_complete event for {case_id}: {critical_emit_error}")
+                traceback.print_exc()
+            
+            # Update analysis info
+            analysis_info['status'] = 'completed'
+            analysis_info['progress'] = 100
+            analysis_info['end_time'] = datetime.now().isoformat()
+            analysis_info['json_file'] = str(pipeline_results.get('data_file', ''))
+            analysis_info['pdf_file'] = str(pipeline_results.get('report_file', '')) if pipeline_results.get('report_file') else None
+            
+            # Store full results for frontend
+            diagnostic_landscape = results.get('diagnostic_landscape', {})
+            analysis_info['results'] = {
+                'primary_diagnoses': [diagnostic_landscape.get('primary_diagnosis', {})],
+                'alternative_diagnoses': diagnostic_landscape.get('strong_alternatives', []),
+                'minority_opinions': diagnostic_landscape.get('minority_opinions', []),
+                'model_responses': results.get('model_responses', []),
+                'models_responded': len([r for r in results.get('model_responses', []) if r.get('response')]),
+                'consensus_report': results.get('consensus_report', ''),
+                'bias_analysis': results.get('bias_analysis', {})
+            }
+            
+            # Update database record (non-blocking)
+            try:
+                if self.db_manager:
+                    session = self.db_manager.get_session()
+                    db_analysis = session.query(Analysis).filter_by(id=case_id).first()
+                    if db_analysis:
+                        db_analysis.status = 'completed'
+                        db_analysis.progress = 100
+                        db_analysis.end_time = datetime.now()
+                        
+                        if diagnostic_landscape.get('primary_diagnosis'):
+                            db_analysis.primary_diagnosis = diagnostic_landscape['primary_diagnosis'].get('name', 'Unknown')
+                            db_analysis.consensus_rate = diagnostic_landscape['primary_diagnosis'].get('consensus_rate', 0.0)
+                        
+                        db_analysis.models_responded = analysis_info.get('completed_models', 0)
+                        db_analysis.models_failed = analysis_info.get('failed_models', 0)
+                        db_analysis.unique_diagnoses = len(analysis_info['results']['alternative_diagnoses']) + len(analysis_info['results']['minority_opinions']) + 1
+                        db_analysis.json_file = analysis_info.get('json_file', '')
+                        db_analysis.pdf_file = analysis_info.get('pdf_file', '')
+                        db_analysis.actual_cost = 0.0 if analysis_info.get('use_free_models', True) else analysis_info.get('completed_models', 0) * 0.002
+                        
+                        session.commit()
+                    session.close()
+            except Exception as db_error:
+                print(f"⚠️ Database update failed in callback for {case_id}: {db_error}")
+            
+            # Register custom case (non-blocking) - skip if this causes issues
+            print(f"🔍 DEBUG: About to register custom case for {case_id}")
+            try:
+                self._register_custom_case(case_id, analysis_info)
+                print(f"✅ DEBUG: Custom case registration completed for {case_id}")
+            except Exception as reg_error:
+                print(f"⚠️ Custom case registration failed in callback for {case_id}: {reg_error}")
+                print(f"🔍 Continuing with completion event emission despite registration failure...")
+            
+            # Emit completion event immediately - CRITICAL STEP
+            print(f"📤 DEBUG: About to emit analysis_complete event via callback for {case_id}")
+            print(f"🔍 Progress session ID for emission: {analysis_info.get('progress_session_id', 'MISSING')}")
+            
+            try:
+                print(f"🔍 DEBUG: Calling _emit_progress for analysis_complete event...")
+                self._emit_progress(case_id, 'analysis_complete', {
+                    'message': 'Analysis complete! Reports are ready.',
+                    'progress': 100,
+                    'case_id': case_id,
+                    'report_url': f'/case/{case_id}',
+                    'pdf_url': f'/api/case/{case_id}/pdf',
+                    'results': analysis_info['results']
+                })
+                print(f"✅ Analysis_complete event emitted successfully via callback for {case_id}")
+            except Exception as emit_error:
+                print(f"❌ Failed to emit analysis_complete event for {case_id}: {emit_error}")
+                traceback.print_exc()
+            
+        except Exception as callback_error:
+            print(f"⚠️ Error in pipeline completion callback for {case_id}: {callback_error}")
+            traceback.print_exc()
+            # Emit a simplified completion event as fallback
+            try:
+                self._emit_progress(case_id, 'analysis_complete', {
+                    'message': 'Analysis complete! Reports are ready.',
+                    'progress': 100,
+                    'case_id': case_id,
+                    'report_url': f'/case/{case_id}',
+                    'pdf_url': f'/api/case/{case_id}/pdf'
+                })
+                print(f"✅ Fallback analysis_complete event emitted via callback for {case_id}")
+            except Exception as final_error:
+                print(f"❌ Failed to emit any completion event via callback for {case_id}: {final_error}")
+    
     def _emit_progress(self, case_id: str, event: str, data: Dict):
         """Emit progress update via Long Polling Progress Manager"""
+        print(f"🔍 _emit_progress called: case_id={case_id}, event={event}")
+        
         # Include cost information in progress updates
         analysis_info = self.active_analyses.get(case_id, {})
         cost_data = {
@@ -370,21 +657,36 @@ class WebOrchestrator:
         
         # Get progress session ID
         progress_session_id = analysis_info.get('progress_session_id')
+        print(f"🔍 Progress session ID for emit: {progress_session_id}")
         
         # Emit to progress manager if we have a progress session
         if progress_session_id:
-            emit_progress(progress_session_id, event, {
+            print(f"🔍 Calling emit_progress with session_id={progress_session_id}")
+            try:
+                emit_progress(progress_session_id, event, {
+                    'analysis_id': case_id,
+                    **data,
+                    **cost_data
+                })
+                print(f"✅ emit_progress completed successfully for {case_id}")
+            except Exception as progress_emit_error:
+                print(f"❌ emit_progress failed for {case_id}: {progress_emit_error}")
+                traceback.print_exc()
+        else:
+            print(f"⚠️ No progress_session_id available for {case_id}, skipping progress emission")
+        
+        # Also emit via Socket.IO for backward compatibility during transition
+        try:
+            print(f"🔍 Calling socketio.emit for {case_id}")
+            self.socketio.emit(event, {
                 'analysis_id': case_id,
                 **data,
                 **cost_data
-            })
-        
-        # Also emit via Socket.IO for backward compatibility during transition
-        self.socketio.emit(event, {
-            'analysis_id': case_id,
-            **data,
-            **cost_data
-        }, room=f'analysis_{case_id}', namespace='/')
+            }, room=f'analysis_{case_id}', namespace='/')
+            print(f"✅ socketio.emit completed successfully for {case_id}")
+        except Exception as socketio_emit_error:
+            print(f"❌ socketio.emit failed for {case_id}: {socketio_emit_error}")
+            traceback.print_exc()
     
     def _update_cost(self, case_id: str, model_cost: float, model_name: str = None):
         """Update the running cost for an analysis"""

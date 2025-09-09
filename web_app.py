@@ -186,13 +186,24 @@ IS_PRODUCTION = os.path.exists('/.dockerenv') or os.getenv('FLASK_ENV') == 'prod
 # SocketIO Configuration: Dummy implementation for long polling mode
 # SocketIO removed - using long polling instead via progress_manager
 class DummySocketIO:
-    """Dummy SocketIO class for compatibility with existing code"""
+    """Dummy SocketIO class for compatibility with existing code - integrates with progress_manager"""
     def __init__(self, app, **kwargs):
         self.app = app
+        self._current_session_id = None
         
-    def emit(self, event, data, room=None):
-        """Dummy emit method - does nothing since we use long polling"""
-        pass
+    def emit(self, event, data=None, room=None, namespace=None, **kwargs):
+        """Emit method that forwards to progress_manager for long polling"""
+        # Map SocketIO events to progress manager events
+        if self._current_session_id and event in ['progress_update', 'model_started', 'model_completed', 'analysis_completed', 'analysis_error']:
+            # Extract relevant data from the SocketIO event
+            if isinstance(data, dict):
+                progress_manager.add_event(self._current_session_id, event, data)
+            else:
+                progress_manager.add_event(self._current_session_id, event, {'message': str(data) if data else ''})
+        
+    def set_session_id(self, session_id):
+        """Set the current session ID for progress events"""
+        self._current_session_id = session_id
         
     def on(self, event):
         """Dummy decorator - returns the function unchanged"""
@@ -1673,6 +1684,8 @@ def get_available_models():
 @app.route('/analyze')
 def analyze():
     """Custom case analysis page"""
+    from flask import make_response
+    
     # Check for API key in session or environment
     if not session.get('api_key') and os.getenv('OPENROUTER_API_KEY'):
         session['api_key'] = os.getenv('OPENROUTER_API_KEY')
@@ -1686,7 +1699,14 @@ def analyze():
     import time
     cache_buster = str(int(time.time()))
     print(f"🚀 DEBUG: Serving analyze_v4.html template with api_key='{api_key[:10] if api_key else 'None'}...'")
-    return render_template('analyze_v4.html', api_key=api_key, cache_buster=cache_buster)
+    
+    # Create response with no-cache headers to ensure fresh JavaScript
+    response = make_response(render_template('analyze_v4.html', api_key=api_key, cache_buster=cache_buster))
+    response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+    response.headers['Pragma'] = 'no-cache'
+    response.headers['Expires'] = '0'
+    
+    return response
 
 @app.route('/settings')
 def settings():
@@ -1949,6 +1969,7 @@ def api_analyze_case():
     
     use_free_models = data.get('use_free_models', False)
     selected_models = data.get('selected_models')
+    enable_pdf = data.get('enable_pdf', True)  # Extract PDF generation setting from frontend
     
     # Validate model selection
     if selected_models:
@@ -1973,7 +1994,8 @@ def api_analyze_case():
         selected_models=selected_models,
         session_id=session.get('session_id'),
         api_key=api_key,
-        progress_session_id=progress_session_id  # Add progress session
+        progress_session_id=progress_session_id,  # Add progress session
+        enable_pdf=enable_pdf  # Pass PDF generation setting to orchestrator
     )
     
     # Add progress session ID to result
@@ -2623,7 +2645,7 @@ def handle_analyze_case(data):
             'google/gemma-2-9b-it:free': 'Gemma 2 9B',
             'google/gemma-3-12b-it:free': 'Gemma 3 12B',
             'meta-llama/llama-3.2-3b-instruct:free': 'Llama 3.2 3B',
-            'openai/gpt-oss-120b': 'GPT-OSS 120B',
+            'openai/gpt-oss-20b:free': 'GPT OSS 20B',
             'meta-llama/llama-3.2-1b-instruct:free': 'Llama 3.2 1B',
             'meta-llama/llama-3.1-8b-instruct:free': 'Llama 3.1 8B',
             'microsoft/phi-3-medium-128k-instruct:free': 'Phi-3 Medium',
@@ -2711,12 +2733,14 @@ def handle_analyze_case(data):
                     # Get other parameters from UI (selected_models already retrieved above)
                     use_free_models = data.get('use_free_models', False)
                     model_limit = data.get('model_limit', 'all')
+                    orchestrator_model = data.get('orchestrator_model', 'auto')
                     
                     # Apply model limit if specified
                     if model_limit != 'all' and model_limit.isdigit():
                         selected_models = selected_models[:int(model_limit)]
                     
                     print(f"Using {len(selected_models)} selected models: {selected_models}")
+                    print(f"Using orchestrator model: {orchestrator_model}")
                     
                     # Real progress will be emitted by the GeneralMedicalPipeline via SocketIO
                     
@@ -2747,6 +2771,9 @@ def handle_analyze_case(data):
                     # Use case_name for caching but analysis_id for SocketIO progress events
                     pipeline = GeneralMedicalPipeline(case_name, api_key=user_api_key, selected_models=selected_models, socketio=socketio, display_case_id=analysis_id)
                     
+                    # Set the orchestrator model selection from GUI
+                    pipeline.orchestrator_model = orchestrator_model
+                    
                     # Read case content
                     with open(case_file_path, 'r') as f:
                         case_content = f.read()
@@ -2763,24 +2790,17 @@ def handle_analyze_case(data):
                     completed_models = set()
                     total_models = len(selected_models)
                     model_display_names = {
-                        # Free models
-                        'google/gemini-2.0-flash-exp:free': 'Gemini 2.0 Flash',
-                        'google/gemini-flash-1.5-8b': 'Gemini Flash 1.5 8B',
-                        'google/gemma-2-9b-it:free': 'Gemma 2 9B',
-                        'meta-llama/llama-3.2-3b-instruct:free': 'Llama 3.2 3B',
-                        'meta-llama/llama-3.2-1b-instruct:free': 'Llama 3.2 1B',
-                        'meta-llama/llama-3.1-8b-instruct:free': 'Llama 3.1 8B',
-                        'microsoft/phi-3-medium-128k-instruct:free': 'Phi-3 Medium',
-                        'microsoft/phi-3-mini-128k-instruct:free': 'Phi-3 Mini',
+                        # Free models - Updated to match actual working models
+                        'deepseek/deepseek-r1:free': 'DeepSeek R1',
+                        'deepseek/deepseek-chat:free': 'DeepSeek Chat',
+                        'meta-llama/llama-3.1-70b-instruct:free': 'Llama 3.1 70B',
+                        'google/gemma-3-27b-it:free': 'Gemma 3 27B',
+                        'qwen/qwen-2.5-72b-instruct:free': 'Qwen 2.5 72B',
+                        'nvidia/llama-3.1-nemotron-70b-instruct:free': 'Nemotron 70B',
                         'mistralai/mistral-7b-instruct:free': 'Mistral 7B',
-                        'mistralai/pixtral-12b:free': 'Pixtral 12B',
-                        'qwen/qwen-2.5-7b-instruct': 'Qwen 2.5 7B',
-                        'qwen/qwen-2.5-coder-32b-instruct': 'Qwen 2.5 Coder',
-                        'liquid/lfm-40b:free': 'Liquid LFM 40B',
-                        'huggingfaceh4/zephyr-7b-beta:free': 'Zephyr 7B',
-                        'openchat/openchat-7b:free': 'OpenChat 7B',
-                        'deepseek/deepseek-chat-v3-0324:free': 'DeepSeek Chat',
-                        'gryphe/mythomax-l2-13b:free': 'MythoMax L2 13B',
+                        'openai/gpt-oss-20b:free': 'GPT OSS 20B',
+                        'google/gemma-3-4b-it:free': 'Gemma 3 4B',
+                        'meta-llama/llama-3.2-3b-instruct:free': 'Llama 3.2 3B',
                         # Premium models
                         'anthropic/claude-3.5-sonnet': 'Claude 3.5 Sonnet',
                         'anthropic/claude-opus-4.1': 'Claude Opus 4.1',

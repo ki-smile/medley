@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}MEDLEY - Medical AI Ensemble System{% endblock %}</title>
     
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
+    
     <!-- Material 3 Design System -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Rounded" rel="stylesheet">
@@ -289,14 +292,68 @@
             transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
+        /* Mobile Menu Button */
+        .mobile-menu-btn {
+            display: none;
+            position: fixed;
+            top: 16px;
+            left: 16px;
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background-color: var(--md-sys-color-primary-container);
+            color: var(--md-sys-color-on-primary-container);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: var(--md-sys-elevation-level2);
+        }
+        
+        .mobile-menu-btn:hover {
+            box-shadow: var(--md-sys-elevation-level3);
+        }
+        
         /* Responsive */
         @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
             .nav-rail {
                 transform: translateX(-100%);
+                transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                z-index: 999;
+            }
+            
+            .nav-rail.mobile-open {
+                transform: translateX(0);
             }
             
             .main-content {
                 margin-left: 0;
+            }
+            
+            .top-app-bar {
+                padding-left: 80px; /* Make room for mobile menu button */
+            }
+            
+            /* Backdrop for mobile menu */
+            .nav-backdrop {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+                z-index: 998;
+            }
+            
+            .nav-backdrop.active {
+                display: block;
             }
         }
     </style>
@@ -304,8 +361,16 @@
     {% block styles %}{% endblock %}
 </head>
 <body>
+    <!-- Mobile Menu Button -->
+    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open navigation menu">
+        <span class="material-symbols-rounded">menu</span>
+    </button>
+    
+    <!-- Navigation Backdrop -->
+    <div class="nav-backdrop" id="navBackdrop"></div>
+    
     <!-- Navigation Rail -->
-    <nav class="nav-rail">
+    <nav class="nav-rail" id="navRail">
         <div class="nav-rail-item {% if request.endpoint == 'index' %}active{% endif %}" data-page="home" title="Home">
             <span class="material-symbols-rounded">home</span>
         </div>
@@ -330,6 +395,33 @@
     
     <!-- Base JavaScript -->
     <script>
+        // Mobile menu handling
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navRail = document.getElementById('navRail');
+        const navBackdrop = document.getElementById('navBackdrop');
+        
+        function toggleMobileMenu() {
+            navRail.classList.toggle('mobile-open');
+            navBackdrop.classList.toggle('active');
+        }
+        
+        function closeMobileMenu() {
+            navRail.classList.remove('mobile-open');
+            navBackdrop.classList.remove('active');
+        }
+        
+        mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+        navBackdrop.addEventListener('click', closeMobileMenu);
+        
+        // Close menu when clicking nav items on mobile
+        document.querySelectorAll('.nav-rail-item').forEach(item => {
+            item.addEventListener('click', function() {
+                if (window.innerWidth <= 768) {
+                    closeMobileMenu();
+                }
+            });
+        });
+        
         // Navigation handling
         document.querySelectorAll('.nav-rail-item').forEach(item => {
             item.addEventListener('click', function() {

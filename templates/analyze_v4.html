@@ -285,6 +285,18 @@
             >
             {% endif %}
             
+            <!-- PDF Generation Option -->
+            <div class="form-field">
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                    <input type="checkbox" id="enablePdf" name="enable_pdf" checked style="accent-color: var(--md-sys-color-primary);">
+                    <label for="enablePdf" style="font-weight: 500;">Generate PDF Report</label>
+                    <span style="color: var(--md-sys-color-on-surface-variant); font-size: var(--md-sys-typescale-body-small); margin-left: 8px;">⚡ Enabled by default for comprehensive reports</span>
+                </div>
+                <div style="font-size: var(--md-sys-typescale-body-small); color: var(--md-sys-color-on-surface-variant); margin-left: 24px;">
+                    ⚠️ PDF generation can add 60-120 seconds to analysis time. HTML report will always be available.
+                </div>
+            </div>
+            
             <!-- Submit Button -->
             <div style="text-align: center;">
                 <button type="button" onclick="startAnalysis()" class="btn btn-filled" style="padding: 14px 32px; font-size: var(--md-sys-typescale-label-large);">
@@ -427,6 +439,31 @@ window.models = {
 let modelsLoaded = false;
 let domReady = false;
 
+// Generate a descriptive case title from case text
+function generateCaseTitle(caseText) {
+    if (!caseText || caseText.trim().length === 0) {
+        return 'Custom Case';
+    }
+    
+    // Extract first sentence or first 50 words, whichever comes first
+    const text = caseText.trim();
+    const firstSentence = text.match(/^[^.!?]*[.!?]/);
+    
+    if (firstSentence && firstSentence[0].length > 10 && firstSentence[0].length < 100) {
+        return firstSentence[0].trim();
+    }
+    
+    // Fall back to first 50 words
+    const words = text.split(/\s+/).slice(0, 10);
+    let title = words.join(' ');
+    
+    if (title.length > 60) {
+        title = title.substring(0, 60) + '...';
+    }
+    
+    return title || 'Custom Case';
+}
+
 // Load models from backend
 async function loadModels() {
     if (modelsLoaded) return;
@@ -508,14 +545,49 @@ function initializeModels() {
 // Start loading models immediately
 loadModels();
 
+// Clean up any existing progress sessions on page load
+function cleanupProgressSession() {
+    console.log('🧹 Cleaning up any existing progress session on page load');
+    // Force stop any existing polling
+    if (window.pollingInterval) {
+        clearInterval(window.pollingInterval);
+        window.pollingInterval = null;
+    }
+    longPollingActive = false;
+    progressSessionId = null;
+    analysisInProgress = false;
+    currentAnalysisId = null;
+    console.log('✅ Progress session state reset');
+}
+
+// Handle page visibility changes to prevent stale sessions
+document.addEventListener('visibilitychange', function() {
+    if (document.visibilityState === 'visible') {
+        // Page became visible - clean up any stale sessions
+        console.log('👁️ Page became visible - checking for stale sessions');
+        if (progressSessionId && !analysisInProgress) {
+            console.log('🧹 Found stale progress session, cleaning up:', progressSessionId);
+            cleanupProgressSession();
+        }
+    }
+});
+
+// Clean up on page unload
+window.addEventListener('beforeunload', function() {
+    console.log('🚪 Page unloading - stopping long polling');
+    longPollingActive = false;
+});
+
 // Handle DOM ready state
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', function() {
+        cleanupProgressSession();
         domReady = true;
         initializeModels();
     });
 } else {
     // DOM is already ready
+    cleanupProgressSession();
     domReady = true;
     initializeModels();
 }
@@ -662,10 +734,28 @@ async function startLongPolling() {
     }
     
     console.log('🔄 Starting long polling for session:', progressSessionId);
+    const startTime = Date.now();
+    const maxPollingDuration = 10 * 60 * 1000; // 10 minutes max polling
     
     let lastEventId = null;
+    let consecutiveErrors = 0;
+    const maxConsecutiveErrors = 5;
     
     while (longPollingActive && progressSessionId) {
+        // Safety check: stop polling after max duration
+        if (Date.now() - startTime > maxPollingDuration) {
+            console.log('⏰ Long polling timeout - stopping after 10 minutes');
+            longPollingActive = false;
+            break;
+        }
+        
+        // Safety check: stop if too many consecutive errors
+        if (consecutiveErrors >= maxConsecutiveErrors) {
+            console.log('💥 Too many consecutive errors - stopping long polling');
+            longPollingActive = false;
+            break;
+        }
+        
         try {
             const timeout = 30000; // 30 seconds timeout
             const url = `/api/progress/${progressSessionId}/events?timeout=${timeout / 1000}${lastEventId ? `&since_id=${lastEventId}` : ''}`;
@@ -674,11 +764,20 @@ async function startLongPolling() {
             const response = await fetch(url);
             
             if (!response.ok) {
+                // If session doesn't exist, stop polling
+                if (response.status === 404) {
+                    console.log('🚫 Progress session not found - stopping polling');
+                    longPollingActive = false;
+                    break;
+                }
                 throw new Error(`HTTP ${response.status}: ${response.statusText}`);
             }
             
             const data = await response.json();
             console.log('📨 Long polling response:', data);
+            
+            // Reset error counter on successful request
+            consecutiveErrors = 0;
             
             if (data.success && data.events && data.events.length > 0) {
                 // Process each event
@@ -694,16 +793,17 @@ async function startLongPolling() {
             
         } catch (error) {
             console.error('❌ Long polling error:', error);
+            consecutiveErrors++;
             
             // If we get a network error, wait longer before retrying
-            if (longPollingActive) {
-                console.log('⏳ Waiting 2 seconds before retry...');
+            if (longPollingActive && consecutiveErrors < maxConsecutiveErrors) {
+                console.log(`⏳ Waiting 2 seconds before retry (${consecutiveErrors}/${maxConsecutiveErrors} errors)...`);
                 await new Promise(resolve => setTimeout(resolve, 2000));
             }
         }
     }
     
-    console.log('🔻 Long polling stopped');
+    console.log('🔻 Long polling stopped for session:', progressSessionId);
 }
 
 function processProgressEvent(event) {
@@ -725,6 +825,11 @@ function processProgressEvent(event) {
                 document.getElementById('progressText').textContent = event.data.message;
                 document.getElementById('currentModel').innerHTML = `<strong>Current Model:</strong> ${event.data.model_name}`;
             }
+            // Calculate progress based on model index (10% to 70% for model queries)
+            if (event.data.model_index !== undefined && event.data.total_models !== undefined) {
+                const progress = 10 + (event.data.model_index / event.data.total_models) * 60;
+                updateProgress(progress, event.data.message);
+            }
             updateModelStatus(event.data.model_name, 'processing');
             break;
             
@@ -732,6 +837,11 @@ function processProgressEvent(event) {
             console.log('✅ Model completed:', event.data);
             if (event.data.message) {
                 document.getElementById('progressText').textContent = event.data.message;
+            }
+            // Calculate progress after model completion (10% to 70% for model queries)
+            if (event.data.model_index !== undefined && event.data.total_models !== undefined) {
+                const progress = 10 + ((event.data.model_index + 1) / event.data.total_models) * 60;
+                updateProgress(progress, event.data.message);
             }
             updateModelStatus(event.data.model_name, event.data.status === 'completed' ? 'completed' : 'failed');
             break;
@@ -744,9 +854,14 @@ function processProgressEvent(event) {
             if (event.data.message) {
                 document.getElementById('progressText').textContent = event.data.message;
             }
+            // Handle models_status data if present
+            if (event.data.models_status) {
+                updateAllModelStatuses(event.data.models_status);
+            }
             break;
             
         case 'analysis_completed':
+        case 'analysis_complete':
             console.log('🎉 Analysis completed:', event.data);
             handleAnalysisComplete(event.data);
             break;
@@ -761,6 +876,73 @@ function processProgressEvent(event) {
             console.log('💰 Cost update:', event.data);
             if (event.data.current_cost !== undefined) {
                 updateCostDisplay(event.data.current_cost, event.data.use_free_models, event.data.model_name, event.data.model_cost);
+            }
+            break;
+            
+        case 'model_selection':
+            console.log('🎯 Model selection:', event.data);
+            if (event.data.message) {
+                document.getElementById('progressText').textContent = event.data.message;
+            }
+            if (event.data.models) {
+                document.getElementById('currentModel').innerHTML = `<strong>Selected Models:</strong> ${event.data.models.join(', ')}`;
+            }
+            // Update progress to show model selection phase
+            updateProgress(5, event.data.message || 'Selecting models for analysis...');
+            break;
+            
+        case 'analysis_running':
+            console.log('🏃 Analysis running:', event.data);
+            if (event.data.message) {
+                document.getElementById('progressText').textContent = event.data.message;
+            }
+            // Update progress to show analysis is actively running
+            updateProgress(10, event.data.message || 'Analysis is running...');
+            updateStageIndicator(1); // Activate Stage 1: Model Responses
+            break;
+            
+        case 'processing_results':
+            console.log('🔄 Processing results:', event.data);
+            if (event.data.message) {
+                document.getElementById('progressText').textContent = event.data.message;
+            }
+            if (event.data.progress !== undefined) {
+                updateProgress(event.data.progress, event.data.message || 'Processing consensus...');
+            }
+            updateStageIndicator(2); // Activate Stage 2: Orchestration
+            break;
+            
+        case 'generating_report':
+            console.log('📋 Generating report:', event.data);
+            if (event.data.message) {
+                document.getElementById('progressText').textContent = event.data.message;
+            }
+            if (event.data.progress !== undefined) {
+                updateProgress(event.data.progress, event.data.message || 'Generating report...');
+            }
+            updateStageIndicator(3); // Activate Stage 3: Report Generation
+            break;
+            
+        case 'model_progress':
+            console.log('🎯 Model progress:', event.data);
+            // Handle individual model progress events sent by backend
+            if (event.data.model_name && event.data.status) {
+                updateModelStatus(event.data.model_name, event.data.status);
+            }
+            // Update progress based on message content for post-model phases
+            if (event.data.message) {
+                const message = event.data.message;
+                if (message.includes('Analyzing diagnostic consensus')) {
+                    updateProgress(75, message);
+                } else if (message.includes('Building comprehensive report')) {
+                    updateProgress(85, message);
+                } else if (message.includes('Running orchestration analysis')) {
+                    updateProgress(90, message);
+                } else if (message.includes('Generating final PDF report')) {
+                    updateProgress(95, message);
+                } else if (message.includes('Analysis complete')) {
+                    updateProgress(100, message);
+                }
             }
             break;
             
@@ -873,6 +1055,7 @@ async function startAnalysis() {
         // Get model selection preferences
         const useFreeModels = document.getElementById('useFreeModels').checked;
         const orchestratorModel = document.getElementById('orchestratorModel').value;
+        const enablePdf = document.getElementById('enablePdf').checked;
         
         // Get selected models from checkboxes
         let selectedModels = [];
@@ -907,12 +1090,13 @@ async function startAnalysis() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 case_text: caseText,
-                case_title: 'Custom Case',
+                case_title: generateCaseTitle(caseText),
                 api_key: apiKey,
                 use_free_models: useFreeModels,
                 selected_models: selectedModels,
                 orchestrator_model: orchestratorModel,
-                progress_session_id: progressSessionId
+                progress_session_id: progressSessionId,
+                enable_pdf: enablePdf
             })
         });
         
@@ -927,6 +1111,17 @@ async function startAnalysis() {
         // Store the analysis ID from response if available
         if (analysisData.analysis_id) {
             currentAnalysisId = analysisData.analysis_id;
+        }
+        
+        // Update progress session ID with the one from backend
+        if (analysisData.progress_session_id && analysisData.progress_session_id !== progressSessionId) {
+            console.log('📝 Updating progress session ID from:', progressSessionId, 'to:', analysisData.progress_session_id);
+            progressSessionId = analysisData.progress_session_id;
+            // Restart long polling with new session ID
+            longPollingActive = false; // Stop current polling
+            await new Promise(resolve => setTimeout(resolve, 100)); // Brief pause
+            longPollingActive = true;
+            startLongPolling(); // Start with new session ID
         }
         
         // The long polling will handle all progress updates from here
@@ -1119,7 +1314,15 @@ function initializeModelStatus(models) {
     modelList.forEach(model => {
         const statusDiv = document.createElement('div');
         statusDiv.className = 'model-status-item';
-        statusDiv.id = `model-${model.replace(/\s+/g, '-').replace(/[^\w-]/g, '')}`;  // Clean ID
+        
+        // Create ID based on the raw model name that will match backend events
+        // Remove :free suffix and normalize
+        const modelId = model.toLowerCase()
+            .replace(/\s+/g, '-')
+            .replace(/[^\w-]/g, '')
+            .replace(/-free$/, '');
+        statusDiv.id = `model-${modelId}`;
+        
         statusDiv.style.cssText = 'padding: 8px; background: var(--md-sys-color-surface-variant); border-radius: 8px; font-size: var(--md-sys-typescale-body-small); min-height: 36px; border: 1px solid var(--md-sys-color-outline-variant);';
         statusDiv.innerHTML = `
             <div style="display: flex; align-items: center; gap: 8px;">
@@ -1132,6 +1335,21 @@ function initializeModelStatus(models) {
     
     console.log('✅ Model status grid initialized with', grid.children.length, 'models');
     console.log('Grid display style:', grid.style.display, 'Visibility:', grid.style.visibility);
+}
+
+function updateAllModelStatuses(modelsStatus) {
+    console.log('🔄 updateAllModelStatuses called with:', modelsStatus);
+    
+    if (!modelsStatus || typeof modelsStatus !== 'object') {
+        console.log('⚠️ No valid models_status data provided');
+        return;
+    }
+    
+    // Update each model's status
+    Object.entries(modelsStatus).forEach(([modelId, status]) => {
+        console.log(`🎯 Updating model ${modelId} to status: ${status}`);
+        updateModelStatus(modelId, status);
+    });
 }
 
 function updateModelStatus(model, status) {
@@ -1192,21 +1410,25 @@ function updateModelStatus(model, status) {
     
     const modelName = String(model); // Ensure it's a string
     
-    // Try multiple model ID matching strategies since backend sends full model names
-    // like "deepseek/deepseek-chat-v3.1:free" but frontend creates IDs like "model-deepseek-deepseek-chat-v31"
+    // Try multiple model ID matching strategies since backend sends raw model names
+    // like "deepseek-chat-v3.1:free" or just "deepseek-chat-v3.1"
     const modelVariations = [
-        modelName,  // Original: "deepseek/deepseek-chat-v3.1:free"
-        modelName.replace(/:\w+$/, ''),  // Remove suffix: "deepseek/deepseek-chat-v3.1"
-        modelName.split('/').pop().replace(/:\w+$/, ''),  // Just model name: "deepseek-chat-v3.1"
-        modelName.split(':')[0]  // Remove everything after colon: "deepseek/deepseek-chat-v3.1"
+        modelName,  // Original: "deepseek-chat-v3.1:free"
+        modelName.replace(/:\w+$/, ''),  // Remove suffix: "deepseek-chat-v3.1"
+        modelName.replace(':free', ''),  // Remove :free suffix specifically
+        modelName.split('/').pop().replace(/:\w+$/, ''),  // Just model name without provider
+        modelName.toLowerCase().replace(/[^\w-]/g, '').replace(/-free$/, '')  // Normalized version
     ];
     
     let statusDiv = null;
     let matchingModelId = null;
     
-    // Try each variation with the same ID normalization used in createModelStatusGrid (line 1102)
+    // Try each variation with normalization
     for (const variation of modelVariations) {
-        const normalizedId = variation.replace(/\s+/g, '-').replace(/[^\w-]/g, '');  // Same cleaning as line 1102
+        const normalizedId = variation.toLowerCase()
+            .replace(/\s+/g, '-')
+            .replace(/[^\w-]/g, '')
+            .replace(/-free$/, '');  // Match the normalization in initializeModelStatus
         const candidateId = `model-${normalizedId}`;
         statusDiv = document.getElementById(candidateId);
         
@@ -1578,8 +1800,13 @@ function saveAnalysisToHistory(analysisId, caseText, results) {
     let primaryDiagnosis = 'Unknown';
     let confidence = 0;
     
-    // Try to extract from diagnostic_landscape (preferred)
-    if (results.diagnostic_landscape && results.diagnostic_landscape.primary_diagnosis) {
+    // Try to extract from consensus_analysis.primary (correct structure)
+    if (results.consensus_analysis && results.consensus_analysis.primary && results.consensus_analysis.primary[0]) {
+        primaryDiagnosis = results.consensus_analysis.primary[0];
+        confidence = Math.round((results.consensus_analysis.primary[1] / results.consensus_analysis.total_models) * 100);
+    }
+    // Fallback to diagnostic_landscape
+    else if (results.diagnostic_landscape && results.diagnostic_landscape.primary_diagnosis) {
         primaryDiagnosis = results.diagnostic_landscape.primary_diagnosis.name || 'Unknown';
         confidence = Math.round(results.diagnostic_landscape.primary_diagnosis.percentage || 0);
     }

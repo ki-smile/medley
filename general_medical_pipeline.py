@@ -25,7 +25,7 @@ class GeneralMedicalPipeline:
     General pipeline for medical case analysis with proper case separation
     """
     
-    def __init__(self, case_id: str, api_key: str = None, selected_models: list = None, socketio=None, display_case_id: str = None):
+    def __init__(self, case_id: str, api_key: str = None, selected_models: list = None, socketio=None, display_case_id: str = None, progress_session_id: str = None, completion_callback=None, enable_pdf: bool = False):
         """
         Initialize pipeline for a specific case
         
@@ -35,12 +35,24 @@ class GeneralMedicalPipeline:
             selected_models: Optional list of specific model IDs to use
             socketio: Optional SocketIO instance for real-time progress updates
             display_case_id: Optional case ID to display in SocketIO events (defaults to case_id)
+            progress_session_id: Optional progress session ID for long polling updates
+            completion_callback: Optional callback function called when analysis completes
+            enable_pdf: Optional boolean to enable/disable PDF generation (default: False for faster completion)
         """
         self.case_id = case_id
         self.api_key = api_key
         self.selected_models = selected_models
         self.socketio = socketio
         self.display_case_id = display_case_id or case_id
+        self.progress_session_id = progress_session_id
+        self.completion_callback = completion_callback
+        self.enable_pdf = enable_pdf
+        
+        # Debug logging
+        if progress_session_id:
+            print(f"📡 Pipeline initialized with progress_session_id: {progress_session_id}")
+        else:
+            print(f"⚠️ Pipeline initialized WITHOUT progress_session_id")
         self.cache_dir = Path.cwd() / "cache"
         self.case_cache_dir = self.cache_dir / "responses" / case_id
         self.orchestrator_cache_dir = self.cache_dir / "orchestrator" / case_id
@@ -57,7 +69,26 @@ class GeneralMedicalPipeline:
         print(f"   📄 Reports: {self.reports_dir}")
     
     def _emit_progress(self, stage, progress, message, models_status=None):
-        """Emit real-time progress via SocketIO with thread-safe handling"""
+        """Emit real-time progress via SocketIO and progress manager with thread-safe handling"""
+        # Always emit to progress manager if we have a session ID
+        if self.progress_session_id:
+            try:
+                print(f"🔍 DEBUG: About to call progress_manager.add_event for {self.case_id}")
+                from utils.progress_manager import progress_manager
+                progress_manager.add_event(self.progress_session_id, 'model_progress', {
+                    'analysis_id': self.display_case_id,
+                    'stage': stage,
+                    'progress': progress,
+                    'status': message,
+                    'message': message,
+                    'models_status': models_status or {},
+                    'current_cost': 0.0,
+                    'estimated_cost': 0.0
+                })
+                print(f"🔍 DEBUG: Completed progress_manager.add_event for {self.case_id}")
+            except Exception as e:
+                print(f"⚠️ Failed to add event to progress manager: {e}")
+        
         if self.socketio:
             # Extract current model from message if it contains "Analyzing with"
             current_model = None
@@ -125,12 +156,37 @@ class GeneralMedicalPipeline:
     
     def get_all_available_models(self):
         """Get all available models from metadata or use selected models"""
+        
+        # Check if we should use free models only
+        use_free_models = os.environ.get('USE_FREE_MODELS', 'false').lower() == 'true'
+        
         if self.selected_models:
+            # When models are selected from web interface, use them as-is
+            # The web interface should only allow selecting appropriate models based on the free models toggle
             print(f"🎯 Using {len(self.selected_models)} selected models from web interface")
+            
+            # Log what type of models are being used
+            if use_free_models:
+                free_count = sum(1 for model in self.selected_models if ':free' in model)
+                paid_count = len(self.selected_models) - free_count
+                if paid_count > 0:
+                    print(f"⚠️  Warning: {paid_count} paid models selected despite USE_FREE_MODELS=true")
+                print(f"🆓 Selected models include {free_count} free models")
+            
             return self.selected_models
         else:
+            # CLI usage - use metadata and filter based on USE_FREE_MODELS flag
             metadata = get_comprehensive_model_metadata()
-            return list(metadata.keys())
+            all_models = list(metadata.keys())
+            
+            if use_free_models:
+                # Filter to only free models for CLI usage
+                free_models = [model for model in all_models if ':free' in model or 'free' in model.lower()]
+                print(f"🆓 CLI: Using {len(free_models)} free models (filtered from {len(all_models)} available)")
+                return free_models
+            else:
+                print(f"🎯 CLI: Using all {len(all_models)} available models")
+                return all_models
     
     def load_case_cached_responses(self):
         """Load cached responses for this specific case only"""
@@ -224,6 +280,17 @@ class GeneralMedicalPipeline:
             current_progress = 10 + (i / len(missing_models)) * 60  # 10% to 70% for model queries
             self._emit_progress(1, int(current_progress), f"Analyzing with {model_id.split('/')[-1]}...", models_status)
             
+            # Emit model started event
+            if self.progress_session_id:
+                try:
+                    from utils.progress_manager import emit_model_started
+                    emit_model_started(self.progress_session_id, model_id.split('/')[-1], i, len(missing_models))
+                    print(f"📡 Emitted model_started for {model_id} to progress session {self.progress_session_id}")
+                except Exception as e:
+                    print(f"⚠️ Failed to emit model started: {e}")
+            else:
+                print(f"⚠️ No progress_session_id available for model_started event")
+            
             try:
                 from src.medley.utils.config import ModelConfig
                 model_config = ModelConfig(
@@ -255,6 +322,14 @@ class GeneralMedicalPipeline:
                     successful += 1
                     models_status[model_id] = 'completed'
                     print(f"    ✅ Success: {len(response.content):,} chars in {elapsed:.2f}s")
+                    
+                    # Emit model completed event to progress manager
+                    if self.progress_session_id:
+                        try:
+                            from utils.progress_manager import emit_model_completed
+                            emit_model_completed(self.progress_session_id, model_id.split('/')[-1], i, len(missing_models), success=True)
+                        except Exception as e:
+                            print(f"⚠️ Failed to emit model completed: {e}")
                     
                     # Emit individual model completion event
                     if hasattr(self, 'socketio') and self.socketio:
@@ -290,6 +365,14 @@ class GeneralMedicalPipeline:
                     models_status[model_id] = 'failed'
                     print(f"    ❌ Invalid response: '{response.content[:50]}...'")
                     
+                    # Emit model failed event to progress manager
+                    if self.progress_session_id:
+                        try:
+                            from utils.progress_manager import emit_model_completed
+                            emit_model_completed(self.progress_session_id, model_id.split('/')[-1], i, len(missing_models), success=False, error="Invalid response format")
+                        except Exception as e:
+                            print(f"⚠️ Failed to emit model failed: {e}")
+                    
                     # Emit individual model invalid response event
                     if hasattr(self, 'socketio') and self.socketio:
                         self.safe_socketio_emit('model_progress', {
@@ -305,6 +388,14 @@ class GeneralMedicalPipeline:
                     models_status[model_id] = 'failed'
                     print(f"    ❌ Error: {response.error}")
                     
+                    # Emit model failed event to progress manager
+                    if self.progress_session_id:
+                        try:
+                            from utils.progress_manager import emit_model_completed
+                            emit_model_completed(self.progress_session_id, model_id.split('/')[-1], i, len(missing_models), success=False, error=response.error)
+                        except Exception as e:
+                            print(f"⚠️ Failed to emit model failed: {e}")
+                    
                     # Emit individual model failure event
                     if hasattr(self, 'socketio') and self.socketio:
                         self.safe_socketio_emit('model_progress', {
@@ -319,6 +410,14 @@ class GeneralMedicalPipeline:
                 failed += 1
                 models_status[model_id] = 'failed'
                 print(f"\\n    💥 Exception with {model_id}: {str(e)[:100]}")
+                
+                # Emit model failed event to progress manager
+                if self.progress_session_id:
+                    try:
+                        from utils.progress_manager import emit_model_completed
+                        emit_model_completed(self.progress_session_id, model_id.split('/')[-1], i, len(missing_models), success=False, error=str(e)[:100])
+                    except Exception as e2:
+                        print(f"⚠️ Failed to emit model failed: {e2}")
                 
                 # Emit individual model exception event
                 if hasattr(self, 'socketio') and self.socketio:
@@ -448,10 +547,37 @@ class GeneralMedicalPipeline:
     
     def _normalize_diagnosis_name(self, diagnosis_name):
         """Normalize diagnosis name for consistent counting using ICD-10 database"""
-        from src.medley.utils.icd10_database import get_icd10_database
+        # TEMPORARY FIX: Bypass ICD-10 normalization to prevent hanging
+        # TODO: Re-enable after fixing ICD-10 database performance issues
+        if not diagnosis_name:
+            return diagnosis_name
         
-        icd_db = get_icd10_database()
-        return icd_db.normalize_diagnosis(diagnosis_name)
+        # Simple normalization without ICD-10 database
+        normalized = diagnosis_name.strip().title()
+        
+        # Basic standardization map for common conditions
+        standardization = {
+            "fmf": "Familial Mediterranean Fever",
+            "familial mediterranean fever": "Familial Mediterranean Fever",
+            "mediterranean fever": "Familial Mediterranean Fever",
+            "periodic fever": "Periodic Fever Syndrome",
+            "lupus": "Systemic Lupus Erythematosus", 
+            "sle": "Systemic Lupus Erythematosus",
+            "still disease": "Adult Still's Disease",
+            "still's disease": "Adult Still's Disease"
+        }
+        
+        normalized_lower = normalized.lower()
+        for pattern, standard in standardization.items():
+            if pattern in normalized_lower:
+                return standard
+                
+        return normalized
+        
+        # Original ICD-10 code (disabled temporarily)
+        # from src.medley.utils.icd10_database import get_icd10_database
+        # icd_db = get_icd10_database()
+        # return icd_db.normalize_diagnosis(diagnosis_name)
     
     def _normalize_diagnosis_name_old(self, diagnosis_name):
         """Legacy normalization method - kept for reference"""
@@ -726,6 +852,7 @@ class GeneralMedicalPipeline:
         """Generate comprehensive PDF report for this case"""
         
         from src.medley.reporters.final_comprehensive_report import FinalComprehensiveReportGenerator
+        import signal
         
         report_gen = FinalComprehensiveReportGenerator()
         output_file = self.reports_dir / f"FINAL_{self.case_id}_comprehensive_{timestamp}.pdf"
@@ -735,19 +862,29 @@ class GeneralMedicalPipeline:
         
         start_report = time.time()
         
-        report_gen.generate_report(
-            ensemble_results=ensemble_data,
-            output_file=str(output_file)
-        )
-        
-        report_time = time.time() - start_report
-        
-        if output_file.exists():
-            file_size = output_file.stat().st_size
-            print(f"✅ Report generated: {file_size:,} bytes in {report_time:.2f}s")
-            return str(output_file)
-        else:
-            print("❌ Report generation failed")
+        # Note: Cannot use signal-based timeout in background thread
+        # PDF generation should complete quickly, so we'll rely on the report generator's own handling
+        try:
+            print(f"📝 Starting PDF report generation for {self.case_id}...")
+            report_gen.generate_report(
+                ensemble_results=ensemble_data,
+                output_file=str(output_file)
+            )
+            
+            report_time = time.time() - start_report
+            
+            if output_file.exists():
+                file_size = output_file.stat().st_size
+                print(f"✅ Report generated: {file_size:,} bytes in {report_time:.2f}s")
+                return str(output_file)
+            else:
+                print("❌ Report generation failed")
+                return None
+                
+        except Exception as e:
+            print(f"❌ PDF generation error: {e}")
+            print(f"   📊 Analysis completed successfully, but PDF could not be generated")
+            print(f"   🌐 HTML report is available at: /case/{self.case_id}")
             return None
     
     def run_complete_analysis(self, case_description, case_title=None):
@@ -819,7 +956,56 @@ class GeneralMedicalPipeline:
         print(f"\\n🧠 STEP 5: Diagnostic Analysis for {self.case_id}")
         
         try:
-            consensus_results = self.analyze_consensus(all_responses)
+            # Add timeout protection around consensus analysis
+            print(f"🔄 Starting consensus analysis for {self.case_id}...")
+            import threading
+            import queue
+            
+            def consensus_analysis_worker(response_queue, responses):
+                """Worker function to run consensus analysis with timeout protection"""
+                try:
+                    result = self.analyze_consensus(responses)
+                    response_queue.put(('success', result))
+                except Exception as e:
+                    response_queue.put(('error', e))
+            
+            # Create a queue for the result
+            result_queue = queue.Queue()
+            
+            # Start consensus analysis in a separate thread with timeout
+            consensus_thread = threading.Thread(
+                target=consensus_analysis_worker, 
+                args=(result_queue, all_responses)
+            )
+            consensus_thread.daemon = True  # Ensure thread dies with main process
+            consensus_thread.start()
+            
+            # Wait for result with timeout
+            CONSENSUS_TIMEOUT = 60  # 60 seconds timeout
+            try:
+                status, consensus_results = result_queue.get(timeout=CONSENSUS_TIMEOUT)
+                if status == 'error':
+                    raise consensus_results  # Re-raise the exception
+                print(f"✅ Consensus analysis completed for {self.case_id}")
+            except queue.Empty:
+                print(f"⚠️ Consensus analysis timed out after {CONSENSUS_TIMEOUT} seconds for {self.case_id}")
+                # Kill the hanging thread (best effort)
+                if consensus_thread.is_alive():
+                    print(f"🔪 Forcing thread termination for {self.case_id}")
+                
+                # Create fallback consensus results
+                consensus_results = {
+                    'primary': ('Unknown Condition (Analysis Timeout)', 0),
+                    'total_models': len(all_responses),
+                    'sorted_diagnoses': [],
+                    'primary_counts': {},
+                    'differential_counts': {},
+                    'total_counts': {},
+                    'icd_codes': {},
+                    'model_diagnoses': {},
+                    'geographical_patterns': {}
+                }
+                
         except Exception as e:
             print(f"❌ Error in analyze_consensus: {e}")
             import traceback
@@ -836,6 +1022,14 @@ class GeneralMedicalPipeline:
                 'model_diagnoses': {},
                 'geographical_patterns': {}
             }
+        
+        # Transition to Stage 2: Orchestration  
+        print(f"\\n" + "=" * 80)
+        print(f"📊 STAGE 2: ORCHESTRATION & SYNTHESIS")
+        print("=" * 80)
+        
+        # Emit stage transition event for UI
+        self._emit_progress(2, 80, "Starting orchestration analysis...")
         
         # Step 6: Build comprehensive ensemble data
         self._emit_progress(3, 85, "Building comprehensive report...")
@@ -948,7 +1142,9 @@ class GeneralMedicalPipeline:
             from src.medley.reporters.report_orchestrator import ReportOrchestrator
             # Use FREE_MODELS environment variable to determine orchestrator model
             use_free_only = os.environ.get('USE_FREE_MODELS', '').lower() == 'true'
-            orchestrator = ReportOrchestrator(llm_manager, use_free_only=use_free_only)
+            # Pass orchestrator model from GUI if available
+            orchestrator_model = getattr(self, 'orchestrator_model', None)
+            orchestrator = ReportOrchestrator(llm_manager, use_free_only=use_free_only, orchestrator_model=orchestrator_model)
             orchestrated_analysis = orchestrator._fallback_extraction(ensemble_data)
             ensemble_data.update(orchestrated_analysis)
             orchestrator_success = False
@@ -960,14 +1156,38 @@ class GeneralMedicalPipeline:
             from src.medley.reporters.report_orchestrator import ReportOrchestrator
             # Use USE_FREE_MODELS environment variable to determine orchestrator model
             use_free_only = os.environ.get('USE_FREE_MODELS', '').lower() == 'true'
-            orchestrator = ReportOrchestrator(llm_manager, use_free_only=use_free_only)
+            # Pass orchestrator model from GUI if available
+            orchestrator_model = getattr(self, 'orchestrator_model', None)
+            orchestrator = ReportOrchestrator(llm_manager, use_free_only=use_free_only, orchestrator_model=orchestrator_model)
             
             orchestrator_success = False
             orchestrated_analysis = None
             
             try:
                 print(f"🚀 Starting orchestrator analysis...")
-                orchestrated_analysis = orchestrator.orchestrate_analysis(ensemble_data)
+                
+                # Create orchestrator progress callback for real-time updates
+                def orchestrator_progress_callback(step, progress, message):
+                    """Callback for orchestrator to report progress in real-time"""
+                    print(f"   🔄 Orchestrator: {message} ({progress}%)")
+                    # Emit progress updates between 90-95%
+                    actual_progress = 90 + (progress * 0.05)  # Map 0-100% to 90-95%
+                    self._emit_progress(3, int(actual_progress), f"Orchestrator: {message}")
+                
+                # Use event-driven orchestrator with progress streaming
+                try:
+                    orchestrated_analysis = orchestrator.orchestrate_analysis_with_progress(
+                        ensemble_data, 
+                        progress_callback=orchestrator_progress_callback
+                    )
+                except AttributeError:
+                    # Fallback: orchestrator doesn't support progress callbacks yet
+                    print(f"   ℹ️  Using standard orchestrator (no progress streaming)")
+                    orchestrated_analysis = orchestrator.orchestrate_analysis(ensemble_data)
+                except Exception as e:
+                    # Any orchestrator failure - use fallback immediately
+                    print(f"   ⚠️  Orchestrator failed ({str(e)[:50]}...), using fallback")
+                    orchestrated_analysis = orchestrator._fallback_extraction(ensemble_data)
                 
                 # Check if orchestrator succeeded (not fallback)
                 if orchestrated_analysis.get("metadata", {}).get("orchestrator_model") != "fallback":
@@ -991,6 +1211,7 @@ class GeneralMedicalPipeline:
                     ensemble_data.update(orchestrated_analysis)
         
         # Step 8: Cache orchestrator response
+        self._emit_progress(3, 92, "Caching analysis results...")
         print(f"\\n💾 STEP 8: Caching {self.case_id} Analysis")
         orchestrator_file = self.cache_orchestrator_response(ensemble_data)
         
@@ -1000,12 +1221,18 @@ class GeneralMedicalPipeline:
             json.dump(ensemble_data, f, indent=2)
         print(f"💾 Saved ensemble data: {ensemble_file.name}")
         
-        # Step 9: Always generate comprehensive report (even with fallback extraction)
-        self._emit_progress(3, 95, "Generating final PDF report...")
-        print(f"\\n📄 STEP 9: Generating {self.case_id} PDF Report")
-        if not orchestrator_success:
-            print(f"   ⚠️  Using fallback extraction data (orchestrator failed)")
-        report_file = self.generate_comprehensive_report(ensemble_data, timestamp)
+        # Step 9: Generate comprehensive PDF report (if enabled)
+        report_file = None
+        if self.enable_pdf:
+            self._emit_progress(3, 95, "Generating final PDF report...")
+            print(f"\\n📄 STEP 9: Generating {self.case_id} PDF Report")
+            if not orchestrator_success:
+                print(f"   ⚠️  Using fallback extraction data (orchestrator failed)")
+            report_file = self.generate_comprehensive_report(ensemble_data, timestamp)
+        else:
+            self._emit_progress(3, 95, "Finalizing analysis and generating report...")
+            print(f"\\n📄 STEP 9: Skipping PDF generation (disabled for faster completion)")
+            print(f"   ℹ️  HTML report will still be available via web interface")
         
         total_time = time.time() - start_time
         
@@ -1028,16 +1255,31 @@ class GeneralMedicalPipeline:
         print(f"   • {len(geo_dist)} countries represented in analysis")
         print(f"   • Comprehensive bias analysis completed")
         
-        # Final completion signal
-        self._emit_progress(3, 100, "Analysis complete!")
+        # Pipeline analysis complete, preparing final report
+        self._emit_progress(3, 95, "Finalizing analysis and generating report...")
+        print(f"🔍 DEBUG: After final _emit_progress for {self.case_id}")
         
-        return {
+        # Prepare results
+        results = {
             'report_file': report_file,
             'data_file': str(ensemble_file),
             'orchestrator_file': str(orchestrator_file),
             'consensus_results': consensus_results,
             'total_models': len(all_responses)
         }
+        
+        print(f"🔍 DEBUG: About to check completion callback for {self.case_id}")
+        print(f"🔍 DEBUG: Completion callback exists: {bool(self.completion_callback)}")
+        
+        # Call completion callback if provided (ensures immediate handover to web orchestrator)
+        if self.completion_callback:
+            try:
+                print(f"🔗 Calling completion callback for {self.case_id}")
+                self.completion_callback(self.case_id, results)
+            except Exception as callback_error:
+                print(f"⚠️ Completion callback failed for {self.case_id}: {callback_error}")
+        
+        return results
     
     def _get_icd_code(self, diagnosis):
         """Get ICD-10 code for diagnosis using comprehensive database"""

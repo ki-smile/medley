@@ -50,12 +50,12 @@ def get_comprehensive_model_metadata() -> Dict[str, Dict[str, Any]]:
             "cost_tier": "Budget"
         },
         
-        "openai/gpt-oss-120b": {
+        "openai/gpt-oss-20b:free": {
             "provider": "OpenAI",
             "origin_country": "USA",
             "release_date": "2025-08-05",
-            "parameters": "117B total, 5.1B active (MoE)",
-            "architecture": "Mixture-of-Experts Transformer", 
+            "parameters": "20B",
+            "architecture": "Open Source Transformer", 
             "training_cutoff": "2025-06",
             "bias_characteristics": {
                 "primary_biases": ["Open-weight but trained on Western data"],
@@ -64,7 +64,7 @@ def get_comprehensive_model_metadata() -> Dict[str, Dict[str, Any]]:
                 "socioeconomic_bias": "Consumer hardware optimization may democratize access"
             },
             "strengths": ["Open-weight", "Apache 2.0 license", "Efficient inference", "Strong reasoning"],
-            "limitations": ["Still Western-trained", "MoE complexity", "Large memory requirements"],
+            "limitations": ["Still Western-trained", "Smaller than 120B version"],
             "cost_tier": "Free"
         },
         
