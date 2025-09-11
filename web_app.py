@@ -543,9 +543,13 @@ def view_shared_analysis(share_id):
 @app.route('/api/cases')
 @cache.cached(timeout=600)  # Cache for 10 minutes
 def get_cases():
-    """Get list of pre-defined cases"""
+    """Get list of pre-defined cases (excluding custom cases)"""
     cases = []
     for case_key, case_info in PREDEFINED_CASES.items():
+        # Skip custom cases - they shouldn't appear in the main list
+        if case_info.get('custom', False) or case_key.startswith('custom_'):
+            continue
+            
         # Check if we have cached results
         case_id = case_info['id']
         report_pattern = f"FINAL_{case_id}_*.pdf"
@@ -601,6 +605,12 @@ def get_case_report(case_key):
     if not json_files:
         json_pattern = f"{case_id}_ensemble_data_*.json"
         json_files = list(REPORTS_DIR.glob(json_pattern))
+    
+    # Fallback: If glob with wildcard fails, manually search for the file
+    if not json_files:
+        # List all files and filter manually (workaround for glob issues)
+        all_files = list(REPORTS_DIR.glob("*.json"))
+        json_files = [f for f in all_files if f.name.startswith(f"{case_id}_ensemble_data")]
     
     # If still not found, try orchestrator cache directory
     if not json_files:
@@ -1354,6 +1364,12 @@ def get_model_responses(case_key):
     if not json_files:
         json_pattern = f"{case_id}_ensemble_data_*.json"
         json_files = list(REPORTS_DIR.glob(json_pattern))
+    
+    # Fallback: If glob with wildcard fails, manually search for the file
+    if not json_files:
+        # List all files and filter manually (workaround for glob issues)
+        all_files = list(REPORTS_DIR.glob("*.json"))
+        json_files = [f for f in all_files if f.name.startswith(f"{case_id}_ensemble_data")]
     
     # If still not found, try orchestrator cache directory
     if not json_files:
