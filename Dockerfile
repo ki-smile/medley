@@ -40,7 +40,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Create non-root user for security and setup cron
 RUN groupadd -r medley && \
     useradd -r -g medley -d /app -s /bin/bash medley && \
-    mkdir -p /app/logs /app/reports /app/cache /app/flask_session /var/log && \
+    mkdir -p /app/logs /app/reports /app/cache/responses /app/cache/orchestrator /app/flask_session /var/log && \
     chown -R medley:medley /app && \
     chmod 666 /var/log && \
     touch /var/log/cron.log && \
@@ -61,7 +61,9 @@ RUN chmod -R 755 /app && \
     chmod +x /app/scripts/cleanup_custom_cases.sh && \
     chmod +x /app/scripts/setup_cron.sh && \
     chmod +x /app/scripts/cleanup_daemon.py && \
-    chmod +x /app/scripts/docker-entrypoint.sh
+    chmod +x /app/scripts/docker-entrypoint.sh && \
+    chmod -R 755 /app/cache /app/reports /app/flask_session && \
+    chown -R medley:medley /app/cache /app/reports /app/flask_session
 
 # Switch to non-root user
 USER medley
