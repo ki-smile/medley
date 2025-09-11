@@ -153,6 +153,16 @@
                 Analysis Complete
             </h2>
             
+            <!-- Analysis Summary -->
+            <div id="analysis-summary" style="padding: 16px; background: var(--md-sys-color-primary-container); 
+                                           border-radius: 12px; margin-bottom: 24px; color: var(--md-sys-color-on-primary-container);
+                                           font-size: 16px; font-weight: 500; text-align: center;">
+                📊 Analysis Summary<br>
+                ✅ <span id="success-count">0</span> models succeeded<br>
+                ❌ <span id="failure-count">0</span> models failed<br>
+                📈 <span id="success-rate">0</span>% success rate
+            </div>
+            
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; margin-bottom: 24px;">
                 <div style="text-align: center;">
                     <div style="font-size: 32px; font-weight: bold; color: var(--md-sys-color-primary);" id="models-count">0</div>
@@ -259,115 +269,349 @@ let analysisStartTime;
 let analysisData = {};
 let currentAnalysisId = null;
 let failedModels = [];
+let reconnectAttempts = 0;
+let maxReconnectAttempts = 5;
+let analysisStatusCheckInterval = null;
+
+// Connection recovery functions
+function startAnalysisStatusPolling(analysisId) {
+    console.log('🔄 Starting analysis status polling for:', analysisId);
+    
+    analysisStatusCheckInterval = setInterval(async () => {
+        try {
+            const response = await fetch(`/api/analyze/${analysisId}/status`);
+            const data = await response.json();
+            
+            console.log('📊 Analysis status poll result:', data);
+            
+            if (data.status === 'completed') {
+                clearInterval(analysisStatusCheckInterval);
+                updateProgress(100, 'Analysis recovered - completed!');
+                
+                // Simulate the completion event
+                showResults({
+                    results: {
+                        report_file: data.report_file,
+                        data_file: data.data_file,
+                        total_models: 10 // Default fallback
+                    }
+                });
+                
+            } else if (data.status === 'failed') {
+                clearInterval(analysisStatusCheckInterval);
+                updateProgress(0, `Analysis failed: ${data.error || 'Unknown error'}`);
+                document.getElementById('progress-bar').style.backgroundColor = 'var(--md-sys-color-error)';
+                
+            } else if (data.status === 'running') {
+                // Still running, continue polling
+                const elapsed = data.elapsed_time || 0;
+                updateProgress(Math.min(90, elapsed / 3), `Analysis in progress (${elapsed}s elapsed)...`);
+            }
+            
+        } catch (error) {
+            console.error('❌ Error polling analysis status:', error);
+        }
+    }, 5000); // Poll every 5 seconds
+}
+
+function handleConnectionLoss(analysisId) {
+    console.log('⚠️ WebSocket connection lost, starting recovery for:', analysisId);
+    
+    updateProgress(null, '⚠️ Connection lost - attempting to recover...');
+    
+    // Start status polling as fallback
+    startAnalysisStatusPolling(analysisId);
+    
+    // Attempt to reconnect WebSocket
+    if (reconnectAttempts < maxReconnectAttempts) {
+        reconnectAttempts++;
+        
+        setTimeout(() => {
+            console.log(`🔄 Reconnect attempt ${reconnectAttempts}/${maxReconnectAttempts}`);
+            
+            if (socket && !socket.connected) {
+                socket.connect();
+                
+                // Re-join analysis room
+                socket.emit('join_analysis', { analysis_id: analysisId });
+                
+                updateProgress(null, `Reconnecting... (attempt ${reconnectAttempts}/${maxReconnectAttempts})`);
+            }
+        }, 2000 * reconnectAttempts); // Exponential backoff
+    } else {
+        updateProgress(null, '❌ Connection lost - using fallback status polling');
+    }
+}
 
 function startAnalysis() {
-    const caseText = document.getElementById('case-text').value.trim();
-    const caseTitle = document.getElementById('case-title').value || 'Custom Medical Case';
+    console.log('🚀 startAnalysis() called');
     
-    if (caseText.length < 100) {
-        alert('Please enter at least 100 characters of case description');
-        return;
+    try {
+        const caseText = document.getElementById('case-text').value.trim();
+        const caseTitle = document.getElementById('case-title').value || 'Custom Medical Case';
+        
+        console.log('📝 Case text length:', caseText.length);
+        console.log('📋 Case title:', caseTitle);
+        
+        if (caseText.length < 100) {
+            console.warn('❌ Case text too short:', caseText.length);
+            alert('Please enter at least 100 characters of case description');
+            return;
+        }
+        
+        console.log('✅ Case validation passed');
+        
+        // Show progress section
+        console.log('📊 Showing progress section');
+        const progressSection = document.getElementById('progress-section');
+        const resultsSection = document.getElementById('results-section');
+        
+        if (!progressSection) {
+            console.error('❌ progress-section element not found');
+            alert('Error: Progress section not found. Please refresh the page.');
+            return;
+        }
+        
+        progressSection.style.display = 'block';
+        if (resultsSection) {
+            resultsSection.style.display = 'none';
+        }
+        
+        // Initialize progress
+        analysisStartTime = Date.now();
+        console.log('⏰ Analysis start time:', analysisStartTime);
+        
+        updateProgress(0, 'Initializing analysis...');
+        
+        // Create model status cards
+        createModelStatusCards();
+        
+        // Generate analysis ID
+        const analysisId = 'custom_' + Date.now();
+        currentAnalysisId = analysisId;
+        console.log('🔢 Analysis ID:', analysisId);
+        
+        // Check socket connection
+        if (!socket) {
+            console.error('❌ Socket not initialized');
+            alert('Error: WebSocket not connected. Please refresh the page.');
+            return;
+        }
+        
+        if (!socket.connected) {
+            console.warn('⚠️ Socket not connected, attempting to connect...');
+            socket.connect();
+        }
+        
+        console.log('🔌 Socket status:', socket.connected ? 'connected' : 'disconnected');
+        
+        // Connect to WebSocket for real-time updates
+        console.log('🔗 Connecting to analysis WebSocket...');
+        connectToAnalysis(analysisId, caseTitle, caseText);
+        
+    } catch (error) {
+        console.error('💥 Error in startAnalysis():', error);
+        alert('An error occurred while starting analysis: ' + error.message);
     }
-    
-    // Show progress section
-    document.getElementById('progress-section').style.display = 'block';
-    document.getElementById('results-section').style.display = 'none';
-    
-    // Initialize progress
-    analysisStartTime = Date.now();
-    updateProgress(0, 'Initializing analysis...');
-    
-    // Generate analysis ID
-    const analysisId = 'custom_' + Date.now();
-    currentAnalysisId = analysisId;
-    
-    // Connect to WebSocket for real-time updates
-    connectToAnalysis(analysisId, caseTitle, caseText);
 }
 
 function updateProgress(percentage, message) {
-    document.getElementById('progress-percentage').textContent = percentage + '%';
-    document.getElementById('progress-bar').style.width = percentage + '%';
+    console.log('📊 updateProgress called with:', { percentage, message });
     
-    if (message) {
-        const messageDiv = document.getElementById('progress-messages');
-        messageDiv.innerHTML += `<div>[${new Date().toLocaleTimeString()}] ${message}</div>`;
-        messageDiv.scrollTop = messageDiv.scrollHeight;
+    try {
+        document.getElementById('progress-percentage').textContent = percentage + '%';
+        document.getElementById('progress-bar').style.width = percentage + '%';
+        
+        if (message && typeof message === 'string') {
+            const messageDiv = document.getElementById('progress-messages');
+            const safeMessage = String(message); // Ensure it's a string
+            const timestamp = new Date().toLocaleTimeString();
+            messageDiv.innerHTML += `<div>[${timestamp}] ${safeMessage}</div>`;
+            messageDiv.scrollTop = messageDiv.scrollHeight;
+        } else if (message) {
+            console.warn('⚠️ Invalid message type:', typeof message, message);
+        }
+    } catch (error) {
+        console.error('💥 Error in updateProgress:', error, { percentage, message });
     }
 }
 
 function connectToAnalysis(analysisId, caseTitle, caseText) {
-    // Join analysis room for updates
-    socket.emit('join_analysis', {analysis_id: analysisId});
+    console.log('🔗 connectToAnalysis() called with ID:', analysisId);
     
-    // Set up event listeners for this analysis
-    socket.once('analysis_started', function(data) {
-        updateProgress(5, 'Analysis started. Analysis ID: ' + (data.analysis_id || analysisId));
-        if (data.websocket_channel) {
-            // Join the specific channel
-            socket.emit('join_analysis', {analysis_id: data.analysis_id});
-        }
-    });
-    
-    socket.on('model_progress', function(data) {
-        if (!currentAnalysisId || data.analysis_id === currentAnalysisId) {
-            const progress = Math.round(data.progress || 0);
-            updateProgress(progress, `Model ${data.model}: ${data.status}`);
-            
-            // Track failed models
-            if (data.status === 'failed') {
-                failedModels.push({
-                    name: data.model,
-                    error: data.error || 'Unknown error'
-                });
+    try {
+        // Join analysis room for updates
+        console.log('📡 Emitting join_analysis event');
+        socket.emit('join_analysis', {analysis_id: analysisId});
+        
+        // Set up event listeners for this analysis
+        console.log('👂 Setting up WebSocket event listeners');
+        
+        // Add connection event handlers
+        socket.on('connect', function() {
+            console.log('✅ WebSocket reconnected');
+            reconnectAttempts = 0; // Reset counter on successful connection
+            if (currentAnalysisId) {
+                socket.emit('join_analysis', { analysis_id: currentAnalysisId });
+                updateProgress(null, '✅ Connection restored');
             }
-            
-            if (data.response) {
-                updateProgress(null, `   → Diagnosis: ${data.response}`);
+        });
+        
+        socket.on('disconnect', function() {
+            console.log('❌ WebSocket disconnected');
+            if (currentAnalysisId) {
+                handleConnectionLoss(currentAnalysisId);
             }
-        }
-    });
-    
-    socket.on('analysis_complete', function(data) {
-        if (!currentAnalysisId || data.analysis_id === currentAnalysisId) {
-            showResults(data);
-            // Leave the room
-            socket.emit('leave_analysis', {analysis_id: currentAnalysisId});
-            // Clean up listeners
-            socket.off('model_progress');
-            socket.off('analysis_complete');
-            socket.off('analysis_error');
-        }
-    });
-    
-    socket.on('analysis_error', function(data) {
-        if (!currentAnalysisId || data.analysis_id === currentAnalysisId) {
-            updateProgress(data.progress || 0, `ERROR: ${data.message}`);
-            document.getElementById('progress-bar').style.backgroundColor = 'var(--md-sys-color-error)';
-            // Clean up listeners
-            socket.off('model_progress');
-            socket.off('analysis_complete');
-            socket.off('analysis_error');
-        }
-    });
-    
-    // Emit analyze event
-    socket.emit('analyze_case', {
-        case_id: analysisId,
-        case_title: caseTitle,
-        case_text: caseText,
-        use_free_models: document.getElementById('use-free-models').checked,  // Use the checkbox value
-        selected_models: getSelectedModels(),  // Get selected models if any
-        api_key: localStorage.getItem('openrouter_api_key')
-    });
+        });
+        
+        socket.once('analysis_started', function(data) {
+            console.log('✅ Received analysis_started event:', data);
+            updateProgress(5, 'Analysis started. Analysis ID: ' + (data.analysis_id || analysisId));
+            if (data.websocket_channel) {
+                console.log('📺 Joining specific channel:', data.analysis_id);
+                // Join the specific channel
+                socket.emit('join_analysis', {analysis_id: data.analysis_id});
+            }
+        });
+        
+        socket.on('model_progress', function(data) {
+            console.log('📊 Model progress event:', data);
+            console.log('📊 Raw event keys:', Object.keys(data));
+            console.log('📊 Event analysis_id:', data.analysis_id);
+            console.log('📊 Event message:', data.message);
+            console.log('📊 Event current_model:', data.current_model);
+            console.log('📊 Event model_status:', data.model_status);
+            
+            if (!currentAnalysisId || data.analysis_id === currentAnalysisId) {
+                const progress = Math.round(data.progress || 0);
+                
+                // Safely construct the message with null checks
+                const modelName = data.model || 'Unknown Model';
+                const status = data.status || 'processing';
+                const message = `Model ${modelName}: ${status}`;
+                console.log('📊 Progress update:', { progress, message, modelName, status });
+                
+                updateProgress(progress, message);
+                
+                // Update model status cards with detailed logging
+                console.log('🔄 About to call updateModelStatusFromProgress with:', data);
+                updateModelStatusFromProgress(data);
+                
+                // Track failed models
+                if (data.status === 'failed') {
+                    failedModels.push({
+                        name: data.model || 'Unknown Model',
+                        error: data.error || 'Unknown error'
+                    });
+                }
+                
+                if (data.response) {
+                    updateProgress(null, `   → Diagnosis: ${data.response}`);
+                }
+            }
+        });
+        
+        socket.on('analysis_complete', function(data) {
+            console.log('🎉 Received analysis_complete event:', data);
+            if (!currentAnalysisId || data.analysis_id === currentAnalysisId) {
+                showResults(data);
+                // Leave the room
+                socket.emit('leave_analysis', {analysis_id: currentAnalysisId});
+                // Clean up listeners
+                socket.off('model_progress');
+                socket.off('analysis_complete');
+                socket.off('analysis_error');
+            }
+        });
+        
+        socket.on('analysis_error', function(data) {
+            console.error('💥 Received analysis_error event:', data);
+            if (!currentAnalysisId || data.analysis_id === currentAnalysisId) {
+                updateProgress(data.progress || 0, `ERROR: ${data.message}`);
+                document.getElementById('progress-bar').style.backgroundColor = 'var(--md-sys-color-error)';
+                // Clean up listeners
+                socket.off('model_progress');
+                socket.off('analysis_complete');
+                socket.off('analysis_error');
+            }
+        });
+        
+        // Prepare analysis data
+        const useFreeModels = document.getElementById('use-free-models').checked;
+        const selectedModels = getSelectedModels();
+        const apiKey = localStorage.getItem('openrouter_api_key');
+        
+        console.log('📊 Analysis parameters:');
+        console.log('  - Use free models:', useFreeModels);
+        console.log('  - Selected models:', selectedModels);
+        console.log('  - API key present:', !!apiKey);
+        console.log('  - Case text length:', caseText.length);
+        
+        // Emit analyze event
+        const payload = {
+            case_id: analysisId,
+            case_title: caseTitle,
+            case_text: caseText,
+            use_free_models: useFreeModels,
+            selected_models: selectedModels,
+            api_key: apiKey
+        };
+        
+        console.log('🚀 Emitting analyze_case event with payload:', payload);
+        socket.emit('analyze_case', payload);
+        
+        console.log('✅ analyze_case event emitted successfully');
+        
+    } catch (error) {
+        console.error('💥 Error in connectToAnalysis():', error);
+        alert('Error connecting to analysis: ' + error.message);
+    }
 }
 
 function showResults(data) {
+    console.log('🎉 showResults called with data:', data);
+    
+    // Update currentAnalysisId with the final ID from backend if available
+    if (data && data.analysis_id) {
+        console.log('🔄 Updating currentAnalysisId from:', currentAnalysisId, 'to:', data.analysis_id);
+        currentAnalysisId = data.analysis_id;
+    } else if (data && data.results && data.results.case_id) {
+        console.log('🔄 Updating currentAnalysisId from:', currentAnalysisId, 'to:', data.results.case_id);
+        currentAnalysisId = data.results.case_id;
+    }
+    
     const timeTaken = Math.floor((Date.now() - analysisStartTime) / 1000);
     
-    // Update results with actual data or defaults
+    // Calculate model statistics from status cards
+    const modelCards = document.querySelectorAll('[id^="status-"]');
+    let successCount = 0;
+    let failedCount = 0;
+    let totalModels = modelCards.length;
+    
+    modelCards.forEach(card => {
+        const status = card.textContent;
+        if (status === '✅') {
+            successCount++;
+        } else if (status === '❌') {
+            failedCount++;
+        }
+    });
+    
+    // If no failed models detected from status cards, use failedModels array
+    if (failedCount === 0 && failedModels.length > 0) {
+        failedCount = failedModels.length;
+    }
+    
+    const successRate = totalModels > 0 ? Math.round((successCount / totalModels) * 100) : 0;
+    
+    console.log('📊 Model statistics:', {
+        totalModels, successCount, failedCount, successRate, 
+        failedModelsArray: failedModels.length
+    });
+    
+    // Update results with calculated data
     const results = data?.results || {};
-    document.getElementById('models-count').textContent = results.models_responded || '31';
+    document.getElementById('models-count').textContent = successCount;
     document.getElementById('consensus-percentage').textContent = 
         results.primary_diagnosis?.agreement_percentage ? 
         Math.round(results.primary_diagnosis.agreement_percentage) + '%' : '0%';
@@ -375,47 +619,74 @@ function showResults(data) {
         (results.alternatives_count || 0) + (results.minority_count || 0) + 1;
     document.getElementById('time-taken').textContent = timeTaken + 's';
     
+    // Update analysis summary elements
+    const successCountElement = document.getElementById('success-count');
+    const failureCountElement = document.getElementById('failure-count'); 
+    const successRateElement = document.getElementById('success-rate');
+    
+    if (successCountElement) successCountElement.textContent = successCount;
+    if (failureCountElement) failureCountElement.textContent = failedCount;
+    if (successRateElement) successRateElement.textContent = successRate;
+    
+    console.log('✅ Updated analysis summary:', { successCount, failedCount, successRate });
+    
     // Show failed models if any
-    if (failedModels.length > 0) {
+    if (failedCount > 0 || failedModels.length > 0) {
         document.getElementById('failed-models-section').style.display = 'block';
-        document.getElementById('failed-count').textContent = failedModels.length;
+        document.getElementById('failed-count').textContent = Math.max(failedCount, failedModels.length);
         const failedList = document.getElementById('failed-models-list');
         failedList.innerHTML = failedModels.map(m => 
             `<div>• ${m.name}: ${m.error}</div>`
         ).join('');
     }
     
-    // Update report links if available
-    if (data?.report_url) {
-        const viewBtn = document.querySelector('[onclick="viewReport()"]');
-        if (viewBtn) {
-            viewBtn.onclick = function() {
-                window.location.href = data.report_url;
-            };
-        }
-    }
-    if (data?.pdf_url) {
-        const pdfBtn = document.querySelector('[onclick="downloadPDF()"]');
-        if (pdfBtn) {
-            pdfBtn.onclick = function() {
-                window.location.href = data.pdf_url;
-            };
-        }
-    }
+    // The report links are now handled by the updated viewReport() and downloadPDF() functions
+    // which use the currentAnalysisId variable directly
+    console.log('🔗 Report links ready for analysis:', currentAnalysisId);
+    
+    // Mark all successful models as completed
+    updateAllCompletedModels();
     
     // Show results section
     document.getElementById('results-section').style.display = 'block';
     updateProgress(100, 'Analysis complete!');
 }
 
+// Helper function to mark all models as completed
+function updateAllCompletedModels() {
+    const modelCards = document.querySelectorAll('[id^="status-"]');
+    modelCards.forEach(statusElement => {
+        if (statusElement.textContent === '⏳' || statusElement.textContent === '🔄') {
+            // Mark as completed if not already failed
+            const isFailedModel = failedModels.some(fm => {
+                const modelName = statusElement.id.replace('status-', '').replace(/-/g, ' ');
+                return fm.name.toLowerCase().includes(modelName.toLowerCase());
+            });
+            
+            if (!isFailedModel) {
+                statusElement.textContent = '✅';
+                statusElement.style.color = 'var(--md-sys-color-tertiary)';
+            }
+        }
+    });
+}
+
 function viewReport() {
-    // TODO: Navigate to report viewer
-    alert('Report viewer coming soon!');
+    if (currentAnalysisId) {
+        console.log('📄 Opening report for current analysis:', currentAnalysisId);
+        window.location.href = `/case/${currentAnalysisId}`;
+    } else {
+        alert('No analysis ID available');
+    }
 }
 
 function downloadPDF() {
-    // TODO: Trigger PDF download
-    alert('PDF download coming soon!');
+    if (currentAnalysisId) {
+        console.log('📑 Downloading PDF for current analysis:', currentAnalysisId);
+        window.location.href = `/api/analyze/${currentAnalysisId}/download`;
+    } else {
+        alert('No analysis ID available');
+    }
 }
 
 function analyzeAnother() {
@@ -458,24 +729,85 @@ function retryFailedModels() {
 }
 
 // Model selection functions
-const availableModels = [
-    // Free Models
+let availableModels = [
+    // Immediate fallback models to ensure the page is never empty
     {id: 'google/gemini-2.0-flash-exp:free', name: 'Gemini 2.0 Flash', free: true, origin: 'USA'},
     {id: 'google/gemini-1.5-flash:free', name: 'Gemini 1.5 Flash', free: true, origin: 'USA'},
     {id: 'meta-llama/llama-3.2-3b-instruct:free', name: 'Llama 3.2 3B', free: true, origin: 'USA'},
     {id: 'meta-llama/llama-3.1-8b-instruct:free', name: 'Llama 3.1 8B', free: true, origin: 'USA'},
     {id: 'microsoft/phi-3-mini-128k-instruct:free', name: 'Phi-3 Mini', free: true, origin: 'USA'},
     {id: 'mistralai/mistral-7b-instruct:free', name: 'Mistral 7B', free: true, origin: 'France'},
-    {id: 'qwen/qwen-2-7b-instruct:free', name: 'Qwen 2 7B', free: true, origin: 'China'},
-    {id: 'nousresearch/hermes-3-llama-3.1-8b:free', name: 'Hermes 3', free: true, origin: 'USA'},
-    
-    // Paid Models (if not using free-only mode)
-    {id: 'openai/gpt-4o', name: 'GPT-4o', free: false, origin: 'USA'},
-    {id: 'anthropic/claude-3-opus', name: 'Claude 3 Opus', free: false, origin: 'USA'},
-    {id: 'google/gemini-pro-1.5', name: 'Gemini Pro 1.5', free: false, origin: 'USA'},
-    {id: 'deepseek/deepseek-chat', name: 'DeepSeek V3', free: false, origin: 'China'},
-    {id: 'mistralai/mistral-large', name: 'Mistral Large', free: false, origin: 'France'}
+    {id: 'nousresearch/hermes-3-llama-3.1-8b:free', name: 'Hermes 3', free: true, origin: 'USA'}
 ];
+
+// Fetch available models from API
+function loadAvailableModels() {
+    console.log('Loading available models from API...');
+    
+    fetch('/api/available_models?t=' + Date.now())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('API Response:', data);
+            
+            if (!data || (!data.free && !data.paid)) {
+                throw new Error('Invalid API response format');
+            }
+            
+            // Combine free and paid models, marking them appropriately
+            availableModels = [
+                ...(data.free || []).map(model => ({...model, free: true})),
+                ...(data.paid || []).map(model => ({...model, free: false}))
+            ];
+            
+            console.log(`✅ Loaded ${availableModels.length} models (${(data.free || []).length} free, ${(data.paid || []).length} paid)`);
+            
+            // Always populate model selection after loading if not in free-only mode
+            if (!document.getElementById('use-free-models').checked) {
+                populateModelSelection();
+            }
+            
+            // Trigger a custom event to indicate models are loaded
+            document.dispatchEvent(new CustomEvent('modelsLoaded', { detail: { models: availableModels } }));
+        })
+        .catch(error => {
+            console.error('❌ Failed to load available models:', error);
+            
+            // Fallback to hardcoded models if API fails
+            availableModels = [
+                // Free Models (fallback)
+                {id: 'google/gemini-2.0-flash-exp:free', name: 'Gemini 2.0 Flash', free: true, origin: 'USA'},
+                {id: 'google/gemini-1.5-flash:free', name: 'Gemini 1.5 Flash', free: true, origin: 'USA'},
+                {id: 'meta-llama/llama-3.2-3b-instruct:free', name: 'Llama 3.2 3B', free: true, origin: 'USA'},
+                {id: 'meta-llama/llama-3.1-8b-instruct:free', name: 'Llama 3.1 8B', free: true, origin: 'USA'},
+                {id: 'microsoft/phi-3-mini-128k-instruct:free', name: 'Phi-3 Mini', free: true, origin: 'USA'},
+                {id: 'mistralai/mistral-7b-instruct:free', name: 'Mistral 7B', free: true, origin: 'France'},
+                {id: 'qwen/qwen-2-7b-instruct:free', name: 'Qwen 2 7B', free: true, origin: 'China'},
+                {id: 'nousresearch/hermes-3-llama-3.1-8b:free', name: 'Hermes 3', free: true, origin: 'USA'},
+                
+                // Paid Models (fallback)
+                {id: 'openai/gpt-4o', name: 'GPT-4o', free: false, origin: 'USA'},
+                {id: 'anthropic/claude-3-opus', name: 'Claude 3 Opus', free: false, origin: 'USA'},
+                {id: 'google/gemini-pro-1.5', name: 'Gemini Pro 1.5', free: false, origin: 'USA'},
+                {id: 'deepseek/deepseek-chat', name: 'DeepSeek V3', free: false, origin: 'China'},
+                {id: 'mistralai/mistral-large', name: 'Mistral Large', free: false, origin: 'France'}
+            ];
+            
+            console.log(`🔄 Using fallback models: ${availableModels.length} models`);
+            
+            // Populate with fallback models if not in free-only mode
+            if (!document.getElementById('use-free-models').checked) {
+                populateModelSelection();
+            }
+            
+            // Trigger event even with fallback models
+            document.dispatchEvent(new CustomEvent('modelsLoaded', { detail: { models: availableModels, fallback: true } }));
+        });
+}
 
 function populateModelSelection() {
     const container = document.getElementById('model-checkboxes');
@@ -530,7 +862,18 @@ function getSelectedModels() {
 document.getElementById('use-free-models').addEventListener('change', function() {
     if (!this.checked) {
         document.getElementById('model-selection').style.display = 'block';
-        populateModelSelection();
+        // Only populate if models are loaded, otherwise wait for them
+        if (availableModels.length > 0) {
+            populateModelSelection();
+        } else {
+            console.log('Models not loaded yet, will populate when available');
+            // Listen for models to load
+            document.addEventListener('modelsLoaded', function(event) {
+                if (!document.getElementById('use-free-models').checked) {
+                    populateModelSelection();
+                }
+            }, { once: true });
+        }
     } else {
         document.getElementById('model-selection').style.display = 'none';
     }
@@ -636,13 +979,453 @@ function createShareableLink() {
     });
 }
 
+// Check for ongoing analyses on page load
+async function checkForOngoingAnalyses() {
+    try {
+        console.log('🔍 Checking for ongoing analyses...');
+        const response = await fetch('/api/user/analyses');
+        const data = await response.json();
+        
+        if (data.analyses && data.analyses.length > 0) {
+            // Find any running analyses
+            const runningAnalyses = data.analyses.filter(a => a.status === 'running');
+            
+            if (runningAnalyses.length > 0) {
+                const mostRecent = runningAnalyses[0]; // Already sorted by most recent
+                console.log('🔄 Found ongoing analysis:', mostRecent.id);
+                
+                // Show recovery dialog
+                const recover = confirm(
+                    `Found an ongoing analysis: "${mostRecent.title}" (${mostRecent.elapsed_time}s elapsed)\n\n` +
+                    'Would you like to reconnect and monitor its progress?'
+                );
+                
+                if (recover) {
+                    currentAnalysisId = mostRecent.id;
+                    
+                    // Show progress section
+                    document.getElementById('progress-section').style.display = 'block';
+                    updateProgress(50, `Reconnecting to analysis: ${mostRecent.title}`);
+                    
+                    // Create model status cards
+                    createModelStatusCards();
+                    
+                    // Start status polling immediately
+                    startAnalysisStatusPolling(mostRecent.id);
+                    
+                    // Try to join WebSocket room
+                    if (socket && socket.connected) {
+                        socket.emit('join_analysis', { analysis_id: mostRecent.id });
+                    }
+                }
+            }
+            
+            // Show completed analyses
+            const completedAnalyses = data.analyses.filter(a => a.status === 'completed');
+            if (completedAnalyses.length > 0) {
+                console.log(`📄 Found ${completedAnalyses.length} completed analyses`);
+                // Could show a notification or recent analyses list here
+            }
+        }
+        
+    } catch (error) {
+        console.error('❌ Error checking ongoing analyses:', error);
+    }
+}
+
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', function() {
-    // Check if free models is checked by default
-    if (!document.getElementById('use-free-models').checked) {
-        populateModelSelection();
+    console.log('DOM loaded, initializing analyze page...');
+    
+    // Check for ongoing analyses and attempt recovery
+    checkForOngoingAnalyses();
+    
+    // Load available models from API with retry mechanism
+    let retryCount = 0;
+    const maxRetries = 3;
+    
+    function tryLoadModels() {
+        if (availableModels.length === 0 && retryCount < maxRetries) {
+            console.log(`Loading models (attempt ${retryCount + 1}/${maxRetries})...`);
+            loadAvailableModels();
+            retryCount++;
+            
+            // Retry after 1 second if models didn't load
+            setTimeout(() => {
+                if (availableModels.length === 0 && retryCount < maxRetries) {
+                    console.log('Models not loaded, retrying...');
+                    tryLoadModels();
+                }
+            }, 1000);
+        }
     }
+    
+    // Start loading models
+    tryLoadModels();
+    
+    // Add debug click listener to analyze button
+    const analyzeBtn = document.getElementById('analyze-btn');
+    if (analyzeBtn) {
+        console.log('🔘 Adding debug click listener to analyze button');
+        analyzeBtn.addEventListener('click', function(event) {
+            console.log('🖱️ Analyze button clicked!', event);
+            console.log('📝 Button element:', this);
+            console.log('🎯 Event target:', event.target);
+        });
+    } else {
+        console.error('❌ Analyze button not found!');
+    }
+    
+    // Listen for successful model loading
+    document.addEventListener('modelsLoaded', function(event) {
+        console.log('Models loaded event received:', event.detail);
+        
+        // Populate model selection if not in free-only mode
+        if (!document.getElementById('use-free-models').checked) {
+            setTimeout(populateModelSelection, 100); // Small delay to ensure DOM is ready
+        }
+    });
+    
+    // Fallback: if models still aren't loaded after 5 seconds, force populate
+    setTimeout(() => {
+        if (availableModels.length === 0) {
+            console.warn('Models not loaded after 5 seconds, forcing fallback...');
+            // Trigger the fallback manually
+            availableModels = [
+                {id: 'google/gemini-2.0-flash-exp:free', name: 'Gemini 2.0 Flash', free: true, origin: 'USA'},
+                {id: 'google/gemini-1.5-flash:free', name: 'Gemini 1.5 Flash', free: true, origin: 'USA'},
+                {id: 'meta-llama/llama-3.2-3b-instruct:free', name: 'Llama 3.2 3B', free: true, origin: 'USA'},
+                {id: 'meta-llama/llama-3.1-8b-instruct:free', name: 'Llama 3.1 8B', free: true, origin: 'USA'},
+                {id: 'microsoft/phi-3-mini-128k-instruct:free', name: 'Phi-3 Mini', free: true, origin: 'USA'},
+                {id: 'mistralai/mistral-7b-instruct:free', name: 'Mistral 7B', free: true, origin: 'France'},
+                {id: 'nousresearch/hermes-3-llama-3.1-8b:free', name: 'Hermes 3', free: true, origin: 'USA'}
+            ];
+            if (!document.getElementById('use-free-models').checked) {
+                populateModelSelection();
+            }
+        }
+    }, 5000);
 });
+
+// Model Status Card Functions
+function createModelStatusCards() {
+    console.log('🎨 Creating model status cards');
+    const modelStatusContainer = document.getElementById('model-status');
+    if (!modelStatusContainer) {
+        console.error('❌ Model status container not found');
+        return;
+    }
+    
+    // Clear existing cards
+    modelStatusContainer.innerHTML = '';
+    
+    // Get selected models or default models
+    const selectedModels = getSelectedModels();
+    const useFreeModels = document.getElementById('use-free-models').checked;
+    
+    // Use default model names if available
+    const defaultModelNames = [
+        'DeepSeek Chat v3.1', 'Deepseek R1', 'Gemma 2 9B', 'Gemma 3 12B', 'Lfm 40B',
+        'Llama 3.2 3B', 'Mistral 7B', 'Hermes 3 Llama 3.1 8B', 'Gpt Oss 120B', 'Shisa V2 Llama3.3 70B'
+    ];
+    
+    let modelsToShow = defaultModelNames;
+    
+    // If models are available, use those with display names
+    if (availableModels.length > 0) {
+        if (useFreeModels) {
+            modelsToShow = availableModels.filter(m => m.free).map(m => m.name);
+        } else if (selectedModels && selectedModels.length > 0) {
+            modelsToShow = availableModels.filter(m => selectedModels.includes(m.id)).map(m => m.name);
+        } else {
+            modelsToShow = availableModels.map(m => m.name);
+        }
+    }
+    
+    // Create status cards for each model
+    modelsToShow.forEach(modelName => {
+        const modelCard = document.createElement('div');
+        modelCard.id = `model-card-${modelName.replace(/\s+/g, '-').toLowerCase()}`;
+        modelCard.style.cssText = `
+            padding: 12px;
+            border: 1px solid var(--md-sys-color-outline);
+            border-radius: 8px;
+            background: var(--md-sys-color-surface-container);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-height: 48px;
+        `;
+        
+        const statusIcon = document.createElement('span');
+        statusIcon.id = `status-${modelName.replace(/\s+/g, '-').toLowerCase()}`;
+        statusIcon.textContent = '⏳'; // Waiting icon
+        statusIcon.style.fontSize = '16px';
+        
+        const modelNameSpan = document.createElement('span');
+        modelNameSpan.textContent = modelName;
+        modelNameSpan.style.cssText = `
+            flex: 1;
+            font-size: 14px;
+            font-weight: 500;
+        `;
+        
+        modelCard.appendChild(statusIcon);
+        modelCard.appendChild(modelNameSpan);
+        modelStatusContainer.appendChild(modelCard);
+    });
+    
+    console.log(`✅ Created ${modelsToShow.length} model status cards`);
+}
+
+function updateModelStatus(modelId, status) {
+    console.log('🔄 updateModelStatus called with:', modelId, 'status:', status);
+    console.log('🔄 Available status elements on page:', Array.from(document.querySelectorAll('[id^="status-"]')).map(el => el.id));
+    
+    // Create comprehensive model name mapping based on actual backend model IDs and frontend display names
+    const modelNameMap = {
+        // DeepSeek models (backend model name -> frontend status card ID)
+        'deepseek/deepseek-chat-v3.1:free': 'status-deepseek-chat-v3-1',
+        'deepseek-chat-v3.1:free': 'status-deepseek-chat-v3-1',
+        'deepseek/deepseek-r1:free': 'status-deepseek-r1', 
+        'deepseek-r1:free': 'status-deepseek-r1',
+        
+        // Google models
+        'google/gemma-2-9b-it:free': 'status-gemma-2-9b',
+        'gemma-2-9b-it:free': 'status-gemma-2-9b',
+        'google/gemma-3-12b-it:free': 'status-gemma-3-12b',
+        'gemma-3-12b-it:free': 'status-gemma-3-12b',
+        
+        // Meta models  
+        'meta-llama/llama-3.2-3b-instruct:free': 'status-llama-3-2-3b',
+        'llama-3.2-3b-instruct:free': 'status-llama-3-2-3b',
+        
+        // Mistral
+        'mistralai/mistral-7b-instruct:free': 'status-mistral-7b',
+        'mistral-7b-instruct:free': 'status-mistral-7b',
+        
+        // Other models
+        'liquid/lfm-40b:free': 'status-lfm-40b',
+        'lfm-40b:free': 'status-lfm-40b',
+        'nousresearch/hermes-3-llama-3.1-8b:free': 'status-hermes-3-llama-3-1-8b',
+        'hermes-3-llama-3.1-8b:free': 'status-hermes-3-llama-3-1-8b',
+        'openai/gpt-oss-120b:free': 'status-gpt-oss-120b',
+        'gpt-oss-120b:free': 'status-gpt-oss-120b',
+        'shisa-ai/shisa-v2-llama3.3-70b:free': 'status-shisa-v2-llama3-3-70b',
+        'shisa-v2-llama3.3-70b:free': 'status-shisa-v2-llama3-3-70b',
+        'anthropic/claude-3-sonnet-20240229': 'status-claude-3-sonnet-20240229'
+    };
+    
+    // Create additional mapping for the exact models I see in backend logs
+    const backendToFrontendMap = {
+        // From actual backend logs
+        'deepseek/deepseek-chat-v3.1:free': 'status-deepseek-chat-v3-1',
+        'deepseek/deepseek-r1:free': 'status-deepseek-r1',
+        'google/gemma-2-9b-it:free': 'status-gemma-2-9b',
+        'google/gemma-3-12b-it:free': 'status-gemma-3-12b',
+        'liquid/lfm-40b:free': 'status-lfm-40b',
+        'meta-llama/llama-3.2-3b-instruct:free': 'status-llama-3-2-3b',
+        'mistralai/mistral-7b-instruct:free': 'status-mistral-7b',
+        'nousresearch/hermes-3-llama-3.1-8b:free': 'status-hermes-3-llama-3-1-8b',
+        'openai/gpt-oss-120b:free': 'status-gpt-oss-120b',
+        'shisa-ai/shisa-v2-llama3.3-70b:free': 'status-shisa-v2-llama3-3-70b',
+        'anthropic/claude-3-sonnet-20240229': 'status-claude-3-sonnet-20240229'
+    };
+    
+    // Also create reverse mapping from display names to status IDs for debugging
+    const displayNameToStatusId = {
+        'DeepSeek Chat v3.1': 'status-deepseek-chat-v3-1',
+        'Deepseek R1': 'status-deepseek-r1', 
+        'Gemma 2 9B': 'status-gemma-2-9b', 
+        'Gemma 3 12B': 'status-gemma-3-12b',
+        'Llama 3.2 3B': 'status-llama-3-2-3b',
+        'Mistral 7B': 'status-mistral-7b',
+        'Lfm 40B': 'status-lfm-40b',
+        'Hermes 3 Llama 3.1 8B': 'status-hermes-3-llama-3-1-8b',
+        'Gpt Oss 120B': 'status-gpt-oss-120b',
+        'Shisa V2 Llama3.3 70B': 'status-shisa-v2-llama3-3-70b',
+        'Claude 3 Sonnet 20240229': 'status-claude-3-sonnet-20240229'
+    };
+    
+    // Create simplified matching map for common patterns
+    const patternToStatusId = {
+        'deepseek-chat': 'status-deepseek-chat-v3-1',
+        'deepseek-r1': 'status-deepseek-r1',
+        'gemma-2-9b': 'status-gemma-2-9b',
+        'gemma-3-12b': 'status-gemma-3-12b', 
+        'llama-3.2-3b': 'status-llama-3-2-3b',
+        'llama-3-2-3b': 'status-llama-3-2-3b',
+        'mistral-7b': 'status-mistral-7b',
+        'lfm-40b': 'status-lfm-40b',
+        'hermes-3': 'status-hermes-3-llama-3-1-8b',
+        'gpt-oss-120b': 'status-gpt-oss-120b',
+        'shisa-v2': 'status-shisa-v2-llama3-3-70b',
+        'claude-3-sonnet': 'status-claude-3-sonnet-20240229'
+    };
+    
+    // Try direct mapping first - try all maps
+    let statusElement = null;
+    let mappedId = modelNameMap[modelId] || backendToFrontendMap[modelId] || displayNameToStatusId[modelId];
+    
+    // Also try pattern matching
+    if (!mappedId) {
+        for (const [pattern, statusId] of Object.entries(patternToStatusId)) {
+            if (modelId.toLowerCase().includes(pattern.toLowerCase())) {
+                mappedId = statusId;
+                console.log('🎯 Pattern match found:', modelId, 'contains', pattern, '→', mappedId);
+                break;
+            }
+        }
+    }
+    
+    if (mappedId) {
+        statusElement = document.getElementById(mappedId);
+        console.log('✅ Direct mapping found:', modelId, '→', mappedId);
+    }
+    
+    // Fallback: try partial matching
+    if (!statusElement) {
+        console.log('🔍 No direct mapping, trying partial matching for:', modelId);
+        const allStatusElements = document.querySelectorAll('[id^="status-"]');
+        
+        // Extract key parts from model ID
+        const modelParts = modelId.toLowerCase()
+            .replace(/[\/\-:]/g, ' ')
+            .replace(/free|instruct|it/g, '')
+            .split(' ')
+            .filter(part => part.length > 2);
+        
+        console.log('Model parts extracted:', modelParts);
+        
+        for (const element of allStatusElements) {
+            const elementId = element.id.replace('status-', '').toLowerCase();
+            console.log('Checking element:', elementId);
+            
+            // Check if any model parts match the element ID
+            for (const part of modelParts) {
+                if (elementId.includes(part) || part.includes(elementId.replace(/\-/g, ''))) {
+                    statusElement = element;
+                    console.log('✅ Partial match found:', part, '→', elementId);
+                    break;
+                }
+            }
+            
+            if (statusElement) break;
+        }
+    }
+    
+    if (statusElement) {
+        switch(status) {
+            case 'processing':
+                statusElement.textContent = '🔄'; // Processing
+                statusElement.style.color = 'var(--md-sys-color-primary)';
+                break;
+            case 'completed':
+                statusElement.textContent = '✅'; // Completed
+                statusElement.style.color = 'var(--md-sys-color-tertiary)';
+                break;
+            case 'failed':
+                statusElement.textContent = '❌'; // Failed
+                statusElement.style.color = 'var(--md-sys-color-error)';
+                break;
+            default:
+                statusElement.textContent = '⏳'; // Waiting
+                statusElement.style.color = 'var(--md-sys-color-on-surface-variant)';
+        }
+        console.log('✅ Updated status for:', modelId, '→', status, 'Element:', statusElement.id);
+    } else {
+        console.warn('⚠️ Status element not found for model:', modelId);
+        // List available status elements for debugging
+        const availableElements = Array.from(document.querySelectorAll('[id^="status-"]')).map(el => el.id);
+        console.log('Available status elements:', availableElements);
+    }
+}
+
+function updateModelStatusFromProgress(data) {
+    console.log('🔄 updateModelStatusFromProgress called with:', data);
+    console.log('📊 Raw progress data:', JSON.stringify(data, null, 2));
+    
+    if (data.current_model && data.model_status) {
+        console.log('📊 Using direct model status:', data.current_model, '→', data.model_status);
+        updateModelStatus(data.current_model, data.model_status);
+    }
+    
+    // Handle models_status object for batch updates
+    if (data.models_status) {
+        console.log('📊 Updating models status batch:', data.models_status);
+        Object.entries(data.models_status).forEach(([modelId, status]) => {
+            console.log('📊 Batch status update:', modelId, '→', status);
+            updateModelStatus(modelId, status);
+        });
+    }
+    
+    // Parse message for model progress patterns
+    if (data.message) {
+        const message = data.message;
+        console.log('📝 Parsing progress message:', message);
+        
+        // Extract model name from "Analyzing with X..." pattern
+        let currentModel = data.current_model;
+        if (message.includes('Analyzing with')) {
+            const match = message.match(/Analyzing with ([^\.]+)\.{3}/);
+            if (match) {
+                currentModel = match[1].trim();
+                console.log('🔍 Extracted model from "Analyzing with" message:', currentModel);
+                updateModelStatus(currentModel, 'processing');
+            }
+        }
+        
+        // Also look for backend log patterns like "[1/11] deepseek/deepseek-chat-v3.1:free"
+        if (message.includes('[') && message.includes('/') && message.includes(']')) {
+            const backendMatch = message.match(/\[(\d+)\/\d+\]\s+([^\n\r\s]+)/);
+            if (backendMatch) {
+                currentModel = backendMatch[2].trim();
+                console.log('🔍 Extracted model from backend log pattern:', currentModel);
+                updateModelStatus(currentModel, 'processing');
+            }
+        }
+        
+        // Success pattern inside backend logs: "✅ Success: X chars in Y.Zs"
+        if (message.includes('✅ Success:')) {
+            // Extract model name from previous backend log patterns
+            // Look for patterns like "[1/11] deepseek/deepseek-chat-v3.1:free"
+            const modelMatch = message.match(/\[(\d+)\/\d+\]\s+([^\n\r]+)/);
+            if (modelMatch) {
+                currentModel = modelMatch[2].trim();
+                console.log('✅ Model completed from backend log:', currentModel);
+                updateModelStatus(currentModel, 'completed');
+            } else if (currentModel) {
+                console.log('✅ Model completed:', currentModel);
+                updateModelStatus(currentModel, 'completed');
+            }
+        }
+        
+        // Failure patterns: "❌ Error: " or API errors  
+        if (message.includes('❌ Error:') || message.includes('API Error')) {
+            // Extract model name from backend log patterns
+            const modelMatch = message.match(/\[(\d+)\/\d+\]\s+([^\n\r]+)/);
+            if (modelMatch) {
+                currentModel = modelMatch[2].trim();
+                console.log('❌ Model failed from backend log:', currentModel);
+                updateModelStatus(currentModel, 'failed');
+                
+                // Add to failed models list for tracking
+                failedModels.push({
+                    name: currentModel,
+                    error: message.substring(message.indexOf('Error:') + 6).trim()
+                });
+            } else if (currentModel) {
+                console.log('❌ Model failed:', currentModel);
+                updateModelStatus(currentModel, 'failed');
+                
+                failedModels.push({
+                    name: currentModel,
+                    error: message.substring(message.indexOf('Error:') + 6).trim()
+                });
+            }
+        }
+    }
+}
 </script>
 
 <style>

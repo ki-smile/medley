@@ -25,22 +25,26 @@ ENV MEDLEY_VERSION=${BUILD_VERSION} \
 # Set working directory
 WORKDIR /app
 
-# Install system dependencies (DNS will be handled by docker-compose)
+# Install system dependencies including cron for cleanup jobs
 RUN apt-get update && apt-get install -y --no-install-recommends \
     gcc \
     g++ \
     curl \
     wget \
     ca-certificates \
+    cron \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
     && update-ca-certificates
 
-# Create non-root user for security
+# Create non-root user for security and setup cron
 RUN groupadd -r medley && \
     useradd -r -g medley -d /app -s /bin/bash medley && \
-    mkdir -p /app/logs /app/reports /app/cache && \
-    chown -R medley:medley /app
+    mkdir -p /app/logs /app/reports /app/cache /app/flask_session /var/log && \
+    chown -R medley:medley /app && \
+    chmod 666 /var/log && \
+    touch /var/log/cron.log && \
+    chmod 666 /var/log/cron.log
 
 # Copy and install Python dependencies (leverage Docker layer caching)
 COPY requirements.txt requirements_web_minimal.txt ./
@@ -53,7 +57,11 @@ COPY --chown=medley:medley . .
 
 # Set proper permissions
 RUN chmod -R 755 /app && \
-    chmod +x /app/web_app.py
+    chmod +x /app/web_app.py && \
+    chmod +x /app/scripts/cleanup_custom_cases.sh && \
+    chmod +x /app/scripts/setup_cron.sh && \
+    chmod +x /app/scripts/cleanup_daemon.py && \
+    chmod +x /app/scripts/docker-entrypoint.sh
 
 # Switch to non-root user
 USER medley
@@ -65,17 +73,5 @@ EXPOSE 5000
 HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
     CMD curl -f http://localhost:5000/api/health || exit 1
 
-# Production startup with gunicorn (using gevent for DNS fix + WebSocket support)
-CMD ["gunicorn", \
-     "--bind", "0.0.0.0:5000", \
-     "--workers", "1", \
-     "--worker-class", "gevent", \
-     "--worker-connections", "1000", \
-     "--timeout", "120", \
-     "--keep-alive", "5", \
-     "--max-requests", "1000", \
-     "--max-requests-jitter", "100", \
-     "--access-logfile", "-", \
-     "--error-logfile", "-", \
-     "--log-level", "info", \
-     "web_app:app"]
+# Production startup with entrypoint script (includes cleanup daemon)
+CMD ["/app/scripts/docker-entrypoint.sh"]

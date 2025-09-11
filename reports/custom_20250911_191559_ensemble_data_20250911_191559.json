@@ -1,0 +1,1192 @@
+{
+  "case_id": "custom_20250911_191559",
+  "case_title": "A 62-year-old man presents with a two-week history of interm...",
+  "case_content": "A 62-year-old man presents with a two-week history of intermittent, painless gross hematuria, sometimes passing small clots. He denies dysuria, frequency, flank pain, or systemic symptoms such as fever or weight loss. His past history is significant for hypertension and type 2 diabetes, both well controlled, with no previous urinary tract infections or kidney stones. He has a 35-pack-year smoking history and worked as a painter for 30 years. Family history includes lung cancer in his father. On examination, his vitals are stable, the abdomen is soft and non-tender without palpable masses, and digital rectal examination reveals a moderately enlarged but smooth prostate.\n\nUrinalysis shows red blood cells without proteinuria or casts, and renal function is normal. Ultrasound imaging demonstrates normal kidneys but reveals an irregular mass in the bladder wall. This clinical picture, combined with age, smoking, and occupational exposure, raises suspicion for bladder cancer. The next steps include cystoscopy, urine cytology, and CT urogram to confirm diagnosis and stage the disease. Management depends on whether the tumor is non\u2013muscle invasive, which would be approached with transurethral resection and intravesical therapy, or muscle invasive, requiring radical cystectomy or chemoradiation",
+  "model_responses": [
+    {
+      "model_name": "deepseek/deepseek-chat-v3.1:free",
+      "response": "```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"Bladder Cancer\",\n        \"confidence\": 0.9,\n        \"icd_code\": \"C67.9\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Benign Prostatic Hyperplasia\",\n            \"confidence\": 0.3,\n            \"icd_code\": \"N40.0\"\n        },\n        {\n            \"name\": \"Urothelial Cell Carcinoma\",\n            \"confidence\": 0.7,\n            \"icd_code\": \"C67.9\"\n        },\n        {\n            \"name\": \"Renal Cell Carcinoma\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"C64.1\"\n        },\n        {\n            \"name\": \"Urinary Tract Infection\",\n            \"confidence\": 0.1,\n            \"icd_code\": \"N39.0\"\n        },\n        {\n            \"name\": \"Bladder Stone\",\n            \"confidence\": 0.15,\n            \"icd_code\": \"N21.0\"\n        }\n    ],\n    \"key_findings\": [\"62-year-old male\", \"intermittent painless gross hematuria\", \"35-pack-year smoking history\", \"occupational exposure as painter\", \"bladder mass on ultrasound\", \"no dysuria/flank pain/fever\", \"normal renal function\", \"enlarged prostate on exam\"],\n    \"tests\": [\n        {\n            \"test\": \"Cystoscopy with biopsy\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"CT Urogram\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Urine Cytology\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Complete Blood Count\",\n            \"priority\": \"routine\"\n        },\n        {\n            \"test\": \"Comprehensive Metabolic Panel\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management\": {\n        \"immediate\": [\"Urology consultation\", \"Smoking cessation counseling\", \"Blood pressure monitoring\", \"Diabetes management optimization\"],\n        \"medications\": [\"No specific medications until diagnosis confirmed\"],\n        \"consultations\": [\"Urology: urgent\", \"Oncology: pending biopsy results\", \"Primary Care: routine follow-up\"]\n    },\n    \"red_flags\": [\"Painless gross hematuria in elderly smoker\", \"Occupational chemical exposure\", \"Family history of cancer\", \"Bladder mass on imaging\", \"High-risk demographic features\"]\n}\n```",
+      "response_time": 32.76956009864807,
+      "cached": false,
+      "case_id": "custom_20250911_191559",
+      "timestamp": "2025-09-11T19:16:32.765409",
+      "tokens_used": 1028,
+      "input_tokens": 492,
+      "output_tokens": 536
+    },
+    {
+      "model_name": "deepseek/deepseek-r1:free",
+      "response": "Okay, let's tackle this medical case. The patient is a 62-year-old man with painless gross hematuria for two weeks. No dysuria or flank pain, which points away from infection or stones. His history includes smoking and occupational exposure as a painter, both risk factors for bladder cancer. The ultrasound found an irregular bladder mass, which is a big red flag. Family history of lung cancer might not directly link here, but the smoking connection is important.\n\nPrimary diagnosis is likely bladder cancer. The confidence is high because of the risk factors and imaging. ICD-10 would be C67.9. For differentials, consider other causes of hematuria. Bladder stones (N21.0) could present with hematuria but usually have pain. UTI (N39.0) is possible but he denies dysuria and urinalysis doesn't show signs of infection. Benign prostatic hyperplasia (N40) might cause hematuria from enlarged prostate, but the ultrasound found a mass, making cancer more likely. Maybe renal cell carcinoma (C64) is another differential, but ultrasound showed normal kidneys.\n\nTests: Cystoscopy immediately to visualize the mass. Urine cytology and CT urogram as urgent. Management would involve TURBT if non-muscle invasive, then intravesical therapy like BCG. If muscle-invasive, radical cystectomy or chemo. Medications would include BCG, dose as per standard. Consult urology immediately. Red flags are the hematuria with risk factors and bladder mass.\n\n\n---\n\n```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"Bladder cancer\",\n        \"confidence\": 0.9,\n        \"icd_code\": \"C67.9\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Bladder stone\",\n            \"confidence\": 0.15,\n            \"icd_code\": \"N21.0\"\n        },\n        {\n            \"name\": \"Urinary tract infection\",\n            \"confidence\": 0.1,\n            \"icd_code\": \"N39.0\"\n        },\n        {\n            \"name\": \"Benign prostatic hyperplasia\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"N40\"\n        },\n        {\n            \"name\": \"Renal cell carcinoma\",\n            \"confidence\": 0.1,\n            \"icd_code\": \"C64\"\n        }\n    ],\n    \"key_findings\": [\n        \"Intermittent painless gross hematuria with clots\",\n        \"Irregular bladder wall mass on ultrasound\",\n        \"35-pack-year smoking history\",\n        \"Occupational exposure to painting chemicals\",\n        \"Absence of dysuria, fever, or flank pain\"\n    ],\n    \"tests\": [\n        {\n            \"test\": \"Cystoscopy with biopsy\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Urine cytology\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"CT urogram\",\n            \"priority\": \"urgent\"\n        }\n    ],\n    \"management\": {\n        \"immediate\": [\n            \"Cystoscopic evaluation\",\n            \"Staging imaging (CT urogram)\"\n        ],\n        \"medications\": [\n            \"drug: Bacillus Calmette-Gu\u00e9rin (BCG), 1 vial intravesical weekly for 6 weeks (if non-muscle invasive)\"\n        ],\n        \"consultations\": [\n            \"urology: immediate\",\n            \"oncology: urgent (if malignancy confirmed)\"\n        ]\n    },\n    \"red_flags\": [\n        \"Painless gross hematuria in a smoker with chemical exposure\",\n        \"Irregular bladder mass on imaging\",\n        \"Age >60 years with new-onset hematuria\"\n    ]\n}\n```",
+      "response_time": 28.517382860183716,
+      "cached": false,
+      "case_id": "custom_20250911_191559",
+      "timestamp": "2025-09-11T19:17:01.284023",
+      "tokens_used": 1291,
+      "input_tokens": 494,
+      "output_tokens": 797
+    },
+    {
+      "model_name": "google/gemma-3-12b-it:free",
+      "response": "```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"Bladder Cancer\",\n        \"confidence\": 0.9,\n        \"icd_code\": \"C67.9\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Benign Prostatic Hyperplasia (BPH)\",\n            \"confidence\": 0.3,\n            \"icd_code\": \"N39.0\"\n        },\n        {\n            \"name\": \"Urinary Tract Infection (UTI)\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"N39.0\"\n        },\n        {\n            \"name\": \"Bladder Stone\",\n            \"confidence\": 0.1,\n            \"icd_code\": \"N20.0\"\n        },\n        {\n            \"name\": \"Renal Cell Carcinoma with Metastasis to Bladder\",\n            \"confidence\": 0.1,\n            \"icd_code\": \"C64.9\"\n        },\n        {\n            \"name\": \"Painless Gross Hematuria due to Trauma\",\n            \"confidence\": 0.05,\n            \"icd_code\": \"S06.0\"\n        }\n    ],\n    \"key_findings\": [\n        \"Intermittent painless gross hematuria\",\n        \"Irregular mass in the bladder wall on ultrasound\",\n        \"35-pack-year smoking history\",\n        \"Occupational exposure to paint\",\n        \"Family history of lung cancer\",\n        \"Moderately enlarged, smooth prostate\"\n    ],\n    \"tests\": [\n        {\n            \"test\": \"Cystoscopy\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Urine Cytology\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"CT Urogram\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Complete Blood Count (CBC)\",\n            \"priority\": \"routine\"\n        },\n        {\n            \"test\": \"Comprehensive Metabolic Panel (CMP)\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management\": {\n        \"immediate\": [\n            \"Monitor for worsening hematuria\",\n            \"Patient education regarding potential diagnosis and next steps\"\n        ],\n        \"medications\": [],\n        \"consultations\": [\n            \"Urology: immediate\",\n            \"Oncology: urgent (pending diagnosis)\"\n        ]\n    },\n    \"red_flags\": [\n        \"Gross hematuria\",\n        \"Irregular bladder mass\",\n        \"Smoking history\",\n        \"Occupational exposure\"\n    ]\n}\n```",
+      "response_time": 18.80313491821289,
+      "cached": false,
+      "case_id": "custom_20250911_191559",
+      "timestamp": "2025-09-11T19:17:22.114192",
+      "tokens_used": 524,
+      "input_tokens": 524,
+      "output_tokens": 544
+    },
+    {
+      "model_name": "meta-llama/llama-3.2-3b-instruct:free",
+      "response": "{\n  \"primary_diagnosis\": {\n    \"name\": \"Bladder Cancer\",\n    \"confidence\": 0.8,\n    \"icd_code\": \"C60\"\n  },\n  \"differential_diagnoses\": [\n    {\n      \"name\": \"Benign Prostatic Hyperplasia\",\n      \"confidence\": 0.4,\n      \"icd_code\": \"N36.0\"\n    },\n    {\n      \"name\": \"Bladder Infection\",\n      \"confidence\": 0.2,\n      \"icd_code\": \"N40.0\"\n    },\n    {\n      \"name\": \"Interstitial Cystitis\",\n      \"confidence\": 0.1,\n      \"icd_code\": \"N298.8\"\n    },\n    {\n      \"name\": \"Kidney Stone\",\n      \"confidence\": 0.1,\n      \"icd_code\": \"N17.0\"\n    }\n  ],\n  \"key_findings\": [\n    \"Painless gross hematuria\",\n    \"Irregular mass in the bladder wall\",\n    \"History of smoking\"\n  ],\n  \"tests\": [\n    {\n      \"test\": \"Urinalysis\",\n      \"priority\": \"urgent\"\n    },\n    {\n      \"test\": \"Urine Cytology\",\n      \"priority\": \"urgent\"\n    },\n    {\n      \"test\": \"CT Urogram\",\n      \"priority\": \"routine\"\n    },\n    {\n      \"test\": \"Cystoscopy\",\n      \"priority\": \"immediate\"\n    }\n  ],\n  \"management\": {\n    \"immediate\": [\"Cystoscopy\"],\n    \"medications\": [\"Hematurin (1 mg/kg, IV)\"],\n    \"consultations\": [\"Urology\"]\n  },\n  \"red_flags\": [\n    \"Age 62\",\n    \"Smoking history\",\n    \"Occupational exposure\",\n    \"Painless gross hematuria\"\n  ]\n}",
+      "response_time": 3.53499698638916,
+      "cached": false,
+      "case_id": "custom_20250911_191559",
+      "timestamp": "2025-09-11T19:17:25.885154",
+      "tokens_used": 1625,
+      "input_tokens": 1226,
+      "output_tokens": 399
+    },
+    {
+      "model_name": "mistralai/mistral-7b-instruct:free",
+      "response": " {\n    \"primary_diagnosis\": {\n        \"name\": \"Bladder Cancer\",\n        \"confidence\": 0.8,\n        \"icd_code\": \"C67\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Benign Prostatic Hyperplasia\",\n            \"confidence\": 0.6,\n            \"icd_code\": \"N30.0\"\n        },\n        {\n            \"name\": \"Chronic Pyelonephritis\",\n            \"confidence\": 0.4,\n            \"icd_code\": \"N10.9\"\n        },\n        {\n            \"name\": \"Renal Cell Carcinoma (Metastasis from Lung Cancer)\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"C61.9\"\n        },\n        {\n            \"name\": \"Urinary Tract Infection\",\n            \"confidence\": 0.3,\n            \"icd_code\": \"N30.00\"\n        },\n        {\n            \"name\": \"Bladder Stones\",\n            \"confidence\": 0.3,\n            \"icd_code\": \"N30.1\"\n        }\n    ],\n    \"key_findings\": [\n        \"Intermittent, painless gross hematuria\",\n        \"Moderately enlarged but smooth prostate\",\n        \"Irregular mass in the bladder wall on ultrasound\"\n    ],\n    \"tests\": [\n        {\n            \"test\": \"Cystoscopy\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Urine Cytology\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"CT Urogram\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Renal Function Tests\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management\": {\n        \"immediate\": [\n            \"Prepare for cystoscopy procedure\"\n        ],\n        \"medications\": [\n            \"No immediate medications\"\n        ],\n        \"consultations\": [\n            \"Urology: urgent\"\n        ]\n    },\n    \"red_flags\": [\n        \"History of smoking and occupational exposure to potential carcinogens\"\n    ]\n}",
+      "response_time": 7.244678974151611,
+      "cached": false,
+      "case_id": "custom_20250911_191559",
+      "timestamp": "2025-09-11T19:17:33.131900",
+      "tokens_used": 1184,
+      "input_tokens": 609,
+      "output_tokens": 575
+    },
+    {
+      "model_name": "openai/gpt-oss-20b:free:free",
+      "response": "We need to produce JSON with the specified structure. Primary diagnosis likely bladder cancer (urothelial carcinoma). Provide confidence maybe 0.9. ICD-10 code: C67.9 (Malignant neoplasm of bladder unspecified). Differential: maybe bladder stones (C67? no), but stone is B? Actually bladder stones is N20.1. Urethral carcinoma (C68.1). Urinary tract infection (N39.0). Renal cell carcinoma can cause hematuria (C64). Interstitial cystitis (N30.0). Provide confidences: for each, maybe 0.8 for bladder cancer, but that's primary. Differential: bladder stones 0.2, UTIs 0.1, renal cell carcinoma 0.3, interstitial cystitis 0.1, urethral carcinoma 0.1. Provide ICD-10 codes: bladder stones N20.1, UTI N39.0, renal cell carcinoma C64.9, interstitial cystitis N30.0, urethral carcinoma C68.1.\n\nKey findings: intermittent painless gross hematuria, irregular bladder wall mass on ultrasound, smoker, occupational exposure, age.\n\nTests: cystoscopy (immediate), urine cytology (urgent), CT urogram (urgent). Also maybe CT chest? but not needed. Provide priority.\n\nManagement: immediate: cystoscopy, obtain biopsy, consider TURBT. Medications: maybe analgesics? Usually no medication until diagnosis. Could give NSAIDs for pain but not needed. Provide maybe \"Tamsulosin\" for BPH? But not immediate. Maybe \"Intravesical Bacillus Calmette-Guerin (BCG)\" for NMIBC but that's after resection. Provide \"Intravesical chemotherapy\" maybe. But we can list \"Bacillus Calmette-Guerin instillation\" as medication. Provide dose? typical 50 mg in 50 ml saline, intravesical.\n\nConsultations: urology (urgent), oncology (urgent if invasive). Provide.\n\nRed flags: progressive worsening hematuria, anemia, weight loss, flank pain, fever, palpable mass, etc.\n\nReturn JSON.\n\nLet's craft.\n\n---\n\n```json\n{\n  \"primary_diagnosis\": {\n    \"name\": \"Urothelial carcinoma of the bladder\",\n    \"confidence\": 0.92,\n    \"icd_code\": \"C67.9\"\n  },\n  \"differential_diagnoses\": [\n    {\n      \"name\": \"Bladder stones\",\n      \"confidence\": 0.23,\n      \"icd_code\": \"N20.1\"\n    },\n    {\n      \"name\": \"Renal cell carcinoma\",\n      \"confidence\": 0.31,\n      \"icd_code\": \"C64.9\"\n    },\n    {\n      \"name\": \"Interstitial cystitis\",\n      \"confidence\": 0.15,\n      \"icd_code\": \"N30.0\"\n    },\n    {\n      \"name\": \"Urethral carcinoma\",\n      \"confidence\": 0.12,\n      \"icd_code\": \"C68.1\"\n    },\n    {\n      \"name\": \"Urinary tract infection\",\n      \"confidence\": 0.08,\n      \"icd_code\": \"N39.0\"\n    }\n  ],\n  \"key_findings\": [\n    \"Intermittent painless gross hematuria with small clots\",\n    \"History of heavy smoking (35-pack\u2011year) and occupational exposure to paint chemicals\",\n    \"Ultrasound: irregular mass in bladder wall\",\n    \"Moderately enlarged, smooth prostate on DRE\",\n    \"No proteinuria or renal function impairment\"\n  ],\n  \"tests\": [\n    {\n      \"test\": \"Cystoscopy with bladder biopsy\",\n      \"priority\": \"immediate\"\n    },\n    {\n      \"test\": \"Urine cytology\",\n      \"priority\": \"urgent\"\n    },\n    {\n      \"test\": \"CT urogram (abdomen and pelvis)\",\n      \"priority\": \"urgent\"\n    },\n    {\n      \"test\": \"Urinalysis with microscopy\",\n      \"priority\": \"routine\"\n    },\n    {\n      \"test\": \"Complete blood count (CBC) with differential\",\n      \"priority\": \"routine\"\n    }\n  ],\n  \"management\": {\n    \"immediate\": [\n      \"Arrange cystoscopy and biopsy\",\n      \"Provide adequate hydration and analgesia as needed\",\n      \"Educate patient on signs of infection or worsening hematuria\"\n    ],\n    \"medications\": [\n      \"Tamsulosin 0.4 mg oral once daily (for BPH relief if symptomatic)\",\n      \"Intravesical Bacillus Calmette\u2011Guerin (BCG) 50 mg in 50 ml saline, instilled nightly for 6 weeks after TURBT (if non\u2011muscle invasive tumor)\"\n    ],\n    \"consultations\": [\n      \"Urology \u2013 urgent\",\n      \"Oncology \u2013 urgent if muscle\u2011invasive disease or metastatic spread is suspected\"\n    ]\n  },\n  \"red_flags\": [\n    \"Progressive or persistent gross hematuria\",\n    \"Drop in hemoglobin or signs of anemia\",\n    \"Fever or chills suggesting infection\",\n    \"New flank pain or palpable abdominal mass\",\n    \"Weight loss or night sweats\",\n    \"Rapidly enlarging prostate or rising PSA (if BPH overlap)\"\n  ]\n}\n```",
+      "response_time": 6.419410943984985,
+      "cached": false,
+      "case_id": "custom_20250911_191559",
+      "timestamp": "2025-09-11T19:17:39.705421",
+      "tokens_used": 1686,
+      "input_tokens": 557,
+      "output_tokens": 1129
+    },
+    {
+      "model_name": "shisa-ai/shisa-v2-llama3.3-70b:free",
+      "response": "```json\n{\n  \"primary_diagnosis\": {\n    \"name\": \"Bladder cancer\",\n    \"confidence\": 0.8,\n    \"icd_code\": \"C67.9\"\n  },\n  \"differential_diagnoses\": [\n    {\n      \"name\": \"Benign prostatic hyperplasia (BPH)\",\n      \"confidence\": 0.2,\n      \"icd_code\": \"BPH-N40.1\"\n    },\n    {\n      \"name\": \"Kidney stones (nephrolithiasis)\",\n      \"confidence\": 0.1,\n      \"icd_code\": \"N20.9\"\n    },\n    {\n      \"name\": \"Urinary tract infection (UTI)\",\n      \"confidence\": 0.05,\n      \"icd_code\": \"N30.9\"\n    },\n    {\n      \"name\": \"Prostatitis\",\n      \"confidence\": 0.05,\n      \"icd_code\": \"N41.9\"\n    }\n  ],\n  \"key_findings\": [\n    \"Painless gross hematuria\",\n    \"Irregular bladder wall mass on ultrasound\",\n    \"35-pack-year smoking history\",\n    \"Occupational exposure to potential carcinogens\"\n  ],\n  \"tests\": [\n    {\n      \"test\": \"Cystoscopy\",\n      \"priority\": \"urgent\"\n    },\n    {\n      \"test\": \"Urine cytology\",\n      \"priority\": \"urgent\"\n    },\n    {\n      \"test\": \"CT urogram\",\n      \"priority\": \"urgent\"\n    },\n    {\n      \"test\": \"Renal function panel\",\n      \"priority\": \"routine\"\n    }\n  ],\n  \"management\": {\n    \"immediate\": [\n      \"Monitor for signs of urinary retention or obstruction\"\n    ],\n    \"medications\": [\n      \"Phenazopyridine: 100-200mg PO TID (for bladder discomfort, if needed)\",\n      \"Oxybutynin: 2.5-5mg PO BID (for urinary frequency, if needed)\"\n    ],\n    \"consultations\": [\n      \"Urology: urgent\"\n    ]\n  },\n  \"red_flags\": [\n    \"Gross hematuria\",\n    \"Bladder mass on imaging\",\n    \"High-risk occupational exposures (painter)\"\n  ]\n}\n```",
+      "response_time": 30.9080970287323,
+      "cached": false,
+      "case_id": "custom_20250911_191559",
+      "timestamp": "2025-09-11T19:18:10.614755",
+      "tokens_used": 1012,
+      "input_tokens": 528,
+      "output_tokens": 484
+    }
+  ],
+  "total_models_analyzed": 7,
+  "geographical_distribution": {
+    "USA": 20,
+    "France": 3,
+    "China": 5,
+    "Canada": 2,
+    "Japan/USA": 1,
+    "Israel": 1
+  },
+  "consensus_analysis": {
+    "primary_counts": {
+      "Bladder Cancer": 6,
+      "Urothelial Carcinoma Of The Bladder": 1
+    },
+    "differential_counts": {
+      "Benign Prostatic Hyperplasia": 4,
+      "Urothelial Cell Carcinoma": 1,
+      "Renal Cell Carcinoma": 3,
+      "Urinary Tract Infection": 4,
+      "Bladder Stone": 3,
+      "Benign Prostatic Hyperplasia (Bph)": 2,
+      "Urinary Tract Infection (Uti)": 2,
+      "Renal Cell Carcinoma With Metastasis To Bladder": 1,
+      "Painless Gross Hematuria Due To Trauma": 1,
+      "Bladder Infection": 1,
+      "Interstitial Cystitis": 2,
+      "Kidney Stone": 1,
+      "Chronic Pyelonephritis": 1,
+      "Renal Cell Carcinoma (Metastasis From Lung Cancer)": 1,
+      "Bladder Stones": 2,
+      "Urethral Carcinoma": 1,
+      "Kidney Stones (Nephrolithiasis)": 1,
+      "Prostatitis": 1
+    },
+    "total_counts": {
+      "Bladder Cancer": 6,
+      "Benign Prostatic Hyperplasia": 4,
+      "Urothelial Cell Carcinoma": 1,
+      "Renal Cell Carcinoma": 3,
+      "Urinary Tract Infection": 4,
+      "Bladder Stone": 3,
+      "Benign Prostatic Hyperplasia (Bph)": 2,
+      "Urinary Tract Infection (Uti)": 2,
+      "Renal Cell Carcinoma With Metastasis To Bladder": 1,
+      "Painless Gross Hematuria Due To Trauma": 1,
+      "Bladder Infection": 1,
+      "Interstitial Cystitis": 2,
+      "Kidney Stone": 1,
+      "Chronic Pyelonephritis": 1,
+      "Renal Cell Carcinoma (Metastasis From Lung Cancer)": 1,
+      "Bladder Stones": 2,
+      "Urothelial Carcinoma Of The Bladder": 1,
+      "Urethral Carcinoma": 1,
+      "Kidney Stones (Nephrolithiasis)": 1,
+      "Prostatitis": 1
+    },
+    "sorted_diagnoses": [
+      [
+        "Bladder Cancer",
+        6
+      ],
+      [
+        "Benign Prostatic Hyperplasia",
+        4
+      ],
+      [
+        "Urinary Tract Infection",
+        4
+      ],
+      [
+        "Renal Cell Carcinoma",
+        3
+      ],
+      [
+        "Bladder Stone",
+        3
+      ],
+      [
+        "Benign Prostatic Hyperplasia (Bph)",
+        2
+      ],
+      [
+        "Urinary Tract Infection (Uti)",
+        2
+      ],
+      [
+        "Interstitial Cystitis",
+        2
+      ],
+      [
+        "Bladder Stones",
+        2
+      ],
+      [
+        "Urothelial Cell Carcinoma",
+        1
+      ],
+      [
+        "Renal Cell Carcinoma With Metastasis To Bladder",
+        1
+      ],
+      [
+        "Painless Gross Hematuria Due To Trauma",
+        1
+      ],
+      [
+        "Bladder Infection",
+        1
+      ],
+      [
+        "Kidney Stone",
+        1
+      ],
+      [
+        "Chronic Pyelonephritis",
+        1
+      ],
+      [
+        "Renal Cell Carcinoma (Metastasis From Lung Cancer)",
+        1
+      ],
+      [
+        "Urothelial Carcinoma Of The Bladder",
+        1
+      ],
+      [
+        "Urethral Carcinoma",
+        1
+      ],
+      [
+        "Kidney Stones (Nephrolithiasis)",
+        1
+      ],
+      [
+        "Prostatitis",
+        1
+      ]
+    ],
+    "primary": [
+      "Bladder Cancer",
+      6
+    ],
+    "total_models": 7,
+    "icd_codes": {
+      "Bladder Cancer": [
+        "C67.9",
+        "C67",
+        "C60"
+      ],
+      "Benign Prostatic Hyperplasia": [
+        "N36.0",
+        "N40.0",
+        "N40",
+        "N30.0"
+      ],
+      "Urothelial Cell Carcinoma": [
+        "C67.9"
+      ],
+      "Renal Cell Carcinoma": [
+        "C64.9",
+        "C64",
+        "C64.1"
+      ],
+      "Urinary Tract Infection": [
+        "N39.0",
+        "N30.00"
+      ],
+      "Bladder Stone": [
+        "N21.0",
+        "N20.0"
+      ],
+      "Benign Prostatic Hyperplasia (Bph)": [
+        "N39.0",
+        "BPH-N40.1"
+      ],
+      "Urinary Tract Infection (Uti)": [
+        "N30.9",
+        "N39.0"
+      ],
+      "Renal Cell Carcinoma With Metastasis To Bladder": [
+        "C64.9"
+      ],
+      "Painless Gross Hematuria Due To Trauma": [
+        "S06.0"
+      ],
+      "Bladder Infection": [
+        "N40.0"
+      ],
+      "Interstitial Cystitis": [
+        "N30.0",
+        "N298.8"
+      ],
+      "Kidney Stone": [
+        "N17.0"
+      ],
+      "Chronic Pyelonephritis": [
+        "N10.9"
+      ],
+      "Renal Cell Carcinoma (Metastasis From Lung Cancer)": [
+        "C61.9"
+      ],
+      "Bladder Stones": [
+        "N30.1",
+        "N20.1"
+      ],
+      "Urothelial Carcinoma Of The Bladder": [
+        "C67.9"
+      ],
+      "Urethral Carcinoma": [
+        "C68.1"
+      ],
+      "Kidney Stones (Nephrolithiasis)": [
+        "N20.9"
+      ],
+      "Prostatitis": [
+        "N41.9"
+      ]
+    },
+    "model_diagnoses": {
+      "Bladder Cancer": {
+        "primary": [
+          "deepseek/deepseek-chat-v3.1:free",
+          "deepseek/deepseek-r1:free",
+          "google/gemma-3-12b-it:free",
+          "meta-llama/llama-3.2-3b-instruct:free",
+          "mistralai/mistral-7b-instruct:free",
+          "shisa-ai/shisa-v2-llama3.3-70b:free"
+        ]
+      },
+      "Benign Prostatic Hyperplasia": {
+        "differential": [
+          "deepseek/deepseek-chat-v3.1:free",
+          "deepseek/deepseek-r1:free",
+          "meta-llama/llama-3.2-3b-instruct:free",
+          "mistralai/mistral-7b-instruct:free"
+        ]
+      },
+      "Urothelial Cell Carcinoma": {
+        "differential": [
+          "deepseek/deepseek-chat-v3.1:free"
+        ]
+      },
+      "Renal Cell Carcinoma": {
+        "differential": [
+          "deepseek/deepseek-chat-v3.1:free",
+          "deepseek/deepseek-r1:free",
+          "openai/gpt-oss-20b:free:free"
+        ]
+      },
+      "Urinary Tract Infection": {
+        "differential": [
+          "deepseek/deepseek-chat-v3.1:free",
+          "deepseek/deepseek-r1:free",
+          "mistralai/mistral-7b-instruct:free",
+          "openai/gpt-oss-20b:free:free"
+        ]
+      },
+      "Bladder Stone": {
+        "differential": [
+          "deepseek/deepseek-chat-v3.1:free",
+          "deepseek/deepseek-r1:free",
+          "google/gemma-3-12b-it:free"
+        ]
+      },
+      "Benign Prostatic Hyperplasia (Bph)": {
+        "differential": [
+          "google/gemma-3-12b-it:free",
+          "shisa-ai/shisa-v2-llama3.3-70b:free"
+        ]
+      },
+      "Urinary Tract Infection (Uti)": {
+        "differential": [
+          "google/gemma-3-12b-it:free",
+          "shisa-ai/shisa-v2-llama3.3-70b:free"
+        ]
+      },
+      "Renal Cell Carcinoma With Metastasis To Bladder": {
+        "differential": [
+          "google/gemma-3-12b-it:free"
+        ]
+      },
+      "Painless Gross Hematuria Due To Trauma": {
+        "differential": [
+          "google/gemma-3-12b-it:free"
+        ]
+      },
+      "Bladder Infection": {
+        "differential": [
+          "meta-llama/llama-3.2-3b-instruct:free"
+        ]
+      },
+      "Interstitial Cystitis": {
+        "differential": [
+          "meta-llama/llama-3.2-3b-instruct:free",
+          "openai/gpt-oss-20b:free:free"
+        ]
+      },
+      "Kidney Stone": {
+        "differential": [
+          "meta-llama/llama-3.2-3b-instruct:free"
+        ]
+      },
+      "Chronic Pyelonephritis": {
+        "differential": [
+          "mistralai/mistral-7b-instruct:free"
+        ]
+      },
+      "Renal Cell Carcinoma (Metastasis From Lung Cancer)": {
+        "differential": [
+          "mistralai/mistral-7b-instruct:free"
+        ]
+      },
+      "Bladder Stones": {
+        "differential": [
+          "mistralai/mistral-7b-instruct:free",
+          "openai/gpt-oss-20b:free:free"
+        ]
+      },
+      "Urothelial Carcinoma Of The Bladder": {
+        "primary": [
+          "openai/gpt-oss-20b:free:free"
+        ]
+      },
+      "Urethral Carcinoma": {
+        "differential": [
+          "openai/gpt-oss-20b:free:free"
+        ]
+      },
+      "Kidney Stones (Nephrolithiasis)": {
+        "differential": [
+          "shisa-ai/shisa-v2-llama3.3-70b:free"
+        ]
+      },
+      "Prostatitis": {
+        "differential": [
+          "shisa-ai/shisa-v2-llama3.3-70b:free"
+        ]
+      }
+    },
+    "geographical_patterns": {
+      "Unknown": {
+        "Bladder Cancer": 6,
+        "Urothelial Carcinoma Of The Bladder": 1
+      }
+    }
+  },
+  "free_models_used": true,
+  "diagnostic_landscape": {
+    "primary_diagnosis": {
+      "name": "Bladder Cancer",
+      "icd_code": "C67.9",
+      "confidence": "High",
+      "supporting_models": [
+        "Unknown",
+        "Unknown",
+        "Unknown",
+        "Unknown"
+      ],
+      "percentage": 0.9,
+      "evidence": [
+        "Irregular bladder mass on ultrasound",
+        "Painless gross hematuria",
+        "History of smoking and occupational exposure"
+      ]
+    },
+    "strong_alternatives": [],
+    "alternatives": [
+      {
+        "name": "Benign Prostatic Hyperplasia (BPH)",
+        "icd_code": "N40.0",
+        "frequency": 3,
+        "supporting_models": [
+          "Unknown",
+          "Unknown",
+          "Unknown"
+        ],
+        "evidence": [
+          "Common in older men, can cause hematuria"
+        ],
+        "agreement_percentage": 11.1
+      },
+      {
+        "name": "Urinary Tract Infection (UTI)",
+        "icd_code": "N39.0",
+        "frequency": 3,
+        "supporting_models": [
+          "Unknown",
+          "Unknown",
+          "Unknown"
+        ],
+        "evidence": [
+          "Can cause hematuria, but no dysuria or flank pain"
+        ],
+        "agreement_percentage": 11.1
+      }
+    ],
+    "minority_opinions": [
+      {
+        "name": "Urothelial Cell Carcinoma",
+        "icd_code": "C67.9",
+        "frequency": 2,
+        "supporting_models": [
+          "Unknown",
+          "Unknown"
+        ],
+        "evidence": [
+          "Subtype of bladder cancer, consistent with symptoms"
+        ],
+        "agreement_percentage": 7.4
+      },
+      {
+        "name": "Bladder Stone",
+        "icd_code": "N20.1",
+        "frequency": 2,
+        "supporting_models": [
+          "Unknown",
+          "Unknown"
+        ],
+        "evidence": [
+          "Can cause hematuria, but no dysuria or flank pain"
+        ],
+        "agreement_percentage": 7.4
+      },
+      {
+        "name": "Renal Cell Carcinoma",
+        "icd_code": "C64",
+        "frequency": 2,
+        "supporting_models": [
+          "Unknown",
+          "Unknown"
+        ],
+        "evidence": [
+          "Can cause hematuria, but no dysuria or flank pain"
+        ],
+        "agreement_percentage": 7.4
+      },
+      {
+        "name": "Kidney Stones (Nephrolithiasis)",
+        "icd_code": "N20.9",
+        "frequency": 1,
+        "supporting_models": [
+          "Unknown"
+        ],
+        "evidence": [
+          "Can cause hematuria, but no dysuria or flank pain"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "Urethral Carcinoma",
+        "icd_code": "C68.1",
+        "frequency": 1,
+        "supporting_models": [
+          "Unknown"
+        ],
+        "evidence": [
+          "Rare, can cause hematuria"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "Interstitial Cystitis",
+        "icd_code": "N30.0",
+        "frequency": 1,
+        "supporting_models": [
+          "Unknown"
+        ],
+        "evidence": [
+          "Can cause hematuria, but no dysuria or flank pain"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "Prostatitis",
+        "icd_code": "N34.9",
+        "frequency": 0,
+        "supporting_models": [],
+        "evidence": [
+          "Can cause hematuria, but no dysuria or flank pain"
+        ],
+        "agreement_percentage": 0
+      },
+      {
+        "name": "Hematuria of Unknown Origin",
+        "icd_code": "R31.9",
+        "frequency": 0,
+        "supporting_models": [],
+        "evidence": [
+          "Hematuria without a clear cause"
+        ],
+        "agreement_percentage": 0
+      }
+    ],
+    "all_alternative_diagnoses": [
+      {
+        "name": "Benign Prostatic Hyperplasia (BPH)",
+        "icd_code": "N40.0",
+        "frequency": 3,
+        "supporting_models": [
+          "Unknown",
+          "Unknown",
+          "Unknown"
+        ],
+        "evidence": [
+          "Common in older men, can cause hematuria"
+        ],
+        "agreement_percentage": 11.1
+      },
+      {
+        "name": "Urinary Tract Infection (UTI)",
+        "icd_code": "N39.0",
+        "frequency": 3,
+        "supporting_models": [
+          "Unknown",
+          "Unknown",
+          "Unknown"
+        ],
+        "evidence": [
+          "Can cause hematuria, but no dysuria or flank pain"
+        ],
+        "agreement_percentage": 11.1
+      },
+      {
+        "name": "Urothelial Cell Carcinoma",
+        "icd_code": "C67.9",
+        "frequency": 2,
+        "supporting_models": [
+          "Unknown",
+          "Unknown"
+        ],
+        "evidence": [
+          "Subtype of bladder cancer, consistent with symptoms"
+        ],
+        "agreement_percentage": 7.4
+      },
+      {
+        "name": "Bladder Stone",
+        "icd_code": "N20.1",
+        "frequency": 2,
+        "supporting_models": [
+          "Unknown",
+          "Unknown"
+        ],
+        "evidence": [
+          "Can cause hematuria, but no dysuria or flank pain"
+        ],
+        "agreement_percentage": 7.4
+      },
+      {
+        "name": "Renal Cell Carcinoma",
+        "icd_code": "C64",
+        "frequency": 2,
+        "supporting_models": [
+          "Unknown",
+          "Unknown"
+        ],
+        "evidence": [
+          "Can cause hematuria, but no dysuria or flank pain"
+        ],
+        "agreement_percentage": 7.4
+      },
+      {
+        "name": "Kidney Stones (Nephrolithiasis)",
+        "icd_code": "N20.9",
+        "frequency": 1,
+        "supporting_models": [
+          "Unknown"
+        ],
+        "evidence": [
+          "Can cause hematuria, but no dysuria or flank pain"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "Urethral Carcinoma",
+        "icd_code": "C68.1",
+        "frequency": 1,
+        "supporting_models": [
+          "Unknown"
+        ],
+        "evidence": [
+          "Rare, can cause hematuria"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "Interstitial Cystitis",
+        "icd_code": "N30.0",
+        "frequency": 1,
+        "supporting_models": [
+          "Unknown"
+        ],
+        "evidence": [
+          "Can cause hematuria, but no dysuria or flank pain"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "Prostatitis",
+        "icd_code": "N34.9",
+        "frequency": 0,
+        "supporting_models": [],
+        "evidence": [
+          "Can cause hematuria, but no dysuria or flank pain"
+        ],
+        "agreement_percentage": 0
+      },
+      {
+        "name": "Hematuria of Unknown Origin",
+        "icd_code": "R31.9",
+        "frequency": 0,
+        "supporting_models": [],
+        "evidence": [
+          "Hematuria without a clear cause"
+        ],
+        "agreement_percentage": 0
+      }
+    ]
+  },
+  "comprehensive_bias_analysis": {
+    "geographical_representation": {
+      "total_countries": 6,
+      "western_dominance": {
+        "western_models": 25,
+        "percentage": 357.14285714285717,
+        "impact": "High Western medical paradigm influence expected"
+      },
+      "chinese_representation": {
+        "chinese_models": 5,
+        "percentage": 71.42857142857143,
+        "impact": "Traditional Chinese Medicine integration possible"
+      }
+    },
+    "case_specific_concerns": [
+      "Analysis strictly limited to custom_20250911_191559 responses",
+      "No cross-case contamination in this analysis",
+      "Bias patterns specific to this case presentation"
+    ],
+    "recommended_mitigations": [
+      "Consider cultural context in diagnosis interpretation",
+      "Account for geographical bias in model training",
+      "Validate findings across diverse medical paradigms"
+    ]
+  },
+  "model_diversity_metrics": {
+    "unique_architectures": 0,
+    "unique_providers": 0,
+    "unique_countries": 0,
+    "diversity_score": 0.0,
+    "case_id": "custom_20250911_191559"
+  },
+  "management_strategies": {
+    "immediate_actions": [
+      "Cystoscopy",
+      "Urine Cytology"
+    ],
+    "differential_testing": [
+      {
+        "test": "Urinalysis",
+        "purpose": "Diagnostic confirmation"
+      },
+      {
+        "test": "CT Urogram",
+        "purpose": "Diagnostic confirmation"
+      }
+    ],
+    "medications": []
+  },
+  "evidence_synthesis": {
+    "key_clinical_findings": [
+      {
+        "finding": "Painless gross hematuria",
+        "diagnostic_significance": "High"
+      },
+      {
+        "finding": "Irregular bladder mass on ultrasound",
+        "diagnostic_significance": "High"
+      },
+      {
+        "finding": "History of smoking and occupational exposure",
+        "diagnostic_significance": "High"
+      },
+      {
+        "finding": "No dysuria or flank pain",
+        "diagnostic_significance": "High"
+      },
+      {
+        "finding": "Family history of lung cancer",
+        "diagnostic_significance": "High"
+      }
+    ],
+    "symptom_diagnosis_matrix": {
+      "symptoms": [
+        "Painless gross hematuria",
+        "No dysuria",
+        "No flank pain",
+        "Irregular bladder mass",
+        "History of smoking"
+      ],
+      "diagnoses": [
+        "Bladder Cancer",
+        "Benign Prostatic Hyperplasia (BPH)",
+        "Urothelial Cell Carcinoma",
+        "Urinary Tract Infection (UTI)",
+        "Bladder Stone",
+        "Renal Cell Carcinoma",
+        "Kidney Stones (Nephrolithiasis)",
+        "Urethral Carcinoma",
+        "Interstitial Cystitis",
+        "Prostatitis",
+        "Hematuria of Unknown Origin"
+      ],
+      "correlations": [
+        {
+          "symptom": "Painless gross hematuria",
+          "diagnosis": "Bladder Cancer",
+          "strength": "Strong"
+        },
+        {
+          "symptom": "Painless gross hematuria",
+          "diagnosis": "Benign Prostatic Hyperplasia (BPH)",
+          "strength": "Moderate"
+        },
+        {
+          "symptom": "Painless gross hematuria",
+          "diagnosis": "Urothelial Cell Carcinoma",
+          "strength": "Strong"
+        },
+        {
+          "symptom": "Painless gross hematuria",
+          "diagnosis": "Urinary Tract Infection (UTI)",
+          "strength": "Moderate"
+        },
+        {
+          "symptom": "Painless gross hematuria",
+          "diagnosis": "Bladder Stone",
+          "strength": "Moderate"
+        },
+        {
+          "symptom": "Painless gross hematuria",
+          "diagnosis": "Renal Cell Carcinoma",
+          "strength": "Moderate"
+        },
+        {
+          "symptom": "Painless gross hematuria",
+          "diagnosis": "Kidney Stones (Nephrolithiasis)",
+          "strength": "Moderate"
+        },
+        {
+          "symptom": "Painless gross hematuria",
+          "diagnosis": "Urethral Carcinoma",
+          "strength": "Moderate"
+        },
+        {
+          "symptom": "Painless gross hematuria",
+          "diagnosis": "Interstitial Cystitis",
+          "strength": "Moderate"
+        },
+        {
+          "symptom": "Painless gross hematuria",
+          "diagnosis": "Prostatitis",
+          "strength": "Moderate"
+        },
+        {
+          "symptom": "Painless gross hematuria",
+          "diagnosis": "Hematuria of Unknown Origin",
+          "strength": "Moderate"
+        },
+        {
+          "symptom": "No dysuria",
+          "diagnosis": "Bladder Cancer",
+          "strength": "Strong"
+        },
+        {
+          "symptom": "No dysuria",
+          "diagnosis": "Benign Prostatic Hyperplasia (BPH)",
+          "strength": "Strong"
+        },
+        {
+          "symptom": "No dysuria",
+          "diagnosis": "Urothelial Cell Carcinoma",
+          "strength": "Strong"
+        },
+        {
+          "symptom": "No dysuria",
+          "diagnosis": "Urinary Tract Infection (UTI)",
+          "strength": "Weak"
+        },
+        {
+          "symptom": "No dysuria",
+          "diagnosis": "Bladder Stone",
+          "strength": "Strong"
+        },
+        {
+          "symptom": "No dysuria",
+          "diagnosis": "Renal Cell Carcinoma",
+          "strength": "Strong"
+        },
+        {
+          "symptom": "No dysuria",
+          "diagnosis": "Kidney Stones (Nephrolithiasis)",
+          "strength": "Strong"
+        },
+        {
+          "symptom": "No dysuria",
+          "diagnosis": "Urethral Carcinoma",
+          "strength": "Strong"
+        },
+        {
+          "symptom": "No dysuria",
+          "diagnosis": "Interstitial Cystitis",
+          "strength": "Strong"
+        },
+        {
+          "symptom": "No dysuria",
+          "diagnosis": "Prostatitis",
+          "strength": "Strong"
+        },
+        {
+          "symptom": "No dysuria",
+          "diagnosis": "Hematuria of Unknown Origin",
+          "strength": "Strong"
+        },
+        {
+          "symptom": "No flank pain",
+          "diagnosis": "Bladder Cancer",
+          "strength": "Strong"
+        },
+        {
+          "symptom": "No flank pain",
+          "diagnosis": "Benign Prostatic Hyperplasia (BPH)",
+          "strength": "Strong"
+        },
+        {
+          "symptom": "No flank pain",
+          "diagnosis": "Urothelial Cell Carcinoma",
+          "strength": "Strong"
+        },
+        {
+          "symptom": "No flank pain",
+          "diagnosis": "Urinary Tract Infection (UTI)",
+          "strength": "Weak"
+        },
+        {
+          "symptom": "No flank pain",
+          "diagnosis": "Bladder Stone",
+          "strength": "Strong"
+        },
+        {
+          "symptom": "No flank pain",
+          "diagnosis": "Renal Cell Carcinoma",
+          "strength": "Strong"
+        },
+        {
+          "symptom": "No flank pain",
+          "diagnosis": "Kidney Stones (Nephrolithiasis)",
+          "strength": "Strong"
+        },
+        {
+          "symptom": "No flank pain",
+          "diagnosis": "Urethral Carcinoma",
+          "strength": "Strong"
+        },
+        {
+          "symptom": "No flank pain",
+          "diagnosis": "Interstitial Cystitis",
+          "strength": "Strong"
+        },
+        {
+          "symptom": "No flank pain",
+          "diagnosis": "Prostatitis",
+          "strength": "Strong"
+        },
+        {
+          "symptom": "No flank pain",
+          "diagnosis": "Hematuria of Unknown Origin",
+          "strength": "Strong"
+        },
+        {
+          "symptom": "Irregular bladder mass",
+          "diagnosis": "Bladder Cancer",
+          "strength": "Strong"
+        },
+        {
+          "symptom": "Irregular bladder mass",
+          "diagnosis": "Benign Prostatic Hyperplasia (BPH)",
+          "strength": "Weak"
+        },
+        {
+          "symptom": "Irregular bladder mass",
+          "diagnosis": "Urothelial Cell Carcinoma",
+          "strength": "Strong"
+        },
+        {
+          "symptom": "Irregular bladder mass",
+          "diagnosis": "Urinary Tract Infection (UTI)",
+          "strength": "Weak"
+        },
+        {
+          "symptom": "Irregular bladder mass",
+          "diagnosis": "Bladder Stone",
+          "strength": "Weak"
+        },
+        {
+          "symptom": "Irregular bladder mass",
+          "diagnosis": "Renal Cell Carcinoma",
+          "strength": "Weak"
+        },
+        {
+          "symptom": "Irregular bladder mass",
+          "diagnosis": "Kidney Stones (Nephrolithiasis)",
+          "strength": "Weak"
+        },
+        {
+          "symptom": "Irregular bladder mass",
+          "diagnosis": "Urethral Carcinoma",
+          "strength": "Weak"
+        },
+        {
+          "symptom": "Irregular bladder mass",
+          "diagnosis": "Interstitial Cystitis",
+          "strength": "Weak"
+        },
+        {
+          "symptom": "Irregular bladder mass",
+          "diagnosis": "Prostatitis",
+          "strength": "Weak"
+        },
+        {
+          "symptom": "Irregular bladder mass",
+          "diagnosis": "Hematuria of Unknown Origin",
+          "strength": "Weak"
+        },
+        {
+          "symptom": "History of smoking",
+          "diagnosis": "Bladder Cancer",
+          "strength": "Strong"
+        },
+        {
+          "symptom": "History of smoking",
+          "diagnosis": "Benign Prostatic Hyperplasia (BPH)",
+          "strength": "Weak"
+        },
+        {
+          "symptom": "History of smoking",
+          "diagnosis": "Urothelial Cell Carcinoma",
+          "strength": "Strong"
+        },
+        {
+          "symptom": "History of smoking",
+          "diagnosis": "Urinary Tract Infection (UTI)",
+          "strength": "Weak"
+        },
+        {
+          "symptom": "History of smoking",
+          "diagnosis": "Bladder Stone",
+          "strength": "Weak"
+        },
+        {
+          "symptom": "History of smoking",
+          "diagnosis": "Renal Cell Carcinoma",
+          "strength": "Weak"
+        },
+        {
+          "symptom": "History of smoking",
+          "diagnosis": "Kidney Stones (Nephrolithiasis)",
+          "strength": "Weak"
+        },
+        {
+          "symptom": "History of smoking",
+          "diagnosis": "Urethral Carcinoma",
+          "strength": "Weak"
+        },
+        {
+          "symptom": "History of smoking",
+          "diagnosis": "Interstitial Cystitis",
+          "strength": "Weak"
+        },
+        {
+          "symptom": "History of smoking",
+          "diagnosis": "Prostatitis",
+          "strength": "Weak"
+        },
+        {
+          "symptom": "History of smoking",
+          "diagnosis": "Hematuria of Unknown Origin",
+          "strength": "Weak"
+        }
+      ]
+    }
+  },
+  "generation_metadata": {
+    "pipeline_version": "General v1.0",
+    "timestamp": "20250911_191559",
+    "case_separation": "Strict",
+    "total_time_seconds": 130.63725996017456
+  },
+  "critical_decision_points": [
+    "Pathology results from cystoscopy",
+    "Staging results from CT urogram"
+  ],
+  "ai_model_bias_analysis": {
+    "geographic_bias": {
+      "detected": true,
+      "description": "The diagnostic consensus is primarily based on Western medical knowledge and may not fully account for variations in symptoms, prevalence, and treatment approaches in non-Western regions.",
+      "mitigation": "Incorporate diverse medical literature and case studies from a global perspective to ensure a more comprehensive and inclusive diagnostic approach."
+    },
+    "training_bias": {
+      "detected": true,
+      "description": "The models supporting the diagnostic consensus are trained on data that may be biased towards Western medical practices and patient demographics, potentially leading to underrepresentation of other populations.",
+      "mitigation": "Use a more diverse training dataset that includes a wide range of patient demographics and medical practices from different regions to reduce bias."
+    },
+    "consensus_strength": "Moderate"
+  },
+  "clinical_decision_tree": {
+    "initial_assessment": "Evaluate presenting symptoms",
+    "diagnostic_tests": [
+      "Urinalysis",
+      "CT Urogram"
+    ],
+    "decision_points": [
+      "Pathology results from cystoscopy",
+      "Staging results from CT urogram"
+    ]
+  },
+  "primary_diagnosis_summaries": {
+    "key_clinical_findings": [
+      {
+        "finding": "Painless gross hematuria",
+        "supporting_evidence": "Clinical presentation",
+        "model_support": 4,
+        "reasoning": "Key diagnostic indicator"
+      },
+      {
+        "finding": "Irregular bladder mass on ultrasound",
+        "supporting_evidence": "Clinical presentation",
+        "model_support": 4,
+        "reasoning": "Key diagnostic indicator"
+      },
+      {
+        "finding": "History of smoking and occupational exposure",
+        "supporting_evidence": "Clinical presentation",
+        "model_support": 4,
+        "reasoning": "Key diagnostic indicator"
+      },
+      {
+        "finding": "No dysuria or flank pain",
+        "supporting_evidence": "Clinical presentation",
+        "model_support": 4,
+        "reasoning": "Key diagnostic indicator"
+      },
+      {
+        "finding": "Family history of lung cancer",
+        "supporting_evidence": "Clinical presentation",
+        "model_support": 4,
+        "reasoning": "Key diagnostic indicator"
+      }
+    ],
+    "recommended_tests": [
+      {
+        "test_name": "Urinalysis",
+        "test_type": "Laboratory",
+        "rationale": "Diagnostic confirmation",
+        "priority": "Urgent",
+        "model_support": 3,
+        "reasoning": "Essential for diagnosis"
+      },
+      {
+        "test_name": "CT Urogram",
+        "test_type": "Laboratory",
+        "rationale": "Diagnostic confirmation",
+        "priority": "Urgent",
+        "model_support": 3,
+        "reasoning": "Essential for diagnosis"
+      }
+    ],
+    "immediate_management": [
+      {
+        "intervention": "Cystoscopy",
+        "category": "Medical",
+        "urgency": "Immediate",
+        "model_support": 3,
+        "reasoning": "Critical intervention"
+      },
+      {
+        "intervention": "Urine Cytology",
+        "category": "Medical",
+        "urgency": "Immediate",
+        "model_support": 3,
+        "reasoning": "Critical intervention"
+      }
+    ],
+    "medications": []
+  },
+  "quality_metrics": {
+    "total_models_analyzed": 7,
+    "consensus_strength": "Moderate",
+    "successful_responses": 7
+  },
+  "metadata": {
+    "analysis_timestamp": "2025-09-11T19:18:47.245999",
+    "orchestrator_model": "qwen/qwen-2.5-72b-instruct:free",
+    "case_id": "custom_20250911_191559",
+    "case_title": "A 62-year-old man presents with a two-week history of interm...",
+    "orchestrator_quality": "free_models",
+    "quality_disclaimer": "\u26a0\ufe0f This analysis uses free orchestrator models which may provide suboptimal quality compared to premium models. For clinical applications, consider using premium orchestrator models for enhanced accuracy and comprehensive analysis."
+  },
+  "generated_at": "2025-09-11T19:18:47.246180"
+}

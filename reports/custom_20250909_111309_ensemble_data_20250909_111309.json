@@ -1,0 +1,978 @@
+{
+  "case_id": "custom_20250909_111309",
+  "case_title": "Custom Case",
+  "case_content": "A 28-year-old male of Mediterranean descent presents with:\n- Recurrent episodes of fever lasting 1-3 days\n- Severe abdominal pain during episodes\n- Chest pain with breathing difficulties\n- Joint pain affecting knees and ankles\n- Family history: Father and paternal uncle have similar symptoms\n- Episodes occur every 2-3 weeks\n- Labs during attack: Elevated CRP, ESR, and WBC\n- Between attacks: Completely asymptomatic\n\nPatient reports episodes started in childhood around age 7. Recent genetic testing is pending.",
+  "model_responses": [
+    {
+      "model_name": "deepseek/deepseek-chat-v3.1:free",
+      "response": "```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"Familial Mediterranean Fever\",\n        \"confidence\": 0.95,\n        \"icd_code\": \"E85.0\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Periodic Fever Syndrome (other types)\",\n            \"confidence\": 0.7,\n            \"icd_code\": \"E85.8\"\n        },\n        {\n            \"name\": \"Systemic Juvenile Idiopathic Arthritis\",\n            \"confidence\": 0.4,\n            \"icd_code\": \"M08.2\"\n        },\n        {\n            \"name\": \"Hereditary Periodic Fever Syndrome\",\n            \"confidence\": 0.6,\n            \"icd_code\": \"E85.8\"\n        },\n        {\n            \"name\": \"Acute Intermittent Porphyria\",\n            \"confidence\": 0.3,\n            \"icd_code\": \"E80.21\"\n        },\n        {\n            \"name\": \"Inflammatory Bowel Disease\",\n            \"confidence\": 0.25,\n            \"icd_code\": \"K50.9\"\n        }\n    ],\n    \"key_findings\": [\"Mediterranean descent\", \"Recurrent self-limited febrile episodes (1-3 days)\", \"Severe abdominal pain\", \"Pleuritic chest pain\", \"Oligoarthritis (knees/ankles)\", \"Positive family history (autosomal recessive pattern)\", \"Elevated inflammatory markers during attacks\", \"Complete resolution between episodes\", \"Childhood onset (age 7)\"],\n    \"tests\": [\n        {\n            \"test\": \"MEFV gene mutation analysis\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Serum amyloid A (SAA) during and between attacks\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Complete blood count with differential\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"CRP and ESR during attack\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Urinalysis for proteinuria\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"24-hour urine protein collection\",\n            \"priority\": \"routine\"\n        },\n        {\n            \"test\": \"Abdominal ultrasound\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management\": {\n        \"immediate\": [\"Symptomatic pain management during acute attack\", \"Monitor for signs of peritonitis or pleurisy\", \"Hydration support\"],\n        \"medications\": [\"colchicine: 0.6 mg PO twice daily (prophylaxis)\", \"colchicine: 1.2 mg PO once, then 0.6 mg 1 hour later (acute attack)\", \"ibuprofen: 400-600 mg PO TID PRN pain\", \"prednisone: 0.5-1 mg/kg/day PO during severe attacks\"],\n        \"consultations\": [\"Rheumatology: urgent\", \"Genetic counseling: routine\", \"Nephrology: routine (for amyloidosis screening)\"]\n    },\n    \"red_flags\": [\"Signs of amyloidosis (proteinuria, renal dysfunction)\", \"Persistent fever >5 days\", \"Signs of pericarditis or cardiac involvement\", \"Development of abdominal rigidity suggesting surgical abdomen\", \"Signs of sepsis\", \"Progressive renal impairment\"]\n}\n```",
+      "response_time": 22.63776731491089,
+      "cached": false,
+      "case_id": "custom_20250909_111309",
+      "timestamp": "2025-09-09T11:13:31.751303",
+      "tokens_used": 1070,
+      "input_tokens": 348,
+      "output_tokens": 722
+    },
+    {
+      "model_name": "deepseek/deepseek-r1:free",
+      "response": "Okay, let's tackle this medical case. The patient is a 28-year-old male of Mediterranean descent with recurrent fever episodes, severe abdominal pain, chest pain with breathing difficulties, joint pain in knees and ankles, and a family history of similar symptoms in his father and paternal uncle. The episodes last 1-3 days, occur every 2-3 weeks, and he's been having them since around age 7. Labs during attacks show elevated CRP, ESR, and WBC. He's asymptomatic between episodes. Genetic testing is pending.\n\nFirst, considering the recurrent fever episodes with a familial pattern, especially in Mediterranean descent, Familial Mediterranean Fever (FMF) comes to mind. The key features here are the periodic fevers, abdominal and chest pain, joint involvement, family history, and elevated acute phase reactants during attacks. The age of onset in childhood also fits. The ICD-10 for FMF is E85.0. Confidence is high, maybe 0.9, given the classic presentation and family history. But since genetic testing is pending, I can't be 100% sure.\n\nDifferential diagnoses: \n\n1. Periodic Fever, Aphthous Stomatitis, Pharyngitis, Adenitis (PFAPA) syndrome. More common in children, but the patient had onset in childhood. However, PFAPA typically has longer intervals between episodes (every 4-6 weeks) and lacks the family history. So maybe confidence around 0.2. ICD-10 would be G40.80, but I'm not certain if that's accurate; sometimes PFAPA is under other specified recurrent fever codes.\n\n2. Systemic Juvenile Idiopathic Arthritis (SJIA). Can present with recurrent fevers, joint pain, and elevated inflammatory markers. But SJIA usually has daily fevers and more persistent symptoms rather than episodic. Also, family history may not be as strong. Confidence around 0.15. ICD-10 M08.2.\n\n3. Hereditary Periodic Fever Syndromes other than FMF, like TRAPS (TNF Receptor-Associated Periodic Syndrome). TRAPS can present with longer episodes (often >5 days), but some variants might have shorter episodes. Family history is also a factor here. But given the Mediterranean descent, FMF is more likely. Confidence 0.1. ICD-10 E85.0 (since TRAPS is another hereditary periodic fever, maybe under the same category, but perhaps a different code? Wait, ICD-10 might not have specific codes for all HPFs, so maybe E85.8 for other amyloidosis or E85.9 unspecified. Not entirely sure here. Maybe need to check, but for the sake of this case, maybe E85.8 as a differential.\n\nKey findings would include the recurrent self-limited fevers, serositis (abdominal and chest pain indicating peritonitis and pleuritis), family history, Mediterranean ethnicity, and elevated inflammatory markers during attacks.\n\nTests: Genetic testing for MEFV mutations is crucial. Since it's pending, that's a priority. Also, serum amyloid A (SAA) to check for amyloidosis, which is a complication of FMF. Urinalysis to check for proteinuria (another complication). Maybe CRP/ESR during an attack, but they've already done that. So tests would be:\n\n- MEFV gene testing (immediate)\n- Serum amyloid A (urgent)\n- Urinalysis (routine)\n\nManagement: Immediate during attacks might be supportive care, like pain management. Colchicine is the mainstay for prophylaxis. So medications would include colchicine, say 1.2 mg daily, maybe increasing during attacks. But typically, colchicine is given daily to prevent attacks. If the patient isn't on it, starting colchicine. If they're already on it, adjust dose. But the case says genetic testing is pending, but treatment might be initiated empirically. Also, NSAIDs for pain. Corticosteroids if severe, but FMF typically responds better to colchicine. Consultations: Rheumatology (urgent), genetic counselor (routine).\n\nRed flags would be signs of complications like renal failure from amyloidosis, so monitoring for proteinuria, or if symptoms persist beyond typical episodes, which might indicate another condition.\n\nWait, differential diagnoses: Maybe include Beh\u00e7et's disease? But Beh\u00e7et's usually has oral/genital ulcers, uveitis, which aren't mentioned here. Not likely. Another differential is Adult-Onset Still's Disease, but similar to SJIA. So maybe stick with the initial three differentials. Or add another if needed. But the user said 3-5, so three is acceptable.\n\nOther key findings: ethnicity, family history, episodic nature, complete resolution between episodes.\n\nSo putting it all together.\n\n\n---\n\n```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"Familial Mediterranean Fever (FMF)\",\n        \"confidence\": 0.9,\n        \"icd_code\": \"E85.0\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Periodic Fever, Aphthous Stomatitis, Pharyngitis, Adenitis (PFAPA) Syndrome\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"G40.80\"\n        },\n        {\n            \"name\": \"Systemic Juvenile Idiopathic Arthritis (SJIA)\",\n            \"confidence\": 0.15,\n            \"icd_code\": \"M08.2\"\n        },\n        {\n            \"name\": \"TNF Receptor-Associated Periodic Syndrome (TRAPS)\",\n            \"confidence\": 0.1,\n            \"icd_code\": \"E85.8\"\n        }\n    ],\n    \"key_findings\": [\n        \"Recurrent self-limiting fever episodes (1-3 days)\",\n        \"Serositis (abdominal pain, pleuritic chest pain)\",\n        \"Family history in paternal relatives\",\n        \"Mediterranean descent\",\n        \"Elevated CRP/ESR/WBC during attacks\",\n        \"Asymptomatic between episodes\"\n    ],\n    \"tests\": [\n        {\n            \"test\": \"MEFV gene sequencing\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Serum amyloid A (SAA)\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Urinalysis (proteinuria screening)\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management\": {\n        \"immediate\": [\n            \"Symptomatic relief with NSAIDs during attacks\",\n            \"Rule out acute surgical causes of abdominal pain\"\n        ],\n        \"medications\": [\n            \"colchicine: 1.2 mg PO daily (prophylaxis)\",\n            \"ibuprofen: 400-600 mg PO every 6 hours as needed for pain\"\n        ],\n        \"consultations\": [\n            \"Rheumatology: urgent\",\n            \"Genetic counseling: routine\"\n        ]\n    },\n    \"red_flags\": [\n        \"Persistent fever or symptoms beyond 3 days\",\n        \"New-onset proteinuria (amyloidosis)\",\n        \"Signs of pericarditis or sepsis\",\n        \"Unresponsive to colchicine therapy\"\n    ]\n}\n```",
+      "response_time": 48.39335107803345,
+      "cached": false,
+      "case_id": "custom_20250909_111309",
+      "timestamp": "2025-09-09T11:14:20.148267",
+      "tokens_used": 1846,
+      "input_tokens": 350,
+      "output_tokens": 1496
+    },
+    {
+      "model_name": "google/gemma-3-12b-it:free",
+      "response": "\n```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"Periodic Fever Syndrome (likely Familial Mediterranean Fever - FMF)\",\n        \"confidence\": 0.85,\n        \"icd_code\": \"M69.8\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Adult-Onset Still's Disease\",\n            \"confidence\": 0.6,\n            \"icd_code\": \"M35.6\"\n        },\n        {\n            \"name\": \"Systemic-Onset Juvenile Idiopathic Arthritis (JIA)\",\n            \"confidence\": 0.5,\n            \"icd_code\": \"M08.0\"\n        },\n        {\n            \"name\": \"Beh\u00e7et's Disease\",\n            \"confidence\": 0.4,\n            \"icd_code\": \"M35.3\"\n        },\n        {\n            \"name\": \"Inflammatory Bowel Disease (IBD)\",\n            \"confidence\": 0.3,\n            \"icd_code\": \"K50.-\"\n        }\n    ],\n    \"key_findings\": [\n        \"Recurrent fever episodes (1-3 days)\",\n        \"Severe abdominal pain\",\n        \"Chest pain and breathing difficulties\",\n        \"Joint pain (knees and ankles)\",\n        \"Family history of similar symptoms\",\n        \"Elevated CRP, ESR, and WBC during attacks\",\n        \"Asymptomatic between attacks\",\n        \"Onset in childhood (age 7)\"\n    ],\n    \"tests\": [\n        {\n            \"test\": \"Genetic testing for MEFV gene (FMF)\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Complete Blood Count (CBC) with differential\",\n            \"priority\": \"routine\"\n        },\n        {\n            \"test\": \"Erythrocyte Sedimentation Rate (ESR)\",\n            \"priority\": \"routine\"\n        },\n        {\n            \"test\": \"C-Reactive Protein (CRP)\",\n            \"priority\": \"routine\"\n        },\n        {\n            \"test\": \"Chest X-ray\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Consider abdominal imaging (CT scan or ultrasound) if abdominal pain persists or worsens\",\n            \"priority\": \"urgent\"\n        }\n    ],\n    \"management\": {\n        \"immediate\": [\n            \"Pain management (NSAIDs)\",\n            \"Monitor respiratory status due to chest pain and breathing difficulties\"\n        ],\n        \"medications\": [\n            \"Naproxen: 500mg twice daily, oral\",\n            \"Colchicine: 1.2mg daily (if FMF confirmed, may need to increase during attacks)\",\n            \"Consider corticosteroids (e.g., Prednisone) for severe symptoms or if NSAIDs are ineffective\"\n        ],\n        \"consultations\": [\n            \"Rheumatology: urgent\",\n            \"Gastroenterology: routine (if IBD is suspected)\"\n        ]\n    },\n    \"red_flags\": [\n        \"Worsening respiratory distress\",\n        \"Severe abdominal pain unresponsive to analgesics\",\n        \"Signs of systemic illness (e.g., hypotension, altered mental status)\"\n    ]\n}\n```",
+      "response_time": 25.914832830429077,
+      "cached": false,
+      "case_id": "custom_20250909_111309",
+      "timestamp": "2025-09-09T11:14:47.739955",
+      "tokens_used": 1126,
+      "input_tokens": 381,
+      "output_tokens": 745
+    },
+    {
+      "model_name": "meta-llama/llama-3.2-3b-instruct:free",
+      "response": "{\n  \"primary_diagnosis\": {\n    \"name\": \"Recurrent Fever Syndrome, undifferentiated\",\n    \"confidence\": 0.6,\n    \"icd_code\": \"M35.81\"\n  },\n  \"differential_diagnoses\": [\n    {\n      \"name\": \"Reactive Arthritis\",\n      \"confidence\": 0.4,\n      \"icd_code\": \"M45.9\"\n    },\n    {\n      \"name\": \"Spondyloarthritis\",\n      \"confidence\": 0.35,\n      \"icd_code\": \"M90.0\"\n    },\n    {\n      \"name\": \"Familial Mediterranean Fever\",\n      \"confidence\": 0.32,\n      \"icd_code\": \"M45.81\"\n    },\n    {\n      \"name\": \"Juvenile Idiopathic Arthritis\",\n      \"confidence\": 0.24,\n      \"icd_code\": \"M07.0\"\n    }\n  ],\n  \"key_findings\": [\n    \"Recurring episodes of fever, severe abdominal pain, and joint pain\",\n    \"Elevated CRP, ESR, and WBC during attacks\",\n    \"Family history of similar symptoms\"\n  ],\n  \"tests\": [\n    {\n      \"test\": \"Complete Blood Count (CBC) with differential\",\n      \"priority\": \"immediate\"\n    },\n    {\n      \"test\": \"Erythrocyte Sedimentation Rate (ESR)\",\n      \"priority\": \"urgent\"\n    },\n    {\n      \"test\": \"C-Reactive Protein (CRP) levels\",\n      \"priority\": \"routine\"\n    },\n    {\n      \"test\": \"Genetic testing for Familial Mediterranean Fever\",\n      \"priority\": \"urgent\"\n    }\n  ],\n  \"management\": {\n    \"immediate\": [\n      \"Oxygen therapy for breathing difficulties\",\n      \"Analgesia for severe abdominal pain\"\n    ],\n    \"medications\": [\n      {\n        \"drug\": \"Prednisone\",\n        \"dose\": \"50mg PO qid for 3 days\",\n        \"route\": \"oral\"\n      },\n      {\n        \"drug\": \"Nonsteroidal Anti-Inflammatory Drugs (NSAIDs) or Colchicine\",\n        \"dose\": \"Colchicine 0.6mg PO qid for 3 days\",\n        \"route\": \"oral\"\n      }\n    ],\n    \"consultations\": [\n      {\n        \"specialty\": \"Rheumatology\",\n        \"urgency\": \"high\"\n      },\n      {\n        \"specialty\": \"Pulmonology\",\n        \"urgency\": \"high\"\n      }\n    ]\n  },\n  \"red_flags\": [\n    \"Family history of similar symptoms\",\n    \"Elevated CRP, ESR, and WBC during attacks\"\n  ]\n}",
+      "response_time": 4.9454920291900635,
+      "cached": false,
+      "case_id": "custom_20250909_111309",
+      "timestamp": "2025-09-09T11:14:52.969722",
+      "tokens_used": 1611,
+      "input_tokens": 1024,
+      "output_tokens": 587
+    },
+    {
+      "model_name": "mistralai/mistral-7b-instruct:free",
+      "response": " Based on the provided symptoms, there are several potential diagnoses. Here is a JSON object with the primary diagnosis, differential diagnoses, key findings, tests, management, and red flags. Please note that this is a hypothetical analysis and the actual diagnosis should be confirmed through further testing and evaluation by a healthcare professional.\n\n```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"Familial Mediterranean Fever (FMF)\",\n        \"confidence\": 0.7,\n        \"icd_code\": \"M39.0\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Hyperuricemia (gout)\",\n            \"confidence\": 0.3,\n            \"icd_code\": \"M75.0\"\n        },\n        {\n            \"name\": \"Inflammatory Bowel Disease (Crohn's Disease)\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"K50.xx\"\n        },\n        {\n            \"name\": \"Rheumatoid Arthritis\",\n            \"confidence\": 0.15,\n            \"icd_code\": \"M05.x\"\n        },\n        {\n            \"name\": \"Systemic Lupus Erythematosus\",\n            \"confidence\": 0.1,\n            \"icd_code\": \"M32.x\"\n        },\n        {\n            \"name\": \"Ankylosing Spondylitis\",\n            \"confidence\": 0.1,\n            \"icd_code\": \"M45.x\"\n        }\n    ],\n    \"key_findings\": [\n        \"Recurrent fever, abdominal pain, chest pain, joint pain, family history\",\n        \"Elevated CRP, ESR, and WBC\"\n    ],\n    \"tests\": [\n        {\n            \"test\": \"Genetic testing for MEFV gene mutations\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Urinalysis\",\n            \"priority\": \"routine\"\n        },\n        {\n            \"test\": \"Stool analysis\",\n            \"priority\": \"routine\"\n        },\n        {\n            \"test\": \"Antinuclear antibody (ANA) test\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management\": {\n        \"immediate\": [\n            \"Consider administration of colchicine for symptomatic relief\"\n        ],\n        \"medications\": [\n            \"colchicine: 0.6 mg twice daily\",\n            \"indomethacin: 25 mg three times daily\"\n        ],\n        \"consultations\": [\"Rheumatology: urgent\"]\n    },\n    \"red_flags\": [\n        \"Persistent high fever, persistent chest pain, severe joint swelling, weight loss\"\n    ]\n}\n```\n\nThis analysis suggests that the patient may have Familial Mediterranean Fever (FMF), but it is important to rule out other possible diagnoses through further testing. The patient should be started on colchicine for symptomatic relief and consulting a rheumatologist is recommended. Genetic testing for the MEFV gene mutations is crucial for a definitive diagnosis.",
+      "response_time": 9.399326086044312,
+      "cached": false,
+      "case_id": "custom_20250909_111309",
+      "timestamp": "2025-09-09T11:15:02.371349",
+      "tokens_used": 1208,
+      "input_tokens": 430,
+      "output_tokens": 778
+    },
+    {
+      "model_name": "openai/gpt-oss-20b:free:free",
+      "response": "We need to analyze the medical case: 28-year-old male, Mediterranean descent, recurrent fever episodes lasting 1-3 days, severe abdominal pain, chest pain with breathing difficulties, joint pain knees and ankles. Family history paternal side similar symptoms. Episodes every 2-3 weeks, labs show elevated CRP, ESR, WBC. Asymptomatic between attacks. Started around age 7. Genetic testing pending.\n\nThis suggests familial Mediterranean fever (FMF). Classic features: recurrent fever, serositis (abdominal pain due to peritonitis, chest pain due to pleurisy, pleuritis). Arthritis (knees, ankles). Periodic attacks 1-3 days, 1-2 weeks intervals. Mediterranean ancestry. Family history. Genetic testing for MEFV gene. So primary diagnosis: Familial Mediterranean fever (FMF). ICD-10 code: M04.8 (Familial Mediterranean fever). Actually M04.8 is \"Other specified autoinflammatory diseases\". But FMF is M04.8? Checking: M04.8 \"Other specified autoinflammatory diseases\". But FMF may also be M04.1? Actually M04.1 is \"Familial Mediterranean fever\". Let's verify: In ICD-10, M04.1 is \"Familial Mediterranean fever\". Yes. So icd_code: M04.1.\n\nDifferential diagnoses: \n- Systemic juvenile idiopathic arthritis (Still's disease)\n- Seronegative spondyloarthropathy (e.g., Reiter syndrome)\n- Recurrent fever syndrome such as TNF receptor-associated periodic syndrome (TRAPS)\n- Hyper-IgD syndrome (Mevalonate kinase deficiency)\n- Acute intermittent porphyria? But less likely. We need 3-5. Let's pick:\n- Systemic juvenile idiopathic arthritis (Still's disease) \u2013 M08.1\n- TNF receptor-associated periodic syndrome (TRAPS) \u2013 M04.8 (other specified autoinflammatory diseases)\n- Hyper-IgD syndrome \u2013 M04.8? Might have M04.8 as well. But we can use M04.8 for both? Could use M04.9? Actually M04.9 \"Other autoinflammatory diseases, unspecified\". Might use M04.9 for general. But we can use more specific if available: Hyper-IgD syndrome is M04.2 \"Hyper-IgD syndrome\". But not sure. Let's check: In ICD-10, M04.2 is \"Familial Mediterranean fever\"? Wait. Let's research quickly: Actually M04.0 is \"Familial Mediterranean fever\". But M04.0 might be \"Familial Mediterranean fever\". Wait there is confusion. Let's open mental memory: In ICD-10, M04 is \"Familial Mediterranean fever\". M04.0 \"Familial Mediterranean fever\". M04.1 \"Familial Mediterranean fever\". Wait no. Let's open memory: I think M04.0 is \"Familial Mediterranean fever\". But I recall M04.1 is \"Familial Mediterranean fever\". Let's check. Actually M04.0 is \"Familial Mediterranean fever\". M04.1 \"Familial Mediterranean fever\". Might be duplicates? Let's search memory: I think M04.0 is \"Familial Mediterranean fever\", M04.1 \"Familial Mediterranean fever\". But I'm not sure. Let's quickly search offline: In ICD-10, M04.0 is \"Familial Mediterranean fever\". M04.1 is \"Familial Mediterranean fever\". But I'm not certain. Let's search memory: I think M04.0 is \"Familial Mediterranean fever\". M04.1 is \"Familial Mediterranean fever\". But that seems odd. There might be M04.0 \"Familial Mediterranean fever\". M04.1 \"Familial Mediterranean fever\". But maybe M04.0 is \"Familial Mediterranean fever\" and M04.1 is \"Familial Mediterranean fever\" as well? Actually maybe M04.0 is \"Familial Mediterranean fever\", M04.1 is \"Familial Mediterranean fever\", M04.2 is \"Familial Mediterranean fever\", etc. Wait maybe there are subtypes? Let's check: The code for \"Familial Mediterranean fever\" is M04.0. But there might be M04.1 \"Familial Mediterranean fever with ...\"? Let's check: I'm going to search memory: M04.0 is \"Familial Mediterranean fever\". M04.1 is \"Familial Mediterranean fever\". M04.8 is \"Other specified autoinflammatory diseases\". M04.9 is \"Other autoinflammatory diseases, unspecified\". So we can use M04.0 for FMF.\n\nFor TRAPS, the ICD-10 code is M04.8 \"Other specified autoinflammatory diseases\". Or maybe M04.8 \"Other specified autoinflammatory diseases\". But we can use that.\n\nFor Hyper-IgD syndrome, ICD-10 code M04.9 \"Other autoinflammatory diseases, unspecified\". Or maybe M04.9. So we can use M04.9.\n\nFor systemic juvenile idiopathic arthritis (Still's disease), ICD-10 M08.0? Actually M08.0 \"Systemic juvenile idiopathic arthritis (Still's disease)\". Yes.\n\nAlternatively, we could include \"Recurrent fever syndrome\" e.g., \"Recurrent pericarditis\". But we want 3-5 differential diagnoses. So we can list:\n\n- Systemic juvenile idiopathic arthritis (Still's disease)\n- TNF receptor-associated periodic syndrome (TRAPS)\n- Hyper-IgD syndrome\n- Acute interstitial pneumonia? Not relevant. \n- Bacterial peritonitis? But chronic. \n- Acute intermittent porphyria? Might have abdominal pain, neurological, but not fever. \n- Chronic mesenteric ischemia? Not relevant.\n\nBetter choose:\n\n- Systemic juvenile idiopathic arthritis (Still's disease)\n- TNF receptor-associated periodic syndrome (TRAPS)\n- Hyper-IgD syndrome (Mevalonate kinase deficiency)\n- Acute interstitial pneumonia? Not.\n\nWhat about \"Seronegative spondyloarthropathy\" like reactive arthritis? But not typical. But we can include \"Recurrent pericarditis\" as differential. But we need 3-5. So we can include:\n\n- Systemic juvenile idiopathic arthritis (Still's disease)\n- TNF receptor-associated periodic syndrome (TRAPS)\n- Hyper-IgD syndrome\n- Recurrent pericarditis (maybe due to viral infection)\n- Acute peritonitis? But not typical.\n\nAlternatively, \"Recurrent abdominal pain due to Crohn disease\" but not typical.\n\nBut we can choose:\n\n- Systemic juvenile idiopathic arthritis (Still's disease)\n- TNF receptor-associated periodic syndrome (TRAPS)\n- Hyper-IgD syndrome\n- Recurrent pericarditis\n\nOk.\n\nKey findings: recurrent fever, serositis (abdominal pain, chest pain, pleuritic), arthritis, Mediterranean descent, family history, attack duration 1-3 days, attack frequency 2-3 weeks, normal between attacks, elevated inflammatory markers, genetic testing pending.\n\nTests: \n- Genetic testing for MEFV gene (urgent)\n- Baseline labs: CBC, CRP, ESR (already done)\n- Serum amyloid A (SAA) measurement (urgent)\n- Serum IgD levels (routine)\n- Serum IL-1\u03b2 levels maybe not routine\n- Echocardiography (routine if pericarditis suspected)\n- Abdominal ultrasound (routine)\n- Chest X-ray (routine)\n- Urine analysis (routine)\n- Maybe DNA sequencing for MEFV gene; also check for TNFRSF1A (TRAPS) and MVK (Hyper-IgD) if FMF negative.\n\nPriority: Genetic testing for MEFV (urgent). Serum amyloid A (SAA) (urgent). Others routine.\n\nManagement:\nImmediate: treat acute attack: NSAIDs (e.g., Indomethacin 50 mg PO BID), or colchicine if prophylactic. Also consider corticosteroids for severe attacks. Use colchicine prophylaxis daily (e.g., 0.5 mg PO BID). Also supportive: fluids, analgesics, anti-pyretics.\n\nMedications: \n- Colchicine 0.5 mg PO BID (or 0.5 mg once daily if tolerated). \n- NSAIDs: Indomethacin 50 mg PO BID for acute. \n- Corticosteroids: Prednisone 30-40 mg PO daily for 3-5 days if severe. \n- Anakinra (IL-1 receptor antagonist) 100 mg SC daily if colchicine fails.\n\nConsultations: \n- Rheumatology (urgent)\n- Genetics (urgent)\n- Cardiology (if pericarditis > 24h) (routine)\n- Infectious disease (if suspicion of infectious cause) (routine)\n\nRed flags: \n- Persistent fever > 48h, no response to colchicine, signs of amyloidosis (proteinuria), progressive organ dysfunction, severe pericarditis leading to tamponade, severe abdominal pain requiring surgery, high risk infections.\n\nOk.\n\nNow produce JSON. Ensure only JSON output. Use proper numeric confidence values.\n\nPrimary diagnosis: FMF. Confidence high: maybe 0.95.\n\nDifferential diagnoses: assign confidence: \n- Systemic juvenile idiopathic arthritis (Still's disease) 0.2\n- TNF receptor-associated periodic syndrome (TRAPS) 0.1\n- Hyper-IgD syndrome 0.05\n- Recurrent pericarditis 0.05\n- Also maybe other autoinflammatory disease 0.05 but we already have 5.\n\nActually",
+      "response_time": 13.855823040008545,
+      "cached": false,
+      "case_id": "custom_20250909_111309",
+      "timestamp": "2025-09-09T11:15:16.443540",
+      "tokens_used": 2408,
+      "input_tokens": 408,
+      "output_tokens": 2000
+    },
+    {
+      "model_name": "shisa-ai/shisa-v2-llama3.3-70b:free",
+      "response": "```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"Familial Mediterranean Fever (FMF)\",\n        \"confidence\": 0.8,\n        \"icd_code\": \"E85.0\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Autoinflammatory Syndrome\",\n            \"confidence\": 0.4,\n            \"icd_code\": \"M35.8\"\n        },\n        {\n            \"name\": \"Periodic Fever, Aphthous Stomatitis, Pharyngitis, Adenitis (PFAPA) Syndrome\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"M35.0\"\n        },\n        {\n            \"name\": \"Hyper-IgD Syndrome (Mevalonate Kinase Deficiency)\",\n            \"confidence\": 0.1,\n            \"icd_code\": \"E85.1\"\n        },\n        {\n            \"name\": \"TNF Receptor-Associated Periodic Syndrome (TRAPS)\",\n            \"confidence\": 0.1,\n            \"icd_code\": \"M35.8\"\n        }\n    ],\n    \"key_findings\": [\n        \"Recurrent fever with abdominal, chest, and joint pain\",\n        \"Family history of similar symptoms\",\n        \"Elevated CRP, ESR, and WBC during episodes\",\n        \"Asymptomatic between episodes\",\n        \"Episodes started in childhood\"\n    ],\n    \"tests\": [\n        {\n            \"test\": \"Genetic testing for FMF-related genes (MEFV)\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Complete Blood Count (CBC) with differential\",\n            \"priority\": \"routine\"\n        },\n        {\n            \"test\": \"Erythrocyte Sedimentation Rate (ESR) and C-Reactive Protein (CRP)\",\n            \"priority\": \"routine\"\n        },\n        {\n            \"test\": \"Serum Amyloid A (SAA) levels\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management\": {\n        \"immediate\": [\n            \"Pain management with NSAIDs\",\n            \"Colchicine for FMF attacks\"\n        ],\n        \"medications\": [\n            \"Colchicine: 1.2-2.4 mg/day orally\",\n            \"NSAIDs: as needed for pain and inflammation\",\n",
+      "response_time": 117.81065797805786,
+      "cached": false,
+      "case_id": "custom_20250909_111309",
+      "timestamp": "2025-09-09T11:17:14.255470",
+      "tokens_used": 852,
+      "input_tokens": 354,
+      "output_tokens": 498
+    }
+  ],
+  "total_models_analyzed": 7,
+  "geographical_distribution": {
+    "USA": 20,
+    "France": 3,
+    "China": 5,
+    "Canada": 2,
+    "Japan/USA": 1,
+    "Israel": 1
+  },
+  "consensus_analysis": {
+    "primary_counts": {
+      "Familial Mediterranean Fever": 4,
+      "Recurrent Fever Syndrome, Undifferentiated": 1,
+      "Reactive Arthritis": 1
+    },
+    "differential_counts": {
+      "Periodic Fever Syndrome": 3,
+      "Systemic Juvenile Idiopathic Arthritis": 1,
+      "Acute Intermittent Porphyria": 1,
+      "Inflammatory Bowel Disease": 1,
+      "Systemic Juvenile Idiopathic Arthritis (Sjia)": 1,
+      "Tnf Receptor-Associated Periodic Syndrome (Traps)": 1,
+      "Adult Still's Disease": 1,
+      "Systemic-Onset Juvenile Idiopathic Arthritis (Jia)": 1,
+      "Beh\u00e7et'S Disease": 1,
+      "Inflammatory Bowel Disease (Ibd)": 1,
+      "Reactive Arthritis": 1,
+      "Spondyloarthritis": 1,
+      "Familial Mediterranean Fever": 1,
+      "Juvenile Idiopathic Arthritis": 1,
+      "Hyperuricemia (Gout)": 1,
+      "Inflammatory Bowel Disease (Crohn'S Disease)": 1,
+      "Rheumatoid Arthritis": 1,
+      "Systemic Lupus Erythematosus": 1,
+      "Ankylosing Spondylitis": 1
+    },
+    "total_counts": {
+      "Familial Mediterranean Fever": 5,
+      "Periodic Fever Syndrome": 3,
+      "Systemic Juvenile Idiopathic Arthritis": 1,
+      "Acute Intermittent Porphyria": 1,
+      "Inflammatory Bowel Disease": 1,
+      "Systemic Juvenile Idiopathic Arthritis (Sjia)": 1,
+      "Tnf Receptor-Associated Periodic Syndrome (Traps)": 1,
+      "Adult Still's Disease": 1,
+      "Systemic-Onset Juvenile Idiopathic Arthritis (Jia)": 1,
+      "Beh\u00e7et'S Disease": 1,
+      "Inflammatory Bowel Disease (Ibd)": 1,
+      "Recurrent Fever Syndrome, Undifferentiated": 1,
+      "Reactive Arthritis": 2,
+      "Spondyloarthritis": 1,
+      "Juvenile Idiopathic Arthritis": 1,
+      "Hyperuricemia (Gout)": 1,
+      "Inflammatory Bowel Disease (Crohn'S Disease)": 1,
+      "Rheumatoid Arthritis": 1,
+      "Systemic Lupus Erythematosus": 1,
+      "Ankylosing Spondylitis": 1
+    },
+    "sorted_diagnoses": [
+      [
+        "Familial Mediterranean Fever",
+        5
+      ],
+      [
+        "Periodic Fever Syndrome",
+        3
+      ],
+      [
+        "Reactive Arthritis",
+        2
+      ],
+      [
+        "Systemic Juvenile Idiopathic Arthritis",
+        1
+      ],
+      [
+        "Acute Intermittent Porphyria",
+        1
+      ],
+      [
+        "Inflammatory Bowel Disease",
+        1
+      ],
+      [
+        "Systemic Juvenile Idiopathic Arthritis (Sjia)",
+        1
+      ],
+      [
+        "Tnf Receptor-Associated Periodic Syndrome (Traps)",
+        1
+      ],
+      [
+        "Adult Still's Disease",
+        1
+      ],
+      [
+        "Systemic-Onset Juvenile Idiopathic Arthritis (Jia)",
+        1
+      ],
+      [
+        "Beh\u00e7et'S Disease",
+        1
+      ],
+      [
+        "Inflammatory Bowel Disease (Ibd)",
+        1
+      ],
+      [
+        "Recurrent Fever Syndrome, Undifferentiated",
+        1
+      ],
+      [
+        "Spondyloarthritis",
+        1
+      ],
+      [
+        "Juvenile Idiopathic Arthritis",
+        1
+      ],
+      [
+        "Hyperuricemia (Gout)",
+        1
+      ],
+      [
+        "Inflammatory Bowel Disease (Crohn'S Disease)",
+        1
+      ],
+      [
+        "Rheumatoid Arthritis",
+        1
+      ],
+      [
+        "Systemic Lupus Erythematosus",
+        1
+      ],
+      [
+        "Ankylosing Spondylitis",
+        1
+      ]
+    ],
+    "primary": [
+      "Familial Mediterranean Fever",
+      5
+    ],
+    "total_models": 7,
+    "icd_codes": {
+      "Familial Mediterranean Fever": [
+        "M39.0",
+        "E85.0",
+        "M45.81",
+        "M69.8"
+      ],
+      "Periodic Fever Syndrome": [
+        "E85.8",
+        "G40.80"
+      ],
+      "Systemic Juvenile Idiopathic Arthritis": [
+        "M08.2"
+      ],
+      "Acute Intermittent Porphyria": [
+        "E80.21"
+      ],
+      "Inflammatory Bowel Disease": [
+        "K50.9"
+      ],
+      "Systemic Juvenile Idiopathic Arthritis (Sjia)": [
+        "M08.2"
+      ],
+      "Tnf Receptor-Associated Periodic Syndrome (Traps)": [
+        "E85.8"
+      ],
+      "Adult Still's Disease": [
+        "M35.6"
+      ],
+      "Systemic-Onset Juvenile Idiopathic Arthritis (Jia)": [
+        "M08.0"
+      ],
+      "Beh\u00e7et'S Disease": [
+        "M35.3"
+      ],
+      "Inflammatory Bowel Disease (Ibd)": [
+        "K50.-"
+      ],
+      "Recurrent Fever Syndrome, Undifferentiated": [
+        "M35.81"
+      ],
+      "Reactive Arthritis": [
+        "M45.9"
+      ],
+      "Spondyloarthritis": [
+        "M90.0"
+      ],
+      "Juvenile Idiopathic Arthritis": [
+        "M07.0"
+      ],
+      "Hyperuricemia (Gout)": [
+        "M75.0"
+      ],
+      "Inflammatory Bowel Disease (Crohn'S Disease)": [
+        "K50.xx"
+      ],
+      "Rheumatoid Arthritis": [
+        "M05.x"
+      ],
+      "Systemic Lupus Erythematosus": [
+        "M32.x"
+      ],
+      "Ankylosing Spondylitis": [
+        "M45.x"
+      ]
+    },
+    "model_diagnoses": {
+      "Familial Mediterranean Fever": {
+        "primary": [
+          "deepseek/deepseek-chat-v3.1:free",
+          "deepseek/deepseek-r1:free",
+          "google/gemma-3-12b-it:free",
+          "mistralai/mistral-7b-instruct:free"
+        ],
+        "differential": [
+          "meta-llama/llama-3.2-3b-instruct:free"
+        ]
+      },
+      "Periodic Fever Syndrome": {
+        "differential": [
+          "deepseek/deepseek-chat-v3.1:free",
+          "deepseek/deepseek-chat-v3.1:free",
+          "deepseek/deepseek-r1:free"
+        ]
+      },
+      "Systemic Juvenile Idiopathic Arthritis": {
+        "differential": [
+          "deepseek/deepseek-chat-v3.1:free"
+        ]
+      },
+      "Acute Intermittent Porphyria": {
+        "differential": [
+          "deepseek/deepseek-chat-v3.1:free"
+        ]
+      },
+      "Inflammatory Bowel Disease": {
+        "differential": [
+          "deepseek/deepseek-chat-v3.1:free"
+        ]
+      },
+      "Systemic Juvenile Idiopathic Arthritis (Sjia)": {
+        "differential": [
+          "deepseek/deepseek-r1:free"
+        ]
+      },
+      "Tnf Receptor-Associated Periodic Syndrome (Traps)": {
+        "differential": [
+          "deepseek/deepseek-r1:free"
+        ]
+      },
+      "Adult Still's Disease": {
+        "differential": [
+          "google/gemma-3-12b-it:free"
+        ]
+      },
+      "Systemic-Onset Juvenile Idiopathic Arthritis (Jia)": {
+        "differential": [
+          "google/gemma-3-12b-it:free"
+        ]
+      },
+      "Beh\u00e7et'S Disease": {
+        "differential": [
+          "google/gemma-3-12b-it:free"
+        ]
+      },
+      "Inflammatory Bowel Disease (Ibd)": {
+        "differential": [
+          "google/gemma-3-12b-it:free"
+        ]
+      },
+      "Recurrent Fever Syndrome, Undifferentiated": {
+        "primary": [
+          "meta-llama/llama-3.2-3b-instruct:free"
+        ]
+      },
+      "Reactive Arthritis": {
+        "differential": [
+          "meta-llama/llama-3.2-3b-instruct:free"
+        ],
+        "primary": [
+          "openai/gpt-oss-20b:free:free"
+        ]
+      },
+      "Spondyloarthritis": {
+        "differential": [
+          "meta-llama/llama-3.2-3b-instruct:free"
+        ]
+      },
+      "Juvenile Idiopathic Arthritis": {
+        "differential": [
+          "meta-llama/llama-3.2-3b-instruct:free"
+        ]
+      },
+      "Hyperuricemia (Gout)": {
+        "differential": [
+          "mistralai/mistral-7b-instruct:free"
+        ]
+      },
+      "Inflammatory Bowel Disease (Crohn'S Disease)": {
+        "differential": [
+          "mistralai/mistral-7b-instruct:free"
+        ]
+      },
+      "Rheumatoid Arthritis": {
+        "differential": [
+          "mistralai/mistral-7b-instruct:free"
+        ]
+      },
+      "Systemic Lupus Erythematosus": {
+        "differential": [
+          "mistralai/mistral-7b-instruct:free"
+        ]
+      },
+      "Ankylosing Spondylitis": {
+        "differential": [
+          "mistralai/mistral-7b-instruct:free"
+        ]
+      }
+    },
+    "geographical_patterns": {
+      "Unknown": {
+        "Familial Mediterranean Fever": 4,
+        "Recurrent Fever Syndrome, Undifferentiated": 1,
+        "Reactive Arthritis": 1
+      }
+    }
+  },
+  "free_models_used": true,
+  "diagnostic_landscape": {
+    "primary_diagnosis": {
+      "name": "Familial Mediterranean Fever (FMF)",
+      "icd_code": "M39.0",
+      "confidence": "High",
+      "supporting_models": [
+        "Unknown",
+        "Unknown",
+        "Unknown",
+        "Unknown",
+        "Unknown"
+      ],
+      "percentage": 85,
+      "evidence": [
+        "Recurrent fever episodes",
+        "Severe abdominal pain",
+        "Chest pain with breathing difficulties",
+        "Joint pain in knees and ankles",
+        "Family history of similar symptoms"
+      ]
+    },
+    "strong_alternatives": [],
+    "alternatives": [
+      {
+        "name": "Periodic Fever Syndrome (other types)",
+        "icd_code": "E85.8",
+        "frequency": 3,
+        "supporting_models": [
+          "Unknown",
+          "Unknown",
+          "Unknown"
+        ],
+        "evidence": [
+          "Recurrent fever episodes",
+          "Severe abdominal pain",
+          "Chest pain with breathing difficulties",
+          "Joint pain in knees and ankles"
+        ],
+        "agreement_percentage": 11.1
+      }
+    ],
+    "minority_opinions": [
+      {
+        "name": "Systemic Juvenile Idiopathic Arthritis",
+        "icd_code": "M08.2",
+        "frequency": 2,
+        "supporting_models": [
+          "Unknown",
+          "Unknown"
+        ],
+        "evidence": [
+          "Recurrent fever episodes",
+          "Joint pain in knees and ankles"
+        ],
+        "agreement_percentage": 7.4
+      },
+      {
+        "name": "Adult-Onset Still's Disease",
+        "icd_code": "M35.6",
+        "frequency": 1,
+        "supporting_models": [
+          "Unknown"
+        ],
+        "evidence": [
+          "Recurrent fever episodes",
+          "Joint pain in knees and ankles"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "Systemic-Onset Juvenile Idiopathic Arthritis (JIA)",
+        "icd_code": "M08.0",
+        "frequency": 1,
+        "supporting_models": [
+          "Unknown"
+        ],
+        "evidence": [
+          "Recurrent fever episodes",
+          "Joint pain in knees and ankles"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "Autoinflammatory Syndrome",
+        "icd_code": "M35.8",
+        "frequency": 1,
+        "supporting_models": [
+          "Unknown"
+        ],
+        "evidence": [
+          "Recurrent fever episodes",
+          "Severe abdominal pain",
+          "Chest pain with breathing difficulties",
+          "Joint pain in knees and ankles"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "Periodic Fever, Aphthous Stomatitis, Pharyngitis, Adenitis (PFAPA) Syndrome",
+        "icd_code": "M35.0",
+        "frequency": 1,
+        "supporting_models": [
+          "Unknown"
+        ],
+        "evidence": [
+          "Recurrent fever episodes",
+          "Severe abdominal pain",
+          "Chest pain with breathing difficulties",
+          "Joint pain in knees and ankles"
+        ],
+        "agreement_percentage": 3.7
+      }
+    ],
+    "all_alternative_diagnoses": [
+      {
+        "name": "Periodic Fever Syndrome (other types)",
+        "icd_code": "E85.8",
+        "frequency": 3,
+        "supporting_models": [
+          "Unknown",
+          "Unknown",
+          "Unknown"
+        ],
+        "evidence": [
+          "Recurrent fever episodes",
+          "Severe abdominal pain",
+          "Chest pain with breathing difficulties",
+          "Joint pain in knees and ankles"
+        ],
+        "agreement_percentage": 11.1
+      },
+      {
+        "name": "Systemic Juvenile Idiopathic Arthritis",
+        "icd_code": "M08.2",
+        "frequency": 2,
+        "supporting_models": [
+          "Unknown",
+          "Unknown"
+        ],
+        "evidence": [
+          "Recurrent fever episodes",
+          "Joint pain in knees and ankles"
+        ],
+        "agreement_percentage": 7.4
+      },
+      {
+        "name": "Adult-Onset Still's Disease",
+        "icd_code": "M35.6",
+        "frequency": 1,
+        "supporting_models": [
+          "Unknown"
+        ],
+        "evidence": [
+          "Recurrent fever episodes",
+          "Joint pain in knees and ankles"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "Systemic-Onset Juvenile Idiopathic Arthritis (JIA)",
+        "icd_code": "M08.0",
+        "frequency": 1,
+        "supporting_models": [
+          "Unknown"
+        ],
+        "evidence": [
+          "Recurrent fever episodes",
+          "Joint pain in knees and ankles"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "Autoinflammatory Syndrome",
+        "icd_code": "M35.8",
+        "frequency": 1,
+        "supporting_models": [
+          "Unknown"
+        ],
+        "evidence": [
+          "Recurrent fever episodes",
+          "Severe abdominal pain",
+          "Chest pain with breathing difficulties",
+          "Joint pain in knees and ankles"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "Periodic Fever, Aphthous Stomatitis, Pharyngitis, Adenitis (PFAPA) Syndrome",
+        "icd_code": "M35.0",
+        "frequency": 1,
+        "supporting_models": [
+          "Unknown"
+        ],
+        "evidence": [
+          "Recurrent fever episodes",
+          "Severe abdominal pain",
+          "Chest pain with breathing difficulties",
+          "Joint pain in knees and ankles"
+        ],
+        "agreement_percentage": 3.7
+      }
+    ]
+  },
+  "comprehensive_bias_analysis": {
+    "geographical_representation": {
+      "total_countries": 6,
+      "western_dominance": {
+        "western_models": 25,
+        "percentage": 357.14285714285717,
+        "impact": "High Western medical paradigm influence expected"
+      },
+      "chinese_representation": {
+        "chinese_models": 5,
+        "percentage": 71.42857142857143,
+        "impact": "Traditional Chinese Medicine integration possible"
+      }
+    },
+    "case_specific_concerns": [
+      "Analysis strictly limited to custom_20250909_111309 responses",
+      "No cross-case contamination in this analysis",
+      "Bias patterns specific to this case presentation"
+    ],
+    "recommended_mitigations": [
+      "Consider cultural context in diagnosis interpretation",
+      "Account for geographical bias in model training",
+      "Validate findings across diverse medical paradigms"
+    ]
+  },
+  "model_diversity_metrics": {
+    "unique_architectures": 0,
+    "unique_providers": 0,
+    "unique_countries": 0,
+    "diversity_score": 0.0,
+    "case_id": "custom_20250909_111309"
+  },
+  "management_strategies": {
+    "immediate_actions": [
+      "Order genetic testing for MEFV gene mutations",
+      "Initiate colchicine therapy"
+    ],
+    "differential_testing": [
+      {
+        "test": "Complete Blood Count (CBC) with differential",
+        "purpose": "Diagnostic confirmation"
+      },
+      {
+        "test": "Erythrocyte Sedimentation Rate (ESR)",
+        "purpose": "Diagnostic confirmation"
+      },
+      {
+        "test": "C-Reactive Protein (CRP) levels",
+        "purpose": "Diagnostic confirmation"
+      }
+    ],
+    "medications": [
+      {
+        "medication_name": "Colchicine",
+        "dosage": "0.6 mg",
+        "route": "oral",
+        "frequency": "twice daily",
+        "duration": "long-term",
+        "indication": "Prophylaxis of FMF attacks"
+      }
+    ]
+  },
+  "evidence_synthesis": {
+    "key_clinical_findings": [
+      {
+        "finding": "Recurrent fever episodes",
+        "diagnostic_significance": "High"
+      },
+      {
+        "finding": "Severe abdominal pain",
+        "diagnostic_significance": "High"
+      },
+      {
+        "finding": "Chest pain with breathing difficulties",
+        "diagnostic_significance": "High"
+      },
+      {
+        "finding": "Joint pain in knees and ankles",
+        "diagnostic_significance": "High"
+      },
+      {
+        "finding": "Family history of similar symptoms",
+        "diagnostic_significance": "High"
+      }
+    ],
+    "symptom_diagnosis_matrix": {
+      "symptoms": [
+        "Recurrent fever episodes",
+        "Severe abdominal pain",
+        "Chest pain with breathing difficulties",
+        "Joint pain in knees and ankles",
+        "Family history of similar symptoms"
+      ],
+      "diagnoses": [
+        "Familial Mediterranean Fever (FMF)",
+        "Periodic Fever Syndrome (other types)",
+        "Systemic Juvenile Idiopathic Arthritis",
+        "Adult-Onset Still's Disease",
+        "Systemic-Onset Juvenile Idiopathic Arthritis (JIA)",
+        "Autoinflammatory Syndrome",
+        "Periodic Fever, Aphthous Stomatitis, Pharyngitis, Adenitis (PFAPA) Syndrome"
+      ],
+      "correlations": [
+        {
+          "symptom": "Recurrent fever episodes",
+          "diagnosis": "Familial Mediterranean Fever (FMF)",
+          "strength": "Strong"
+        },
+        {
+          "symptom": "Severe abdominal pain",
+          "diagnosis": "Familial Mediterranean Fever (FMF)",
+          "strength": "Strong"
+        },
+        {
+          "symptom": "Chest pain with breathing difficulties",
+          "diagnosis": "Familial Mediterranean Fever (FMF)",
+          "strength": "Strong"
+        },
+        {
+          "symptom": "Joint pain in knees and ankles",
+          "diagnosis": "Familial Mediterranean Fever (FMF)",
+          "strength": "Strong"
+        },
+        {
+          "symptom": "Family history of similar symptoms",
+          "diagnosis": "Familial Mediterranean Fever (FMF)",
+          "strength": "Strong"
+        },
+        {
+          "symptom": "Recurrent fever episodes",
+          "diagnosis": "Periodic Fever Syndrome (other types)",
+          "strength": "Strong"
+        },
+        {
+          "symptom": "Severe abdominal pain",
+          "diagnosis": "Periodic Fever Syndrome (other types)",
+          "strength": "Strong"
+        },
+        {
+          "symptom": "Chest pain with breathing difficulties",
+          "diagnosis": "Periodic Fever Syndrome (other types)",
+          "strength": "Strong"
+        },
+        {
+          "symptom": "Joint pain in knees and ankles",
+          "diagnosis": "Periodic Fever Syndrome (other types)",
+          "strength": "Strong"
+        },
+        {
+          "symptom": "Recurrent fever episodes",
+          "diagnosis": "Systemic Juvenile Idiopathic Arthritis",
+          "strength": "Moderate"
+        },
+        {
+          "symptom": "Joint pain in knees and ankles",
+          "diagnosis": "Systemic Juvenile Idiopathic Arthritis",
+          "strength": "Moderate"
+        },
+        {
+          "symptom": "Recurrent fever episodes",
+          "diagnosis": "Adult-Onset Still's Disease",
+          "strength": "Moderate"
+        },
+        {
+          "symptom": "Joint pain in knees and ankles",
+          "diagnosis": "Adult-Onset Still's Disease",
+          "strength": "Moderate"
+        },
+        {
+          "symptom": "Recurrent fever episodes",
+          "diagnosis": "Systemic-Onset Juvenile Idiopathic Arthritis (JIA)",
+          "strength": "Moderate"
+        },
+        {
+          "symptom": "Joint pain in knees and ankles",
+          "diagnosis": "Systemic-Onset Juvenile Idiopathic Arthritis (JIA)",
+          "strength": "Moderate"
+        },
+        {
+          "symptom": "Recurrent fever episodes",
+          "diagnosis": "Autoinflammatory Syndrome",
+          "strength": "Moderate"
+        },
+        {
+          "symptom": "Severe abdominal pain",
+          "diagnosis": "Autoinflammatory Syndrome",
+          "strength": "Moderate"
+        },
+        {
+          "symptom": "Chest pain with breathing difficulties",
+          "diagnosis": "Autoinflammatory Syndrome",
+          "strength": "Moderate"
+        },
+        {
+          "symptom": "Joint pain in knees and ankles",
+          "diagnosis": "Autoinflammatory Syndrome",
+          "strength": "Moderate"
+        },
+        {
+          "symptom": "Recurrent fever episodes",
+          "diagnosis": "Periodic Fever, Aphthous Stomatitis, Pharyngitis, Adenitis (PFAPA) Syndrome",
+          "strength": "Moderate"
+        },
+        {
+          "symptom": "Severe abdominal pain",
+          "diagnosis": "Periodic Fever, Aphthous Stomatitis, Pharyngitis, Adenitis (PFAPA) Syndrome",
+          "strength": "Moderate"
+        },
+        {
+          "symptom": "Chest pain with breathing difficulties",
+          "diagnosis": "Periodic Fever, Aphthous Stomatitis, Pharyngitis, Adenitis (PFAPA) Syndrome",
+          "strength": "Moderate"
+        },
+        {
+          "symptom": "Joint pain in knees and ankles",
+          "diagnosis": "Periodic Fever, Aphthous Stomatitis, Pharyngitis, Adenitis (PFAPA) Syndrome",
+          "strength": "Moderate"
+        }
+      ]
+    }
+  },
+  "generation_metadata": {
+    "pipeline_version": "General v1.0",
+    "timestamp": "20250909_111309",
+    "case_separation": "Strict",
+    "total_time_seconds": 245.15097308158875
+  },
+  "critical_decision_points": [
+    "Evaluate response to colchicine therapy after 1-2 months",
+    "Consider dose adjustment or alternative treatments if colchicine is ineffective or poorly tolerated"
+  ],
+  "ai_model_bias_analysis": {
+    "geographic_bias": {
+      "detected": true,
+      "description": "The diagnostic consensus is primarily based on Western medical literature and may not fully account for the prevalence and presentation of FMF in non-Western populations, particularly those in the Mediterranean and Middle Eastern regions.",
+      "mitigation": "Incorporate a broader range of medical literature and case studies from diverse geographic regions, especially those with higher prevalence of FMF, to ensure a more comprehensive and inclusive diagnostic approach."
+    },
+    "training_bias": {
+      "detected": true,
+      "description": "The models supporting the diagnostic consensus are trained on Western-centric data, which may lead to underrepresentation of symptoms and clinical presentations specific to non-Western populations.",
+      "mitigation": "Diversify the training data to include a wider range of patient populations and clinical settings, ensuring that the models are better equipped to recognize and diagnose FMF in diverse contexts."
+    },
+    "consensus_strength": "Moderate"
+  },
+  "clinical_decision_tree": {
+    "initial_assessment": "Evaluate presenting symptoms",
+    "diagnostic_tests": [
+      "Complete Blood Count (CBC) with differential",
+      "Erythrocyte Sedimentation Rate (ESR)",
+      "C-Reactive Protein (CRP) levels"
+    ],
+    "decision_points": [
+      "Evaluate response to colchicine therapy after 1-2 months",
+      "Consider dose adjustment or alternative treatments if colchicine is ineffective or poorly tolerated"
+    ]
+  },
+  "primary_diagnosis_summaries": {
+    "key_clinical_findings": [
+      {
+        "finding": "Recurrent fever episodes",
+        "supporting_evidence": "Clinical presentation",
+        "model_support": 5,
+        "reasoning": "Key diagnostic indicator"
+      },
+      {
+        "finding": "Severe abdominal pain",
+        "supporting_evidence": "Clinical presentation",
+        "model_support": 5,
+        "reasoning": "Key diagnostic indicator"
+      },
+      {
+        "finding": "Chest pain with breathing difficulties",
+        "supporting_evidence": "Clinical presentation",
+        "model_support": 5,
+        "reasoning": "Key diagnostic indicator"
+      },
+      {
+        "finding": "Joint pain in knees and ankles",
+        "supporting_evidence": "Clinical presentation",
+        "model_support": 5,
+        "reasoning": "Key diagnostic indicator"
+      },
+      {
+        "finding": "Family history of similar symptoms",
+        "supporting_evidence": "Clinical presentation",
+        "model_support": 5,
+        "reasoning": "Key diagnostic indicator"
+      }
+    ],
+    "recommended_tests": [
+      {
+        "test_name": "Complete Blood Count (CBC) with differential",
+        "test_type": "Laboratory",
+        "rationale": "Diagnostic confirmation",
+        "priority": "Urgent",
+        "model_support": 3,
+        "reasoning": "Essential for diagnosis"
+      },
+      {
+        "test_name": "Erythrocyte Sedimentation Rate (ESR)",
+        "test_type": "Laboratory",
+        "rationale": "Diagnostic confirmation",
+        "priority": "Urgent",
+        "model_support": 3,
+        "reasoning": "Essential for diagnosis"
+      },
+      {
+        "test_name": "C-Reactive Protein (CRP) levels",
+        "test_type": "Laboratory",
+        "rationale": "Diagnostic confirmation",
+        "priority": "Urgent",
+        "model_support": 3,
+        "reasoning": "Essential for diagnosis"
+      }
+    ],
+    "immediate_management": [
+      {
+        "intervention": "Order genetic testing for MEFV gene mutations",
+        "category": "Medical",
+        "urgency": "Immediate",
+        "model_support": 3,
+        "reasoning": "Critical intervention"
+      },
+      {
+        "intervention": "Initiate colchicine therapy",
+        "category": "Medical",
+        "urgency": "Immediate",
+        "model_support": 3,
+        "reasoning": "Critical intervention"
+      }
+    ],
+    "medications": [
+      {
+        "medication_name": "Colchicine",
+        "dosage": "0.6 mg",
+        "route": "oral",
+        "frequency": "twice daily",
+        "duration": "long-term",
+        "indication": "Prophylaxis of FMF attacks",
+        "model_support": 2,
+        "reasoning": "Prophylaxis of FMF attacks"
+      }
+    ]
+  },
+  "quality_metrics": {
+    "total_models_analyzed": 7,
+    "consensus_strength": "Moderate",
+    "successful_responses": 7
+  },
+  "metadata": {
+    "analysis_timestamp": "2025-09-09T11:17:42.199072",
+    "orchestrator_model": "qwen/qwen-2.5-72b-instruct:free",
+    "case_id": "custom_20250909_111309",
+    "case_title": "Custom Case",
+    "orchestrator_quality": "free_models",
+    "quality_disclaimer": "\u26a0\ufe0f This analysis uses free orchestrator models which may provide suboptimal quality compared to premium models. For clinical applications, consider using premium orchestrator models for enhanced accuracy and comprehensive analysis."
+  },
+  "generated_at": "2025-09-09T11:17:42.199387"
+}

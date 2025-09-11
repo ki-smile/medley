@@ -1,0 +1,614 @@
+{
+  "case_id": "custom_20250909_093501",
+  "case_title": "Custom Case",
+  "case_content": "A 28-year-old male of Mediterranean descent presents with:\n- Recurrent episodes of fever lasting 1-3 days\n- Severe abdominal pain during episodes\n- Chest pain with breathing difficulties\n- Joint pain affecting knees and ankles\n- Family history: Father and paternal uncle have similar symptoms\n- Episodes occur every 2-3 weeks\n- Labs during attack: Elevated CRP, ESR, and WBC\n- Between attacks: Completely asymptomatic\n\nPatient reports episodes started in childhood around age 7. Recent genetic testing is pending.",
+  "model_responses": [
+    {
+      "model_name": "deepseek/deepseek-chat-v3.1:free",
+      "response": "```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"Familial Mediterranean Fever\",\n        \"confidence\": 0.95,\n        \"icd_code\": \"E85.0\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Periodic Fever Syndrome (other types)\",\n            \"confidence\": 0.7,\n            \"icd_code\": \"E85.8\"\n        },\n        {\n            \"name\": \"Systemic Juvenile Idiopathic Arthritis\",\n            \"confidence\": 0.4,\n            \"icd_code\": \"M08.2\"\n        },\n        {\n            \"name\": \"Acute Intermittent Porphyria\",\n            \"confidence\": 0.3,\n            \"icd_code\": \"E80.21\"\n        },\n        {\n            \"name\": \"Inflammatory Bowel Disease\",\n            \"confidence\": 0.25,\n            \"icd_code\": \"K50.9\"\n        },\n        {\n            \"name\": \"Hereditary Angioedema\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"D84.1\"\n        }\n    ],\n    \"key_findings\": [\"Mediterranean descent\", \"Recurrent self-limited febrile episodes\", \"Abdominal pain\", \"Chest pain\", \"Joint pain\", \"Positive family history\", \"Elevated inflammatory markers during attacks\", \"Asymptomatic between episodes\", \"Childhood onset\"],\n    \"tests\": [\n        {\n            \"test\": \"MEFV gene mutation analysis\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Serum amyloid A (SAA) during and between attacks\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"24-hour urine protein\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Complete metabolic panel\",\n            \"priority\": \"routine\"\n        },\n        {\n            \"test\": \"Echocardiogram\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management\": {\n        \"immediate\": [\"Symptomatic management during acute attacks\", \"Rule out other acute abdominal/thoracic pathologies\"],\n        \"medications\": [\"colchicine: 0.6 mg PO twice daily\", \"ibuprofen: 400-600 mg PO every 6 hours PRN for pain\", \"prednisone: 0.5-1 mg/kg/day PO during severe attacks (short course)\"],\n        \"consultations\": [\"Rheumatology: urgent\", \"Genetic counseling: routine\"]\n    },\n    \"red_flags\": [\"Signs of amyloidosis (proteinuria, renal impairment)\", \"Persistent fever beyond typical pattern\", \"Signs of infection\", \"Severe abdominal pain suggesting acute abdomen\", \"Respiratory distress\", \"Signs of anaphylaxis\"]\n}\n```",
+      "response_time": 19.046715021133423,
+      "cached": false,
+      "case_id": "custom_20250909_093501",
+      "timestamp": "2025-09-09T09:35:20.503241",
+      "tokens_used": 949,
+      "input_tokens": 348,
+      "output_tokens": 601
+    },
+    {
+      "model_name": "mistralai/mistral-7b-instruct:free",
+      "response": " {\n    \"primary_diagnosis\": {\n        \"name\": \"Familial Mediterranean Fever (FMF)\",\n        \"confidence\": 0.7,\n        \"icd_code\": \"M39.0\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Reactive Arthritis\",\n            \"confidence\": 0.3,\n            \"icd_code\": \"M40.5\"\n        },\n        {\n            \"name\": \"Systemic Lupus Erythematosus\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"M32.0\"\n        },\n        {\n            \"name\": \"Ankylosing Spondylitis\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"M45.0\"\n        },\n        {\n            \"name\": \"Gout\",\n            \"confidence\": 0.1,\n            \"icd_code\": \"M10.0\"\n        },\n        {\n            \"name\": \"Tuberculosis\",\n            \"confidence\": 0.1,\n            \"icd_code\": \"A15.9\"\n        }\n    ],\n    \"key_findings\": [\n        \"Recurrent fever, abdominal pain, chest pain, joint pain, family history of similar symptoms\"\n    ],\n    \"tests\": [\n        {\n            \"test\": \"AML/MPO Genotyping\",\n            \"priority\": \"immediate\"\n        },\n        {\n            \"test\": \"Anti-nuclear Antibody (ANA)\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"HLA-B27 Test\",\n            \"priority\": \"routine\"\n        },\n        {\n            \"test\": \"Blood culture\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management\": {\n        \"immediate\": [\n            \"Start colchicine 0.6 mg orally twice daily\"\n        ],\n        \"medications\": [\n            \"colchicine: 0.6 mg, orally twice daily\",\n            \"Non-steroidal anti-inflammatory drugs (NSAIDs) as needed for pain management\"\n        ],\n        \"consultations\": [\n            \"Rheumatology: urgency\"\n        ]\n    },\n    \"red_flags\": [\n        \"Sudden onset of severe symptoms, unexplained weight loss, night sweats\"\n    ]\n}",
+      "response_time": 6.939827919006348,
+      "cached": false,
+      "case_id": "custom_20250909_093501",
+      "timestamp": "2025-09-09T09:35:28.658335",
+      "tokens_used": 1043,
+      "input_tokens": 430,
+      "output_tokens": 613
+    },
+    {
+      "model_name": "shisa-ai/shisa-v2-llama3.3-70b:free",
+      "response": "```json\n{\n    \"primary_diagnosis\": {\n        \"name\": \"Familial Mediterranean Fever (FMF)\",\n        \"confidence\": 0.8,\n        \"icd_code\": \"E85.0\"\n    },\n    \"differential_diagnoses\": [\n        {\n            \"name\": \"Periodic Fever, Aphthous Stomatitis, Pharyngitis, and Adenitis (PFAPA) Syndrome\",\n            \"confidence\": 0.3,\n            \"icd_code\": \"R68.0\"\n        },\n        {\n            \"name\": \"Hyper-IgD Syndrome (Mevalonate Kinase Deficiency)\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"E85.1\"\n        },\n        {\n            \"name\": \"Tumor Necrosis Factor Receptor-Associated Periodic Syndrome (TRAPS)\",\n            \"confidence\": 0.2,\n            \"icd_code\": \"E85.2\"\n        },\n        {\n            \"name\": \"Cryopyrin-Associated Periodic Syndrome (CAPS)\",\n            \"confidence\": 0.1,\n            \"icd_code\": \"E85.3\"\n        }\n    ],\n    \"key_findings\": [\n        \"Recurrent febrile episodes with serositis (abdominal, chest, joint pain)\",\n        \"Family history of similar symptoms consistent with FMF\",\n        \"Elevated inflammatory markers during attacks\",\n        \"Asymptomatic periods between episodes\",\n        \"Age of onset in childhood\"\n    ],\n    \"tests\": [\n        {\n            \"test\": \"Genetic testing for MEFV gene mutations\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Serum amyloid A (SAA) levels during and between attacks\",\n            \"priority\": \"urgent\"\n        },\n        {\n            \"test\": \"Complete Blood Count (CBC) with differential during attacks\",\n            \"priority\": \"routine\"\n        },\n        {\n            \"test\": \"Erythrocyte Sedimentation Rate (ESR) and C-Reactive Protein (CRP)\",\n            \"priority\": \"routine\"\n        }\n    ],\n    \"management\": {\n        \"immediate\": [\n            \"Monitor for signs of amyloidosis (proteinuria, renal dysfunction)\",\n            \"Provide supportive care during acute episodes (hydration, pain control)\"\n        ],\n        \"medications\": [\n            \"Colchicine: 1.2-1.8 mg orally daily (adjust based on response and renal function)\",\n            \"NSAIDs for pain and inflammation during episodes (e.g., ibuprofen 400-800 mg orally every 6-8 hours as needed)\",\n            \"Corticosteroids for severe episodes (e.g., prednisone 1 mg/kg orally daily, taper as symptoms improve)\"\n        ],\n        \"consultations\": [\n            \"Rheumatology: urgent\",\n            \"Genetics: routine\",\n            \"Nephrology: routine (if amyloidosis is suspected)\"\n        ]\n    },\n    \"red_flags\": [\n        \"Signs of amyloidosis (e.g., nephrotic syndrome, gastrointestinal bleeding)\",\n        \"Severe or prolonged episodes unresponsive to standard treatment\",\n        \"Family history of early-onset or severe complications of FMF\"\n    ]\n}\n```",
+      "response_time": 32.90700817108154,
+      "cached": false,
+      "case_id": "custom_20250909_093501",
+      "timestamp": "2025-09-09T09:36:01.565966",
+      "tokens_used": 1066,
+      "input_tokens": 378,
+      "output_tokens": 688
+    }
+  ],
+  "total_models_analyzed": 3,
+  "geographical_distribution": {
+    "USA": 20,
+    "France": 3,
+    "China": 5,
+    "Canada": 2,
+    "Japan/USA": 1,
+    "Israel": 1
+  },
+  "consensus_analysis": {
+    "primary_counts": {
+      "Familial Mediterranean Fever": 3
+    },
+    "differential_counts": {
+      "PFAPA Syndrome": 1,
+      "Systemic Juvenile Idiopathic Arthritis": 1,
+      "Acute Intermittent Porphyria": 1,
+      "Inflammatory Bowel Disease": 1,
+      "Hereditary Angioedema": 1,
+      "Reactive Arthritis": 1,
+      "Systemic Lupus Erythematosus": 1,
+      "Ankylosing Spondylitis": 1,
+      "Gouty Arthritis": 1,
+      "Tuberculosis": 1,
+      "Periodic Fever, Aphthous Stomatitis, Pharyngitis, and Adenitis (pfapa) Syndrome": 1,
+      "Hyper-igd Syndrome (mevalonate Kinase Deficiency)": 1,
+      "TRAPS": 1,
+      "Cryopyrin-associated Periodic Syndrome (caps)": 1
+    },
+    "total_counts": {
+      "Familial Mediterranean Fever": 3,
+      "PFAPA Syndrome": 1,
+      "Systemic Juvenile Idiopathic Arthritis": 1,
+      "Acute Intermittent Porphyria": 1,
+      "Inflammatory Bowel Disease": 1,
+      "Hereditary Angioedema": 1,
+      "Reactive Arthritis": 1,
+      "Systemic Lupus Erythematosus": 1,
+      "Ankylosing Spondylitis": 1,
+      "Gouty Arthritis": 1,
+      "Tuberculosis": 1,
+      "Periodic Fever, Aphthous Stomatitis, Pharyngitis, and Adenitis (pfapa) Syndrome": 1,
+      "Hyper-igd Syndrome (mevalonate Kinase Deficiency)": 1,
+      "TRAPS": 1,
+      "Cryopyrin-associated Periodic Syndrome (caps)": 1
+    },
+    "sorted_diagnoses": [
+      [
+        "Familial Mediterranean Fever",
+        3
+      ],
+      [
+        "PFAPA Syndrome",
+        1
+      ],
+      [
+        "Systemic Juvenile Idiopathic Arthritis",
+        1
+      ],
+      [
+        "Acute Intermittent Porphyria",
+        1
+      ],
+      [
+        "Inflammatory Bowel Disease",
+        1
+      ],
+      [
+        "Hereditary Angioedema",
+        1
+      ],
+      [
+        "Reactive Arthritis",
+        1
+      ],
+      [
+        "Systemic Lupus Erythematosus",
+        1
+      ],
+      [
+        "Ankylosing Spondylitis",
+        1
+      ],
+      [
+        "Gouty Arthritis",
+        1
+      ],
+      [
+        "Tuberculosis",
+        1
+      ],
+      [
+        "Periodic Fever, Aphthous Stomatitis, Pharyngitis, and Adenitis (pfapa) Syndrome",
+        1
+      ],
+      [
+        "Hyper-igd Syndrome (mevalonate Kinase Deficiency)",
+        1
+      ],
+      [
+        "TRAPS",
+        1
+      ],
+      [
+        "Cryopyrin-associated Periodic Syndrome (caps)",
+        1
+      ]
+    ],
+    "primary": [
+      "Familial Mediterranean Fever",
+      3
+    ],
+    "total_models": 3,
+    "icd_codes": {
+      "Familial Mediterranean Fever": [
+        "M39.0",
+        "E85.0"
+      ],
+      "PFAPA Syndrome": [
+        "E85.8"
+      ],
+      "Systemic Juvenile Idiopathic Arthritis": [
+        "M08.2"
+      ],
+      "Acute Intermittent Porphyria": [
+        "E80.21"
+      ],
+      "Inflammatory Bowel Disease": [
+        "K50.9"
+      ],
+      "Hereditary Angioedema": [
+        "D84.1"
+      ],
+      "Reactive Arthritis": [
+        "M40.5"
+      ],
+      "Systemic Lupus Erythematosus": [
+        "M32.0"
+      ],
+      "Ankylosing Spondylitis": [
+        "M45.0"
+      ],
+      "Gouty Arthritis": [
+        "M10.0"
+      ],
+      "Tuberculosis": [
+        "A15.9"
+      ],
+      "Periodic Fever, Aphthous Stomatitis, Pharyngitis, and Adenitis (pfapa) Syndrome": [
+        "R68.0"
+      ],
+      "Hyper-igd Syndrome (mevalonate Kinase Deficiency)": [
+        "E85.1"
+      ],
+      "TRAPS": [
+        "E85.2"
+      ],
+      "Cryopyrin-associated Periodic Syndrome (caps)": [
+        "E85.3"
+      ]
+    },
+    "model_diagnoses": {
+      "Familial Mediterranean Fever": {
+        "primary": [
+          "deepseek/deepseek-chat-v3.1:free",
+          "mistralai/mistral-7b-instruct:free",
+          "shisa-ai/shisa-v2-llama3.3-70b:free"
+        ]
+      },
+      "PFAPA Syndrome": {
+        "differential": [
+          "deepseek/deepseek-chat-v3.1:free"
+        ]
+      },
+      "Systemic Juvenile Idiopathic Arthritis": {
+        "differential": [
+          "deepseek/deepseek-chat-v3.1:free"
+        ]
+      },
+      "Acute Intermittent Porphyria": {
+        "differential": [
+          "deepseek/deepseek-chat-v3.1:free"
+        ]
+      },
+      "Inflammatory Bowel Disease": {
+        "differential": [
+          "deepseek/deepseek-chat-v3.1:free"
+        ]
+      },
+      "Hereditary Angioedema": {
+        "differential": [
+          "deepseek/deepseek-chat-v3.1:free"
+        ]
+      },
+      "Reactive Arthritis": {
+        "differential": [
+          "mistralai/mistral-7b-instruct:free"
+        ]
+      },
+      "Systemic Lupus Erythematosus": {
+        "differential": [
+          "mistralai/mistral-7b-instruct:free"
+        ]
+      },
+      "Ankylosing Spondylitis": {
+        "differential": [
+          "mistralai/mistral-7b-instruct:free"
+        ]
+      },
+      "Gouty Arthritis": {
+        "differential": [
+          "mistralai/mistral-7b-instruct:free"
+        ]
+      },
+      "Tuberculosis": {
+        "differential": [
+          "mistralai/mistral-7b-instruct:free"
+        ]
+      },
+      "Periodic Fever, Aphthous Stomatitis, Pharyngitis, and Adenitis (pfapa) Syndrome": {
+        "differential": [
+          "shisa-ai/shisa-v2-llama3.3-70b:free"
+        ]
+      },
+      "Hyper-igd Syndrome (mevalonate Kinase Deficiency)": {
+        "differential": [
+          "shisa-ai/shisa-v2-llama3.3-70b:free"
+        ]
+      },
+      "TRAPS": {
+        "differential": [
+          "shisa-ai/shisa-v2-llama3.3-70b:free"
+        ]
+      },
+      "Cryopyrin-associated Periodic Syndrome (caps)": {
+        "differential": [
+          "shisa-ai/shisa-v2-llama3.3-70b:free"
+        ]
+      }
+    },
+    "geographical_patterns": {
+      "Unknown": {
+        "Familial Mediterranean Fever": 3
+      }
+    }
+  },
+  "free_models_used": true,
+  "diagnostic_landscape": {
+    "primary_diagnosis": {
+      "name": "Familial Mediterranean Fever",
+      "icd_code": "E85.0",
+      "confidence": "High",
+      "supporting_models": [
+        "Unknown",
+        "Unknown"
+      ],
+      "percentage": 87.5,
+      "evidence": [
+        "High confidence from two models",
+        "Consistent ICD code across models"
+      ]
+    },
+    "strong_alternatives": [],
+    "alternatives": [],
+    "minority_opinions": [
+      {
+        "name": "Periodic Fever Syndrome (other types)",
+        "icd_code": "E85.8",
+        "frequency": 70,
+        "supporting_models": [
+          "Unknown"
+        ],
+        "evidence": [
+          "Second most likely diagnosis in one model"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "Systemic Juvenile Idiopathic Arthritis",
+        "icd_code": "M08.2",
+        "frequency": 40,
+        "supporting_models": [
+          "Unknown"
+        ],
+        "evidence": [
+          "Third most likely diagnosis in one model"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "Periodic Fever, Aphthous Stomatitis, Pharyngitis, and Adenitis (PFAPA) Syndrome",
+        "icd_code": "R68.0",
+        "frequency": 30,
+        "supporting_models": [
+          "Unknown"
+        ],
+        "evidence": [
+          "Second most likely diagnosis in one model"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "Hyper-IgD Syndrome (Mevalonate Kinase Deficiency)",
+        "icd_code": "E85.8",
+        "frequency": 20,
+        "supporting_models": [
+          "Unknown"
+        ],
+        "evidence": [
+          "Third most likely diagnosis in one model"
+        ],
+        "agreement_percentage": 3.7
+      }
+    ],
+    "all_alternative_diagnoses": [
+      {
+        "name": "Periodic Fever Syndrome (other types)",
+        "icd_code": "E85.8",
+        "frequency": 70,
+        "supporting_models": [
+          "Unknown"
+        ],
+        "evidence": [
+          "Second most likely diagnosis in one model"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "Systemic Juvenile Idiopathic Arthritis",
+        "icd_code": "M08.2",
+        "frequency": 40,
+        "supporting_models": [
+          "Unknown"
+        ],
+        "evidence": [
+          "Third most likely diagnosis in one model"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "Periodic Fever, Aphthous Stomatitis, Pharyngitis, and Adenitis (PFAPA) Syndrome",
+        "icd_code": "R68.0",
+        "frequency": 30,
+        "supporting_models": [
+          "Unknown"
+        ],
+        "evidence": [
+          "Second most likely diagnosis in one model"
+        ],
+        "agreement_percentage": 3.7
+      },
+      {
+        "name": "Hyper-IgD Syndrome (Mevalonate Kinase Deficiency)",
+        "icd_code": "E85.8",
+        "frequency": 20,
+        "supporting_models": [
+          "Unknown"
+        ],
+        "evidence": [
+          "Third most likely diagnosis in one model"
+        ],
+        "agreement_percentage": 3.7
+      }
+    ]
+  },
+  "comprehensive_bias_analysis": {
+    "geographical_representation": {
+      "total_countries": 6,
+      "western_dominance": {
+        "western_models": 25,
+        "percentage": 833.3333333333334,
+        "impact": "High Western medical paradigm influence expected"
+      },
+      "chinese_representation": {
+        "chinese_models": 5,
+        "percentage": 166.66666666666669,
+        "impact": "Traditional Chinese Medicine integration possible"
+      }
+    },
+    "case_specific_concerns": [
+      "Analysis strictly limited to custom_20250909_093501 responses",
+      "No cross-case contamination in this analysis",
+      "Bias patterns specific to this case presentation"
+    ],
+    "recommended_mitigations": [
+      "Consider cultural context in diagnosis interpretation",
+      "Account for geographical bias in model training",
+      "Validate findings across diverse medical paradigms"
+    ]
+  },
+  "model_diversity_metrics": {
+    "unique_architectures": 0,
+    "unique_providers": 0,
+    "unique_countries": 0,
+    "diversity_score": 0.0,
+    "case_id": "custom_20250909_093501"
+  },
+  "management_strategies": {
+    "immediate_actions": [],
+    "differential_testing": [
+      {
+        "test": "AML/MPO Genotyping",
+        "purpose": "Diagnostic confirmation"
+      },
+      {
+        "test": "Anti-nuclear Antibody (ANA)",
+        "purpose": "Diagnostic confirmation"
+      }
+    ],
+    "medications": []
+  },
+  "evidence_synthesis": {
+    "key_clinical_findings": [
+      {
+        "finding": "High confidence in Familial Mediterranean Fever",
+        "diagnostic_significance": "High"
+      },
+      {
+        "finding": "Consistent ICD code across models",
+        "diagnostic_significance": "High"
+      },
+      {
+        "finding": "Periodic Fever Syndrome as a differential diagnosis",
+        "diagnostic_significance": "High"
+      },
+      {
+        "finding": "Systemic Juvenile Idiopathic Arthritis as a differential diagnosis",
+        "diagnostic_significance": "High"
+      },
+      {
+        "finding": "PFAPA Syndrome as a differential diagnosis",
+        "diagnostic_significance": "High"
+      }
+    ],
+    "symptom_diagnosis_matrix": {
+      "symptoms": [
+        "Fever",
+        "Abdominal Pain",
+        "Arthritis",
+        "Rash",
+        "Sore Throat"
+      ],
+      "diagnoses": [
+        "Familial Mediterranean Fever",
+        "Periodic Fever Syndrome (other types)",
+        "Systemic Juvenile Idiopathic Arthritis",
+        "PFAPA Syndrome",
+        "Hyper-IgD Syndrome"
+      ],
+      "correlations": [
+        {
+          "symptom": "Fever",
+          "diagnosis": "Familial Mediterranean Fever",
+          "strength": "Strong"
+        },
+        {
+          "symptom": "Abdominal Pain",
+          "diagnosis": "Familial Mediterranean Fever",
+          "strength": "Strong"
+        },
+        {
+          "symptom": "Arthritis",
+          "diagnosis": "Systemic Juvenile Idiopathic Arthritis",
+          "strength": "Strong"
+        },
+        {
+          "symptom": "Rash",
+          "diagnosis": "Periodic Fever Syndrome (other types)",
+          "strength": "Moderate"
+        },
+        {
+          "symptom": "Sore Throat",
+          "diagnosis": "PFAPA Syndrome",
+          "strength": "Strong"
+        }
+      ]
+    }
+  },
+  "generation_metadata": {
+    "pipeline_version": "General v1.0",
+    "timestamp": "20250909_093501",
+    "case_separation": "Strict",
+    "total_time_seconds": 60.11360502243042
+  },
+  "critical_decision_points": [],
+  "ai_model_bias_analysis": {
+    "geographic_bias": {
+      "detected": true,
+      "description": "The diagnostic consensus is primarily influenced by Western medical perspectives, potentially underrepresenting or misdiagnosing conditions more prevalent in non-Western populations.",
+      "mitigation": "Incorporate a diverse set of medical data from various geographic regions and cultural backgrounds to ensure a more balanced diagnostic approach."
+    },
+    "training_bias": {
+      "detected": true,
+      "description": "The models used in the diagnostic consensus are trained on data that may be biased towards Western medical practices and patient demographics, leading to potential misdiagnosis or underdiagnosis of conditions more common in other regions.",
+      "mitigation": "Expand the training datasets to include a broader range of medical cases and patient demographics from diverse regions and cultural backgrounds."
+    },
+    "consensus_strength": "Moderate"
+  },
+  "clinical_decision_tree": {
+    "initial_assessment": "Evaluate presenting symptoms",
+    "diagnostic_tests": [
+      "AML/MPO Genotyping",
+      "Anti-nuclear Antibody (ANA)"
+    ],
+    "decision_points": []
+  },
+  "primary_diagnosis_summaries": {
+    "key_clinical_findings": [
+      {
+        "finding": "High confidence in Familial Mediterranean Fever",
+        "supporting_evidence": "Clinical presentation",
+        "model_support": 2,
+        "reasoning": "Key diagnostic indicator"
+      },
+      {
+        "finding": "Consistent ICD code across models",
+        "supporting_evidence": "Clinical presentation",
+        "model_support": 2,
+        "reasoning": "Key diagnostic indicator"
+      },
+      {
+        "finding": "Periodic Fever Syndrome as a differential diagnosis",
+        "supporting_evidence": "Clinical presentation",
+        "model_support": 2,
+        "reasoning": "Key diagnostic indicator"
+      },
+      {
+        "finding": "Systemic Juvenile Idiopathic Arthritis as a differential diagnosis",
+        "supporting_evidence": "Clinical presentation",
+        "model_support": 2,
+        "reasoning": "Key diagnostic indicator"
+      },
+      {
+        "finding": "PFAPA Syndrome as a differential diagnosis",
+        "supporting_evidence": "Clinical presentation",
+        "model_support": 2,
+        "reasoning": "Key diagnostic indicator"
+      }
+    ],
+    "recommended_tests": [
+      {
+        "test_name": "AML/MPO Genotyping",
+        "test_type": "Laboratory",
+        "rationale": "Diagnostic confirmation",
+        "priority": "Urgent",
+        "model_support": 1,
+        "reasoning": "Essential for diagnosis"
+      },
+      {
+        "test_name": "Anti-nuclear Antibody (ANA)",
+        "test_type": "Laboratory",
+        "rationale": "Diagnostic confirmation",
+        "priority": "Urgent",
+        "model_support": 1,
+        "reasoning": "Essential for diagnosis"
+      }
+    ],
+    "immediate_management": [],
+    "medications": []
+  },
+  "quality_metrics": {
+    "total_models_analyzed": 3,
+    "consensus_strength": "Moderate",
+    "successful_responses": 3
+  },
+  "metadata": {
+    "analysis_timestamp": "2025-09-09T09:36:16.428091",
+    "orchestrator_model": "qwen/qwen-2.5-72b-instruct:free",
+    "case_id": "custom_20250909_093501",
+    "case_title": "Custom Case",
+    "orchestrator_quality": "free_models",
+    "quality_disclaimer": "\u26a0\ufe0f This analysis uses free orchestrator models which may provide suboptimal quality compared to premium models. For clinical applications, consider using premium orchestrator models for enhanced accuracy and comprehensive analysis."
+  },
+  "generated_at": "2025-09-09T09:36:16.428583"
+}

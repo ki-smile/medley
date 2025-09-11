@@ -427,6 +427,8 @@ let analysisInProgress = false;
 let lastProcessingModel = null;  // Track the current model being processed
 let progressSessionId = null;    // Progress session ID for long polling
 let longPollingActive = false;   // Flag to control long polling
+let lastProgressUpdate = null;   // Timestamp of last progress update
+let progressHeartbeatInterval = null; // Interval for heartbeat checks
 
 // Models will be populated on page load
 
@@ -557,20 +559,105 @@ function cleanupProgressSession() {
     progressSessionId = null;
     analysisInProgress = false;
     currentAnalysisId = null;
+    stopProgressHeartbeat();
     console.log('✅ Progress session state reset');
 }
 
-// Handle page visibility changes to prevent stale sessions
+// Handle page visibility changes to prevent stale sessions and resume polling
 document.addEventListener('visibilitychange', function() {
     if (document.visibilityState === 'visible') {
-        // Page became visible - clean up any stale sessions
-        console.log('👁️ Page became visible - checking for stale sessions');
-        if (progressSessionId && !analysisInProgress) {
+        // Page became visible - check for stale sessions and resume polling
+        console.log('👁️ Page became visible - checking progress status');
+        
+        if (progressSessionId && analysisInProgress) {
+            // Analysis is in progress but page was hidden - resume aggressive polling
+            console.log('🔄 Resuming progress polling after page became visible');
+            
+            // Force immediate progress check
+            checkProgressImmediately();
+            
+            // If long polling isn't active, restart it
+            if (!longPollingActive) {
+                console.log('🚀 Restarting long polling after visibility change');
+                longPollingActive = true;
+                startLongPolling();
+            }
+        } else if (progressSessionId && !analysisInProgress) {
             console.log('🧹 Found stale progress session, cleaning up:', progressSessionId);
             cleanupProgressSession();
         }
+    } else if (document.visibilityState === 'hidden') {
+        // Page became hidden - note this for debugging
+        console.log('👻 Page became hidden - progress polling may be throttled');
     }
 });
+
+// Force immediate progress check function
+async function checkProgressImmediately() {
+    if (!progressSessionId) return;
+    
+    try {
+        console.log('⚡ Forcing immediate progress check for session:', progressSessionId);
+        const response = await fetch(`/api/progress/${progressSessionId}/events?timeout=1&immediate=true`);
+        
+        if (response.ok) {
+            const data = await response.json();
+            console.log('⚡ Immediate progress response:', data);
+            
+            if (data.success && data.events && data.events.length > 0) {
+                for (const event of data.events) {
+                    processProgressEvent(event);
+                }
+                lastProgressUpdate = Date.now();
+            }
+        }
+    } catch (error) {
+        console.log('⚡ Immediate progress check failed:', error);
+    }
+}
+
+// Start heartbeat monitoring to detect stuck progress
+function startProgressHeartbeat() {
+    if (progressHeartbeatInterval) {
+        clearInterval(progressHeartbeatInterval);
+    }
+    
+    lastProgressUpdate = Date.now();
+    
+    progressHeartbeatInterval = setInterval(() => {
+        if (!analysisInProgress || !progressSessionId) {
+            stopProgressHeartbeat();
+            return;
+        }
+        
+        const now = Date.now();
+        const timeSinceLastUpdate = now - (lastProgressUpdate || now);
+        
+        // If no progress update for 60 seconds and page is visible, force check
+        if (timeSinceLastUpdate > 60000 && document.visibilityState === 'visible') {
+            console.log('💓 Progress heartbeat: No updates for', Math.round(timeSinceLastUpdate / 1000), 'seconds - forcing check');
+            checkProgressImmediately();
+            
+            // If long polling isn't active, restart it
+            if (!longPollingActive) {
+                console.log('💓 Heartbeat detected stalled progress - restarting long polling');
+                longPollingActive = true;
+                startLongPolling();
+            }
+        }
+    }, 30000); // Check every 30 seconds
+    
+    console.log('💓 Progress heartbeat monitoring started');
+}
+
+// Stop heartbeat monitoring
+function stopProgressHeartbeat() {
+    if (progressHeartbeatInterval) {
+        clearInterval(progressHeartbeatInterval);
+        progressHeartbeatInterval = null;
+        console.log('💓 Progress heartbeat monitoring stopped');
+    }
+}
 
 // Clean up on page unload
 window.addEventListener('beforeunload', function() {
@@ -757,11 +844,29 @@ async function startLongPolling() {
         }
         
         try {
-            const timeout = 30000; // 30 seconds timeout
+            // Use shorter timeout if page was recently hidden to combat throttling
+            const isPageVisible = document.visibilityState === 'visible';
+            const timeout = isPageVisible ? 30000 : 10000; // 30s if visible, 10s if hidden
             const url = `/api/progress/${progressSessionId}/events?timeout=${timeout / 1000}${lastEventId ? `&since_id=${lastEventId}` : ''}`;
             
-            console.log('📡 Long polling request:', url);
-            const response = await fetch(url);
+            console.log('📡 Long polling request:', url, `(page ${document.visibilityState})`);
+            
+            // Add client-side timeout using AbortController
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => {
+                controller.abort();
+                console.log('⏱️ Client-side timeout - aborting request');
+            }, timeout + 5000); // Client timeout slightly longer than server timeout
+            
+            const response = await fetch(url, { 
+                signal: controller.signal,
+                cache: 'no-cache', // Prevent caching issues
+                headers: {
+                    'Cache-Control': 'no-cache',
+                    'Pragma': 'no-cache'
+                }
+            });
+            clearTimeout(timeoutId);
             
             if (!response.ok) {
                 // If session doesn't exist, stop polling
@@ -770,7 +875,7 @@ async function startLongPolling() {
                     longPollingActive = false;
                     break;
                 }
-                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                throw new Error(`HTTP ${response.status}: ${response.status}`);
             }
             
             const data = await response.json();
@@ -786,10 +891,13 @@ async function startLongPolling() {
                     lastEventId = event.id;
                     processProgressEvent(event);
                 }
+                // Update last progress timestamp
+                lastProgressUpdate = Date.now();
             }
             
-            // Small delay before next request to prevent tight loops
-            await new Promise(resolve => setTimeout(resolve, 100));
+            // Use adaptive delay based on page visibility and recent activity (reuse isPageVisible)
+            const delay = isPageVisible ? 100 : 2000; // 100ms if visible, 2s if hidden
+            await new Promise(resolve => setTimeout(resolve, delay));
             
         } catch (error) {
             console.error('❌ Long polling error:', error);
@@ -863,11 +971,13 @@ function processProgressEvent(event) {
         case 'analysis_completed':
         case 'analysis_complete':
             console.log('🎉 Analysis completed:', event.data);
+            stopProgressHeartbeat(); // Stop heartbeat monitoring
             handleAnalysisComplete(event.data);
             break;
             
         case 'analysis_error':
             console.log('❌ Analysis error:', event.data);
+            stopProgressHeartbeat(); // Stop heartbeat monitoring
             showError(event.data.error || 'Analysis failed');
             longPollingActive = false;
             break;
@@ -934,14 +1044,19 @@ function processProgressEvent(event) {
                 const message = event.data.message;
                 if (message.includes('Analyzing diagnostic consensus')) {
                     updateProgress(75, message);
+                    updateStageIndicator(2); // Move to Stage 2: Orchestration
                 } else if (message.includes('Building comprehensive report')) {
                     updateProgress(85, message);
+                    updateStageIndicator(3); // Move to Stage 3: Report Generation
                 } else if (message.includes('Running orchestration analysis')) {
                     updateProgress(90, message);
+                    updateStageIndicator(2); // Ensure Stage 2: Orchestration is active
                 } else if (message.includes('Generating final PDF report')) {
                     updateProgress(95, message);
+                    updateStageIndicator(3); // Ensure Stage 3: Report Generation is active
                 } else if (message.includes('Analysis complete')) {
                     updateProgress(100, message);
+                    updateStageIndicator(3); // Keep Stage 3 active for completion
                 }
             }
             break;
@@ -1048,9 +1163,10 @@ async function startAnalysis() {
         progressSessionId = progressData.session_id;
         console.log('✅ Progress session created:', progressSessionId);
         
-        // Start long polling
+        // Start long polling and heartbeat monitoring
         longPollingActive = true;
         startLongPolling(); // Don't await - let it run in parallel
+        startProgressHeartbeat(); // Start heartbeat monitoring
         
         // Get model selection preferences
         const useFreeModels = document.getElementById('useFreeModels').checked;
@@ -1248,41 +1364,41 @@ function updateProgress(percent, status, model, stage) {
         document.getElementById('currentModel').innerHTML = `<strong>Current Model:</strong> ${model}`;
     } else if (stage === 2) {
         document.getElementById('currentModel').innerHTML = '<strong>🧠 Orchestrating consensus...</strong>';
+        updateStageIndicator(2); // Update to Stage 2
     } else if (stage === 3) {
         document.getElementById('currentModel').innerHTML = '<strong>📄 Generating reports...</strong>';
+        updateStageIndicator(3); // Update to Stage 3
+    }
+    
+    // Also trigger stage updates based on progress percentage as fallback
+    if (stage) {
+        updateStageIndicator(stage);
+    } else if (percent >= 70 && percent < 90) {
+        updateStageIndicator(2); // Stage 2: Orchestration (70-90%)
+    } else if (percent >= 90) {
+        updateStageIndicator(3); // Stage 3: Report Generation (90%+)
     }
 }
 
 function updateStageIndicator(currentStage) {
     console.log(`Updating stage indicator to stage ${currentStage}`);
     
-    // Reset all stages
+    // Reset all stages to match original design
     for (let i = 1; i <= 3; i++) {
         const stageEl = document.getElementById(`stage${i}`);
         if (stageEl) {
-            if (i < currentStage) {
-                // Completed stage
-                stageEl.style.background = 'var(--md-sys-color-primary-container)';
-                stageEl.style.opacity = '1';
-                stageEl.style.color = 'var(--md-sys-color-on-primary-container)';
-                stageEl.style.border = '2px solid var(--md-sys-color-primary)';
-                stageEl.style.fontWeight = '500';
-            } else if (i === currentStage) {
-                // Current stage - highlight it
+            if (i <= currentStage) {
+                // Current or completed stage - active style like original
                 stageEl.style.background = 'var(--md-sys-color-primary)';
                 stageEl.style.opacity = '1';
                 stageEl.style.color = 'var(--md-sys-color-on-primary)';
-                stageEl.style.border = '2px solid var(--md-sys-color-primary)';
                 stageEl.style.fontWeight = '600';
-                stageEl.style.transform = 'scale(1.05)';
             } else {
-                // Future stage
+                // Future stage - muted like original
                 stageEl.style.background = 'var(--md-sys-color-surface-variant)';
                 stageEl.style.opacity = '0.5';
                 stageEl.style.color = 'var(--md-sys-color-on-surface-variant)';
-                stageEl.style.border = '2px solid transparent';
                 stageEl.style.fontWeight = '400';
-                stageEl.style.transform = 'scale(1)';
             }
         }
     }
@@ -1821,10 +1937,16 @@ function saveAnalysisToHistory(analysisId, caseText, results) {
         confidence = Math.round((results.consensus_analysis.primary_confidence || 0) * 100);
     }
     
+    // Generate a proper title - prefer consensus diagnosis, fallback to case text
+    const caseTitle = primaryDiagnosis && primaryDiagnosis !== 'Unknown' 
+        ? primaryDiagnosis 
+        : generateCaseTitle(caseText);
+    
     // Create new analysis entry WITH the full results
     const newAnalysis = {
         id: analysisId,
         timestamp: new Date().toISOString(),
+        title: caseTitle,  // Use consensus diagnosis as title, fallback to case text
         caseText: caseText,  // Save full case text
         casePreview: caseText.substring(0, 150) + (caseText.length > 150 ? '...' : ''),
         primaryDiagnosis: primaryDiagnosis,
@@ -1871,8 +1993,33 @@ Patient reports episodes started in childhood around age 7. Recent genetic testi
 }
 
 function loadRecentAnalyses() {
-    const recentAnalyses = JSON.parse(localStorage.getItem('medley_recent_analyses') || '[]');
+    let recentAnalyses = JSON.parse(localStorage.getItem('medley_recent_analyses') || '[]');
     console.log('📖 Loading recent analyses, found:', recentAnalyses.length);
+    
+    // Migrate old entries: add titles to entries that don't have them
+    let migrated = false;
+    recentAnalyses = recentAnalyses.map(analysis => {
+        if (!analysis.title) {
+            console.log('🔄 Migrating old analysis to add title:', analysis.id);
+            // Prefer consensus diagnosis, fallback to case text extraction
+            if (analysis.primaryDiagnosis && analysis.primaryDiagnosis !== 'Unknown') {
+                analysis.title = analysis.primaryDiagnosis;
+            } else if (analysis.caseText) {
+                analysis.title = generateCaseTitle(analysis.caseText);
+            } else {
+                analysis.title = 'Custom Case';
+            }
+            migrated = true;
+        }
+        return analysis;
+    });
+    
+    // Save migrated data back to localStorage
+    if (migrated) {
+        localStorage.setItem('medley_recent_analyses', JSON.stringify(recentAnalyses));
+        console.log('✅ Migrated old analyses with new titles');
+    }
+    
     const container = document.getElementById('recentAnalyses');
     
     if (recentAnalyses.length === 0) {
@@ -1897,7 +2044,7 @@ function loadRecentAnalyses() {
                                 <div style="flex: 1;">
                                     <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
                                         <span style="font-weight: 600; color: var(--md-sys-color-primary);">
-                                            ${analysis.primaryDiagnosis}
+                                            ${analysis.title || analysis.primaryDiagnosis || 'Custom Case'}
                                         </span>
                                     </div>
                                     <div style="font-size: 0.9em; color: var(--md-sys-color-on-surface-variant); 

@@ -666,7 +666,9 @@ function connectWebSocket() {
         console.log('📊 Model progress event:', data);
         if (!currentAnalysisId || data.analysis_id === currentAnalysisId) {
             updateProgress(data.progress, data.status, data.model, data.stage);
-            updateModelStatus(data.model, data.status);
+            if (data.model) {
+                updateModelStatus(data.model, data.status);
+            }
             
             // Update stage indicators if stage is provided
             if (data.stage) {
@@ -683,13 +685,17 @@ function connectWebSocket() {
     socket.on('model_error', function(data) {
         console.log('❌ Model error event:', data);
         if (!currentAnalysisId || data.analysis_id === currentAnalysisId) {
-            showError(`Model ${data.model} failed: ${data.error}`);
-            updateModelStatus(data.model, 'failed');
+            const modelName = data.model || 'Unknown Model';
+            showError(`Model ${modelName} failed: ${data.error}`);
+            if (data.model) {
+                updateModelStatus(data.model, 'failed');
+            }
         }
     });
     
     socket.on('analysis_complete', function(data) {
         console.log('🎉 Analysis complete event:', data);
+        console.log('Has results?', !!data.results);
         if (!currentAnalysisId || data.analysis_id === currentAnalysisId) {
             // Update progress to show completion
             document.getElementById('progressBar').style.width = '100%';
@@ -753,17 +759,22 @@ function connectWebSocket() {
             addAnalysisSummary();
             
             // Hide progress after a short delay to let user see 100%
-            setTimeout(() => {
-                hideProgress();
-            }, 2000);
+            // TEMPORARILY DISABLED: Auto-hide to debug display issues
+            // setTimeout(() => {
+            //     hideProgress();
+            // }, 2000);
+            console.log('📌 NOT auto-hiding progress to debug display');
             
             analysisInProgress = false;
         }
     });
     
     socket.on('analysis_error', function(data) {
+        console.log('❌ analysis_error event received:', data);
+        console.log('Error details:', data.error);
         if (data.analysis_id === currentAnalysisId) {
-            hideProgress();
+            console.log('🚨 NOT hiding progress to debug - error was:', data.error);
+            // TEMPORARILY DISABLED: hideProgress();
             showError(data.error || 'Analysis failed');
         }
     });
@@ -900,8 +911,16 @@ function showProgress() {
     console.log('📦 progressContainer element:', progressContainer);
     
     if (progressContainer) {
-        progressContainer.style.display = 'block';
+        // Force display with important to override any CSS
+        progressContainer.style.setProperty('display', 'block', 'important');
+        progressContainer.style.setProperty('visibility', 'visible', 'important');
+        progressContainer.style.setProperty('opacity', '1', 'important');
         console.log('✅ Set progressContainer display to block');
+        console.log('Container styles:', {
+            display: progressContainer.style.display,
+            visibility: progressContainer.style.visibility,
+            opacity: progressContainer.style.opacity
+        });
         
         // Initialize stage indicator to Stage 1
         updateStageIndicator(1);
@@ -927,7 +946,12 @@ function showProgress() {
 }
 
 function hideProgress() {
-    document.getElementById('progressContainer').style.display = 'none';
+    console.log('🔻 hideProgress() called');
+    console.trace('Hide progress call stack');
+    const progressContainer = document.getElementById('progressContainer');
+    if (progressContainer) {
+        progressContainer.style.display = 'none';
+    }
     analysisInProgress = false;
 }
 
@@ -1021,11 +1045,15 @@ function initializeModelStatus(models) {
     
     console.log(`Initializing status grid for ${modelList.length} models:`, modelList);
     
+    // Make sure the grid is visible
+    grid.style.display = 'grid';
+    grid.style.visibility = 'visible';
+    
     modelList.forEach(model => {
         const statusDiv = document.createElement('div');
         statusDiv.className = 'model-status-item';
         statusDiv.id = `model-${model.replace(/\s+/g, '-').replace(/[^\w-]/g, '')}`;  // Clean ID
-        statusDiv.style.cssText = 'padding: 8px; background: var(--md-sys-color-surface-variant); border-radius: 8px; font-size: var(--md-sys-typescale-body-small);';
+        statusDiv.style.cssText = 'padding: 8px; background: var(--md-sys-color-surface-variant); border-radius: 8px; font-size: var(--md-sys-typescale-body-small); min-height: 36px; border: 1px solid var(--md-sys-color-outline-variant);';
         statusDiv.innerHTML = `
             <div style="display: flex; align-items: center; gap: 8px;">
                 <span class="status-icon">⏳</span>
@@ -1034,10 +1062,20 @@ function initializeModelStatus(models) {
         `;
         grid.appendChild(statusDiv);
     });
+    
+    console.log('✅ Model status grid initialized with', grid.children.length, 'models');
+    console.log('Grid display style:', grid.style.display, 'Visibility:', grid.style.visibility);
 }
 
 function updateModelStatus(model, status) {
-    const modelId = `model-${model.replace(/\s+/g, '-').replace(/[^\w-]/g, '')}`;  // Same cleaning as in initialize
+    // Add null check for model parameter
+    if (!model) {
+        console.warn('⚠️ updateModelStatus called with undefined model');
+        return;
+    }
+    
+    const modelName = String(model); // Ensure it's a string
+    const modelId = `model-${modelName.replace(/\s+/g, '-').replace(/[^\w-]/g, '')}`;  // Same cleaning as in initialize
     const statusDiv = document.getElementById(modelId);
     
     if (statusDiv) {
