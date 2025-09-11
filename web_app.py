@@ -452,7 +452,24 @@ def view_case(case_key):
     print(f"🔍 view_case called with case_key: {case_key}", flush=True)
     
     # Check if it's a custom case first (even if it's in PREDEFINED_CASES due to orchestrator registration)
-    if case_key.startswith('custom_') or case_key.startswith('Case_') or case_key.startswith('case_'):
+    # Custom cases: custom_* or Case_* but NOT predefined case_### patterns
+    def is_predefined_case_pattern(case_key):
+        # Predefined cases follow pattern: case_### (e.g., case_001, case_002)
+        if case_key.startswith('case_') and len(case_key) == 8:
+            try:
+                int(case_key[5:8])  # Check if last 3 chars are digits
+                return True
+            except ValueError:
+                pass
+        return False
+    
+    is_custom_case = (
+        case_key.startswith('custom_') or 
+        case_key.startswith('Case_') or
+        (case_key.startswith('case_') and not is_predefined_case_pattern(case_key))
+    )
+    
+    if is_custom_case:
         app.logger.info(f"🎯 Custom case detected: {case_key}")
         print(f"🎯 Custom case detected: {case_key}", flush=True)
         
