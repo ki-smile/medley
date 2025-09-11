@@ -451,12 +451,7 @@ def view_case(case_key):
     app.logger.info(f"🔍 view_case called with case_key: {case_key}")
     print(f"🔍 view_case called with case_key: {case_key}", flush=True)
     
-    # Check predefined cases first (to avoid conflicts with case_ prefix)
-    if case_key in PREDEFINED_CASES:
-        print(f"DEBUG: Found predefined case: {case_key}")
-        return render_template('case_viewer.html', case_id=case_key)
-    
-    # Check if it's a custom case (starts with custom_, Case_, or case_)
+    # Check if it's a custom case first (even if it's in PREDEFINED_CASES due to orchestrator registration)
     if case_key.startswith('custom_') or case_key.startswith('Case_') or case_key.startswith('case_'):
         app.logger.info(f"🎯 Custom case detected: {case_key}")
         print(f"🎯 Custom case detected: {case_key}", flush=True)
@@ -537,6 +532,11 @@ def view_case(case_key):
             message=f"The custom case '{case_key}' could not be found.",
             subtitle="This case may have been automatically cleaned up after 2 days, or the analysis may not have completed successfully."
         ), 404
+    
+    # Check predefined cases as fallback (for truly predefined cases)  
+    if case_key in PREDEFINED_CASES:
+        print(f"DEBUG: Found predefined case: {case_key}")
+        return render_template('case_viewer.html', case_id=case_key)
     
     # Case not found
     print(f"DEBUG: Case not found: {case_key}")
