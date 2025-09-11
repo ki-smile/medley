@@ -282,10 +282,30 @@ if db_available:
 
 # Constants - Environment-aware paths
 import os
-BASE_DIR = Path(os.getenv('APP_BASE_DIR', '.'))  # Default to current dir for local, /app for Docker
+# Smart path detection: use /app if we're in Docker, otherwise current directory
+APP_BASE_DIR = os.getenv('APP_BASE_DIR')
+if APP_BASE_DIR:
+    BASE_DIR = Path(APP_BASE_DIR)
+elif Path('/app').exists() and Path('/app/web_app.py').exists():
+    # We're likely in Docker container
+    BASE_DIR = Path('/app')
+else:
+    # Local development
+    BASE_DIR = Path('.')
+    
+print(f"🗂️  BASE_DIR set to: {BASE_DIR.absolute()}", flush=True)
 CACHE_DIR = BASE_DIR / "cache" / "responses"
 REPORTS_DIR = BASE_DIR / "reports"
 USECASES_DIR = BASE_DIR / "usecases"
+
+# Ensure critical directories exist
+try:
+    CACHE_DIR.mkdir(parents=True, exist_ok=True)
+    REPORTS_DIR.mkdir(parents=True, exist_ok=True) 
+    USECASES_DIR.mkdir(parents=True, exist_ok=True)
+    print(f"✅ Directory structure verified: cache={CACHE_DIR.exists()}, reports={REPORTS_DIR.exists()}, usecases={USECASES_DIR.exists()}", flush=True)
+except Exception as e:
+    print(f"⚠️  Could not create directories: {e}", flush=True)
 
 # Initialize the web orchestrator if available
 if web_orchestrator_available:
@@ -505,14 +525,26 @@ def view_case(case_key):
                     has_pdf=has_pdf)
             except Exception as e:
                 print(f"DEBUG: Error loading JSON: {e}")
-                return f"Error loading case data: {e}", 500
+                return render_template('error.html',
+                    title="Case Data Error",
+                    message=f"Error loading case data: {str(e)}",
+                    subtitle="The case data file appears to be corrupted or inaccessible."
+                ), 500
         
-        print(f"DEBUG: No JSON files found, returning 404")
-        return "Custom case not found", 404
+        print(f"DEBUG: No JSON files found, showing custom case not found error")
+        return render_template('error.html',
+            title="Custom Case Not Found",
+            message=f"The custom case '{case_key}' could not be found.",
+            subtitle="This case may have been automatically cleaned up after 2 days, or the analysis may not have completed successfully."
+        ), 404
     
     # Case not found
     print(f"DEBUG: Case not found: {case_key}")
-    return "Case not found", 404
+    return render_template('error.html',
+        title="Case Not Found", 
+        message=f"The case '{case_key}' does not exist.",
+        subtitle="Please check the case name and try again."
+    ), 404
 
 @app.route('/share/<share_id>')
 def view_shared_analysis(share_id):
