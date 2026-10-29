@@ -1540,6 +1540,10 @@ def export_metrics():
 @app.route('/api/cache/clear', methods=['POST'])
 def clear_cache():
     """Clear all cached responses"""
+    # The cache holds every case's model responses and the endpoint has no login, so it is
+    # off unless the operator enables it (MEDLEY_ALLOW_CACHE_CLEAR=1, for local setups).
+    if os.getenv('MEDLEY_ALLOW_CACHE_CLEAR') != '1':
+        return jsonify({'success': False, 'error': 'Clearing the cache is disabled on this server'}), 403
     try:
         # Clear the cache directory
         cache_dir = Path(__file__).parent / 'cache'
