@@ -172,6 +172,8 @@ def inject_app_version():
         'app_version': APP_VERSION,
         'app_build': APP_BUILD,
         'app_build_date': APP_BUILD_DATE,
+        # Retention of custom cases, enforced by scripts/cleanup_daemon.py
+        'cleanup_hours': int(os.getenv('CLEANUP_DAYS', '2')) * 24,
     }
 
 # Configuration
