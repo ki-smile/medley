@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="medley-version" content="{{ app_version }}+{{ app_build }}">
     <title>{% block title %}MEDLEY - Medical AI Ensemble System{% endblock %}</title>
     
     <!-- Material Design 3 Expressive Theme -->
@@ -562,6 +563,7 @@
             <p>Karolinska Institutet | <a href="https://smile.ki.se">smile.ki.se</a></p>
             <p class="mt-2" style="opacity: 0.8;">For research and educational purposes only. Not for clinical use.</p>
             <p class="mt-1" style="opacity: 0.6; font-size: var(--md-sys-typescale-body-small);">Last Updated: <span id="last-update"></span></p>
+            <p class="mt-1" style="opacity: 0.6; font-size: var(--md-sys-typescale-body-small);"><span id="app-version" title="{% if app_build_date %}Built {{ app_build_date }}{% endif %}">MEDLEY v{{ app_version }} · build {{ app_build }}</span></p>
         </footer>
     </div>
     

@@ -6,14 +6,17 @@
 
 FROM python:3.11-slim
 
-# Build metadata
-ARG BUILD_VERSION="prod-$(date +%Y%m%d_%H%M%S)"
+# Build metadata (passed in by the GitHub workflow; shown in the page footer and /api/health)
+ARG GIT_SHA=unknown
+ARG BUILD_DATE=unknown
 LABEL maintainer="SMAILE @ Karolinska Institutet"
-LABEL version=${BUILD_VERSION}
+LABEL org.opencontainers.image.revision=${GIT_SHA}
+LABEL org.opencontainers.image.created=${BUILD_DATE}
 LABEL description="Medley Medical AI Ensemble Application"
 
 # Environment setup for production
-ENV MEDLEY_VERSION=${BUILD_VERSION} \
+ENV MEDLEY_GIT_SHA=${GIT_SHA} \
+    MEDLEY_BUILD_DATE=${BUILD_DATE} \
     PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     PYTHONPATH=/app \
@@ -25,8 +28,10 @@ ENV MEDLEY_VERSION=${BUILD_VERSION} \
 # Set working directory
 WORKDIR /app
 
-# Install system dependencies including cron for cleanup jobs
-RUN apt-get update && apt-get install -y --no-install-recommends \
+# Install system dependencies including cron for cleanup jobs.
+# apt-get upgrade applies Debian security fixes missing from the base image
+# (for example libbrotli1, CVE-2026-111497).
+RUN apt-get update && apt-get upgrade -y && apt-get install -y --no-install-recommends \
     gcc \
     g++ \
     curl \
@@ -37,9 +42,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/* \
     && update-ca-certificates
 
-# Create non-root user for security and setup cron
-RUN groupadd -r medley && \
-    useradd -r -g medley -d /app -s /bin/bash medley && \
+# Create non-root user for security and setup cron.
+# UID/GID are pinned to match production's bind-mounted data (997:996); an
+# unpinned -r user can shift if a new Debian package adds a system user.
+RUN groupadd -r -g 996 medley && \
+    useradd -r -u 997 -g medley -d /app -s /bin/bash medley && \
     mkdir -p /app/logs /app/reports /app/cache/responses /app/cache/orchestrator /app/flask_session /var/log && \
     chown -R medley:medley /app && \
     chmod 666 /var/log && \
@@ -48,7 +55,7 @@ RUN groupadd -r medley && \
 
 # Copy and install Python dependencies (leverage Docker layer caching)
 COPY requirements.txt requirements_web_minimal.txt ./
-RUN pip install --no-cache-dir --upgrade pip && \
+RUN pip install --no-cache-dir --upgrade pip setuptools && \
     pip install --no-cache-dir -r requirements.txt && \
     pip install --no-cache-dir -r requirements_web_minimal.txt
 

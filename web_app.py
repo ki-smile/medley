@@ -147,10 +147,32 @@ except ImportError:
     init_database = None
 
 # Initialize Flask app
-app = Flask(__name__, 
+app = Flask(__name__,
     static_folder='static',
     template_folder='templates'
 )
+
+# Release information, shown in the page footer, a <meta name="medley-version"> tag,
+# the X-Medley-Version response header and /api/health. The version comes from the
+# VERSION file; the git commit and build date are set by the Docker build.
+def _read_app_version() -> str:
+    try:
+        return (Path(__file__).resolve().parent / "VERSION").read_text().strip() or "unknown"
+    except OSError:
+        return "unknown"
+
+APP_VERSION = _read_app_version()
+APP_GIT_SHA = os.getenv('MEDLEY_GIT_SHA', '')
+APP_BUILD = APP_GIT_SHA[:7] if APP_GIT_SHA and APP_GIT_SHA != 'unknown' else 'dev'
+APP_BUILD_DATE = os.getenv('MEDLEY_BUILD_DATE', '') if os.getenv('MEDLEY_BUILD_DATE') != 'unknown' else ''
+
+@app.context_processor
+def inject_app_version():
+    return {
+        'app_version': APP_VERSION,
+        'app_build': APP_BUILD,
+        'app_build_date': APP_BUILD_DATE,
+    }
 
 # Configuration
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'medley-demo-key-2025')
@@ -170,7 +192,7 @@ app.config['COMPRESS_LEVEL'] = 6  # Balanced compression
 app.config['COMPRESS_MIN_SIZE'] = 500  # Only compress files > 500 bytes
 
 # Cache configuration  
-app.config['CACHE_TYPE'] = 'simple'
+app.config['CACHE_TYPE'] = 'SimpleCache'  # Flask-Caching 2.5 removed the old 'simple' alias
 app.config['CACHE_DEFAULT_TIMEOUT'] = 300  # 5 minutes
 
 # Initialize extensions
@@ -272,6 +294,7 @@ def is_model_response_valid(response_dict):
 # Add security headers to all responses
 @app.after_request
 def add_security_headers(response):
+    response.headers['X-Medley-Version'] = f"{APP_VERSION}+{APP_BUILD}"
     return SecurityHeaders.add_security_headers(response)
 
 # Initialize database
@@ -1696,7 +1719,9 @@ def health_check():
     health_status = {
         "status": "healthy",
         "timestamp": datetime.now().isoformat(),
-        "version": "2.0.0",
+        "version": APP_VERSION,
+        "build": APP_BUILD,
+        "build_date": APP_BUILD_DATE,
         "checks": {
             "cache_directory": CACHE_DIR.exists(),
             "reports_directory": REPORTS_DIR.exists(),
@@ -1946,7 +1971,7 @@ def export_json(export_type):
             'cases': list(PREDEFINED_CASES.values()),
             'performance': calculate_model_performance(),
             'exported_at': datetime.now().isoformat(),
-            'version': '2.0.0'
+            'version': APP_VERSION
         }
     else:
         return jsonify({"error": "Invalid export type"}), 400

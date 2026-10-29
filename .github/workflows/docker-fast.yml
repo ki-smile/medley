@@ -1,8 +1,9 @@
 name: Fast Docker Build
 
+# Manual only: docker-build.yml publishes :latest on every push to main.
+# This workflow also pushes :latest and points at deployment/Dockerfile.fast,
+# which does not exist, so it must not run automatically.
 on:
-  push:
-    branches: [ main ]
   workflow_dispatch:
 
 env:

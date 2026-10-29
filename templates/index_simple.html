@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="medley-version" content="{{ app_version }}+{{ app_build }}">
     <title>MEDLEY - Medical AI Ensemble System</title>
     <style>
         /* Karolinska Institutet Color Palette */
@@ -323,6 +324,7 @@
             <p>© 2025 SMAILE - Stockholm Medical Artificial Intelligence and Learning Environments</p>
             <p>Karolinska Institutet | <a href="https://smile.ki.se" style="color: var(--ki-orange);">smile.ki.se</a></p>
             <p style="margin-top: 20px; opacity: 0.8;">For research and educational purposes only. Not for clinical use.</p>
+            <p style="opacity: 0.6;"><span id="app-version" title="{% if app_build_date %}Built {{ app_build_date }}{% endif %}">MEDLEY v{{ app_version }} · build {{ app_build }}</span></p>
         </footer>
     </div>
 </body>
